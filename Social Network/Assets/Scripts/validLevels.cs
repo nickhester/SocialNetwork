@@ -7,7 +7,6 @@ public class validLevels : MonoBehaviour {
 	public int level;
 	public Difficulty difficulty;
 	public int seed;
-	public int percentRelationship;
 	public int cantTouch;
 	public bool oneClick;
 	public int numClicks;
@@ -27,13 +26,12 @@ public class validLevels : MonoBehaviour {
 	
 	}
 
-	public void SetAttributes(int _level, Difficulty _difficulty, int _seed, int _percentRelationship, int _cantTouch, bool _oneClick, int _numClicks,
+	public void SetAttributes(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks,
 	                          bool _isFallToRed, bool _isOneClick, bool _isCantTouch, bool _isNoLines)
 	{
 		level = _level;
 		difficulty = _difficulty;
 		seed = _seed;
-		percentRelationship = _percentRelationship;
 		cantTouch = _cantTouch;
 		oneClick = _oneClick;
 		numClicks = _numClicks;
@@ -44,9 +42,9 @@ public class validLevels : MonoBehaviour {
 	}
 
 	// overload...
-	public void SetAttributes(int _level, Difficulty _difficulty, int _seed, int _percentRelationship, int _cantTouch, bool _oneClick, int _numClicks)
+	public void SetAttributes(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks)
 	{
-		SetAttributes(_level, _difficulty, _seed, _percentRelationship, _cantTouch, _oneClick, _numClicks, false, false, false, false);
+		SetAttributes(_level, _difficulty, _seed, _cantTouch, _oneClick, _numClicks, false, false, false, false);
 	}
 
 	public void SetOnlySpecialAttributes(bool _isFallToRed, bool _isOneClick, bool _isCantTouch, bool _isNoLines)

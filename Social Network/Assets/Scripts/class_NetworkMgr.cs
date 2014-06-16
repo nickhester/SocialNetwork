@@ -12,7 +12,8 @@ public class class_NetworkMgr : MonoBehaviour {
 	public List<Person> allPeopleExceptPlayer = new List<Person>();
 	private Dictionary<class_Relationship, int> savedStateAllRelationships = new Dictionary<class_Relationship, int>();
 	public List<class_Relationship> allRelationships = new List<class_Relationship>();
-	private Person player;
+	[HideInInspector]
+	public Person player;
 	public int changeByAmount = 200;
 	private bool showDebug = false;
 	public GameObject hitParticle;
@@ -22,7 +23,7 @@ public class class_NetworkMgr : MonoBehaviour {
 	public bool isReadingSeedFromFile;
 	public TextAsset validSeedList;
 	private bool levelIsComplete = false;
-	public int percentHasRelationship = 75;
+	private int percentHasRelationship = 50;
 	private validLevels levelUsed;
 
 	// Debug and Score
@@ -188,7 +189,6 @@ public class class_NetworkMgr : MonoBehaviour {
 		{
 			_usedSeed = levelUsed.seed;
 			Random.seed = _usedSeed;
-			percentHasRelationship = levelUsed.percentRelationship;
 		}
 		else if (isUsingSeed)		// if using a set seed
 		{
@@ -200,7 +200,7 @@ public class class_NetworkMgr : MonoBehaviour {
 			_usedSeed = levelUsed.seed;
 			Random.seed = _usedSeed;		// save the seed used
 			// copy used seed to the clipboard (windows clipboard)
-			TextEditor te = new TextEditor(); te.content = new GUIContent(_usedSeed.ToString()); te.SelectAll(); te.Copy(); print ("seed copied to clipboard");
+			TextEditor te = new TextEditor(); te.content = new GUIContent(_usedSeed.ToString()); te.SelectAll(); te.Copy();
 		}
 		return _usedSeed;
 	}
@@ -286,7 +286,7 @@ public class class_NetworkMgr : MonoBehaviour {
 				if (secondPerson != person)			// if they haven't already been compared (don't repeat A to A)
 				{
 					class_Relationship newRel = gameObject.AddComponent("class_Relationship") as class_Relationship;
-					newRel.relationshipValue = ExponentialWeight(200);		// set random relationship value
+					// TODO: is this line necessary? // newRel.relationshipValue = ExponentialWeight(200);		// set random relationship value
 					newRel.relationshipMembers.Add(person);
 					newRel.relationshipMembers.Add (secondPerson);
 					allRelationships.Add(newRel);
@@ -300,12 +300,12 @@ public class class_NetworkMgr : MonoBehaviour {
 		
 		// Renumber the values
 		List<int> RelationshipValues = new List<int>();
-		RelationshipValues = WeightedRelationships(allRelationships.Count - (player.relationshipList.Count), 10, 10, 200);
+		RelationshipValues = WeightedRelationships(allRelationships.Count - (player.relationshipList.Count), percentHasRelationship);
 
 
 		foreach (class_Relationship rel in allRelationships)
 		{
-			Random.Range(0,1);
+			Random.Range(0,1);		// just a random call to keep the seed in sync with old data
 			if (!rel.relationshipMembers.Contains(player) && RelationshipValues.Count > 0)
 			{
 				int _i = RelationshipValues[Random.Range (0, RelationshipValues.Count)];	// pick a random relationship to assign a value to
@@ -315,21 +315,22 @@ public class class_NetworkMgr : MonoBehaviour {
 		}
 	}
 
-	// returns an even spread of numbers for relationships
-	int ExponentialWeight(int divisionFactor)
-	{
-	    int diceRoll = Random.Range(0, 101);                    // get a number from 0 to 100
-	    diceRoll = (diceRoll * diceRoll) / divisionFactor;      // divide by the "division factor"
-	    if (diceRoll > 100) { diceRoll = 100; }                 // clamp to 100
-	    if (diceRoll < -100) { diceRoll = -100; }                   // clamp to -100
-	    if (Random.Range(0, 2) == 1) { diceRoll = diceRoll * -1; }  // choose whether positive or negative
-	    return diceRoll;
-	}
-
-	List<int> WeightedRelationships(int quantity, int percentWeak, int percentStrong, int curveFactor)
+	// TODO: remove this function
+//	// returns an even spread of numbers for relationships
+//	int ExponentialWeight(int divisionFactor)
+//	{
+//	    int diceRoll = Random.Range(0, 101);                    // get a number from 0 to 100
+//	    diceRoll = (diceRoll * diceRoll) / divisionFactor;      // divide by the "division factor"
+//	    if (diceRoll > 100) { diceRoll = 100; }                 // clamp to 100
+//	    if (diceRoll < -100) { diceRoll = -100; }                   // clamp to -100
+//	    if (Random.Range(0, 2) == 1) { diceRoll = diceRoll * -1; }  // choose whether positive or negative
+//	    return diceRoll;
+//	}
+	
+	List<int> WeightedRelationships(int quantity, int _percentHasRelationship)
 	{
 		List<int> result = new List<int>();
-		int numNonZero = (int)(quantity * (percentHasRelationship/100.0f));
+		int numNonZero = (int)(quantity * (_percentHasRelationship/100.0f));
 		for (int i = 0; i < quantity; i++)
 		{
 			if (i <= numNonZero)
@@ -367,11 +368,15 @@ public class class_NetworkMgr : MonoBehaviour {
 		if (GUI.Button(new Rect(0, Screen.height - 20, 50, 20), "Debug")) { showDebug = true; }
 		if (showDebug)
 		{
-			GUI.Box (new Rect(0, 0, 100, Screen.height), DebugSummary);
-			if (GUI.Button(new Rect(10, Screen.height - 75, 35, 25), "+10")) { changeByAmount += 10; }
-			if (GUI.Button(new Rect(55, Screen.height - 75, 35, 25), "-10")) { changeByAmount -= 10; }
+			//GUI.Box (new Rect(0, 0, 100, Screen.height), DebugSummary);
 			if (GUI.Button(new Rect(Screen.width - 100, Screen.height - 50, 75, 25), AIbutton)) { levelTesterRef.ComputerPlay(10000, 1); }
-			if (GUI.Button(new Rect(Screen.width - 200, Screen.height - 50, 75, 25), "path")) { levelTesterRef.PathfindLevel(); }
+			if (GUI.Button(new Rect(Screen.width - 200, Screen.height - 50, 75, 25), "path"))
+			{
+				if (!levelTesterRef.HasFailCase())
+				{
+					levelTesterRef.PathfindLevel_BreadthFirst();
+				}
+			}
 
 		}
 	}

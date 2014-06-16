@@ -38,7 +38,6 @@ public class levelSeedList : MonoBehaviour {
 	}
 	
 	public Difficulty myDifficulty { get; private set; }
-	public int myPercentRelationship { get; set; }
 	
 
 	// Use this for initialization

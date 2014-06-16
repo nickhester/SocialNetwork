@@ -12,17 +12,17 @@ public class levelTester : MonoBehaviour {
 	public string filename = "validSeedList.txt";
 	public bool runTestSeries = false;
 	public bool overWriteExistingFile = false;
-	public TextAsset textFile;
+	//private TextAsset textFile;
 	private List<levelSeedList> seedList = new List<levelSeedList>();
 	private string textToWrite = "";
-
-	public int numTriesPerLevel = 5;
+	
 	public int numLevelsToRun = 5;
-	public int numClicksPerRun = 5000;
-	private int numLevelsHaveBeenRun = 0;
+	[HideInInspector]
+	public int numLevelsLeftToRun;
+	[HideInInspector]
+	public int levelToLoad;
 	[HideInInspector]
 	public bool isStartingSingleton = false;
-	private bool hasRunTest = false;
 	private class_NetworkMgr networkMgr;
 
 	private List<Person> failCaseCheckList = new List<Person>();
@@ -34,27 +34,16 @@ public class levelTester : MonoBehaviour {
 	private int currentStepsTaken = 0;
 	private levelTesterState_s bestWinState;
 	private int stackOverflowPreventer = 0;
+	private Person loopStart;
+	private Person lastVisitedInLoop;
+	private List<Person> loopMembers = new List<Person>();
+	private bool bestWinStateHasBeenFound = false;
 
 	#endregion
 
 	void Awake ()
 	{
-		FindNetworkManager();
-		List<GameObject> _temp = new List<GameObject>();
-		_temp.AddRange(GameObject.FindGameObjectsWithTag("levelTester"));
-		if (_temp.Count() > 1) 					// initiate singleton
-		{
-			foreach (GameObject GO in _temp)
-			{
-				if (!GO.GetComponent<levelTester>().isStartingSingleton)
-				{
-					Destroy(GO);
-				}
-			}
-		}
-		else { DontDestroyOnLoad(gameObject); isStartingSingleton = true; }
-
-
+		//textFile = Resources.Load<TextAsset>("validSeedList");
 	}
 
 	void Start () {
@@ -63,24 +52,22 @@ public class levelTester : MonoBehaviour {
 	
 	void Update ()
 	{
-		if (runTestSeries)
+		if (numLevelsLeftToRun > 0)
 		{
-			FindNetworkManager();
-			if (!HasFailCase())
-			{
-				if (!hasRunTest)
-				{
-					Application.LoadLevel(Application.loadedLevel);
-					RunOneLevelTrial();
-					numLevelsHaveBeenRun++;
-					AppendToFile(textToWrite);
-					if (numLevelsHaveBeenRun == numLevelsToRun)
-					{
-						hasRunTest = true;
-					}
-				}
-			}
+			print ("running test number " + numLevelsLeftToRun);
+			runTestAndRecord();
+			numLevelsLeftToRun--;
 		}
+	}
+
+	public void runTestAndRecord()
+	{
+		if (!HasFailCase())
+		{
+			RunOneLevelTrial();
+			AppendToFile(textToWrite);
+		}
+		GetComponent<createAndDestroyLevel>().MakeNewTestLevel(levelToLoad);
 	}
 
 	void FindNetworkManager()
@@ -130,28 +117,99 @@ public class levelTester : MonoBehaviour {
 	
 	public bool HasFailCase()
 	{	
+		FindNetworkManager();
+		bool hasAtLeastOnePersonWithAllGreenRelationships = false;
 		foreach (Person _person in networkMgr.allPeople)					// for each person
 		{
-			if (_person.relationshipListNegativeNoPlayer.Count > 0)	// if the person has at least 1 red relationship
+			if (_person != networkMgr.player) 		// ignore the player
 			{
-				failCaseCheckList.Clear();
-				if (!Recursive_CheckForGreenNeighbors(_person))		// check to see if they connect to anything green, even their neighbors, etc.
-				{ return true; }
-				else if (_person.relationshipListNegativeNoPlayer.Count == 2 && _person.relationshipListPositiveNoPlayer.Count == 0)	// if the person has just 2 red relationships
+				if (_person.relationshipListNegativeNoPlayer.Count > 0)	// if the person has at least 1 red relationship
 				{
-					class_Relationship _greenRel = null;
-					if (_person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[0], _person).relationshipListPositiveNoPlayer.Count == 1
-					    && _person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[0], _person).relationshipListNegativeNoPlayer.Count == 1)		// if they have one green and one red relationship
+					failCaseCheckList.Clear();
+					if (!Recursive_CheckForGreenNeighbors(_person))		// check to see if they connect to anything green, even their neighbors, etc.
+					{ print ("fail case: red island"); return true; }
+
+					else if (_person.relationshipListNegativeNoPlayer.Count == 2 && _person.relationshipListPositiveNoPlayer.Count == 0)	// if the person has just 2 red relationships
 					{
-						_greenRel = _person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[0], _person).relationshipListPositiveNoPlayer[0];				// remember that relationship
+						class_Relationship _greenRel = null;
+						if (_person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[0], _person).relationshipListPositiveNoPlayer.Count == 1
+						    && _person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[0], _person).relationshipListNegativeNoPlayer.Count == 1)		// if they have one green and one red relationship
+						{
+							_greenRel = _person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[0], _person).relationshipListPositiveNoPlayer[0];				// remember that relationship
+						}
+						if (_person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[1], _person).relationshipListPositiveNoPlayer.Count == 1
+						    && _person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[1], _person).relationshipListNegativeNoPlayer.Count == 1)		// if they also have one green and one red relationship
+						{
+							if (_greenRel != null && _greenRel == _person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[1], _person).relationshipListPositiveNoPlayer[0])				// if that green relationship is the same as the last one
+							{ print ("fail case: triangle of death"); return true; }
+						}
 					}
-					if (_person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[1], _person).relationshipListPositiveNoPlayer.Count == 1
-					    && _person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[1], _person).relationshipListNegativeNoPlayer.Count == 1)		// if they also have one green and one red relationship
+				}
+
+				else if (_person.relationshipListNonZeroNoPlayer.Count == 0) 		// if a person is not connected to anything
+				{ print ("fail case: unconnected person"); return true; }
+
+//				else if (_person.relationshipListNonZeroNoPlayer.Count == 2) 			// find loops (polygons) that have no other connections
+//				{
+//					loopStart = null;
+//					loopMembers.Clear();
+//					if (Recursive_isImpossibleLoop(_person))
+//					{ print ("fail case: loop without 2 greens (not yet checking greens)"); return true; }
+//				}
+
+				if (!hasAtLeastOnePersonWithAllGreenRelationships && _person.relationshipListNegativeNoPlayer.Count == 0)
+				{
+					hasAtLeastOnePersonWithAllGreenRelationships = true;
+				}
+			}
+		}
+
+		if (!hasAtLeastOnePersonWithAllGreenRelationships)
+		{ print ("fail case: no green only people"); return true; }
+
+		return false;
+	}
+
+	// TODO: does not yet look for the double greens.
+	bool Recursive_isImpossibleLoop(Person p)
+	{
+		loopMembers.Add(p);
+		if (p.relationshipListNonZeroNoPlayer.Count == 2)	// if a person has exactly 2 relationships
+		{
+			if (loopStart == null) 		// if a loop start person has not been set, this must be the first person, so set it
+			{
+				loopStart = p;
+			} else if (loopStart == p) 	// if you've reached the loop start again, then you've successfully completed the loop
+			{
+				if (!CheckPeopleForTwoGeenRelationships(loopMembers))
+				{ return true; }
+			}
+			
+			foreach (class_Relationship _rel in p.relationshipListNonZeroNoPlayer)
+			{
+				Person _neighbor = p.GetMyNeighbor(_rel);
+				if (_neighbor != loopStart && _neighbor != lastVisitedInLoop)
+				{
+					lastVisitedInLoop = p;
+					if (Recursive_isImpossibleLoop(_neighbor))
 					{
-						if (_greenRel != null && _greenRel == _person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[1], _person).relationshipListPositiveNoPlayer[0])				// if that green relationship is the same as the last one
+						if (!CheckPeopleForTwoGeenRelationships(loopMembers))
 						{ return true; }
 					}
 				}
+			}
+		}
+		
+		return false;		// if a loop was not found
+	}
+
+	bool CheckPeopleForTwoGeenRelationships(List<Person> _ppl)
+	{
+		foreach (Person _p in _ppl)
+		{
+			if (_p.relationshipListPositiveNoPlayer.Count > 1)
+			{
+				return true;
 			}
 		}
 		return false;
@@ -184,68 +242,156 @@ public class levelTester : MonoBehaviour {
 		return false;
 	}
 
-	void RunOneLevelTrial()
+	bool RunOneLevelTrial()
 	{
 		FindNetworkManager();
-		
-		for (int i = 0; i < 1; i++)
+		levelSeedList thisLevelSeedList = new levelSeedList();
+
+		int _numTries = PathfindLevel_BreadthFirst();
+		if (_numTries == -1)
 		{
-			levelSeedList thisLevelSeedList = new levelSeedList();
-			List<int> numTriesList = new List<int>();
-			int _counter = 0;
-			for (int i2 = 0; i2 < numTriesPerLevel; i2++)
-			{
-				int _numTries = ComputerPlay(numClicksPerRun, 1);
-				if (_numTries == -1) { _counter++; }	// if it fails, increment the counter
-				else
-				{
-					numTriesList.Add(_numTries);		// only add it to the list if it succeeds
-					_counter += -99;					// if any answer is found, prevent the failsafe
-				}
-				if (_counter == 3) { break; }			// if it fails 3 time, fail out early
-			}
-			thisLevelSeedList.mySeed = networkMgr.usedSeed;						// set used seed
-			if (numTriesList.Count() > 0)
-			{
-				thisLevelSeedList.numTimesAITook = (int)numTriesList.Average();		// set average number of clicks taken
-			}
-			else { thisLevelSeedList.numTimesAITook = -1; }
-			thisLevelSeedList.numPeople = networkMgr.allPeople.Count() - 1;		// set how many people on this level
-			thisLevelSeedList.myPercentRelationship = networkMgr.percentHasRelationship;
-			string _results = string.Format("level:{0},difficulty:{1},seed:{2},clicks:{3},percentRelationship:{4}\n",
-			                                thisLevelSeedList.numPeople,
-			                                thisLevelSeedList.myDifficulty,
-			                                thisLevelSeedList.mySeed,
-			                                thisLevelSeedList.numTimesAITook,
-			                                thisLevelSeedList.myPercentRelationship
-			                                );
-			print (_results);
-			if (thisLevelSeedList.myDifficulty != Difficulty.NoSolutionFound)
-			{
-				textToWrite += _results;
-				seedList.Add(thisLevelSeedList);
-			}
+			return false;
 		}
+		else
+		{
+			thisLevelSeedList.numTimesAITook = _numTries; 					// set number of clicks
+		}
+
+		thisLevelSeedList.mySeed = networkMgr.usedSeed;						// set used seed
+
+		thisLevelSeedList.numPeople = networkMgr.allPeople.Count() - 1;		// set how many people on this level
+
+		string _results = FormatValidLevelText(thisLevelSeedList.numPeople,
+		                                       thisLevelSeedList.myDifficulty,
+		                                       thisLevelSeedList.mySeed,
+		                                       thisLevelSeedList.numTimesAITook,
+		                                       "unknown",
+		                                       -2);
+        
+		if (thisLevelSeedList.myDifficulty != Difficulty.Impossible)
+		{
+			textToWrite += _results;
+			seedList.Add(thisLevelSeedList);
+		}
+		return true;
+	}
+
+	string FormatValidLevelText(int level, Difficulty difficulty, int seed, int clicks, string oneClick, int cantTouch)
+	{
+		return string.Format("level:{0},difficulty:{1},seed:{2},clicks:{3},oneClick:{4},cantTouch:{5}\n",
+                level.ToString(),
+                difficulty.ToString(),
+                seed.ToString(),
+                clicks.ToString(),
+                oneClick,
+                cantTouch.ToString()
+                );
 	}
 
 	void AppendToFile(string _stringToAppend)
 	{
-		print (_stringToAppend);
+		TextAsset textFile = Resources.Load<TextAsset>("validSeedList");
 		string _stringToAppendTrimmed = _stringToAppend.TrimEnd('\n');
 		print (_stringToAppendTrimmed);
 		if (!overWriteExistingFile)
 		{
 			_stringToAppendTrimmed = textFile.text + _stringToAppendTrimmed;
 		}
-		StreamWriter sw = new StreamWriter(Application.dataPath + "\\" + filename);
-		sw.Write(_stringToAppendTrimmed);
-		sw.Close();
+		using (StreamWriter sw = new StreamWriter(Application.dataPath + "\\Resources\\" + filename))
+		{
+			sw.AutoFlush = true;
+			sw.WriteLine(_stringToAppendTrimmed);
+		}
 	}
+
+	#region BreadthFirstBestPathSearch
+
+	public int PathfindLevel_BreadthFirst()
+	{
+		FindNetworkManager();
+		// create winning state for reference
+		List<bool> allTrue = new List<bool>();
+		for (int i = 0; i < networkMgr.allPeopleExceptPlayer.Count; i++)
+		{
+			allTrue.Add(true);
+		}
+		winState = new levelTesterState_s(allTrue, true, 0);
+
+		levelTesterState_s gameStartingState = GetLevelState();
+		gameStartingState.numStepsToReach = 0;
+		statesThatHaveBeenReached.Add(gameStartingState);
+
+		// make a default "best win"
+		bestWinState.numStepsToReach = 99;
+
+		// create lists to hold the "levels" of depth for the search
+		List<levelTesterState_s> parentList = new List<levelTesterState_s>();
+		List<levelTesterState_s> childList = new List<levelTesterState_s>();
+
+		parentList.Add(gameStartingState);		// to start, game start state is in the parent list...
+
+		while (!bestWinStateHasBeenFound)
+		{
+			currentStepsTaken++;
+			//print ("steps taken: " + currentStepsTaken);
+			if (currentStepsTaken > 15) { print ("breaking out early, none found"); break; }
+			if (parentList.Count == 0)
+			{
+				print ("TESTER FEEDBACK: this level is impossible");
+				return -1;
+			}
+			foreach (levelTesterState_s _parentState in parentList)
+			{
+				childList.AddRange(SearchAllOptionsOneLevelDeep(_parentState));
+				//print ("child count:" + childList.Count);
+			}
+			if (!bestWinStateHasBeenFound)
+			{
+				parentList.Clear();
+				parentList.AddRange(childList);
+				childList.Clear();
+			}
+			else
+			{
+				print ("TESTER FEEDBACK: requires " + bestWinState.numStepsToReach + " steps");
+			}
+		}
+		return bestWinState.numStepsToReach;
+	}
+
+	List<levelTesterState_s> SearchAllOptionsOneLevelDeep(levelTesterState_s parentState)
+	{
+		List<levelTesterState_s> returnState = new List<levelTesterState_s>();
+		foreach (actionPossibility _actionPossibility in FindAllPossibleActions())
+		{
+			PerformAnAction(_actionPossibility);
+			levelTesterState_s currentState = GetLevelState();
+			currentState.numStepsToReach = currentStepsTaken;
+			if (currentState == winState) 				// if you find a win state...
+			{
+				bestWinStateHasBeenFound = true;
+				returnState.Add(currentState);
+				bestWinState = currentState;
+				break;
+			}
+			else if (CheckIfMatchingStateExists(currentState).isNull) 		// if it's a new state...
+			{
+				statesThatHaveBeenReached.Add(currentState);
+				//print ("state count: " + statesThatHaveBeenReached.Count);
+				returnState.Add(currentState);
+			}
+			ReturnToPreviousLevelState(parentState);
+		}
+		return returnState;
+	}
+
+	#endregion
 
 	#region RecursiveBestPathSearch
 
 	public void PathfindLevel()
 	{
+		FindNetworkManager();
 		currentLevel = GameObject.Find("Clipboard").GetComponent<clipboard>().nextLevelUp.myLevel;
 
 		// create winning state for reference
@@ -257,9 +403,9 @@ public class levelTester : MonoBehaviour {
 		winState = new levelTesterState_s(allTrue, true, 0);
 
 		levelTesterState_s gameStartingState = GetLevelState();
+		statesThatHaveBeenReached.Add(gameStartingState);
 
 		// make a default "best win"
-		statesThatHaveBeenReached.Add(gameStartingState);
 		bestWinState.numStepsToReach = 99;
 
 		FindBestWin(0);
@@ -391,8 +537,6 @@ public class levelTester : MonoBehaviour {
 	{
 		foreach (levelTesterState_s _state in statesThatHaveBeenReached)
 		{
-//			print (stateToCompare.myState[0] + "," + stateToCompare.myState[1] + "," + stateToCompare.myState[2] +
-//			       " vs " + _state.myState[0] + "," + _state.myState[1] + "," + _state.myState[2]);
 			if (stateToCompare == _state)
 			{ return _state; }
 		}

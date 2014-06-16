@@ -1,0 +1,148 @@
+// --3------------------------------------------------------------------------
+// VeryEasy
+level:3,difficulty:VeryEasy,seed:180257,clicks:2,oneClick:true,cantTouch:1
+level:3,difficulty:VeryEasy,seed:383427,clicks:2,oneClick:true,cantTouch:2
+level:3,difficulty:VeryEasy,seed:222964,clicks:1,oneClick:true,cantTouch:3
+level:3,difficulty:VeryEasy,seed:422154,clicks:2,oneClick:true,cantTouch:2
+level:3,difficulty:VeryEasy,seed:290675,clicks:2,oneClick:true,cantTouch:1
+level:3,difficulty:VeryEasy,seed:291635,clicks:3,oneClick:true,cantTouch:0
+// --4------------------------------------------------------------------------
+// VeryEasy
+level:4,difficulty:VeryEasy,seed:217191,clicks:2,oneClick:true,cantTouch:3
+level:4,difficulty:VeryEasy,seed:560939,clicks:2,oneClick:true,cantTouch:1
+level:4,difficulty:VeryEasy,seed:830639,clicks:2,oneClick:true,cantTouch:3
+level:4,difficulty:VeryEasy,seed:285442,clicks:2,oneClick:true,cantTouch:3
+level:4,difficulty:VeryEasy,seed:090166,clicks:3,oneClick:true,cantTouch:1
+level:4,difficulty:VeryEasy,seed:699082,clicks:2,oneClick:true,cantTouch:2
+level:4,difficulty:VeryEasy,seed:119059,clicks:2,oneClick:true,cantTouch:2
+level:4,difficulty:VeryEasy,seed:089355,clicks:2,oneClick:true,cantTouch:3
+level:4,difficulty:VeryEasy,seed:241155,clicks:1,oneClick:true,cantTouch:1
+level:4,difficulty:VeryEasy,seed:625357,clicks:2,oneClick:true,cantTouch:2
+// Easy
+level:4,difficulty:Easy,seed:747747,clicks:2,oneClick:true,cantTouch:4
+level:4,difficulty:Easy,seed:329317,clicks:3,oneClick:true,cantTouch:2
+level:4,difficulty:Easy,seed:842996,clicks:3,oneClick:true,cantTouch:3
+level:4,difficulty:Easy,seed:545708,clicks:2,oneClick:true,cantTouch:3
+level:4,difficulty:Easy,seed:045916,clicks:2,oneClick:true,cantTouch:1
+level:4,difficulty:Easy,seed:923432,clicks:2,oneClick:true,cantTouch:3
+// --5------------------------------------------------------------------------
+// Easy
+level:5,difficulty:Easy,seed:781653,clicks:3,oneClick:true,cantTouch:3
+level:5,difficulty:Easy,seed:057398,clicks:3,oneClick:true,cantTouch:2
+level:5,difficulty:Easy,seed:404431,clicks:2,oneClick:true,cantTouch:2
+level:5,difficulty:Easy,seed:513468,clicks:3,oneClick:true,cantTouch:3
+level:5,difficulty:Easy,seed:402931,clicks:2,oneClick:true,cantTouch:1
+level:5,difficulty:Easy,seed:771386,clicks:3,oneClick:true,cantTouch:2
+level:5,difficulty:Easy,seed:249327,clicks:3,oneClick:true,cantTouch:2
+level:5,difficulty:Easy,seed:829842,clicks:2,oneClick:true,cantTouch:4
+level:5,difficulty:Easy,seed:633673,clicks:2,oneClick:true,cantTouch:2
+// Medium
+level:5,difficulty:Medium,seed:577953,clicks:3,oneClick:true,cantTouch:4
+level:5,difficulty:Medium,seed:660523,clicks:4,oneClick:true,cantTouch:1
+level:5,difficulty:Medium,seed:420596,clicks:3,oneClick:true,cantTouch:1
+level:5,difficulty:Medium,seed:228416,clicks:4,oneClick:true,cantTouch:5
+level:5,difficulty:Medium,seed:493007,clicks:3,oneClick:true,cantTouch:1
+// --6------------------------------------------------------------------------
+// Easy
+level:6,difficulty:Easy,seed:775679,clicks:3,oneClick:true,cantTouch:3
+level:6,difficulty:Easy,seed:837689,clicks:4,oneClick:true,cantTouch:5
+level:6,difficulty:Easy,seed:796093,clicks:4,oneClick:true,cantTouch:1
+level:6,difficulty:Easy,seed:227289,clicks:2,oneClick:true,cantTouch:3
+level:6,difficulty:Easy,seed:553845,clicks:3,oneClick:true,cantTouch:3
+level:6,difficulty:Easy,seed:114951,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Easy,seed:685304,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Easy,seed:232030,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Easy,seed:817601,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Easy,seed:232030,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Easy,seed:045914,clicks:-1,oneClick:true,cantTouch:-2
+// Medium
+level:6,difficulty:Medium,seed:554807,clicks:3,oneClick:true,cantTouch:5
+level:6,difficulty:Medium,seed:576476,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:769632,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:222588,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:503340,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:115904,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:488935,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:106464,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:006455,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:198009,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:611584,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:422366,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:383799,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:963695,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:241254,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:288376,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:084740,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:786212,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:242817,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:336757,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:721707,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:122492,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:636320,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:011648,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:090166,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:015715,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:016875,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:282389,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:224283,clicks:-1,oneClick:true,cantTouch:-2
+level:6,difficulty:Medium,seed:107090,clicks:-1,oneClick:true,cantTouch:-2
+// Hard
+level:6,difficulty:Hard,seed:143941,clicks:4,oneClick:true,cantTouch:2
+level:6,difficulty:Hard,seed:372485,clicks:-1,oneClick:unknown,cantTouch:-2
+level:6,difficulty:Hard,seed:250087,clicks:-1,oneClick:unknown,cantTouch:-2
+level:6,difficulty:Hard,seed:457576,clicks:-1,oneClick:unknown,cantTouch:-2
+level:6,difficulty:Hard,seed:262249,clicks:-1,oneClick:unknown,cantTouch:-2
+level:6,difficulty:Hard,seed:252723,clicks:-1,oneClick:unknown,cantTouch:-2
+level:6,difficulty:Hard,seed:134926,clicks:-1,oneClick:unknown,cantTouch:-2
+level:6,difficulty:Hard,seed:862526,clicks:-1,oneClick:unknown,cantTouch:-2
+level:6,difficulty:Hard,seed:596593,clicks:-1,oneClick:unknown,cantTouch:-2
+level:6,difficulty:Hard,seed:368105,clicks:-1,oneClick:unknown,cantTouch:-2
+level:6,difficulty:Hard,seed:315764,clicks:-1,oneClick:unknown,cantTouch:-2
+// --7------------------------------------------------------------------------
+// Medium
+level:7,difficulty:Medium,seed:031668,clicks:3,oneClick:true,cantTouch:4
+level:7,difficulty:Medium,seed:682756,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:387345,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:844579,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:604198,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:732008,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:362064,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:266206,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:672876,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:851235,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:511268,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:437054,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:089453,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:660024,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:883647,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:889374,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:058807,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:163620,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:144767,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:164488,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Medium,seed:507578,clicks:-1,oneClick:unknown,cantTouch:-2
+// Hard
+level:7,difficulty:Hard,seed:894666,clicks:5,oneClick:true,cantTouch:1
+level:7,difficulty:Hard,seed:898880,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Hard,seed:039631,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Hard,seed:215936,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Hard,seed:760429,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Hard,seed:944434,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Hard,seed:384489,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Hard,seed:891761,clicks:-1,oneClick:unknown,cantTouch:-2
+level:7,difficulty:Hard,seed:745758,clicks:-1,oneClick:unknown,cantTouch:-2
+// --8------------------------------------------------------------------------
+// Medium
+level:8,difficulty:Medium,seed:280060,clicks:4,oneClick:true,cantTouch:6
+// Hard
+level:8,difficulty:Hard,seed:840483,clicks:4,oneClick:true,cantTouch:1
+level:8,difficulty:Hard,seed:082791,clicks:-1,oneClick:unknown,cantTouch:-2
+level:8,difficulty:Hard,seed:298418,clicks:-1,oneClick:unknown,cantTouch:-2
+level:8,difficulty:Hard,seed:041175,clicks:-1,oneClick:unknown,cantTouch:-2
+level:8,difficulty:Hard,seed:268797,clicks:-1,oneClick:unknown,cantTouch:-2
+//
+//
+//
+level:3,difficulty:VeryEasy,seed:733296,clicks:2,oneClick:unknown,cantTouch:-2
+level:3,difficulty:VeryEasy,seed:306520,clicks:99,oneClick:unknown,cantTouch:-2
+level:3,difficulty:VeryEasy,seed:396036,clicks:99,oneClick:unknown,cantTouch:-2

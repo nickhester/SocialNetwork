@@ -47,13 +47,13 @@ public class calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		3;
 					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
 					_newCalDayComponent.timeLimit = 			180;
-					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
+					_newCalDayComponent.SetRequirementsForStars	(5, 15, 25);
 					break;
 				case 1:
 					_newCalDayComponent.numAppointments = 		4;
 					_newCalDayComponent.SetDifficulties			(25, 75, 0, 0);
 					_newCalDayComponent.timeLimit = 			240;
-					_newCalDayComponent.SetRequirementsForStars	(30, 40, 50);
+					_newCalDayComponent.SetRequirementsForStars	(25, 35, 45);
 					break;
 				case 2:
 					_newCalDayComponent.numAppointments = 		6;
@@ -65,53 +65,47 @@ public class calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(10, 40, 50, 0);
 					_newCalDayComponent.timeLimit = 			300;
-					_newCalDayComponent.SetRequirementsForStars	(60, 80, 100);
+					_newCalDayComponent.SetRequirementsForStars	(40, 60, 80);
 					break;
 				case 4:
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(10, 40, 50, 0);
 					_newCalDayComponent.timeLimit = 			120;
-					_newCalDayComponent.SetRequirementsForStars	(50, 70, 90);
+					_newCalDayComponent.SetRequirementsForStars	(40, 60, 80);
 					break;
 
 				// WEEK 2 ----
-				case 5:
-					_newCalDayComponent.numAppointments = 		6;
-					_newCalDayComponent.SetDifficulties			(0, 100, 0, 0);
-					_newCalDayComponent.timeLimit = 			300;
-					_newCalDayComponent.SetRequirementsForStars	(50, 70, 90);
-					break;
 
 					// these are for testing the "special" levels
-				case 10:	// monday
+				case 5:	// monday
 					_newCalDayComponent.numAppointments = 		8;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
-					_newCalDayComponent.SetSpecialAttributes	(4, 0, 0, 0);
+					_newCalDayComponent.SetSpecialAttributes	(8, 0, 0, 0);
 					break;
-				case 11:	// tuesday
+				case 6:	// tuesday
 					_newCalDayComponent.numAppointments = 		8;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
-					_newCalDayComponent.SetSpecialAttributes	(0, 4, 0, 0);
+					_newCalDayComponent.SetSpecialAttributes	(0, 8, 0, 0);
 					break;
-				case 12:	// wednesday
+				case 7:	// wednesday
 					_newCalDayComponent.numAppointments = 		8;
 					_newCalDayComponent.SetDifficulties			(0, 100, 0, 0);
 					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(0, 0, 8, 0);
 					break;
-				case 13:	// thursday
+				case 8:	// thursday
 					_newCalDayComponent.numAppointments = 		8;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
-					_newCalDayComponent.SetSpecialAttributes	(0, 0, 0, 4);
+					_newCalDayComponent.SetSpecialAttributes	(0, 0, 0, 8);
 					break;
-				case 14:	// friday
+				case 9:	// friday
 					_newCalDayComponent.numAppointments = 		8;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 					_newCalDayComponent.timeLimit = 			600;

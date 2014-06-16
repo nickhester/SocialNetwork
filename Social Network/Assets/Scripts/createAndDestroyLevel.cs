@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Types;
 
 public class createAndDestroyLevel : MonoBehaviour {
@@ -45,6 +46,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 	private float waitToShowResultsAfterFinished = 1.25f;
 	private bool gameplayHasStarted = false;
 	private bool isShowingDebugControls = false;
+	private int currentLevelLoaded;
 
     #endregion
 	
@@ -176,6 +178,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 			myClipboardComponent.HideClipboard();
 			isClipboardUp = false;
 		}
+		currentLevelLoaded = _aSpecificLevel.level;
 	}
 
 	// method overload
@@ -186,7 +189,25 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 	void DestroyOldLevel()
 	{
-		Destroy(GameObject.Find("LevelParent"));
+		foreach (GameObject aLevelParent in GameObject.FindGameObjectsWithTag("levelParent"))
+		{
+			Destroy(aLevelParent);
+		}
+
+
+//		List<GameObject> objectList = new List<GameObject>();
+//		do {
+//			GameObject GO = GameObject.Find("LevelParent");
+//			if (objectList.Contains(GO))
+//			{
+//
+//			}
+//			else
+//			{
+//				objectList.Add(GO);
+//			}
+//		}
+//		while (GO != null);
 	}
 
 	public void GetStartFromClipboard()
@@ -208,7 +229,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 		return _starReq;
 	}
 
-	void MakeNewTestLevel(int _levelNumber)
+	public void MakeNewTestLevel(int _levelNumber)
 	{
 		int randSeed = Random.Range(0, 1000000);
 		DestroyOldLevel();
@@ -223,12 +244,19 @@ public class createAndDestroyLevel : MonoBehaviour {
 		if (isShowingDebugControls)
 			{
 			// Buttons to load new level
-			if (GUI.Button(new Rect(10, 10, 90, 25), "New 3")) { MakeNewTestLevel(3); }
-			if (GUI.Button(new Rect(10, 40, 90, 25), "New 4")) { MakeNewTestLevel(4); }
-			if (GUI.Button(new Rect(10, 70, 90, 25), "New 5")) { MakeNewTestLevel(5); }
-			if (GUI.Button(new Rect(10, 100, 90, 25), "New 6")) { MakeNewTestLevel(6); }
-			if (GUI.Button(new Rect(10, 130, 90, 25), "New 7")) { MakeNewTestLevel(7); }
-			if (GUI.Button(new Rect(10, 160, 90, 25), "New 8")) { MakeNewTestLevel(8); }
+			if (GUI.Button(new Rect(10, 10, 90, 25), "New 3")) { MakeNewTestLevel(3); currentLevelLoaded = 3; }
+			if (GUI.Button(new Rect(10, 40, 90, 25), "New 4")) { MakeNewTestLevel(4); currentLevelLoaded = 4; }
+			if (GUI.Button(new Rect(10, 70, 90, 25), "New 5")) { MakeNewTestLevel(5); currentLevelLoaded = 5; }
+			if (GUI.Button(new Rect(10, 100, 90, 25), "New 6")) { MakeNewTestLevel(6); currentLevelLoaded = 6; }
+			if (GUI.Button(new Rect(10, 130, 90, 25), "New 7")) { MakeNewTestLevel(7); currentLevelLoaded = 7; }
+			if (GUI.Button(new Rect(10, 160, 90, 25), "New 8")) { MakeNewTestLevel(8); currentLevelLoaded = 8; }
+
+			if (GUI.Button(new Rect(Screen.width - 300, Screen.height - 50, 75, 25), "series"))
+			{
+				levelTester t = GetComponent<levelTester>();
+				t.numLevelsLeftToRun = t.numLevelsToRun;
+				t.levelToLoad = currentLevelLoaded;
+			}
 		}
 
 		if (dayComplete && waitToShowResultsAfterFinished <= 0)
@@ -250,6 +278,8 @@ public class createAndDestroyLevel : MonoBehaviour {
 				(Screen.height/2.0f)*(percentOfVert/100.0f)*2
 				), daySummary, dayCompleteScreenStyle);
 		}
+
+
 
 		//GUI.Box (new Rect(100, Screen.height - 60, 60, 30), ((int)timeLeft).ToString());	// display countdown timer
 	}

@@ -31,7 +31,7 @@ public class LevelFactory : MonoBehaviour {
 				else
 				{
 					validLevels aNewRandomLevel = new validLevels();
-					aNewRandomLevel.SetAttributes(_level, _difficulty, _seed, 50, 0, false, 0);
+					aNewRandomLevel.SetAttributes(_level, _difficulty, _seed, 0, false, 0);
 					print ("returning a new random level with seed " + aNewRandomLevel.seed);
 					return aNewRandomLevel;
 				}
@@ -93,7 +93,6 @@ public class LevelFactory : MonoBehaviour {
 				Difficulty thisDifficulty = Difficulty.Unknown;
 				int thisSeed = 0;
 				int thisLevel = 0;
-				int thisPercentRelationship = 0;
 				int thisCantTouch = 0;
 				bool thisOneClick = false;
 				int thisNumClick = 0;
@@ -116,15 +115,13 @@ public class LevelFactory : MonoBehaviour {
 					{ thisSeed = a; }       							// set the seed
 				if (int.TryParse((tokens[3].Split(':')[1]), out a))
 					{ thisNumClick = a; }     							// set the numClicks
-				if (int.TryParse((tokens[4].Split(':')[1]), out a))
-					{ thisPercentRelationship = a; }     				// set the percent relationship
-				if (bool.TryParse((tokens[5].Split(':')[1]), out b))	
+				if (bool.TryParse((tokens[4].Split(':')[1]), out b))	
 				{ thisOneClick = b; }        							// set the oneClick possibility
-				if (int.TryParse((tokens[6].Split(':')[1]), out a))	
+				if (int.TryParse((tokens[5].Split(':')[1]), out a))	
 				{ thisCantTouch = a; }        							// set who you cant touch, if possible
 
 				validLevels lvl = gameObject.AddComponent<validLevels>();
-				lvl.SetAttributes(thisLevel, thisDifficulty, thisSeed, thisPercentRelationship, thisCantTouch, thisOneClick, thisNumClick);
+				lvl.SetAttributes(thisLevel, thisDifficulty, thisSeed, thisCantTouch, thisOneClick, thisNumClick);
 				_list.Add(lvl);
 			}
 		}
