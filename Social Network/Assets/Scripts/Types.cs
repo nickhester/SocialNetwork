@@ -31,4 +31,18 @@ namespace Types
 		NoLines,
 		None
 	}
+
+	public enum Mood
+	{
+		Negative,
+		Neutral,
+		Positive
+	}
+
+	public enum Friendship
+	{
+		Negative,
+		Neutral,
+		Positive
+	}
 }

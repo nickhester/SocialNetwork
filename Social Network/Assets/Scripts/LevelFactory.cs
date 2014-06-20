@@ -30,7 +30,8 @@ public class LevelFactory : MonoBehaviour {
 				}
 				else
 				{
-					validLevels aNewRandomLevel = new validLevels();
+					//validLevels aNewRandomLevel = new validLevels();
+					validLevels aNewRandomLevel = gameObject.AddComponent<validLevels>();
 					aNewRandomLevel.SetAttributes(_level, _difficulty, _seed, 0, false, 0);
 					print ("returning a new random level with seed " + aNewRandomLevel.seed);
 					return aNewRandomLevel;

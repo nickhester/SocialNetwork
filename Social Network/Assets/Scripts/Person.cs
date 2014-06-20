@@ -1,22 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Types;
 
 public class Person : MonoBehaviour {
 
 	#region Variables
 
 	public List<class_Relationship> relationshipList;
-	public List<class_Relationship> relationshipListNonZeroNoPlayer;
-	public List<class_Relationship> relationshipListNegativeNoPlayer;
-	public List<class_Relationship> relationshipListPositiveNoPlayer;
+	public List<class_Relationship> relationshipListNonZero;
+	public List<class_Relationship> relationshipListNegative;
+	public List<class_Relationship> relationshipListPositive;
 	public int personalIndex;
+	public Mood m_Mood = Mood.Neutral;
 	[HideInInspector]
 	public class_NetworkMgr manager;
-	[HideInInspector]
-	public Person player;
-	[HideInInspector]
-	public class_Relationship relWithPlayer;
 	[HideInInspector]
 	public Transform myTransform;
 	public GameObject myMaxIndicator;
@@ -33,7 +31,7 @@ public class Person : MonoBehaviour {
 
 	public GameObject pulseParti;
 	public float animationTime = 0.25f;
-	private Dictionary<class_Relationship, int> listOfNonPlayerAffectedRels = new Dictionary<class_Relationship, int>();
+	private Dictionary<class_Relationship, Mood> listOfAffectedRels = new Dictionary<class_Relationship, Mood>();
 	public GameObject Mask_CannotClick;
 	public GameObject myMask_CannotClick;
 
@@ -51,13 +49,9 @@ public class Person : MonoBehaviour {
 		manager = transform.parent.GetComponent<class_NetworkMgr>() as class_NetworkMgr;
 		foreach (class_Relationship _rel in relationshipList)
 		{
-			if (_rel.relationshipMembers.Contains(player))
-			{
-				relWithPlayer = _rel;
-			}
-			if (_rel.relationshipValue != 0 && !_rel.relationshipMembers.Contains(player)) { relationshipListNonZeroNoPlayer.Add(_rel); }
-			if (_rel.relationshipValue < 0 && !_rel.relationshipMembers.Contains(player)) { relationshipListNegativeNoPlayer.Add(_rel); }
-			if (_rel.relationshipValue > 0 && !_rel.relationshipMembers.Contains(player)) { relationshipListPositiveNoPlayer.Add(_rel); }
+			if (_rel.m_Friendship != Friendship.Neutral) { relationshipListNonZero.Add(_rel); }
+			if (_rel.m_Friendship < Friendship.Negative) { relationshipListNegative.Add(_rel); }
+			if (_rel.m_Friendship > Friendship.Positive) { relationshipListPositive.Add(_rel); }
 		}
 		
 		Vector3 positionJustBehindPerson = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
@@ -74,13 +68,13 @@ public class Person : MonoBehaviour {
 	}
 
 	void Update () {
-		if (relWithPlayer.relationshipValue == -100)
+		if (m_Mood == Mood.Negative)
 		{
 			_myMaxIndicator.renderer.enabled = true;
 			_myMaxIndicator.renderer.material = statusCircleRed;
 			renderer.material = facialArt1_sad;
 		}
-		if (relWithPlayer.relationshipValue == 100)
+		if (m_Mood == Mood.Positive)
 		{
 			_myMaxIndicator.renderer.enabled = true;
 			_myMaxIndicator.renderer.material = statusCircleGreen;
@@ -123,33 +117,26 @@ public class Person : MonoBehaviour {
 		if (!canBeClicked)
 		{ return; }
 
-		List<class_Relationship> relsNotWithPlayer = new List<class_Relationship>();
+		Mood changeToMood;
+
+		if (isPositiveChange)
+		{
+			changeToMood = Mood.Positive;
+		}
+		else
+		{
+			changeToMood = Mood.Negative;
+		}
+		this.m_Mood = changeToMood;
+
+		listOfAffectedRels.Clear();					// start with cleared list of affected relationships
 		foreach (class_Relationship rel in relationshipList)					// go through my relationships
 		{
-			if (rel.relationshipMembers.Contains(player))		// if it's with the player person
+			if (rel.m_Friendship == Friendship.Positive) { listOfAffectedRels.Add(rel, changeToMood); }
+			else if (rel.m_Friendship == Friendship.Negative)
 			{
-				if (isPositiveChange)
-				{
-					// leave "changeByAmount" positive
-				}
-				else
-				{
-					manager.changeByAmount = -manager.changeByAmount;			// get negative of change by amount
-				}
-				AffectRelationship (manager.changeByAmount, rel);		// affect relationship between player and target by amount
-			}
-			else { relsNotWithPlayer.Add(rel); }
-		}
-
-		listOfNonPlayerAffectedRels.Clear();					// start with cleared list of affected relationships
-		foreach (var otherRelationship in relsNotWithPlayer)			// for all relationships between the person and other people (not player)...
-		{
-			foreach (var _relationship in GetMyNeighbor(otherRelationship).relationshipList)		// ...get their list of relationships...
-			{
-				if (_relationship.relationshipMembers.Contains(player))	// ...with the player...
-				{
-					listOfNonPlayerAffectedRels.Add(_relationship, (int)(manager.changeByAmount * ((float)otherRelationship.relationshipValue / 100.0f)));
-				}
+				if (changeToMood == Mood.Positive) { listOfAffectedRels.Add(rel, Mood.Negative); }
+				else if (changeToMood == Mood.Negative) { listOfAffectedRels.Add(rel, Mood.Positive); }
 			}
 		}
 
@@ -157,11 +144,9 @@ public class Person : MonoBehaviour {
 		if (isDebugChange) { AffectListOfRelationships(false); _animationTime = 0; }
 		else { Invoke ("AffectListOfRelationships", animationTime); }
 
-		manager.changeByAmount = Mathf.Abs(manager.changeByAmount);		// set changeByAmount back to its absolute value
-
 		if (!isDebugChange)
 		{
-			foreach (class_Relationship _rel in relationshipListNonZeroNoPlayer)
+			foreach (class_Relationship _rel in relationshipListNonZero)
 			{
 				EffectPulse(transform.position, GetMyNeighbor(_rel).gameObject.transform.position, (isPositiveChange ? true : false), (_rel.relationshipValue == -100 ? true : false));
 			}
@@ -182,19 +167,16 @@ public class Person : MonoBehaviour {
 
 	void AffectListOfRelationships(bool finishIfDone)
 	{
-		foreach (var _rel in listOfNonPlayerAffectedRels)
+		foreach (var _rel in listOfAffectedRels)
 		{
 			AffectRelationship(_rel.Value, _rel.Key);
 		}
-		manager.CalculateScore();
 		if (finishIfDone) { manager.EndIfDone(); }
 	}
-
-	public void AffectRelationship(int _amount, class_Relationship _relationship)
+	
+	public void AffectRelationship(Mood _moodTarget, class_Relationship _relationship)
 	{
-		_relationship.relationshipValue += _amount;
-		if (_relationship.relationshipValue > 100) {	_relationship.relationshipValue = 100;	}
-		else if (_relationship.relationshipValue < -100)	{	_relationship.relationshipValue = -100;	}
+		_relationship.GetOppositeMember(this).m_Mood = _moodTarget;
 	}
 
 	void EffectPulse(Vector3 startPos, Vector3 endPos, bool isGreen, bool changesColor)

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class class_Entity : MonoBehaviour {
 
 	public Dictionary<class_Entity, int> relationships;
-	public int relationshipWithPlayer;
 
 	// Use this for initialization
 	void Start () {

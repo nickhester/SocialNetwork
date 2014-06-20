@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Types;
 
 public class specialLevels : MonoBehaviour {
 
 	private bool fallsToRed = false;
 	private float fallToRedTimer = 0.0f;
-	private Person player;
-	private List<class_Relationship> playerRels = new List<class_Relationship>();
+	private class_NetworkMgr manager;
 	private float fallToRedSeconds = 4.0f;
 
 	void Start ()
@@ -16,22 +16,18 @@ public class specialLevels : MonoBehaviour {
 		{
 			fallsToRed = true;
 		}
-		player = GameObject.FindGameObjectWithTag("Player").GetComponent<Person>();
-
-
+		manager = GameObject.Find("networkMgr").GetComponent<class_NetworkMgr>();
 	}
 
 	void Update ()
 	{
-		if (playerRels.Count == 0) { playerRels.AddRange(player.relationshipList); }
-
 		fallToRedTimer += Time.deltaTime;
 		if (fallsToRed)
 		{
 			if (fallToRedTimer >= fallToRedSeconds)
 			{
 				fallToRedTimer = 0;
-				player.AffectRelationship(-200, playerRels[Random.Range(0, playerRels.Count)]);
+				manager.allPeople[Random.Range(0, manager.allPeople.Count)].m_Mood = Mood.Negative;
 			}
 		}
 	}

@@ -31,7 +31,7 @@ public class levelTester : MonoBehaviour {
 	private List<levelTesterState_s> statesThatHaveBeenReached = new List<levelTesterState_s>();
 	private levelTesterState_s winState;
 	private List<levelTesterState_s> listWinStates = new List<levelTesterState_s>();
-	private int currentStepsTaken = 0;
+	private int currentStepsTaken;
 	private levelTesterState_s bestWinState;
 	private int stackOverflowPreventer = 0;
 	private Person loopStart;
@@ -92,9 +92,9 @@ public class levelTester : MonoBehaviour {
 		for (int i = 0; i < numClicks; i++)
 		{
 			numTries++;
-			int chooseAPerson = Random.Range(0, networkMgr.allPeopleExceptPlayer.Count);
-			networkMgr.TriggerRelationshipChange(networkMgr.allPeopleExceptPlayer[chooseAPerson].gameObject, true, true);
-			networkMgr.CalculateScore();
+			int chooseAPerson = Random.Range(0, networkMgr.allPeople.Count);
+			networkMgr.TriggerRelationshipChange(networkMgr.allPeople[chooseAPerson].gameObject, true, true);
+			//networkMgr.CalculateScore();	// TODO: remove with mood logic
 			if (networkMgr.CheckWinningRequirements())
 			{
 				print ("---Success after " + numTries + " random clicks.---");
@@ -121,33 +121,31 @@ public class levelTester : MonoBehaviour {
 		bool hasAtLeastOnePersonWithAllGreenRelationships = false;
 		foreach (Person _person in networkMgr.allPeople)					// for each person
 		{
-			if (_person != networkMgr.player) 		// ignore the player
+			if (_person.relationshipListNegative.Count > 0)	// if the person has at least 1 red relationship
 			{
-				if (_person.relationshipListNegativeNoPlayer.Count > 0)	// if the person has at least 1 red relationship
-				{
-					failCaseCheckList.Clear();
-					if (!Recursive_CheckForGreenNeighbors(_person))		// check to see if they connect to anything green, even their neighbors, etc.
-					{ print ("fail case: red island"); return true; }
+				failCaseCheckList.Clear();
+				if (!Recursive_CheckForGreenNeighbors(_person))		// check to see if they connect to anything green, even their neighbors, etc.
+				{ print ("fail case: red island"); return true; }
 
-					else if (_person.relationshipListNegativeNoPlayer.Count == 2 && _person.relationshipListPositiveNoPlayer.Count == 0)	// if the person has just 2 red relationships
+				else if (_person.relationshipListNegative.Count == 2 && _person.relationshipListPositive.Count == 0)	// if the person has just 2 red relationships
+				{
+					class_Relationship _greenRel = null;
+					if (_person.GetMyNeighbor(_person.relationshipListNegative[0], _person).relationshipListPositive.Count == 1
+					    && _person.GetMyNeighbor(_person.relationshipListNegative[0], _person).relationshipListNegative.Count == 1)		// if they have one green and one red relationship
 					{
-						class_Relationship _greenRel = null;
-						if (_person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[0], _person).relationshipListPositiveNoPlayer.Count == 1
-						    && _person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[0], _person).relationshipListNegativeNoPlayer.Count == 1)		// if they have one green and one red relationship
-						{
-							_greenRel = _person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[0], _person).relationshipListPositiveNoPlayer[0];				// remember that relationship
-						}
-						if (_person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[1], _person).relationshipListPositiveNoPlayer.Count == 1
-						    && _person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[1], _person).relationshipListNegativeNoPlayer.Count == 1)		// if they also have one green and one red relationship
-						{
-							if (_greenRel != null && _greenRel == _person.GetMyNeighbor(_person.relationshipListNegativeNoPlayer[1], _person).relationshipListPositiveNoPlayer[0])				// if that green relationship is the same as the last one
-							{ print ("fail case: triangle of death"); return true; }
-						}
+						_greenRel = _person.GetMyNeighbor(_person.relationshipListNegative[0], _person).relationshipListPositive[0];				// remember that relationship
+					}
+					if (_person.GetMyNeighbor(_person.relationshipListNegative[1], _person).relationshipListPositive.Count == 1
+					    && _person.GetMyNeighbor(_person.relationshipListNegative[1], _person).relationshipListNegative.Count == 1)		// if they also have one green and one red relationship
+					{
+						if (_greenRel != null && _greenRel == _person.GetMyNeighbor(_person.relationshipListNegative[1], _person).relationshipListPositive[0])				// if that green relationship is the same as the last one
+						{ print ("fail case: triangle of death"); return true; }
 					}
 				}
+			}
 
-				else if (_person.relationshipListNonZeroNoPlayer.Count == 0) 		// if a person is not connected to anything
-				{ print ("fail case: unconnected person"); return true; }
+			else if (_person.relationshipListNonZero.Count == 0) 		// if a person is not connected to anything
+			{ print ("fail case: unconnected person"); return true; }
 
 //				else if (_person.relationshipListNonZeroNoPlayer.Count == 2) 			// find loops (polygons) that have no other connections
 //				{
@@ -157,10 +155,9 @@ public class levelTester : MonoBehaviour {
 //					{ print ("fail case: loop without 2 greens (not yet checking greens)"); return true; }
 //				}
 
-				if (!hasAtLeastOnePersonWithAllGreenRelationships && _person.relationshipListNegativeNoPlayer.Count == 0)
-				{
-					hasAtLeastOnePersonWithAllGreenRelationships = true;
-				}
+			if (!hasAtLeastOnePersonWithAllGreenRelationships && _person.relationshipListNegative.Count == 0)
+			{
+				hasAtLeastOnePersonWithAllGreenRelationships = true;
 			}
 		}
 
@@ -174,7 +171,7 @@ public class levelTester : MonoBehaviour {
 	bool Recursive_isImpossibleLoop(Person p)
 	{
 		loopMembers.Add(p);
-		if (p.relationshipListNonZeroNoPlayer.Count == 2)	// if a person has exactly 2 relationships
+		if (p.relationshipListNonZero.Count == 2)	// if a person has exactly 2 relationships
 		{
 			if (loopStart == null) 		// if a loop start person has not been set, this must be the first person, so set it
 			{
@@ -185,7 +182,7 @@ public class levelTester : MonoBehaviour {
 				{ return true; }
 			}
 			
-			foreach (class_Relationship _rel in p.relationshipListNonZeroNoPlayer)
+			foreach (class_Relationship _rel in p.relationshipListNonZero)
 			{
 				Person _neighbor = p.GetMyNeighbor(_rel);
 				if (_neighbor != loopStart && _neighbor != lastVisitedInLoop)
@@ -207,7 +204,7 @@ public class levelTester : MonoBehaviour {
 	{
 		foreach (Person _p in _ppl)
 		{
-			if (_p.relationshipListPositiveNoPlayer.Count > 1)
+			if (_p.relationshipListPositive.Count > 1)
 			{
 				return true;
 			}
@@ -224,13 +221,13 @@ public class levelTester : MonoBehaviour {
 		else
 		{
 			failCaseCheckList.Add(p);			// add yourself to the list
-			if (p.relationshipListNonZeroNoPlayer.Count > p.relationshipListNegativeNoPlayer.Count)		// if he has any positive relationships
+			if (p.relationshipListNonZero.Count > p.relationshipListNegative.Count)		// if he has any positive relationships
 			{
 				return true;
 			}
 			else
 			{
-				foreach (class_Relationship _rel in p.relationshipListNegativeNoPlayer)
+				foreach (class_Relationship _rel in p.relationshipListNegative)
 				{
 					if (Recursive_CheckForGreenNeighbors(p.GetMyNeighbor(_rel, p)))
 					{
@@ -245,7 +242,7 @@ public class levelTester : MonoBehaviour {
 	bool RunOneLevelTrial()
 	{
 		FindNetworkManager();
-		levelSeedList thisLevelSeedList = new levelSeedList();
+		levelSeedList thisLevelSeedList = gameObject.AddComponent<levelSeedList>();
 
 		int _numTries = PathfindLevel_BreadthFirst();
 		if (_numTries == -1)
@@ -259,7 +256,7 @@ public class levelTester : MonoBehaviour {
 
 		thisLevelSeedList.mySeed = networkMgr.usedSeed;						// set used seed
 
-		thisLevelSeedList.numPeople = networkMgr.allPeople.Count() - 1;		// set how many people on this level
+		thisLevelSeedList.numPeople = networkMgr.allPeople.Count();		// set how many people on this level
 
 		string _results = FormatValidLevelText(thisLevelSeedList.numPeople,
 		                                       thisLevelSeedList.myDifficulty,
@@ -309,9 +306,10 @@ public class levelTester : MonoBehaviour {
 	public int PathfindLevel_BreadthFirst()
 	{
 		FindNetworkManager();
+		bestWinStateHasBeenFound = false;
 		// create winning state for reference
 		List<bool> allTrue = new List<bool>();
-		for (int i = 0; i < networkMgr.allPeopleExceptPlayer.Count; i++)
+		for (int i = 0; i < networkMgr.allPeople.Count; i++)
 		{
 			allTrue.Add(true);
 		}
@@ -319,6 +317,7 @@ public class levelTester : MonoBehaviour {
 
 		levelTesterState_s gameStartingState = GetLevelState();
 		gameStartingState.numStepsToReach = 0;
+		statesThatHaveBeenReached.Clear();
 		statesThatHaveBeenReached.Add(gameStartingState);
 
 		// make a default "best win"
@@ -330,6 +329,7 @@ public class levelTester : MonoBehaviour {
 
 		parentList.Add(gameStartingState);		// to start, game start state is in the parent list...
 
+		currentStepsTaken = 0;
 		while (!bestWinStateHasBeenFound)
 		{
 			currentStepsTaken++;
@@ -396,7 +396,7 @@ public class levelTester : MonoBehaviour {
 
 		// create winning state for reference
 		List<bool> allTrue = new List<bool>();
-		for (int i = 0; i < networkMgr.allPeopleExceptPlayer.Count; i++)
+		for (int i = 0; i < networkMgr.allPeople.Count; i++)
 		{
 			allTrue.Add(true);
 		}
@@ -476,7 +476,7 @@ public class levelTester : MonoBehaviour {
 
 	void PerformAnAction(actionPossibility _action)
 	{
-		foreach (Person _per in networkMgr.allPeopleExceptPlayer)
+		foreach (Person _per in networkMgr.allPeople)
 		{
 			if (_per.personalIndex == _action.personIndex)
 			{
@@ -488,16 +488,16 @@ public class levelTester : MonoBehaviour {
 	levelTesterState_s GetLevelState()
 	{
 		List<bool> statesOfPeople = new List<bool>();
-		for (int i = 0; i < networkMgr.allPeopleExceptPlayer.Count; i++)
+		for (int i = 0; i < networkMgr.allPeople.Count; i++)
 		{
 			statesOfPeople.Add(false);		// create a place holder list, defaulting everyone to false
 		}
-		for (int i = 0; i < networkMgr.allPeopleExceptPlayer.Count; i++)
+		for (int i = 0; i < networkMgr.allPeople.Count; i++)
 		{
-			Person _people = networkMgr.allPeopleExceptPlayer[i];
-			if (_people.relWithPlayer.relationshipValue == 100)
+			Person _people = networkMgr.allPeople[i];
+			if (_people.m_Mood == Mood.Positive)
 			{
-				statesOfPeople[_people.personalIndex - 1] = true;		// -1 because this list excludes the player, so the player indexes are off by one
+				statesOfPeople[_people.personalIndex] = true;
 			}
 		}
 		levelTesterState_s listToReturn = new levelTesterState_s();
@@ -507,15 +507,15 @@ public class levelTester : MonoBehaviour {
 
 	void ReturnToPreviousLevelState(levelTesterState_s levelStateToReturnTo)
 	{
-		for (int i = 0; i < networkMgr.allPeopleExceptPlayer.Count; i++)
+		for (int i = 0; i < networkMgr.allPeople.Count; i++)
 		{
-			if (levelStateToReturnTo.myState[networkMgr.allPeopleExceptPlayer[i].personalIndex - 1])	// -1 because this list excludes the player, so the player indexes are off by one
+			if (levelStateToReturnTo.myState[networkMgr.allPeople[i].personalIndex])
 			{
-				networkMgr.allPeopleExceptPlayer[i].relWithPlayer.relationshipValue = 100;
+				networkMgr.allPeople[i].m_Mood = Mood.Positive;
 			}
 			else
 			{
-				networkMgr.allPeopleExceptPlayer[i].relWithPlayer.relationshipValue = -100;
+				networkMgr.allPeople[i].m_Mood = Mood.Negative;
 			}
 		}
 	}
@@ -523,10 +523,10 @@ public class levelTester : MonoBehaviour {
 	List<actionPossibility> FindAllPossibleActions()
 	{
 		List<actionPossibility> listToReturn = new List<actionPossibility>();
-		for (int i = 0; i < networkMgr.allPeopleExceptPlayer.Count; i++) 		// for every person
+		for (int i = 0; i < networkMgr.allPeople.Count; i++) 		// for every person
 		{
-			actionPossibility possibility1 = new actionPossibility(true, networkMgr.allPeopleExceptPlayer[i].personalIndex);
-			actionPossibility possibility2 = new actionPossibility(false, networkMgr.allPeopleExceptPlayer[i].personalIndex);
+			actionPossibility possibility1 = new actionPossibility(true, networkMgr.allPeople[i].personalIndex);
+			actionPossibility possibility2 = new actionPossibility(false, networkMgr.allPeople[i].personalIndex);
 			listToReturn.Add(possibility1);
 			listToReturn.Add(possibility2);
 		}

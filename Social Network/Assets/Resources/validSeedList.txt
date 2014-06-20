@@ -143,6 +143,3 @@ level:8,difficulty:Hard,seed:268797,clicks:-1,oneClick:unknown,cantTouch:-2
 //
 //
 //
-level:3,difficulty:VeryEasy,seed:733296,clicks:2,oneClick:unknown,cantTouch:-2
-level:3,difficulty:VeryEasy,seed:306520,clicks:99,oneClick:unknown,cantTouch:-2
-level:3,difficulty:VeryEasy,seed:396036,clicks:99,oneClick:unknown,cantTouch:-2

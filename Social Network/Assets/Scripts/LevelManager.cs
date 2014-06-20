@@ -13,17 +13,7 @@ public class LevelManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-//		allPeople.AddRange(GetComponentsInChildren<Person>());
-//
-//		// TODO: remove this loop when you can remove the "player" person
-//		for (int i = 0; i < allPeople.Count; i++)
-//		{
-//			Person per = allPeople[i];
-//			if (per.gameObject.name == "_Player") { allPeople.Remove(per); Destroy(per.gameObject); }
-//		}
-//
-//		InitiateLevel();
-//	
+
 	}
 	
 	// Update is called once per frame

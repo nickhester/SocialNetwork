@@ -9,12 +9,10 @@ public class class_NetworkMgr : MonoBehaviour {
 	#region Variables
 
 	public List<Person> allPeople = new List<Person>();
-	public List<Person> allPeopleExceptPlayer = new List<Person>();
-	private Dictionary<class_Relationship, int> savedStateAllRelationships = new Dictionary<class_Relationship, int>();
+	// private Dictionary<class_Relationship, int> savedStateAllRelationships = new Dictionary<class_Relationship, int>();		// TODO: remove once mood logic is in
+	private Dictionary<class_Relationship, Friendship> savedStateAllRelationships = new Dictionary<class_Relationship, Friendship>();
 	public List<class_Relationship> allRelationships = new List<class_Relationship>();
-	[HideInInspector]
-	public Person player;
-	public int changeByAmount = 200;
+	public int changeByAmount = 200;	// TODO: remove once all usages have been fixed
 	private bool showDebug = false;
 	public GameObject hitParticle;
 	public bool isUsingSeed = false;
@@ -28,9 +26,6 @@ public class class_NetworkMgr : MonoBehaviour {
 
 	// Debug and Score
 	private string DebugSummary = "";
-	private int playerRelTotal = 0;
-	private int playerRelTotalCounter = 0;
-	private int relAverage = 0;
 	public string AIbutton = "AI";
 	[HideInInspector]
 	public int AIScoreReturn;
@@ -62,20 +57,12 @@ public class class_NetworkMgr : MonoBehaviour {
 		levelTesterRef = GameObject.FindWithTag("levelTester").GetComponent<levelTester>();
 
 		allPeople.AddRange(GetComponentsInChildren<Person>());
-		
-		foreach (Person _per in allPeople)
-		{
-			if (_per.gameObject.tag == "Player") { player = _per.GetComponent<Person>() as Person; } // pick out "player"
-		}
-
-		allPeopleExceptPlayer.AddRange(allPeople);
-		allPeopleExceptPlayer.Remove(player);
 
 		usedSeed = SeedTheLevel();
 
 		InitiateLevel();
 		SaveStartingState();
-		CalculateScore();
+		// CalculateScore();		// TODO: remove with mood logic
 
 		foreach (Person _per in allPeople)
 		{ _per.Initialize(); }
@@ -134,13 +121,19 @@ public class class_NetworkMgr : MonoBehaviour {
 		// Debug lines
 		foreach (var relationship in allRelationships)
 		{
-			float redValue;
-			float greenValue;
-			if (relationship.relationshipValue > 0) { greenValue = (float)relationship.relationshipValue / 100; redValue = 0; }
-			else { greenValue = 0; redValue = -(float)relationship.relationshipValue / 100; }
-			
-			Debug.DrawLine(relationship.relationshipMembers[0].transform.position, relationship.relationshipMembers[1].transform.position, 
-			               new Color(redValue, greenValue, 0), 0.1f);
+//			float redValue;		// TODO: remove when mood logic is complete
+//			float greenValue;
+//			if (relationship.relationshipValue > 0) { greenValue = (float)relationship.relationshipValue / 100; redValue = 0; }
+//			else { greenValue = 0; redValue = -(float)relationship.relationshipValue / 100; }
+//			
+//			Debug.DrawLine(relationship.relationshipMembers[0].transform.position, relationship.relationshipMembers[1].transform.position, 
+//			               new Color(redValue, greenValue, 0), 0.1f);
+
+			Color c;
+			if (relationship.m_Friendship == Friendship.Positive) { c = Color.green; }
+			else if (relationship.m_Friendship == Friendship.Negative) { c = Color.red; }
+			else { c = Color.black; }
+			Debug.DrawLine(relationship.relationshipMembers[0].transform.position, relationship.relationshipMembers[1].transform.position, c);
 		}
 	}
 
@@ -152,14 +145,14 @@ public class class_NetworkMgr : MonoBehaviour {
 	{
 		isUsingSeed = true;
 		randomSeed = usedSeed;
-		CalculateScore();
+		// CalculateScore();		// TODO: remove with mood logic
 	}
 
 	void SaveStartingState()
 	{
 		foreach (class_Relationship _rel in allRelationships)
 		{
-			savedStateAllRelationships.Add(_rel, _rel.relationshipValue);
+			savedStateAllRelationships.Add(_rel, _rel.m_Friendship);
 		}
 	}
 
@@ -167,9 +160,9 @@ public class class_NetworkMgr : MonoBehaviour {
 	{
 		foreach (class_Relationship _rel in allRelationships)
 		{
-			_rel.relationshipValue = savedStateAllRelationships[_rel];
+			_rel.m_Friendship = savedStateAllRelationships[_rel];
 		}
-		CalculateScore();
+		// CalculateScore();	// remove with mood logic
 	}
 
 	// save seed used whether randomly generated or user set
@@ -228,8 +221,14 @@ public class class_NetworkMgr : MonoBehaviour {
 	
 	public bool CheckWinningRequirements()
 	{
-		if (relAverage >= 100) { return true; }
-		else { return false; }
+		foreach (Person _person in allPeople)
+		{
+			if (_person.m_Mood != Mood.Positive)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	void WinningScreen()
@@ -241,26 +240,20 @@ public class class_NetworkMgr : MonoBehaviour {
         }
 	}
 
-	public void CalculateScore()
-	{
-	    int counter = 0;
-	    playerRelTotal = 0;
-	    playerRelTotalCounter = 0;
-	    DebugSummary = "\n==Debug==\n";
-	    foreach (class_Relationship _relationship in allRelationships)
-	    {
-	        DebugSummary += counter + " (" + _relationship.relationshipMembers[0].name.Substring(7) + "," + _relationship.relationshipMembers[1].name.Substring(7) + "): ";
-	        DebugSummary += _relationship.relationshipValue + "\n";
-	        counter++;
-	        if (_relationship.relationshipMembers.Contains(player))     // if the relationship is with the player
-	        {
-	            playerRelTotal += _relationship.relationshipValue;
-	            playerRelTotalCounter++;
-	        }
-	    }
-	    relAverage = playerRelTotal / playerRelTotalCounter;
-	    DebugSummary += "\nStrength: " + changeByAmount;
-	}
+	// TODO: shouldn't need to calculate store in mood logic
+//	public void CalculateScore()
+//	{
+//	    int counter = 0;
+//	    DebugSummary = "\n==Debug==\n";
+//	    foreach (class_Relationship _relationship in allRelationships)
+//	    {
+//	        DebugSummary += counter + " (" + _relationship.relationshipMembers[0].name.Substring(7) + "," + _relationship.relationshipMembers[1].name.Substring(7) + "): ";
+//	        DebugSummary += _relationship.m_Friendship + "\n";
+//	        counter++;
+//	        
+//	    }
+//	    DebugSummary += "\nStrength: " + changeByAmount;
+//	}
 
 	#endregion
 	
@@ -293,41 +286,30 @@ public class class_NetworkMgr : MonoBehaviour {
 					person.relationshipList.Add(newRel);
 					secondPerson.relationshipList.Add (newRel);
 				}
-				person.player = player;
 			}
 			notYetCompared.Remove(person);			// remove from list so you don't get duplicate relationships (a,b) & (b,a)
 		}
 		
-		// Renumber the values
-		List<int> RelationshipValues = new List<int>();
-		RelationshipValues = WeightedRelationships(allRelationships.Count - (player.relationshipList.Count), percentHasRelationship);
+		// Recalculate the values
+		List<Friendship> RelationshipValues = new List<Friendship>();
+		RelationshipValues = WeightedRelationships(allRelationships.Count, percentHasRelationship);
 
 
 		foreach (class_Relationship rel in allRelationships)
 		{
-			Random.Range(0,1);		// just a random call to keep the seed in sync with old data
-			if (!rel.relationshipMembers.Contains(player) && RelationshipValues.Count > 0)
+			if (RelationshipValues.Count > 0)
 			{
-				int _i = RelationshipValues[Random.Range (0, RelationshipValues.Count)];	// pick a random relationship to assign a value to
-				rel.relationshipValue = _i;
-				RelationshipValues.Remove(_i);						// then remove that one you picked
+				//int _mood = RelationshipValues[Random.Range (0, RelationshipValues.Count)];	// pick a random relationship to assign a value to // TODO: phase out rel values
+				Friendship _friendship = RelationshipValues[Random.Range (0, RelationshipValues.Count)];	// pick a random relationship to assign a value to
+				//rel.relationshipValue = _mood;		 // TODO: phase out rel values
+				rel.m_Friendship = _friendship;
+				RelationshipValues.Remove(_friendship);						// then remove that one you picked
 			}
 		}
 	}
 
-	// TODO: remove this function
-//	// returns an even spread of numbers for relationships
-//	int ExponentialWeight(int divisionFactor)
-//	{
-//	    int diceRoll = Random.Range(0, 101);                    // get a number from 0 to 100
-//	    diceRoll = (diceRoll * diceRoll) / divisionFactor;      // divide by the "division factor"
-//	    if (diceRoll > 100) { diceRoll = 100; }                 // clamp to 100
-//	    if (diceRoll < -100) { diceRoll = -100; }                   // clamp to -100
-//	    if (Random.Range(0, 2) == 1) { diceRoll = diceRoll * -1; }  // choose whether positive or negative
-//	    return diceRoll;
-//	}
-	
-	List<int> WeightedRelationships(int quantity, int _percentHasRelationship)
+	// List<int> WeightedRelationships(int quantity, int _percentHasRelationship)
+	List<Friendship> WeightedRelationships(int quantity, int _percentHasRelationship)
 	{
 		List<int> result = new List<int>();
 		int numNonZero = (int)(quantity * (_percentHasRelationship/100.0f));
@@ -344,7 +326,19 @@ public class class_NetworkMgr : MonoBehaviour {
 				result.Add(tempResult);
 			}
 		}
-		return result;
+		 
+		// return result; TODO: remove this
+
+		List<Friendship> newResult = new List<Friendship>();
+		foreach (int i in result)	
+		{
+			if (i == -100) { newResult.Add(Friendship.Negative); }
+			else if (i == 100) { newResult.Add(Friendship.Positive); }
+			else { newResult.Add(Friendship.Neutral); }
+		}
+
+		return newResult;
+
 	}
 
 	#endregion

@@ -17,40 +17,34 @@ public class class_LineDisplay : MonoBehaviour {
 	{
 		foreach (Person person in GetComponentsInChildren<Person>())	// for each person
 		{
-			if (person != person.player)	// ...that isn't the player
+			List<GameObject> _lineList = new List<GameObject>();
+			foreach (class_Relationship rel in person.relationshipList)	// for each of that person's relationships
 			{
-				List<GameObject> _lineList = new List<GameObject>();
-				foreach (class_Relationship rel in person.relationshipList)	// for each of that person's relationships
-				{
-					if (!rel.relationshipMembers.Contains(person.player))		// ...that isn't with the player
-					{
-						GameObject _lineObject = CreateLineMesh(
-							rel.relationshipMembers[0].GetComponent<personMovement>().originalPos,
-							rel.relationshipMembers[1].GetComponent<personMovement>().originalPos,
-							lineWidth,
-							0.0f,
-							3.0f); // create line using mesh method
+				GameObject _lineObject = CreateLineMesh(
+					rel.relationshipMembers[0].GetComponent<personMovement>().originalPos,
+					rel.relationshipMembers[1].GetComponent<personMovement>().originalPos,
+					lineWidth,
+					0.0f,
+					3.0f); // create line using mesh method
 
-						string _relName = "rel with " + rel.relationshipMembers[0].name + " & " + rel.relationshipMembers[1].name;
-						_lineObject.gameObject.name = _relName;
-						_lineObject.transform.parent = transform;					// puts the relationship line objects under the network manager
-						_lineObject.renderer.enabled = true;
-						_lineObject.renderer.material = new Material(Shader.Find("Transparent/VertexLit"));
-						_lineObject.tag = "relationshipLines";
+				string _relName = "rel with " + rel.relationshipMembers[0].name + " & " + rel.relationshipMembers[1].name;
+				_lineObject.gameObject.name = _relName;
+				_lineObject.transform.parent = transform;					// puts the relationship line objects under the network manager
+				_lineObject.renderer.enabled = true;
+				_lineObject.renderer.material = new Material(Shader.Find("Transparent/VertexLit"));
+				_lineObject.tag = "relationshipLines";
 
-						// figure out state for Line component colors
-						int relState;
-						if (rel.relationshipValue > 0) { relState = 1; }
-						else if (rel.relationshipValue == 0) { relState = 0; }
-						else { relState = -1; }
+				// figure out state for Line component colors
+				int relState;
+				if (rel.m_Friendship == Types.Friendship.Positive) { relState = 1; }
+				else if (rel.m_Friendship == Types.Friendship.Neutral) { relState = 0; }
+				else { relState = -1; }
 
-						Line thisLine = _lineObject.AddComponent<Line>();
-						thisLine.myState = relState;
-						_lineList.Add(_lineObject);
-					}
-				}
-				lineConnections[person] = _lineList;
+				Line thisLine = _lineObject.AddComponent<Line>();
+				thisLine.myState = relState;
+				_lineList.Add(_lineObject);
 			}
+			lineConnections[person] = _lineList;
 		}
 		if (GameObject.Find("Clipboard").GetComponent<clipboard>().nextLevelUp.myLevel.isNoLines) { linesAreInvisible = true; print ("set lines to off"); }
 	}
