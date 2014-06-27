@@ -79,28 +79,28 @@ public class calendar : MonoBehaviour {
 					// these are for testing the "special" levels
 				case 5:	// monday
 					_newCalDayComponent.numAppointments = 		8;
-					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
+					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
 					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(8, 0, 0, 0);
 					break;
 				case 6:	// tuesday
 					_newCalDayComponent.numAppointments = 		8;
-					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
+					_newCalDayComponent.SetDifficulties			(0, 100, 0, 0);
 					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(0, 8, 0, 0);
 					break;
 				case 7:	// wednesday
 					_newCalDayComponent.numAppointments = 		8;
-					_newCalDayComponent.SetDifficulties			(0, 100, 0, 0);
+					_newCalDayComponent.SetDifficulties			(0, 0, 100, 0);
 					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(0, 0, 8, 0);
 					break;
 				case 8:	// thursday
 					_newCalDayComponent.numAppointments = 		8;
-					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
+					_newCalDayComponent.SetDifficulties			(0, 0, 0, 100);
 					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(0, 0, 0, 8);
@@ -114,9 +114,9 @@ public class calendar : MonoBehaviour {
 					break;
 
 					// this is a test level
-				case 19:
-					_newCalDayComponent.numAppointments = 		10;
-					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
+				case 10:
+					_newCalDayComponent.numAppointments = 		8;
+					_newCalDayComponent.SetDifficulties			(0, 100, 0, 0);
 					_newCalDayComponent.timeLimit = 			1000;
 					_newCalDayComponent.SetRequirementsForStars	(0, 0, 0);
 					break;

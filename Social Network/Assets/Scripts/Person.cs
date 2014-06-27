@@ -148,7 +148,7 @@ public class Person : MonoBehaviour {
 		{
 			foreach (class_Relationship _rel in relationshipListNonZero)
 			{
-				EffectPulse(transform.position, GetMyNeighbor(_rel).gameObject.transform.position, (isPositiveChange ? true : false), (_rel.relationshipValue == -100 ? true : false));
+				EffectPulse(transform.position, GetMyNeighbor(_rel).gameObject.transform.position, isPositiveChange, (_rel.m_Friendship == Friendship.Negative));
 			}
 		}
 		hasBeenActivatedOnce = true;

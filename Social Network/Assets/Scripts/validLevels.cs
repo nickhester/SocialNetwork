@@ -2,7 +2,7 @@
 using System.Collections;
 using Types;
 
-public class validLevels : MonoBehaviour {
+public class validLevels {
 
 	public int level;
 	public Difficulty difficulty;
@@ -15,16 +15,6 @@ public class validLevels : MonoBehaviour {
 	public bool isOneClick = false;
 	public bool isCantTouch = false;
 	public bool isNoLines = false;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	public void SetAttributes(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks,
 	                          bool _isFallToRed, bool _isOneClick, bool _isCantTouch, bool _isNoLines)

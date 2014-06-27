@@ -9,12 +9,11 @@ public class levelTester : MonoBehaviour {
 
 	#region variables
 
-	public string filename = "validSeedList.txt";
+	private string filename = "validSeedList";
+	FileParse fp;
 	public bool runTestSeries = false;
 	public bool overWriteExistingFile = false;
-	//private TextAsset textFile;
 	private List<levelSeedList> seedList = new List<levelSeedList>();
-	private string textToWrite = "";
 	
 	public int numLevelsToRun = 5;
 	[HideInInspector]
@@ -33,18 +32,12 @@ public class levelTester : MonoBehaviour {
 	private List<levelTesterState_s> listWinStates = new List<levelTesterState_s>();
 	private int currentStepsTaken;
 	private levelTesterState_s bestWinState;
-	private int stackOverflowPreventer = 0;
 	private Person loopStart;
 	private Person lastVisitedInLoop;
 	private List<Person> loopMembers = new List<Person>();
 	private bool bestWinStateHasBeenFound = false;
 
 	#endregion
-
-	void Awake ()
-	{
-		//textFile = Resources.Load<TextAsset>("validSeedList");
-	}
 
 	void Start () {
 
@@ -54,7 +47,6 @@ public class levelTester : MonoBehaviour {
 	{
 		if (numLevelsLeftToRun > 0)
 		{
-			print ("running test number " + numLevelsLeftToRun);
 			runTestAndRecord();
 			numLevelsLeftToRun--;
 		}
@@ -65,7 +57,6 @@ public class levelTester : MonoBehaviour {
 		if (!HasFailCase())
 		{
 			RunOneLevelTrial();
-			AppendToFile(textToWrite);
 		}
 		GetComponent<createAndDestroyLevel>().MakeNewTestLevel(levelToLoad);
 	}
@@ -257,48 +248,34 @@ public class levelTester : MonoBehaviour {
 		thisLevelSeedList.mySeed = networkMgr.usedSeed;						// set used seed
 
 		thisLevelSeedList.numPeople = networkMgr.allPeople.Count();		// set how many people on this level
-
-		string _results = FormatValidLevelText(thisLevelSeedList.numPeople,
-		                                       thisLevelSeedList.myDifficulty,
-		                                       thisLevelSeedList.mySeed,
-		                                       thisLevelSeedList.numTimesAITook,
-		                                       "unknown",
-		                                       -2);
         
 		if (thisLevelSeedList.myDifficulty != Difficulty.Impossible)
 		{
-			textToWrite += _results;
 			seedList.Add(thisLevelSeedList);
+
+			if (fp == null) { fp = new FileParse(); }
+			fp.SerializeALevel(ConvertLevelSeedListToValidLevel(thisLevelSeedList));
 		}
 		return true;
 	}
 
-	string FormatValidLevelText(int level, Difficulty difficulty, int seed, int clicks, string oneClick, int cantTouch)
+	validLevels ConvertLevelSeedListToValidLevel(levelSeedList seedList)
 	{
-		return string.Format("level:{0},difficulty:{1},seed:{2},clicks:{3},oneClick:{4},cantTouch:{5}\n",
-                level.ToString(),
-                difficulty.ToString(),
-                seed.ToString(),
-                clicks.ToString(),
-                oneClick,
-                cantTouch.ToString()
-                );
+		validLevels returnLevel = new validLevels();
+		returnLevel.level = seedList.numPeople;
+		returnLevel.difficulty = seedList.myDifficulty;
+		returnLevel.seed = seedList.mySeed;
+		returnLevel.numClicks = seedList.numTimesAITook;
+		returnLevel.oneClick = false;
+		returnLevel.cantTouch = -2;
+
+		return returnLevel;
 	}
 
-	void AppendToFile(string _stringToAppend)
+	void SaveLevelToFile(validLevels level)
 	{
-		TextAsset textFile = Resources.Load<TextAsset>("validSeedList");
-		string _stringToAppendTrimmed = _stringToAppend.TrimEnd('\n');
-		print (_stringToAppendTrimmed);
-		if (!overWriteExistingFile)
-		{
-			_stringToAppendTrimmed = textFile.text + _stringToAppendTrimmed;
-		}
-		using (StreamWriter sw = new StreamWriter(Application.dataPath + "\\Resources\\" + filename))
-		{
-			sw.AutoFlush = true;
-			sw.WriteLine(_stringToAppendTrimmed);
-		}
+		if (fp == null) { fp = new FileParse(); }
+		fp.SerializeALevel(level);
 	}
 
 	#region BreadthFirstBestPathSearch
@@ -383,95 +360,6 @@ public class levelTester : MonoBehaviour {
 			ReturnToPreviousLevelState(parentState);
 		}
 		return returnState;
-	}
-
-	#endregion
-
-	#region RecursiveBestPathSearch
-
-	public void PathfindLevel()
-	{
-		FindNetworkManager();
-		currentLevel = GameObject.Find("Clipboard").GetComponent<clipboard>().nextLevelUp.myLevel;
-
-		// create winning state for reference
-		List<bool> allTrue = new List<bool>();
-		for (int i = 0; i < networkMgr.allPeople.Count; i++)
-		{
-			allTrue.Add(true);
-		}
-		winState = new levelTesterState_s(allTrue, true, 0);
-
-		levelTesterState_s gameStartingState = GetLevelState();
-		statesThatHaveBeenReached.Add(gameStartingState);
-
-		// make a default "best win"
-		bestWinState.numStepsToReach = 99;
-
-		FindBestWin(0);
-
-		if (bestWinState.numStepsToReach == 99)
-		{
-			print ("TESTER FEEDBACK: this level is impossible");
-		}
-		else
-		{
-			print ("TESTER FEEDBACK: requires " + bestWinState.numStepsToReach + " steps");
-		}
-	}
-
-	// recursive function to find best pathway to win state
-	void FindBestWin(int currentStepNumber)
-	{
-		stackOverflowPreventer++;
-		//if (stackOverflowPreventer > 50) { print ("float back up... " + stackOverflowPreventer + "================="); return; }
-
-		int myCurrentStepNumber = currentStepNumber += 1;
-		if (myCurrentStepNumber > bestWinState.numStepsToReach) { return; }
-
-		print ("### " + myCurrentStepNumber + " -- " + stackOverflowPreventer);
-
-		levelTesterState_s thisLevelState = GetLevelState();
-		foreach (actionPossibility possibleAction in FindAllPossibleActions())
-		{
-			//print ("loop...");
-
-			ReturnToPreviousLevelState(thisLevelState);						// make sure you're starting in the right state
-			PerformAnAction(possibleAction);								// perform the chosen action
-			levelTesterState_s _newState = GetLevelState();					// find the state that this action takes you to
-			_newState.numStepsToReach = myCurrentStepNumber;
-
-			if (_newState == winState) { 										// if it's a win state
-				if (_newState.numStepsToReach < bestWinState.numStepsToReach) 	// and if it's a win state that takes less steps to get to
-				{
-					bestWinState = _newState;
-				}
-				listWinStates.Add(_newState);	// this may not be needed. maybe remove this list
-				//print ("TESTER: found a win state");
-				continue;
-			}
-
-			// if you hit a state you've hit before
-			levelTesterState_s match = CheckIfMatchingStateExists(_newState);
-
-			if (!match.isNull && _newState.numStepsToReach < match.numStepsToReach)				// this state matches a previous state, but it got there faster, so keep going
-			{
-				match.numStepsToReach = _newState.numStepsToReach;
-				//print ("TESTER: found faster way to get to previous state");
-			}
-			else if (match.isNull) 							// this state does not match any existing state
-			{
-				//print ("TESTER: new state found");
-				statesThatHaveBeenReached.Add(_newState);		// so add it to the list of found states
-			}
-			else if (!match.isNull) 				// this state has already been reached, and you didn't get there any faster than before
-			{
-				//print ("TESTER: previous state found");
-				continue;
-			}
-
-			FindBestWin(myCurrentStepNumber);
-		}
 	}
 
 	void PerformAnAction(actionPossibility _action)
