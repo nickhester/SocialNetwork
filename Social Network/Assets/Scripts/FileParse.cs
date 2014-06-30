@@ -14,13 +14,15 @@ public class FileParse {
 
 	public void SerializeALevel(validLevels level)
 	{
-		string formattedString = string.Format("level:{0},difficulty:{1},seed:{2},clicks:{3},oneClick:{4},cantTouch:{5}\n",
+		string formattedString = string.Format("level:{0},difficulty:{1},seed:{2},clicks:{3},oneClick:{4},cantTouch:{5},path:{6}\n",
 		                                       level.level.ToString(),
 		                                       level.difficulty.ToString(),
 		                                       level.seed.ToString(),
 		                                       level.numClicks.ToString(),
 		                                       level.oneClick,
-		                                       level.cantTouch.ToString()
+		                                       level.cantTouch.ToString(),
+		                                       level.path
+
 		                     );
 
 		fileIO.AppendToFile(formattedString);

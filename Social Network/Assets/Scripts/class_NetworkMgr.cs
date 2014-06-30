@@ -9,11 +9,8 @@ public class class_NetworkMgr : MonoBehaviour {
 	#region Variables
 
 	public List<Person> allPeople = new List<Person>();
-	// private Dictionary<class_Relationship, int> savedStateAllRelationships = new Dictionary<class_Relationship, int>();		// TODO: remove once mood logic is in
-	private Dictionary<class_Relationship, Friendship> savedStateAllRelationships = new Dictionary<class_Relationship, Friendship>();
+	private List<class_Relationship> savedStateAllRelationships = new List<class_Relationship>();
 	public List<class_Relationship> allRelationships = new List<class_Relationship>();
-	public int changeByAmount = 200;	// TODO: remove once all usages have been fixed
-	private bool showDebug = false;
 	public GameObject hitParticle;
 	public bool isUsingSeed = false;
 	public int randomSeed = 0;
@@ -25,13 +22,8 @@ public class class_NetworkMgr : MonoBehaviour {
 	private validLevels levelUsed;
 
 	// Debug and Score
-	private string DebugSummary = "";
-	public string AIbutton = "AI";
-	[HideInInspector]
-	public int AIScoreReturn;
 	[HideInInspector]
 	public int numActionsTaken = 0;
-	private levelTester levelTesterRef;
 	
 	// selection cursor stuff
 	public GameObject selectionCursor;
@@ -54,15 +46,12 @@ public class class_NetworkMgr : MonoBehaviour {
 
 	void Start ()
 	{
-		levelTesterRef = GameObject.FindWithTag("levelTester").GetComponent<levelTester>();
-
 		allPeople.AddRange(GetComponentsInChildren<Person>());
 
 		usedSeed = SeedTheLevel();
 
 		InitiateLevel();
 		SaveStartingState();
-		// CalculateScore();		// TODO: remove with mood logic
 
 		foreach (Person _per in allPeople)
 		{ _per.Initialize(); }
@@ -84,7 +73,6 @@ public class class_NetworkMgr : MonoBehaviour {
 
 	void Update ()
 	{
-		
 		selectionCursorCurrentPos = selectionCursorInst.transform.position;
 		
 		if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))		// if clicking either mouse button
@@ -121,14 +109,6 @@ public class class_NetworkMgr : MonoBehaviour {
 		// Debug lines
 		foreach (var relationship in allRelationships)
 		{
-//			float redValue;		// TODO: remove when mood logic is complete
-//			float greenValue;
-//			if (relationship.relationshipValue > 0) { greenValue = (float)relationship.relationshipValue / 100; redValue = 0; }
-//			else { greenValue = 0; redValue = -(float)relationship.relationshipValue / 100; }
-//			
-//			Debug.DrawLine(relationship.relationshipMembers[0].transform.position, relationship.relationshipMembers[1].transform.position, 
-//			               new Color(redValue, greenValue, 0), 0.1f);
-
 			Color c;
 			if (relationship.m_Friendship == Friendship.Positive) { c = Color.green; }
 			else if (relationship.m_Friendship == Friendship.Negative) { c = Color.red; }
@@ -141,28 +121,26 @@ public class class_NetworkMgr : MonoBehaviour {
 
 	#region TestRunMethods
 
-	void RestartCurrentLevel()
-	{
-		isUsingSeed = true;
-		randomSeed = usedSeed;
-		// CalculateScore();		// TODO: remove with mood logic
-	}
+//	void RestartCurrentLevel()	// I don't think this is needed. Remove when confirmed
+//	{
+//		isUsingSeed = true;
+//		randomSeed = usedSeed;
+//	}
 
 	void SaveStartingState()
 	{
 		foreach (class_Relationship _rel in allRelationships)
 		{
-			savedStateAllRelationships.Add(_rel, _rel.m_Friendship);
+			savedStateAllRelationships.Add(_rel);
 		}
 	}
 
 	public void ReloadStartingState()
 	{
-		foreach (class_Relationship _rel in allRelationships)
+		foreach (Person _ppl in allPeople)
 		{
-			_rel.m_Friendship = savedStateAllRelationships[_rel];
+			_ppl.m_Mood = Mood.Neutral;
 		}
-		// CalculateScore();	// remove with mood logic
 	}
 
 	// save seed used whether randomly generated or user set
@@ -307,8 +285,7 @@ public class class_NetworkMgr : MonoBehaviour {
 			}
 		}
 	}
-
-	// List<int> WeightedRelationships(int quantity, int _percentHasRelationship)
+	
 	List<Friendship> WeightedRelationships(int quantity, int _percentHasRelationship)
 	{
 		List<int> result = new List<int>();
@@ -326,8 +303,6 @@ public class class_NetworkMgr : MonoBehaviour {
 				result.Add(tempResult);
 			}
 		}
-		 
-		// return result; TODO: remove this
 
 		List<Friendship> newResult = new List<Friendship>();
 		foreach (int i in result)	
@@ -336,9 +311,7 @@ public class class_NetworkMgr : MonoBehaviour {
 			else if (i == 100) { newResult.Add(Friendship.Positive); }
 			else { newResult.Add(Friendship.Neutral); }
 		}
-
 		return newResult;
-
 	}
 
 	#endregion
@@ -354,24 +327,5 @@ public class class_NetworkMgr : MonoBehaviour {
 	    Person targetPerson = personObject.GetComponent<Person>();  // get the clicked object's person component
 	    
 	    targetPerson.OnActivate(isPositiveChange, isDebugChange);      // tell that person's component to do what they do when they're activated
-	}
-
-	void OnGUI()
-	{
-		// Debug info
-		if (GUI.Button(new Rect(0, Screen.height - 20, 50, 20), "Debug")) { showDebug = true; }
-		if (showDebug)
-		{
-			//GUI.Box (new Rect(0, 0, 100, Screen.height), DebugSummary);
-			if (GUI.Button(new Rect(Screen.width - 100, Screen.height - 50, 75, 25), AIbutton)) { levelTesterRef.ComputerPlay(10000, 1); }
-			if (GUI.Button(new Rect(Screen.width - 200, Screen.height - 50, 75, 25), "path"))
-			{
-				if (!levelTesterRef.HasFailCase())
-				{
-					levelTesterRef.PathfindLevel_BreadthFirst();
-				}
-			}
-
-		}
 	}
 }

@@ -124,7 +124,6 @@ public class clipboard : MonoBehaviour {
 							if (buttonState == 0)
 							{
 								nextLevelUp = FindTopAppointment();							// figure out which level is up next
-								print("nextlevelupText: " + nextLevelUp.myTextComponent.text);
 								createAndDestroyLevelRef.GetStartFromClipboard();
 								currentLevelDifficulty = nextLevelUp.myLevel.difficulty;			// store level difficulty for scoring
 								currentLevelNumBlocks = nextLevelUp.myLevel.level;

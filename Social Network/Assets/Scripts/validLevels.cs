@@ -11,6 +11,8 @@ public class validLevels {
 	public bool oneClick;
 	public int numClicks;
 
+	public actionTrail path;
+
 	public bool isFallToRed = false;
 	public bool isOneClick = false;
 	public bool isCantTouch = false;
