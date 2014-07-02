@@ -24,7 +24,6 @@ public class LevelFactory : MonoBehaviour {
 				if (level.seed == _seed && level.difficulty == _difficulty && level.level == _level)
 				{
 					// set special attributes, if any
-					// WARNING: setting special attributes on a specific seeded level does not check that those attributes will work!
 					level.SetOnlySpecialAttributes(_fallToRed, _oneClick, _cantTouch, _noLines);
 					return level;
 				}
@@ -43,7 +42,7 @@ public class LevelFactory : MonoBehaviour {
 		                          where level.level == _level
 		                          where level.difficulty == _difficulty
 		                          where (_oneClick == true && level.oneClick) || (_oneClick == false)
-		                          where (_cantTouch == true && level.cantTouch > 0) || (_cantTouch == false)
+		                          where (_cantTouch == true && level.cantTouch >= 0) || (_cantTouch == false)
 		                          select level).ToList();
 
 		print ("choosing from " + levelsToChooseFrom.Count + " choices");

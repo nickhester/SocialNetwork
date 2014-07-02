@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Types;
 
 public class levelTesterState : MonoBehaviour {
 	
@@ -31,13 +32,13 @@ public class levelTesterState : MonoBehaviour {
 
 public struct levelTesterState_s
 {
-	public List<bool> myState;
+	public List<Mood> myState;
 	public bool isWinningState;
 	public int numStepsToReach;
 	public bool isNull;
 	public actionTrail pathOfActions;
 	
-	public levelTesterState_s(List<bool> _m, bool _w, int _n)
+	public levelTesterState_s(List<Mood> _m, bool _w, int _n)
 	{
 		myState = _m; isWinningState = _w; numStepsToReach = _n; isNull = false; pathOfActions = new actionTrail(true);
 	}
@@ -71,6 +72,15 @@ public struct levelTesterState_s
 			if (lhs.myState[i] != rhs.myState[i]) { returnValue = true; break; }
 		}
 		return returnValue;
+	}
+	public override string ToString()
+	{
+		string returnVal = "";
+		foreach (var vals in myState)
+		{
+			returnVal += vals + ",";
+		}
+		return returnVal;
 	}
 }
 

@@ -50,12 +50,12 @@ public class LevelValidator {
 		FindNetworkManager();
 		bestWinStateHasBeenFound = false;
 		// create winning state for reference
-		List<bool> allTrue = new List<bool>();
+		List<Mood> allPositive = new List<Mood>();
 		for (int i = 0; i < networkMgr.allPeople.Count; i++)
 		{
-			allTrue.Add(true);
+			allPositive.Add(Mood.Positive);
 		}
-		winState = new levelTesterState_s(allTrue, true, 0);
+		winState = new levelTesterState_s(allPositive, true, 0);
 		levelTesterState_s bestWinState = new levelTesterState_s();
 		
 		levelTesterState_s gameStartingState = GetLevelState();
@@ -112,19 +112,36 @@ public class LevelValidator {
 				continue;
 			}
 
+			if (parentState.pathOfActions.trail.Count > 1)
+			{
+				if (_actionPossibility.personIndex == 0 && _actionPossibility.isGoodAction == true)
+				{
+					int i = 1;
+				}
+			}
+
+			else if (parentState.pathOfActions.trail.Count > 1)
+			{
+				if (parentState.pathOfActions.trail[0].Key == 1 && parentState.pathOfActions.trail[0].Value == true)
+				{
+					int i = 1;
+				}
+			}
+
+			ReturnToPreviousLevelState(parentState);
 			PerformAnAction(_actionPossibility);
 			levelTesterState_s currentState = GetLevelState();
 			currentState.InitializeStart();
 			currentState.numStepsToReach = currentStepsTaken;
 			currentState.AddPath(parentState.pathOfActions, _actionPossibility.personIndex, _actionPossibility.isGoodAction);
-			//MonoBehaviour.print (currentState.pathOfActions);
+			//MonoBehaviour.print ("current and parent:" + currentState.pathOfActions + " from " + parentState.pathOfActions);
 			
 			if (currentState == winState) 				// if you find a win state...
 			{
 				bestWinStateHasBeenFound = true;
 				returnState.Add(currentState);
 				bestState = currentState;
-				MonoBehaviour.print ("the win state is: " + currentState.pathOfActions);
+				//MonoBehaviour.print ("the win state is: " + currentState.pathOfActions);
 				break;
 			}
 			else if (CheckIfMatchingStateExists(currentState).isNull) 		// if it's a new state...
@@ -136,7 +153,6 @@ public class LevelValidator {
 			{
 				//MonoBehaviour.print ("matching state -- end branch");
 			}
-			ReturnToPreviousLevelState(parentState);
 		}
 		return returnState;
 	}
@@ -148,24 +164,26 @@ public class LevelValidator {
 			if (_per.personalIndex == _action.personIndex)
 			{
 				networkMgr.TriggerRelationshipChange(_per.gameObject, _action.isGoodAction, true);
+				return;
 			}
 		}
 	}
 	
 	levelTesterState_s GetLevelState()
 	{
-		List<bool> statesOfPeople = new List<bool>();
+		List<Mood> statesOfPeople = new List<Mood>();
 		for (int i = 0; i < networkMgr.allPeople.Count; i++)
 		{
-			statesOfPeople.Add(false);		// create a place holder list, defaulting everyone to false
+			statesOfPeople.Add(Mood.Neutral);		// create a place holder list, defaulting everyone to neutral
 		}
 		for (int i = 0; i < networkMgr.allPeople.Count; i++)
 		{
 			Person _people = networkMgr.allPeople[i];
-			if (_people.m_Mood == Mood.Positive)
-			{
-				statesOfPeople[_people.personalIndex] = true;
-			}
+			statesOfPeople[_people.personalIndex] = _people.m_Mood;
+//			if (_people.m_Mood == Mood.Positive)
+//			{
+//				statesOfPeople[_people.personalIndex] = true;
+//			}
 		}
 		levelTesterState_s listToReturn = new levelTesterState_s();
 		listToReturn.myState = statesOfPeople;
@@ -176,14 +194,7 @@ public class LevelValidator {
 	{
 		for (int i = 0; i < networkMgr.allPeople.Count; i++)
 		{
-			if (levelStateToReturnTo.myState[networkMgr.allPeople[i].personalIndex])
-			{
-				networkMgr.allPeople[i].m_Mood = Mood.Positive;
-			}
-			else
-			{
-				networkMgr.allPeople[i].m_Mood = Mood.Negative;
-			}
+			networkMgr.allPeople[i].m_Mood = levelStateToReturnTo.myState[networkMgr.allPeople[i].personalIndex];
 		}
 	}
 	

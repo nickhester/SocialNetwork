@@ -93,7 +93,7 @@ public class calendar : MonoBehaviour {
 					break;
 				case 7:	// wednesday
 					_newCalDayComponent.numAppointments = 		8;
-					_newCalDayComponent.SetDifficulties			(0, 100, 0, 0);
+					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(0, 0, 8, 0);
