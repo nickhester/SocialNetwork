@@ -48,6 +48,11 @@ public class calendar : MonoBehaviour {
 					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
 					_newCalDayComponent.timeLimit = 			180;
 					_newCalDayComponent.SetRequirementsForStars	(5, 15, 25);
+
+					validLevels r = new validLevels();
+					r.level = 3; r.difficulty = Types.Difficulty.VeryEasy; r.seed = 874353;
+					_newCalDayComponent.SetSpecificLevel(r);
+
 					break;
 				case 1:
 					_newCalDayComponent.numAppointments = 		4;

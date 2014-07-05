@@ -103,6 +103,17 @@ public class class_NetworkMgr : MonoBehaviour {
 				}
 			}
 		}
+
+		if (Input.GetKeyDown(KeyCode.Q) && currentlySelectedPerson != null)
+		{
+			TriggerRelationshipChange(currentlySelectedPerson, true);
+			numActionsTaken++;
+		}
+		else if (Input.GetKeyDown(KeyCode.W) && currentlySelectedPerson != null)
+		{
+			TriggerRelationshipChange(currentlySelectedPerson, false);
+			numActionsTaken++;
+		}
 		
 		selectionCursorInst.transform.position = Vector3.Lerp(selectionCursorCurrentPos, selectionCursorTargetPos, 0.25f);
 		

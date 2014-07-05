@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Types;
 
 public class CalendarDay : MonoBehaviour {
@@ -33,6 +34,8 @@ public class CalendarDay : MonoBehaviour {
 	public int timeLimit;
 	public bool isPlayable = false;
 	public bool hasBeenCompleted = false;
+	public bool hasSpecificLevelRequests = false;
+	public List<validLevels> specificLevelsRequested = new List<validLevels>();
 
     // special day attributes
     public int special_FallToRed = 0;          // people randomly fall back to red
@@ -101,6 +104,12 @@ public class CalendarDay : MonoBehaviour {
 	public void SetDifficulties(int _VeryEasy, int _Easy, int _Medium, int _Hard)
 	{
 		percentVeryEasy = _VeryEasy; percentEasy = _Easy; percentMedium = _Medium; percentHard = _Hard;
+	}
+
+	public void SetSpecificLevel(validLevels levelRequested)
+	{
+		hasSpecificLevelRequests = true;
+		specificLevelsRequested.Add(levelRequested);
 	}
 
 	public void SetRequirementsForStars(int _oneStar, int _twoStars, int _threeStars)

@@ -17,6 +17,7 @@ public class clipboard : MonoBehaviour {
 	private createAndDestroyLevel createAndDestroyLevelRef;
 	private bool creatingInitialApptList = true;
 	private List<SpecialLevelAttributes> listOfSpecialAttributes = new List<SpecialLevelAttributes>();
+	private List<levelOption> listOfLevelOptions = new List<levelOption>();
 
 	// appointments
 	public GameObject appointmentObject;
@@ -33,17 +34,9 @@ public class clipboard : MonoBehaviour {
 	public Difficulty currentLevelDifficulty;
 	public int currentLevelNumBlocks;
 	private GameObject startButton;
-
-	private int diffVeryEasy;
-	private int diffEasy;
-	private int diffMedium;
-	private int diffHard;
+	
 	private List<Difficulty> listOfLevelDifficulties = new List<Difficulty>();
 	private List<int> listofLevelNumber = new List<int>();
-	private int special_FallToRed = 0;
-	private int special_OneClick = 0;
-	private int special_CantTouch = 0;
-	private int special_NoLines = 0;
 
 	public levelSelector selectorRef;
 	private int buttonState = 0;
@@ -70,30 +63,9 @@ public class clipboard : MonoBehaviour {
 			if (GO.name == "watch hand") {watchHand = GO.gameObject; }			// get reference to watch hand
 		}
 
-
-		try 		// if there's a level selector, get the level properties from that
-		{
-			selectorRef = GameObject.Find("LevelSelector").GetComponent<levelSelector>();
-			diffVeryEasy = selectorRef.dayToGenerate.percentVeryEasy;
-			diffEasy = selectorRef.dayToGenerate.percentEasy;
-			diffMedium = selectorRef.dayToGenerate.percentMedium;
-			diffHard = selectorRef.dayToGenerate.percentHard;
-
-			special_FallToRed = selectorRef.dayToGenerate.special_FallToRed;
-			special_OneClick = selectorRef.dayToGenerate.special_OneClick;
-			special_CantTouch = selectorRef.dayToGenerate.special_CantTouch;
-			special_NoLines = selectorRef.dayToGenerate.special_NoLines;
-
-			createAndDestroyLevelRef.m_levelsAvailable = selectorRef.dayToGenerate.numAppointments;
-			createAndDestroyLevelRef.levelDuration = selectorRef.dayToGenerate.timeLimit;
-		}
-		catch 		// if not, then just use default values
-		{
-			diffVeryEasy = 25;
-			diffEasy = 25;
-			diffMedium = 25;
-			diffHard = 25;
-		}
+		selectorRef = GameObject.Find("LevelSelector").GetComponent<levelSelector>();
+		createAndDestroyLevelRef.m_levelsAvailable = selectorRef.dayToGenerate.numAppointments;
+		createAndDestroyLevelRef.levelDuration = selectorRef.dayToGenerate.timeLimit;
 
 		CreateAllAppointments();
 
@@ -211,36 +183,15 @@ public class clipboard : MonoBehaviour {
 		
 		if (creatingInitialApptList)
 		{
-			for (float i = 0; i < createAndDestroyLevelRef.levelsAvailable; i++)	// generate even list of difficulties and levels
+			if (selectorRef.dayToGenerate.hasSpecificLevelRequests)
 			{
-				if ((i/createAndDestroyLevelRef.levelsAvailable)*100.0f <= diffVeryEasy-1 && diffVeryEasy != 0)
+				foreach (validLevels levelRequest in selectorRef.dayToGenerate.specificLevelsRequested)
 				{
-					listOfLevelDifficulties.Add(Difficulty.VeryEasy);
-					listofLevelNumber.Add(Random.Range (0, 2) + 3);		// levels 3 or 4
+					// TODO: generate specific level requests, and somehow subtract that number from count
 				}
-				else if ((i/createAndDestroyLevelRef.levelsAvailable)*100.0f <= diffVeryEasy-1 + diffEasy && diffEasy != 0)
-				{
-					listOfLevelDifficulties.Add(Difficulty.Easy);
-					listofLevelNumber.Add(Random.Range (1, 4) + 3);		// levels 4, 5, 6
-				}
-				else if ((i/createAndDestroyLevelRef.levelsAvailable)*100.0f <= diffVeryEasy-1 + diffEasy + diffMedium && diffMedium != 0)
-				{
-					listOfLevelDifficulties.Add(Difficulty.Medium);
-					listofLevelNumber.Add(Random.Range (2, listLevel.Count) + 3);	// levels 5 and up
-				}
-				else
-				{
-					listOfLevelDifficulties.Add(Difficulty.Hard);
-					listofLevelNumber.Add(Random.Range (3, listLevel.Count) + 3);	// levels 6 and up
-				}
-
-				if (special_CantTouch > 0) { listOfSpecialAttributes.Add(SpecialLevelAttributes.CantTouch); special_CantTouch--; }
-				else if (special_FallToRed > 0) { listOfSpecialAttributes.Add(SpecialLevelAttributes.FallToRed); special_FallToRed--; }
-				else if (special_NoLines > 0) { listOfSpecialAttributes.Add(SpecialLevelAttributes.NoLines); special_NoLines--; }
-				else if (special_OneClick > 0) { listOfSpecialAttributes.Add(SpecialLevelAttributes.OneClick); special_OneClick--; }
-				else { listOfSpecialAttributes.Add(SpecialLevelAttributes.None); }
-
 			}
+
+			GenerateListOfDifficultiesAndLevels();
 			
 			if (createAndDestroyLevelRef.levelsAvailable < _maxAppts)	// if all the levels can fit on the clipboard...
 			{
@@ -258,6 +209,7 @@ public class clipboard : MonoBehaviour {
 				Appointment _apptComponent = _appt.GetComponent<Appointment>();				// get reference to appointment component
 				_apptComponent.Initialize();
 				_appt.transform.parent = transform;
+
 				int numIndexToGenerate = Random.Range(0, listOfLevelDifficulties.Count);	// this randomizes the order
 				int numIndexToGenerate2 = Random.Range(0, listOfSpecialAttributes.Count);	// this randomizes the order
 
@@ -275,6 +227,75 @@ public class clipboard : MonoBehaviour {
 				listOfLevelDifficulties.RemoveAt(numIndexToGenerate);	// remove used level difficulty
 				listofLevelNumber.RemoveAt(numIndexToGenerate);			// remove used level number
 				listOfSpecialAttributes.RemoveAt(numIndexToGenerate2);	// remove used special item
+			}
+		}
+	}
+
+	struct levelOption
+	{
+		Difficulty diff;
+		int level;
+		SpecialLevelAttributes spec;
+	}
+
+	void GenerateListOfDifficultiesAndLevels()
+	{
+		for (float i = 0; i < createAndDestroyLevelRef.levelsAvailable; i++)
+		{
+			if ((i / createAndDestroyLevelRef.levelsAvailable) * 100.0f <= selectorRef.dayToGenerate.percentVeryEasy-1 
+			    && selectorRef.dayToGenerate.percentVeryEasy != 0)
+			{
+				listOfLevelDifficulties.Add(Difficulty.VeryEasy);
+				listofLevelNumber.Add(Random.Range(0, 2) + 3);
+				// levels 3 or 4
+			}
+			else if ((i / createAndDestroyLevelRef.levelsAvailable) * 100.0f <= selectorRef.dayToGenerate.percentVeryEasy-1 
+			         + selectorRef.dayToGenerate.percentEasy 
+			         && selectorRef.dayToGenerate.percentEasy != 0)
+			{
+				listOfLevelDifficulties.Add(Difficulty.Easy);
+				listofLevelNumber.Add(Random.Range(1, 4) + 3);
+				// levels 4, 5, 6
+			}
+			else if ((i / createAndDestroyLevelRef.levelsAvailable) * 100.0f <= selectorRef.dayToGenerate.percentVeryEasy-1 
+			         + selectorRef.dayToGenerate.percentEasy 
+			         + selectorRef.dayToGenerate.percentMedium 
+			         && selectorRef.dayToGenerate.percentMedium != 0)
+			{
+				listOfLevelDifficulties.Add(Difficulty.Medium);
+				listofLevelNumber.Add(Random.Range(2, listLevel.Count) + 3);
+				// levels 5 and up
+			}
+			else
+			{
+				listOfLevelDifficulties.Add(Difficulty.Hard);
+				listofLevelNumber.Add(Random.Range(3, listLevel.Count) + 3);
+				// levels 6 and up
+			}
+
+			if (selectorRef.dayToGenerate.special_CantTouch > 0)
+			{
+				listOfSpecialAttributes.Add(SpecialLevelAttributes.CantTouch);
+				selectorRef.dayToGenerate.special_CantTouch--;
+			}
+			else if (selectorRef.dayToGenerate.special_FallToRed > 0)
+			{
+				listOfSpecialAttributes.Add(SpecialLevelAttributes.FallToRed);
+				selectorRef.dayToGenerate.special_FallToRed--;
+			}
+			else if (selectorRef.dayToGenerate.special_NoLines > 0)
+			{
+				listOfSpecialAttributes.Add(SpecialLevelAttributes.NoLines);
+				selectorRef.dayToGenerate.special_NoLines--;
+			}
+			else if (selectorRef.dayToGenerate.special_OneClick > 0)
+			{
+				listOfSpecialAttributes.Add(SpecialLevelAttributes.OneClick);
+				selectorRef.dayToGenerate.special_OneClick--;
+			}
+			else
+			{
+				listOfSpecialAttributes.Add(SpecialLevelAttributes.None);
 			}
 		}
 	}
