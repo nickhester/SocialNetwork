@@ -71,8 +71,7 @@ public class FileParse {
 				if (int.TryParse((tokens[5].Split(':')[1]), out a))	
 				{ thisCantTouch = a; }        							// set who you cant touch, if possible
 				
-				validLevels lvl =  new validLevels();
-				lvl.SetAttributes(thisLevel, thisDifficulty, thisSeed, thisCantTouch, thisOneClick, thisNumClick);
+				validLevels lvl =  new validLevels(thisLevel, thisDifficulty, thisSeed, thisCantTouch, thisOneClick, thisNumClick);
 				_list.Add(lvl);
 			}
 		}

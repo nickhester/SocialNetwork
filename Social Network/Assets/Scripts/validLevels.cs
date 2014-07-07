@@ -33,6 +33,21 @@ public class validLevels {
 		isNoLines = _isNoLines;
 	}
 
+	public validLevels(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks)
+	{
+		SetAttributes(_level, _difficulty, _seed, _cantTouch, _oneClick, _numClicks);
+	}
+
+	public validLevels() { }
+
+	public validLevels(int _level, Difficulty _difficulty, int _seed, bool _isFallToRed, bool _isOneClick, bool _isCantTouch, bool _isNoLines)
+	{
+		level = _level;
+		difficulty = _difficulty;
+		seed = _seed;
+		SetOnlySpecialAttributes(_isFallToRed, _isOneClick, _isCantTouch, _isNoLines);
+	}
+
 	// overload...
 	public void SetAttributes(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks)
 	{

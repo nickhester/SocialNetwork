@@ -29,8 +29,7 @@ public class LevelFactory : MonoBehaviour {
 				}
 				else
 				{
-					validLevels aNewRandomLevel = new validLevels();
-					aNewRandomLevel.SetAttributes(_level, _difficulty, _seed, 0, false, 0);
+					validLevels aNewRandomLevel = new validLevels(_level, _difficulty, _seed, 0, false, 0);
 					return aNewRandomLevel;
 				}
 			}

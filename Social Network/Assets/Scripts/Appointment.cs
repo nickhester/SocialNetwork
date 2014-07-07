@@ -5,8 +5,6 @@ using Types;
 
 public class Appointment : MonoBehaviour {
 
-	public int level;
-	public Difficulty difficulty;
 	public GameObject textObject;
 	public GameObject myTextObject;
 	public TextMesh myTextComponent;

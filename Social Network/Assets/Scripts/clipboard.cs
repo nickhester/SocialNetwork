@@ -18,6 +18,8 @@ public class clipboard : MonoBehaviour {
 	private bool creatingInitialApptList = true;
 	private List<SpecialLevelAttributes> listOfSpecialAttributes = new List<SpecialLevelAttributes>();
 	private List<levelOption> listOfLevelOptions = new List<levelOption>();
+	private List<validLevels> listOfSpecificallyRequestedLevels = new List<validLevels>();
+	private int specificLevelsToCreate = 0;
 
 	// appointments
 	public GameObject appointmentObject;
@@ -65,11 +67,8 @@ public class clipboard : MonoBehaviour {
 
 		selectorRef = GameObject.Find("LevelSelector").GetComponent<levelSelector>();
 		createAndDestroyLevelRef.m_levelsAvailable = selectorRef.dayToGenerate.numAppointments;
-		createAndDestroyLevelRef.levelDuration = selectorRef.dayToGenerate.timeLimit;
 
 		CreateAllAppointments();
-
-		watchHandZOffset = watchHand.transform.eulerAngles.z;
 	}
 
 	// Update is called once per frame
@@ -171,8 +170,6 @@ public class clipboard : MonoBehaviour {
 			{ isInMotion = false; }
 		}
 		lastStepPosition = transform.position;
-
-		RotateWatchHand();
 	}
 
 	#endregion
@@ -185,10 +182,8 @@ public class clipboard : MonoBehaviour {
 		{
 			if (selectorRef.dayToGenerate.hasSpecificLevelRequests)
 			{
-				foreach (validLevels levelRequest in selectorRef.dayToGenerate.specificLevelsRequested)
-				{
-					// TODO: generate specific level requests, and somehow subtract that number from count
-				}
+				listOfSpecificallyRequestedLevels.AddRange(selectorRef.dayToGenerate.specificLevelsRequested);
+				specificLevelsToCreate = selectorRef.dayToGenerate.specificLevelsRequested.Count;
 			}
 
 			GenerateListOfDifficultiesAndLevels();
@@ -219,10 +214,26 @@ public class clipboard : MonoBehaviour {
 				else if (listOfSpecialAttributes[numIndexToGenerate2] == SpecialLevelAttributes.CantTouch) { s3 = true; }
 				else if (listOfSpecialAttributes[numIndexToGenerate2] == SpecialLevelAttributes.NoLines) { s4 = true; }
 
-				GenerateALevel(_apptComponent,
-				               listOfLevelDifficulties[numIndexToGenerate],
-				               listofLevelNumber[numIndexToGenerate],
-				               s1, s2, s3, s4);					// pick a level for the appt
+				if (specificLevelsToCreate > 0)
+				{
+					GenerateALevel(ref _apptComponent,
+					               listOfSpecificallyRequestedLevels[0].difficulty,
+					               listOfSpecificallyRequestedLevels[0].level,
+					               listOfSpecificallyRequestedLevels[0].isFallToRed,
+					               listOfSpecificallyRequestedLevels[0].isOneClick,
+					               listOfSpecificallyRequestedLevels[0].isCantTouch,
+					               listOfSpecificallyRequestedLevels[0].isNoLines,
+					               listOfSpecificallyRequestedLevels[0].seed);
+					listOfSpecificallyRequestedLevels.RemoveAt(0);
+					specificLevelsToCreate--;
+				}
+				else
+				{
+					GenerateALevel(_apptComponent,
+					               listOfLevelDifficulties[numIndexToGenerate],
+					               listofLevelNumber[numIndexToGenerate],
+					               s1, s2, s3, s4);					// pick a level for the appt
+				}
 
 				listOfLevelDifficulties.RemoveAt(numIndexToGenerate);	// remove used level difficulty
 				listofLevelNumber.RemoveAt(numIndexToGenerate);			// remove used level number
@@ -233,9 +244,13 @@ public class clipboard : MonoBehaviour {
 
 	struct levelOption
 	{
-		Difficulty diff;
-		int level;
-		SpecialLevelAttributes spec;
+		public Difficulty diff;
+		public int level;
+		public levelOption(int l, Difficulty d)
+		{
+			diff = d;
+			level = l;
+		}
 	}
 
 	void GenerateListOfDifficultiesAndLevels()
@@ -254,8 +269,8 @@ public class clipboard : MonoBehaviour {
 			         && selectorRef.dayToGenerate.percentEasy != 0)
 			{
 				listOfLevelDifficulties.Add(Difficulty.Easy);
-				listofLevelNumber.Add(Random.Range(1, 4) + 3);
-				// levels 4, 5, 6
+				listofLevelNumber.Add(Random.Range(1, 3) + 3);
+				// levels 4, 5
 			}
 			else if ((i / createAndDestroyLevelRef.levelsAvailable) * 100.0f <= selectorRef.dayToGenerate.percentVeryEasy-1 
 			         + selectorRef.dayToGenerate.percentEasy 
@@ -300,21 +315,25 @@ public class clipboard : MonoBehaviour {
 		}
 	}
 
-	void RotateWatchHand()
-	{
-		float _percentTimeLeft = createAndDestroyLevelRef.timeLeft/createAndDestroyLevelRef.levelDuration;
-		watchHand.transform.eulerAngles = new Vector3(0, 0, ((360.0f)*_percentTimeLeft) + watchHandZOffset);
-	}
-
-	void GenerateALevel(Appointment _appt, Difficulty _diff, int _levelNum, bool _special_FallToRed, bool _special_OneClick, bool _special_CantTouch, bool _special_NoLines)
+	void GenerateALevel(ref Appointment _appt, Difficulty _diff, int _levelNum, bool _special_FallToRed, bool _special_OneClick, bool _special_CantTouch, bool _special_NoLines, int seed)
 	{
 		string _appointmentText = "";
 		string _difficultyText = "";
 
 		createAndDestroyLevelRef.levelsAvailable--;
 
-		validLevels requestedLevel = GameObject.Find("LevelSelector").GetComponent<LevelFactory>().GetALevel(
-									_diff, _levelNum, _special_FallToRed, _special_OneClick, _special_CantTouch, _special_NoLines);
+		validLevels requestedLevel;
+		if (seed == -1)
+		{
+			requestedLevel = GameObject.Find("LevelSelector").GetComponent<LevelFactory>().GetALevel(
+										_diff, _levelNum, _special_FallToRed, _special_OneClick, _special_CantTouch, _special_NoLines);
+		}
+		else
+		{
+			requestedLevel = GameObject.Find("LevelSelector").GetComponent<LevelFactory>().GetALevel(
+				_diff, _levelNum, _special_FallToRed, _special_OneClick, _special_CantTouch, _special_NoLines, seed);
+		}
+
 		_appt.myLevel = requestedLevel;
 
 		_appt.SetMySpecialOverlays();
@@ -330,6 +349,11 @@ public class clipboard : MonoBehaviour {
 		_appointmentText += ", Issues: ";
 		_appointmentText += _difficultyText;
 		_appt.myDisplayText_prop = _appointmentText;
+	}
+
+	void GenerateALevel(Appointment _appt, Difficulty _diff, int _levelNum, bool _special_FallToRed, bool _special_OneClick, bool _special_CantTouch, bool _special_NoLines)
+	{
+		GenerateALevel(ref _appt, _diff, _levelNum, _special_FallToRed, _special_OneClick, _special_CantTouch, _special_NoLines, -1);
 	}
 
 	Appointment FindTopAppointment()

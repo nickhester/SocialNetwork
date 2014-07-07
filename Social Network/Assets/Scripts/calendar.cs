@@ -46,36 +46,30 @@ public class calendar : MonoBehaviour {
 
 					_newCalDayComponent.numAppointments = 		3;
 					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
-					_newCalDayComponent.timeLimit = 			180;
 					_newCalDayComponent.SetRequirementsForStars	(5, 15, 25);
 
-					validLevels r = new validLevels();
-					r.level = 3; r.difficulty = Types.Difficulty.VeryEasy; r.seed = 874353;
-					_newCalDayComponent.SetSpecificLevel(r);
+					validLevels req = new validLevels(3, Types.Difficulty.VeryEasy, 874353, false, true, false, false);
+					_newCalDayComponent.SetSpecificLevel(req);
 
 					break;
 				case 1:
 					_newCalDayComponent.numAppointments = 		4;
 					_newCalDayComponent.SetDifficulties			(25, 75, 0, 0);
-					_newCalDayComponent.timeLimit = 			240;
 					_newCalDayComponent.SetRequirementsForStars	(25, 35, 45);
 					break;
 				case 2:
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(25, 50, 25, 0);
-					_newCalDayComponent.timeLimit = 			300;
 					_newCalDayComponent.SetRequirementsForStars	(50, 70, 90);
 					break;
 				case 3:
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(10, 40, 50, 0);
-					_newCalDayComponent.timeLimit = 			300;
 					_newCalDayComponent.SetRequirementsForStars	(40, 60, 80);
 					break;
 				case 4:
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(10, 40, 50, 0);
-					_newCalDayComponent.timeLimit = 			120;
 					_newCalDayComponent.SetRequirementsForStars	(40, 60, 80);
 					break;
 
@@ -85,35 +79,30 @@ public class calendar : MonoBehaviour {
 				case 5:	// monday
 					_newCalDayComponent.numAppointments = 		8;
 					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
-					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(8, 0, 0, 0);
 					break;
 				case 6:	// tuesday
 					_newCalDayComponent.numAppointments = 		8;
 					_newCalDayComponent.SetDifficulties			(0, 100, 0, 0);
-					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(0, 8, 0, 0);
 					break;
 				case 7:	// wednesday
 					_newCalDayComponent.numAppointments = 		8;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
-					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(0, 0, 8, 0);
 					break;
 				case 8:	// thursday
 					_newCalDayComponent.numAppointments = 		8;
 					_newCalDayComponent.SetDifficulties			(0, 0, 0, 100);
-					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(0, 0, 0, 8);
 					break;
 				case 9:	// friday
 					_newCalDayComponent.numAppointments = 		8;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
-					_newCalDayComponent.timeLimit = 			600;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(2, 2, 2, 2);
 					break;
@@ -122,14 +111,12 @@ public class calendar : MonoBehaviour {
 				case 10:
 					_newCalDayComponent.numAppointments = 		8;
 					_newCalDayComponent.SetDifficulties			(0, 0, 100, 0);
-					_newCalDayComponent.timeLimit = 			1000;
 					_newCalDayComponent.SetRequirementsForStars	(0, 0, 0);
 					break;
 
 				default:
 					_newCalDayComponent.numAppointments = 		8;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
-					_newCalDayComponent.timeLimit = 			360;
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					break;
 			}

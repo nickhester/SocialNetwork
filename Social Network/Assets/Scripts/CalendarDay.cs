@@ -31,7 +31,7 @@ public class CalendarDay : MonoBehaviour {
 	public int percentMedium = 0;
 	public int percentHard = 0;
 	public int numAppointments;
-	public int timeLimit;
+	//public int timeLimit;
 	public bool isPlayable = false;
 	public bool hasBeenCompleted = false;
 	public bool hasSpecificLevelRequests = false;

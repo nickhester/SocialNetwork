@@ -207,8 +207,8 @@ public class levelTester : MonoBehaviour {
 		{	thisLevel.difficulty = Difficulty.Easy;	}
 		else if (thisLevel.level == 5 && thisLevel.numClicks >= 4)
 		{	thisLevel.difficulty = Difficulty.Medium;	}
-		else if (thisLevel.level == 6 && thisLevel.numClicks < 4)
-		{	thisLevel.difficulty = Difficulty.Easy;	}
+		else if (thisLevel.level == 6 && thisLevel.numClicks < 3)
+		{	return false;	}		// this level is too easy
 		else if (thisLevel.level == 6 && thisLevel.numClicks < 5)
 		{	thisLevel.difficulty = Difficulty.Medium;	}
 		else if (thisLevel.level == 6 && thisLevel.numClicks >= 5)
