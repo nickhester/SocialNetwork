@@ -37,7 +37,7 @@ public class calendar : MonoBehaviour {
 			{ _newCalDayComponent.isPlayable = true; }
 
 			// configure settings for each day ##################################################
-
+			List<validLevels> reqList = new List<validLevels>();
 			switch (i)
 			{
 				// WEEK 1 ----
@@ -46,12 +46,11 @@ public class calendar : MonoBehaviour {
 
 					_newCalDayComponent.numAppointments = 		3;
 					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
-					_newCalDayComponent.SetRequirementsForStars	(5, 15, 25);
+					_newCalDayComponent.SetRequirementsForStars	(8, 13, 18);
 
-					List<validLevels> reqList = new List<validLevels>();
 					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 874353, true, false, false, false));
-					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 278940, false, true, false, false));
-					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 315229, false, false, true, false));
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 278940, true, false, false, false));
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 315229, true, false, false, false));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 
 					break;

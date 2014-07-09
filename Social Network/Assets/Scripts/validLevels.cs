@@ -37,9 +37,7 @@ public class validLevels {
 	{
 		SetAttributes(_level, _difficulty, _seed, _cantTouch, _oneClick, _numClicks);
 	}
-
 	public validLevels() { }
-
 	public validLevels(int _level, Difficulty _difficulty, int _seed, bool _isFallToRed, bool _isOneClick, bool _isCantTouch, bool _isNoLines)
 	{
 		level = _level;
