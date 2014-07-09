@@ -6,13 +6,13 @@ public class scoreTrackerOneDay : MonoBehaviour {
 
 	public int score = 0;
 
-	public int bonusForVeryEasy = 1;
-	public int bonusForEasy = 2;
-	public int bonusForMedium = 6;
-	public int bonusForHard = 12;
-
-	public int bonusMultiplierForEachConsecutiveLevelBeaten = 2;
-	public int bonusOverallMultiplierForSpecialLevels = 2;
+	private int bonusForVeryEasy = 1;
+	private int bonusForEasy = 2;
+	private int bonusForMedium = 4;
+	private int bonusForHard = 8;
+	
+	private int bonusSpecialMultiplier = 2;
+	private int bonusPerfectMultiplier = 3;
 
 	public GameObject My3dText;
 	private GameObject My3dTextObject;
@@ -65,20 +65,14 @@ public class scoreTrackerOneDay : MonoBehaviour {
 
 		// add to score for number of actions
 		validLevels thisLevel = GameObject.Find("Clipboard").GetComponent<clipboard>().nextLevelUp.myLevel;
-		if (numActionsTaken <= thisLevel.numClicks)
-		{ scoreToAdd +=  thisLevel.level * 2; }
 
-		print ("score - w/ actions bonus (" + numActionsTaken + "):" + scoreToAdd);
+		// add score for perfect number of actions
+		if (numActionsTaken <= thisLevel.numClicks) { scoreToAdd *= bonusPerfectMultiplier; }
 
-		// add to score for consecutive levels beaten
-		scoreToAdd += ((numConsecutiveLevelsCompleted - 1) * bonusMultiplierForEachConsecutiveLevelBeaten);
-
-		print ("score - w/ consec bonus: " + scoreToAdd);
+		print ("score - w/ perfect bonus (" + numActionsTaken + "/" + thisLevel.numClicks + "):" + scoreToAdd);
 
 		// add score for it being a special level
-		if (isSpecial) { scoreToAdd *= bonusOverallMultiplierForSpecialLevels; }
-
-		print ("score - w/ special bonus: " + scoreToAdd);
+		if (isSpecial) { scoreToAdd *= bonusSpecialMultiplier; print ("score - w/ special bonus: " + scoreToAdd); }
 
 		score += scoreToAdd;
 		DisplayScorePopUp(scoreToAdd);

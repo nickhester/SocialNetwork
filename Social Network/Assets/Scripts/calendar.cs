@@ -48,8 +48,11 @@ public class calendar : MonoBehaviour {
 					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
 					_newCalDayComponent.SetRequirementsForStars	(5, 15, 25);
 
-					validLevels req = new validLevels(3, Types.Difficulty.VeryEasy, 874353, false, true, false, false);
-					_newCalDayComponent.SetSpecificLevel(req);
+					List<validLevels> reqList = new List<validLevels>();
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 874353, true, false, false, false));
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 278940, false, true, false, false));
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 315229, false, false, true, false));
+					_newCalDayComponent.SetSpecificLevels(reqList);
 
 					break;
 				case 1:

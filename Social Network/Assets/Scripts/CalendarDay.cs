@@ -111,6 +111,11 @@ public class CalendarDay : MonoBehaviour {
 		hasSpecificLevelRequests = true;
 		specificLevelsRequested.Add(levelRequested);
 	}
+	public void SetSpecificLevels(List<validLevels> levelsRequested)
+	{
+		hasSpecificLevelRequests = true;
+		specificLevelsRequested.AddRange(levelsRequested);
+	}
 
 	public void SetRequirementsForStars(int _oneStar, int _twoStars, int _threeStars)
 	{

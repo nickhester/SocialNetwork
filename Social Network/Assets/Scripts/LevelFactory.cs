@@ -27,12 +27,11 @@ public class LevelFactory : MonoBehaviour {
 					level.SetOnlySpecialAttributes(_fallToRed, _oneClick, _cantTouch, _noLines);
 					return level;
 				}
-				else
-				{
-					validLevels aNewRandomLevel = new validLevels(_level, _difficulty, _seed, 0, false, 0);
-					return aNewRandomLevel;
-				}
 			}
+			Debug.LogException(new System.Exception("A requested level was not found in the level list"));
+//			validLevels aNewRandomLevel = new validLevels(_level, _difficulty, _seed, 0, false, 0);
+//			aNewRandomLevel.SetOnlySpecialAttributes(_fallToRed, _oneClick, _cantTouch, _noLines);
+//			return aNewRandomLevel;
 		}
 
 		// otherwise, find all matching levels

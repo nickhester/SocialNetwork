@@ -155,7 +155,10 @@ public class createAndDestroyLevel : MonoBehaviour {
 			bool isSpecialLevel = false;
 			if (_thisLevel.myLevel.isCantTouch || _thisLevel.myLevel.isFallToRed || _thisLevel.myLevel.isNoLines || _thisLevel.myLevel.isOneClick)
 			{ isSpecialLevel = true; }
-			GetComponent<scoreTrackerOneDay>().UpdateScore(myClipboardComponent.currentLevelDifficulty, numActionsTaken, numLevelsCompletedInARow, isSpecialLevel);
+			GetComponent<scoreTrackerOneDay>().UpdateScore(myClipboardComponent.currentLevelDifficulty,
+			                                               numActionsTaken,
+			                                               numLevelsCompletedInARow,
+			                                               isSpecialLevel);
 		}
 
 		levelsLeftToComplete--;

@@ -61,4 +61,19 @@ public class validLevels {
 		isCantTouch = _isCantTouch;
 		isNoLines = _isNoLines;
 	}
+
+	public override string ToString()
+	{
+		string returnVal = level + ", " +
+			difficulty + ", " +
+				seed + ", " +
+				cantTouch + ", " +
+				oneClick + ", " +
+				numClicks + ", " +
+				isFallToRed + ", " +
+				isOneClick + ", " +
+				isCantTouch + ", " +
+				isNoLines;
+		return returnVal;
+	}
 }
