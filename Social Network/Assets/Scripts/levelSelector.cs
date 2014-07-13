@@ -29,6 +29,11 @@ public class levelSelector : MonoBehaviour {
 
 	public void StartDay(CalendarDay _calendarDay)
 	{
+		foreach (Transform child in _calendarDay.transform.GetComponentsInChildren<Transform>())
+		{
+			if (child != _calendarDay.transform) { Destroy(child.gameObject); }
+		}
+		_calendarDay.transform.parent = null;		// unparent calendar day so it doesn't get destroyed with the rest of them
 		DontDestroyOnLoad(_calendarDay.gameObject);
 		Application.LoadLevel("Scene_Clipboard");
 		_dayToGenerate = _calendarDay;

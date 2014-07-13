@@ -83,6 +83,7 @@ public class clipboard : MonoBehaviour {
 				{
 					if (!isHiding)									// if the clipboard is visible
 					{
+						/*
 						if (hit.transform.tag == "appointment")				// if you click an "appointment" block
 						{
 							isDragging = true;
@@ -90,7 +91,8 @@ public class clipboard : MonoBehaviour {
 							appointmentBeingDragged = hit.transform.gameObject;
 							dragOffset = hit.point - hit.transform.position;				// move around appointments
 						}
-						else if (hit.transform.name == "StartButton")		// "start/skip" button on clipboard
+						*/
+						if (hit.transform.name == "StartButton")		// "start/skip" button on clipboard
 						{
 							if (buttonState == 0)
 							{

@@ -43,7 +43,7 @@ public class LevelFactory : MonoBehaviour {
 		                          where (_cantTouch == true && level.cantTouch >= 0) || (_cantTouch == false)
 		                          select level).ToList();
 
-		print ("choosing from " + levelsToChooseFrom.Count + " choices");
+		//print ("choosing from " + levelsToChooseFrom.Count + " choices");
 
 		if (levelsToChooseFrom.Count == 0)			// if there aren't any found for this level
 		{

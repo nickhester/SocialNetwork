@@ -66,15 +66,17 @@ public class CalendarDay : MonoBehaviour {
 
 	void Start () {
 		GameObject _textNumber = Instantiate(m_text, transform.position, Quaternion.identity) as GameObject;
+		_textNumber.transform.parent = transform;
 		GameObject _textDay = Instantiate(m_text, transform.position, Quaternion.identity) as GameObject;
+		_textDay.transform.parent = transform;
 		
 		_textNumber.transform.localScale = _textNumber.transform.localScale * 0.75f;
-		_textNumber.transform.position = new Vector3(transform.position.x - 0.68f, transform.position.y + 0.65f, transform.position.z);
+		_textNumber.transform.position = new Vector3(transform.position.x - 3.65f, transform.position.y + 0.65f, transform.position.z);
 		_textNumber.GetComponent<TextMesh>().text = ((dayIndex + 1).ToString());
 		
 		_textDay.transform.localScale = _textDay.transform.localScale * 0.6f;
-		_textDay.transform.position = new Vector3(transform.position.x + .3f, transform.position.y + 0.65f, transform.position.z);
-		_textDay.GetComponent<TextMesh>().text = (dayOfTheWeek.ToString().Substring(0, 3));
+		_textDay.transform.position = new Vector3(transform.position.x, transform.position.y + 0.65f, transform.position.z);
+		_textDay.GetComponent<TextMesh>().text = (dayOfTheWeek.ToString());
 	}
 	
 	void Update () {
@@ -94,11 +96,11 @@ public class CalendarDay : MonoBehaviour {
 	public void AddStatusOverlay()
 	{
 		Vector3 overlayPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 0.1f);
-		if (numStars == 1) { Instantiate(stars_1, overlayPos, Quaternion.identity); }
-		else if (numStars == 2) { Instantiate(stars_2, overlayPos, Quaternion.identity); }
-		else if (numStars == 3) { Instantiate(stars_3, overlayPos, Quaternion.identity); }
+		if (numStars == 1) { GameObject go = Instantiate(stars_1, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
+		else if (numStars == 2) { GameObject go = Instantiate(stars_2, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
+		else if (numStars == 3) { GameObject go = Instantiate(stars_3, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
 
-		if (!isPlayable) { Instantiate (overlay_grey, overlayPos, Quaternion.identity); }
+		if (!isPlayable) { GameObject go = Instantiate (overlay_grey, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
 	}
 
 	public void SetDifficulties(int _VeryEasy, int _Easy, int _Medium, int _Hard)

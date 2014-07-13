@@ -6,19 +6,24 @@ public class calendar : MonoBehaviour {
 
 	public GameObject calendarDayObject;
 	private List<CalendarDay> dayList = new List<CalendarDay>();
+	private const int daysToGenerate = 30;
+	private GameObject dayParent;
+	private const float distanceBetweenWeeks = 10.0f;
+	private int viewingWeek;
 
 	// Use this for initialization
 	void Start () {
 
-		float calendarDaySeparationHorizontal = 2.0f;
 		float calendarDaySeparationVertical = 2.0f;
-		for (int i = 0; i < 20; i++)
+		dayParent = new GameObject("dayParent");
+		for (int i = 0; i < daysToGenerate; i++)
 		{
-			// create calendar days in order, 5 days in each row, 4 rows
+			// create calendar days in order
 			GameObject _newCalDay = Instantiate(calendarDayObject, new Vector3(
-				((i%5)*calendarDaySeparationHorizontal) - ((calendarDaySeparationHorizontal/2.0f) * 4),
-				-((Mathf.Floor(i/5.0f))*calendarDaySeparationVertical) + ((calendarDaySeparationVertical/2.0f) * 3)
+				Mathf.Floor((i)/5.0f) * distanceBetweenWeeks,
+				(-((i % 5)*calendarDaySeparationVertical) + ((calendarDaySeparationVertical/2.0f) * 3.7f))
 				), Quaternion.identity) as GameObject;
+			_newCalDay.transform.parent = dayParent.transform;
 			CalendarDay _newCalDayComponent = _newCalDay.GetComponent<CalendarDay>();
 			_newCalDayComponent.dayIndex = i;
 			dayList.Add(_newCalDayComponent);
@@ -34,7 +39,10 @@ public class calendar : MonoBehaviour {
 			{ _newCalDayComponent.numStars = 3; }
 
 			if (PlayerPrefs.GetInt("M1_D" + i + "_isPlayable") == 1)
-			{ _newCalDayComponent.isPlayable = true; }
+			{
+				_newCalDayComponent.isPlayable = true;
+				viewingWeek = (int)Mathf.Floor(i / 5.0f);
+			}
 
 			// configure settings for each day ##################################################
 			List<validLevels> reqList = new List<validLevels>();
@@ -46,18 +54,26 @@ public class calendar : MonoBehaviour {
 
 					_newCalDayComponent.numAppointments = 		3;
 					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
-					_newCalDayComponent.SetRequirementsForStars	(8, 13, 18);
+					_newCalDayComponent.SetRequirementsForStars	(3, 6, 9);
 
-					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 874353, true, false, false, false));
-					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 278940, true, false, false, false));
-					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 315229, true, false, false, false));
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 874353, false, false, false, false));
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 278940, false, false, false, false));
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 315229, false, false, false, false));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 
 					break;
 				case 1:
-					_newCalDayComponent.numAppointments = 		4;
+					_newCalDayComponent.numAppointments = 		5;
 					_newCalDayComponent.SetDifficulties			(25, 75, 0, 0);
-					_newCalDayComponent.SetRequirementsForStars	(25, 35, 45);
+					_newCalDayComponent.SetRequirementsForStars	(10, 20, 27);
+
+					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 990103, false, false, false, false));
+					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 899196, false, false, false, false));
+					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 890388, false, false, false, false));
+					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 595357, false, false, false, false));
+					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 101640, false, false, false, false));
+					_newCalDayComponent.SetSpecificLevels(reqList);
+
 					break;
 				case 2:
 					_newCalDayComponent.numAppointments = 		6;
@@ -146,9 +162,22 @@ public class calendar : MonoBehaviour {
 					Destroy(GameObject.FindObjectOfType<levelSelector>().gameObject);
 					Application.LoadLevel("Scene_MainMenu");
 				}
+				else if (hit.transform.name == "Next Week")
+				{
+					if (viewingWeek < (Mathf.Floor(daysToGenerate/5.0f)) - 1)
+					{ viewingWeek++; }
+				}
+				else if (hit.transform.name == "Last Week")
+				{
+					if (viewingWeek != 0)
+					{ viewingWeek--; }
+				}
 			}
 		}
-	
+
+		Vector3 targetWeekPosition = new Vector3(-viewingWeek * distanceBetweenWeeks, dayParent.transform.position.y, 0);
+		dayParent.transform.position = Vector3.Lerp(dayParent.transform.position, targetWeekPosition, 0.1f);
+
 	}
 
 	void OnGUI()
