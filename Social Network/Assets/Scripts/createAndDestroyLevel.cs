@@ -14,6 +14,12 @@ public class createAndDestroyLevel : MonoBehaviour {
 	public int numLevelsCompletedInARow = 0;
 	public GUIStyle dayCompleteScreenStyle;
 	private bool hasRunDayEnd = false;
+	public Material notesFor0Stars;
+	public Material notesFor1Star;
+	public Material notesFor2Stars;
+	public Material notesFor3Stars;
+	private GameObject resultsPage;
+	private GameObject resultsNotes;
 
 	// clipboard
 	public GameObject myClipboard;
@@ -43,7 +49,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 	public float timeLeft;
 	public int levelsLeftToComplete;
 	public bool dayComplete = false;
-	private float waitToShowResultsAfterFinished = 1.25f;
+	private float waitToShowResultsAfterFinished = 2.0f;
 	private bool gameplayHasStarted = false;
 	private bool isShowingDebugControls = false;
 	private int currentLevelLoaded;
@@ -57,22 +63,13 @@ public class createAndDestroyLevel : MonoBehaviour {
 		timeLeft = levelDuration;
 		// add levels available and levels on clipboard (b/c levels available has already been subtracted from)
 		levelsLeftToComplete = m_levelsAvailable;
+		resultsPage = GameObject.Find("results page");
+		resultsPage.renderer.enabled = false;
+		resultsNotes = GameObject.Find("results notes");
+		resultsNotes.renderer.enabled = false;
 	}
 
 	void Update () {
-		if (gameplayHasStarted && !dayComplete)
-		{
-			timeLeft -= Time.deltaTime;
-			if (timeLeft <= 0)
-			{
-				if (isClipboardUp)
-				{
-					myClipboardComponent.ClearClipboard();
-					DayEnd();
-				}
-				else if (timeLeft < 0) { timeLeft = 0; }		// if the timer gets below 0, set it to 0
-			}
-		}
 
 		if (isClipboardUp && timeLeft <= 0)
 		{
@@ -196,21 +193,6 @@ public class createAndDestroyLevel : MonoBehaviour {
 		{
 			Destroy(aLevelParent);
 		}
-
-
-//		List<GameObject> objectList = new List<GameObject>();
-//		do {
-//			GameObject GO = GameObject.Find("LevelParent");
-//			if (objectList.Contains(GO))
-//			{
-//
-//			}
-//			else
-//			{
-//				objectList.Add(GO);
-//			}
-//		}
-//		while (GO != null);
 	}
 
 	public void GetStartFromClipboard()
@@ -262,18 +244,41 @@ public class createAndDestroyLevel : MonoBehaviour {
 			}
 		}
 
+		if (dayComplete)
+		{
+			resultsPage.renderer.enabled = true;
+		}
+
 		if (dayComplete && waitToShowResultsAfterFinished <= 0)
 		{
-			string daySummary = "You earned " + GetComponent<scoreTrackerOneDay>().score.ToString() + " points";
-			daySummary += "\n\n" + GetDayRequirements()[0] + " points = one star";
-			daySummary += "\n" + GetDayRequirements()[1] + " points = two stars";
-			daySummary += "\n" + GetDayRequirements()[2] + " points = three stars";
-			daySummary += "\n\n" + "(at least one star required to progress)";
+			string daySummary = GetComponent<scoreTrackerOneDay>().score.ToString();
+			daySummary += "\n\n";
+			if (GetComponent<scoreTrackerOneDay>().score < GetDayRequirements()[0])
+			{
+				daySummary += "0";
+				resultsNotes.renderer.material = notesFor0Stars;
+			}
+			else if (GetComponent<scoreTrackerOneDay>().score < GetDayRequirements()[1])
+			{
+				daySummary += "1";
+				resultsNotes.renderer.material = notesFor1Star;
+			}
+			else if (GetComponent<scoreTrackerOneDay>().score < GetDayRequirements()[2])
+			{
+				daySummary += "2";
+				resultsNotes.renderer.material = notesFor2Stars;
+			}
+			else if (GetComponent<scoreTrackerOneDay>().score >= GetDayRequirements()[2])
+			{
+				daySummary += "3";
+				resultsNotes.renderer.material = notesFor3Stars;
+			}
+			resultsNotes.renderer.enabled = true;
 
-			int percentOfHoriz = 70;
+			int percentOfHoriz = 50;
 			int percentOfVert = 65;
-			int offsetFromCenterHoriz = 0;
-			int offsetFromCenterVert = 50;
+			int offsetFromCenterHoriz = -72;
+			int offsetFromCenterVert = 125;
 			GUI.Box (new Rect(
 				(Screen.width/2 - (Screen.width/2.0f)*(percentOfHoriz/100.0f)) + offsetFromCenterHoriz,
 				(Screen.height/2 - (Screen.height/2.0f)*(percentOfVert/100.0f)) + offsetFromCenterVert,
