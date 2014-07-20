@@ -20,6 +20,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 	public Material notesFor3Stars;
 	private GameObject resultsPage;
 	private GameObject resultsNotes;
+	private bool isDisplayingScore = false;
 
 	// clipboard
 	public GameObject myClipboard;
@@ -249,43 +250,58 @@ public class createAndDestroyLevel : MonoBehaviour {
 			resultsPage.renderer.enabled = true;
 		}
 
-		if (dayComplete && waitToShowResultsAfterFinished <= 0)
+		if (dayComplete && waitToShowResultsAfterFinished <= 0 && !isDisplayingScore)
 		{
+			isDisplayingScore = true;
+
 			scoreTrackerOneDay scoreTrackerComponent = GetComponent<scoreTrackerOneDay>();
-			string daySummary = scoreTrackerComponent.score.ToString();
-			daySummary += "\n\n";
+			int resultPoints = scoreTrackerComponent.score;
+			int resultStars = 0;
 			if (scoreTrackerComponent.score < GetDayRequirements()[0])
 			{
-				daySummary += "0";
+				resultStars = 0;
 				resultsNotes.renderer.material = notesFor0Stars;
 			}
 			else if (scoreTrackerComponent.score < GetDayRequirements()[1])
 			{
-				daySummary += "1";
+				resultStars = 1;
 				resultsNotes.renderer.material = notesFor1Star;
 			}
 			else if (scoreTrackerComponent.score < GetDayRequirements()[2])
 			{
-				daySummary += "2";
+				resultStars = 2;
 				resultsNotes.renderer.material = notesFor2Stars;
 			}
 			else if (scoreTrackerComponent.score >= GetDayRequirements()[2])
 			{
-				daySummary += "3";
+				resultStars = 3;
 				resultsNotes.renderer.material = notesFor3Stars;
 			}
 			resultsNotes.renderer.enabled = true;
 
-			int percentOfHoriz = 50;
-			int percentOfVert = 65;
-			int offsetFromCenterHoriz = -72;
-			int offsetFromCenterVert = 125;
-			GUI.Box (new Rect(
-				(Screen.width/2 - (Screen.width/2.0f)*(percentOfHoriz/100.0f)) + offsetFromCenterHoriz,
-				(Screen.height/2 - (Screen.height/2.0f)*(percentOfVert/100.0f)) + offsetFromCenterVert,
-				(Screen.width/2.0f)*(percentOfHoriz/100.0f)*2,
-				(Screen.height/2.0f)*(percentOfVert/100.0f)*2
-				), daySummary, dayCompleteScreenStyle);
+//			int percentOfHoriz = 50;
+//			int percentOfVert = 65;
+//			int offsetFromCenterHoriz = -72;
+//			int offsetFromCenterVert = 125;
+//			GUI.Box (new Rect(
+//				(Screen.width/2 - (Screen.width/2.0f)*(percentOfHoriz/100.0f)) + offsetFromCenterHoriz,
+//				(Screen.height/2 - (Screen.height/2.0f)*(percentOfVert/100.0f)) + offsetFromCenterVert,
+//				(Screen.width/2.0f)*(percentOfHoriz/100.0f)*2,
+//				(Screen.height/2.0f)*(percentOfVert/100.0f)*2
+//				), daySummary, dayCompleteScreenStyle);
+
+			foreach (TextMesh scoreText in resultsPage.GetComponentsInChildren<TextMesh>())
+			{
+				scoreText.renderer.enabled = true;
+				if (scoreText.gameObject.name == "points")
+				{
+					scoreText.text = resultPoints.ToString();
+				}
+				else if (scoreText.gameObject.name == "stars")
+				{
+					scoreText.text = resultStars.ToString();
+				}
+			}
 		}
 
 
