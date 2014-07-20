@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Types;
 
 public class scoreTrackerOneDay : MonoBehaviour {
@@ -14,17 +15,7 @@ public class scoreTrackerOneDay : MonoBehaviour {
 	private int bonusSpecialMultiplier = 2;
 	private int bonusPerfectMultiplier = 3;
 
-//	public GameObject My3dText;
-//	private GameObject My3dTextObject;
-//	private float textSize = 4.0f;
-//	private bool textIsDisplaying = false;
-//	private float startingHeight = 6.0f;
-//	private float endingHeight = -20.0f;
-//	private float currentAlphaValue = 0.0f;
-//	private bool alphaIsIncreasing = true;
-//	private float speedOfFade = 0.003f;
-//	private float maxFade = 0.15f;
-//	private float speedOfDrop = 5.0f;
+	public int maximumPossibleScore = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -33,40 +24,62 @@ public class scoreTrackerOneDay : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-//		if (textIsDisplaying)
-//		{
-//			My3dTextObject.transform.Translate(Vector3.down * speedOfDrop * Time.deltaTime);
-//			if (currentAlphaValue < maxFade && alphaIsIncreasing)
-//			{
-//				currentAlphaValue += speedOfFade;
-//				My3dTextObject.renderer.material.color = new Color(0, 0, 0, currentAlphaValue);
-//			}
-//			else
-//			{
-//				currentAlphaValue -= speedOfFade;
-//				My3dTextObject.renderer.material.color = new Color(0, 0, 0, currentAlphaValue);
-//			}
-//			if (currentAlphaValue >= maxFade) { alphaIsIncreasing = false; }
-//			if (My3dTextObject.transform.position.y < endingHeight) { Destroy(My3dTextObject); textIsDisplaying = false; currentAlphaValue = 0; alphaIsIncreasing = true; }
-//		}
+
 	}
 
-	public void UpdateScore(Difficulty difficulty, int numActionsTaken, int numConsecutiveLevelsCompleted, bool isSpecial)
+	int CalculateNumPointsForDifficulty(Difficulty diff)
+	{
+		if (diff == Difficulty.VeryEasy) { return bonusForVeryEasy; }
+		else if (diff == Difficulty.Easy) { return bonusForEasy; }
+		else if (diff == Difficulty.Medium) { return bonusForMedium; }
+		else if (diff == Difficulty.Hard) { return bonusForHard; }
+		return -1;
+	}
+
+	public void UpdateMaxScore(Difficulty diff, bool isSpecial, int numActionsTaken)
+	{
+		int pointsFromLevel = 0;
+		pointsFromLevel += CalculateNumPointsForDifficulty(diff);
+		validLevels thisLevel = GameObject.Find("Clipboard").GetComponent<clipboard>().nextLevelUp.myLevel;
+		pointsFromLevel *= bonusPerfectMultiplier;
+		if (isSpecial)
+		{
+			pointsFromLevel *= bonusSpecialMultiplier;
+		}
+		maximumPossibleScore += pointsFromLevel;
+
+		print ("best score is now: " + maximumPossibleScore);
+	}
+
+	public int[] GetStarRequirements()
+	{
+		int[] returnList = new int[3];
+		returnList[2] = maximumPossibleScore;
+		returnList[1] = (int)(Mathf.Round(maximumPossibleScore * 0.66f));
+		returnList[0] = (int)(Mathf.Round(maximumPossibleScore * 0.33f));
+		if (returnList[1] >= returnList[2])
+		{
+			returnList[1] = returnList[2] - 1;
+		}
+		if (returnList[0] >= returnList[1])
+		{
+			returnList[0] = returnList[1] - 1;
+		}
+		return returnList;
+	}
+
+	public void UpdateScore(Difficulty diff, int numActionsTaken, bool isSpecial)
 	{
 		int scoreToAdd = 0;
 
 		// add to score for difficulty
-		if (difficulty == Difficulty.VeryEasy) { scoreToAdd += bonusForVeryEasy; }
-		else if (difficulty == Difficulty.Easy) { scoreToAdd += bonusForEasy; }
-		else if (difficulty == Difficulty.Medium) { scoreToAdd += bonusForMedium; }
-		else if (difficulty == Difficulty.Hard) { scoreToAdd += bonusForHard; }
+		scoreToAdd += CalculateNumPointsForDifficulty(diff);
 
 		print ("score - w/ diff bonus: " + scoreToAdd);
 
-		// add to score for number of actions
+		// add score for perfect number of actions
 		validLevels thisLevel = GameObject.Find("Clipboard").GetComponent<clipboard>().nextLevelUp.myLevel;
 
-		// add score for perfect number of actions
 		if (numActionsTaken <= thisLevel.numClicks)
 		{
 			scoreToAdd *= bonusPerfectMultiplier;
@@ -89,14 +102,4 @@ public class scoreTrackerOneDay : MonoBehaviour {
 		ScorePopUp spu = gameObject.AddComponent<ScorePopUp>();
 		spu.DisplayScorePopUp(scoreToAdd.ToString());
 	}
-
-//	public void DisplayScorePopUp(string _displayScore)
-//	{
-//		My3dTextObject = Instantiate(My3dText, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y + startingHeight, 0), Quaternion.identity) as GameObject;
-//		TextMesh _textComponent = My3dTextObject.GetComponent<TextMesh>();
-//		_textComponent.text = _displayScore.ToString();
-//		My3dTextObject.transform.localScale *= textSize;
-//		My3dTextObject.renderer.material.color = new Color(0, 0, 0, 0);
-//		textIsDisplaying = true;
-//	}
 }

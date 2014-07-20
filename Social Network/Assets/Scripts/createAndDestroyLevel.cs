@@ -90,7 +90,8 @@ public class createAndDestroyLevel : MonoBehaviour {
 		{
 			dayComplete = true;
 			bool receivedStar = false;
-			int thisScore = GetComponent<scoreTrackerOneDay>().score;
+			scoreTrackerOneDay st = GetComponent<scoreTrackerOneDay>();
+			int thisScore = st.score;
 
 			string thisDayString = "M1_D" + myClipboardComponent.selectorRef.dayToGenerate.dayIndex;
 			string nextDayString = "M1_D" + (myClipboardComponent.selectorRef.dayToGenerate.dayIndex + 1);
@@ -99,18 +100,18 @@ public class createAndDestroyLevel : MonoBehaviour {
 			if (thisScore > PlayerPrefs.GetInt(thisDayString + "_highestScore"))
 			{ PlayerPrefs.SetInt(thisDayString + "_highestScore", thisScore); }
 
-			if (thisScore >= myClipboardComponent.selectorRef.dayToGenerate.pointsRequiredForThreeStars)
+			if (thisScore >= GetDayRequirements()[0])
 			{
 				PlayerPrefs.SetInt(thisDayString + "_starCount", 3);
 				receivedStar = true;
 			}
-			else if (thisScore >= myClipboardComponent.selectorRef.dayToGenerate.pointsRequiredForTwoStars
+			else if (thisScore >= GetDayRequirements()[1]
 			         && PlayerPrefs.GetInt(thisDayString + "_starCount", 0) < 2)
 			{
 				PlayerPrefs.SetInt(thisDayString + "_starCount", 2);
 				receivedStar = true;
 			}
-			else if (thisScore >= myClipboardComponent.selectorRef.dayToGenerate.pointsRequiredForOneStar
+			else if (thisScore >= GetDayRequirements()[2]
 			         && PlayerPrefs.GetInt(thisDayString + "_starCount", 0) < 1)
 			{
 				PlayerPrefs.SetInt(thisDayString + "_starCount", 1);
@@ -146,18 +147,18 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 	public void RoundEnd(bool levelSuccess, int numActionsTaken)
 	{
+		Appointment _thisLevel = myClipboardComponent.nextLevelUp;
+		bool isSpecialLevel = false;
+		if (_thisLevel.myLevel.isCantTouch || _thisLevel.myLevel.isFallToRed || _thisLevel.myLevel.isNoLines || _thisLevel.myLevel.isOneClick)
+		{ isSpecialLevel = true; }
+		scoreTrackerOneDay st = GetComponent<scoreTrackerOneDay>();
+
 		if (levelSuccess)
 		{
-			Appointment _thisLevel = myClipboardComponent.nextLevelUp;
-			bool isSpecialLevel = false;
-			if (_thisLevel.myLevel.isCantTouch || _thisLevel.myLevel.isFallToRed || _thisLevel.myLevel.isNoLines || _thisLevel.myLevel.isOneClick)
-			{ isSpecialLevel = true; }
-			GetComponent<scoreTrackerOneDay>().UpdateScore(myClipboardComponent.currentLevelDifficulty,
-			                                               numActionsTaken,
-			                                               numLevelsCompletedInARow,
-			                                               isSpecialLevel);
+			st.UpdateScore(myClipboardComponent.currentLevelDifficulty, numActionsTaken, isSpecialLevel);
 		}
 
+		st.UpdateMaxScore(myClipboardComponent.currentLevelDifficulty, isSpecialLevel, numActionsTaken);
 		levelsLeftToComplete--;
 		myClipboardComponent.Invoke("BringUpClipboard", (levelSuccess ? 1.0f : 0.0f));
 		isClipboardUp = true;
@@ -209,9 +210,8 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 	int[] GetDayRequirements()
 	{
-		CalendarDay _thisDay = GameObject.Find("LevelSelector").GetComponent<levelSelector>().dayToGenerate;
-		int[] _starReq = { _thisDay.pointsRequiredForOneStar, _thisDay.pointsRequiredForTwoStars, _thisDay.pointsRequiredForThreeStars };
-		return _starReq;
+		scoreTrackerOneDay st = GetComponent<scoreTrackerOneDay>();
+		return st.GetStarRequirements();
 	}
 
 	public void MakeNewTestLevel(int _levelNumber)
@@ -251,24 +251,25 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 		if (dayComplete && waitToShowResultsAfterFinished <= 0)
 		{
-			string daySummary = GetComponent<scoreTrackerOneDay>().score.ToString();
+			scoreTrackerOneDay scoreTrackerComponent = GetComponent<scoreTrackerOneDay>();
+			string daySummary = scoreTrackerComponent.score.ToString();
 			daySummary += "\n\n";
-			if (GetComponent<scoreTrackerOneDay>().score < GetDayRequirements()[0])
+			if (scoreTrackerComponent.score < GetDayRequirements()[0])
 			{
 				daySummary += "0";
 				resultsNotes.renderer.material = notesFor0Stars;
 			}
-			else if (GetComponent<scoreTrackerOneDay>().score < GetDayRequirements()[1])
+			else if (scoreTrackerComponent.score < GetDayRequirements()[1])
 			{
 				daySummary += "1";
 				resultsNotes.renderer.material = notesFor1Star;
 			}
-			else if (GetComponent<scoreTrackerOneDay>().score < GetDayRequirements()[2])
+			else if (scoreTrackerComponent.score < GetDayRequirements()[2])
 			{
 				daySummary += "2";
 				resultsNotes.renderer.material = notesFor2Stars;
 			}
-			else if (GetComponent<scoreTrackerOneDay>().score >= GetDayRequirements()[2])
+			else if (scoreTrackerComponent.score >= GetDayRequirements()[2])
 			{
 				daySummary += "3";
 				resultsNotes.renderer.material = notesFor3Stars;

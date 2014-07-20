@@ -54,7 +54,8 @@ public class calendar : MonoBehaviour {
 
 					_newCalDayComponent.numAppointments = 		3;
 					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
-					_newCalDayComponent.SetRequirementsForStars	(3, 6, 9);
+					//_newCalDayComponent.SetRequirementsForStars	(3, 6, 9);
+					_newCalDayComponent.SetRequirementsForStars	(99, 99, 99);
 
 					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 874353, false, false, false, false));
 					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 278940, false, false, false, false));
@@ -76,18 +77,26 @@ public class calendar : MonoBehaviour {
 
 					break;
 				case 2:
-					_newCalDayComponent.numAppointments = 		6;
+					_newCalDayComponent.numAppointments = 		5;
 					_newCalDayComponent.SetDifficulties			(25, 50, 25, 0);
-					_newCalDayComponent.SetRequirementsForStars	(50, 70, 90);
+					_newCalDayComponent.SetRequirementsForStars	(14, 28, 42);
+
+					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 653977, false, false, false, false));
+					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 633214, false, false, false, false));
+					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 950079, false, false, false, false));
+					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 595034, false, false, false, false));
+					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 773589, false, false, false, false));
+					_newCalDayComponent.SetSpecificLevels(reqList);
+
 					break;
 				case 3:
 					_newCalDayComponent.numAppointments = 		6;
-					_newCalDayComponent.SetDifficulties			(10, 40, 50, 0);
+					_newCalDayComponent.SetDifficulties			(0, 40, 50, 0);
 					_newCalDayComponent.SetRequirementsForStars	(40, 60, 80);
 					break;
 				case 4:
 					_newCalDayComponent.numAppointments = 		6;
-					_newCalDayComponent.SetDifficulties			(10, 40, 50, 0);
+					_newCalDayComponent.SetDifficulties			(0, 40, 50, 0);
 					_newCalDayComponent.SetRequirementsForStars	(40, 60, 80);
 					break;
 
@@ -96,13 +105,13 @@ public class calendar : MonoBehaviour {
 					// these are for testing the "special" levels
 				case 5:	// monday
 					_newCalDayComponent.numAppointments = 		8;
-					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
+					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(8, 0, 0, 0);
 					break;
 				case 6:	// tuesday
 					_newCalDayComponent.numAppointments = 		8;
-					_newCalDayComponent.SetDifficulties			(0, 100, 0, 0);
+					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(0, 8, 0, 0);
 					break;
@@ -114,7 +123,7 @@ public class calendar : MonoBehaviour {
 					break;
 				case 8:	// thursday
 					_newCalDayComponent.numAppointments = 		8;
-					_newCalDayComponent.SetDifficulties			(0, 0, 0, 100);
+					_newCalDayComponent.SetDifficulties			(25, 25, 25, 100);
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(0, 0, 0, 8);
 					break;
@@ -126,11 +135,11 @@ public class calendar : MonoBehaviour {
 					break;
 
 					// this is a test level
-				case 10:
-					_newCalDayComponent.numAppointments = 		8;
-					_newCalDayComponent.SetDifficulties			(0, 0, 100, 0);
-					_newCalDayComponent.SetRequirementsForStars	(0, 0, 0);
-					break;
+//				case 10:
+//					_newCalDayComponent.numAppointments = 		8;
+//					_newCalDayComponent.SetDifficulties			(0, 0, 100, 0);
+//					_newCalDayComponent.SetRequirementsForStars	(0, 0, 0);
+//					break;
 
 				default:
 					_newCalDayComponent.numAppointments = 		8;

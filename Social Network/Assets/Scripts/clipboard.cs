@@ -83,15 +83,6 @@ public class clipboard : MonoBehaviour {
 				{
 					if (!isHiding)									// if the clipboard is visible
 					{
-						/*
-						if (hit.transform.tag == "appointment")				// if you click an "appointment" block
-						{
-							isDragging = true;
-							hit.transform.GetComponent<Appointment>().isLerping = false;
-							appointmentBeingDragged = hit.transform.gameObject;
-							dragOffset = hit.point - hit.transform.position;				// move around appointments
-						}
-						*/
 						if (hit.transform.name == "StartButton")		// "start/skip" button on clipboard
 						{
 							if (buttonState == 0)
@@ -341,10 +332,10 @@ public class clipboard : MonoBehaviour {
 		_appt.SetMySpecialOverlays();
 
 		// build text to display on appointment
-		if (requestedLevel.difficulty == Difficulty.VeryEasy) { _difficultyText = "VeryEasy"; }
-		else if (_diff == Difficulty.Easy) { _difficultyText = "Easy"; }
-		else if (_diff == Difficulty.Medium) { _difficultyText = "Medium"; }
-		else if (_diff == Difficulty.Hard) { _difficultyText = "Hard"; }
+		if (requestedLevel.difficulty == Difficulty.VeryEasy) { _difficultyText = "Trivial"; }
+		else if (_diff == Difficulty.Easy) { _difficultyText = "Minor"; }
+		else if (_diff == Difficulty.Medium) { _difficultyText = "Major"; }
+		else if (_diff == Difficulty.Hard) { _difficultyText = "Critical"; }
 				
         _appointmentText += "Patients: ";
         _appointmentText += (_appt.myLevel.level).ToString();
