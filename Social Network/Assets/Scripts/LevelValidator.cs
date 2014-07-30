@@ -79,7 +79,7 @@ public class LevelValidator {
 			if (currentStepsTaken > 10) { MonoBehaviour.print ("breaking out early, none found"); break; }
 			if (parentList.Count == 0)
 			{
-				MonoBehaviour.print ("TESTER FEEDBACK: this level is impossible");
+				//MonoBehaviour.print ("TESTER FEEDBACK: this level is impossible");
 				bestWinState.numStepsToReach = -1;
 				return bestWinState;
 			}
@@ -96,7 +96,7 @@ public class LevelValidator {
 			}
 			else
 			{
-				MonoBehaviour.print ("TESTER FEEDBACK: requires " + bestWinState.numStepsToReach + " steps");
+				//MonoBehaviour.print ("TESTER FEEDBACK: requires " + bestWinState.numStepsToReach + " steps");
 			}
 		}
 		return bestWinState;
@@ -112,7 +112,7 @@ public class LevelValidator {
 				continue;
 			}
 
-			if (parentState.pathOfActions.trail.Count > 1)
+			if (parentState.pathOfActions.trail.Count > 1)							// if this parent state has had more than one parent before it
 			{
 				if (_actionPossibility.personIndex == 0 && _actionPossibility.isGoodAction == true)
 				{
@@ -141,7 +141,7 @@ public class LevelValidator {
 				bestWinStateHasBeenFound = true;
 				returnState.Add(currentState);
 				bestState = currentState;
-				//MonoBehaviour.print ("the win state is: " + currentState.pathOfActions);
+				MonoBehaviour.print ("the win state is: " + currentState.pathOfActions);
 				break;
 			}
 			else if (CheckIfMatchingStateExists(currentState).isNull) 		// if it's a new state...

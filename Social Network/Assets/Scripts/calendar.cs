@@ -90,12 +90,12 @@ public class calendar : MonoBehaviour {
 
 					break;
 				case 3:
-					_newCalDayComponent.numAppointments = 		6;
+					_newCalDayComponent.numAppointments = 		1;
 					_newCalDayComponent.SetDifficulties			(0, 40, 50, 0);
 					_newCalDayComponent.SetRequirementsForStars	(40, 60, 80);
 					break;
 				case 4:
-					_newCalDayComponent.numAppointments = 		6;
+					_newCalDayComponent.numAppointments = 		1;
 					_newCalDayComponent.SetDifficulties			(0, 40, 50, 0);
 					_newCalDayComponent.SetRequirementsForStars	(40, 60, 80);
 					break;
@@ -104,10 +104,15 @@ public class calendar : MonoBehaviour {
 
 					// these are for testing the "special" levels
 				case 5:	// monday
-					_newCalDayComponent.numAppointments = 		8;
+					_newCalDayComponent.numAppointments = 		3;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
 					_newCalDayComponent.SetSpecialAttributes	(8, 0, 0, 0);
+
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 874353, false, false, false, false));
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 278940, false, false, false, false));
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 315229, false, false, false, false));
+					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 6:	// tuesday
 					_newCalDayComponent.numAppointments = 		8;
@@ -150,6 +155,21 @@ public class calendar : MonoBehaviour {
 
 			_newCalDay.name = (_newCalDayComponent.dayIndex + 1).ToString() + " " + _newCalDayComponent.dayOfTheWeek.ToString();
 			_newCalDayComponent.AddStatusOverlay();
+		}
+		if (viewingWeek == 0)
+		{
+			// show score instructions the first time see the calendar
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(0);
+		}
+		else if (viewingWeek == 1)
+		{
+			// show score instructions when you start the second week
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(4);
+		}
+		else if (viewingWeek == 2)
+		{
+			// show score instructions when you start the third week
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(5);
 		}
 	}
 	

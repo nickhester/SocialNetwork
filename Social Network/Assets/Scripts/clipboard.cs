@@ -324,7 +324,7 @@ public class clipboard : MonoBehaviour {
 		else
 		{
 			requestedLevel = GameObject.Find("LevelSelector").GetComponent<LevelFactory>().GetALevel(
-				_diff, _levelNum, _special_FallToRed, _special_OneClick, _special_CantTouch, _special_NoLines, seed);
+				_diff, _levelNum, _special_FallToRed, _special_OneClick, _special_CantTouch, _special_NoLines, seed, false);
 		}
 
 		_appt.myLevel = requestedLevel;

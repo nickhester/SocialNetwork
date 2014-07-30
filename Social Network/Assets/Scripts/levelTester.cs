@@ -240,14 +240,17 @@ public class levelTester : MonoBehaviour {
 		bool foundCantClickPerson = false;
 		for (int i = 0; i < bestWinState.pathOfActions.trail.Count; i++)
 		{
+			int personToExclude = bestWinState.pathOfActions.trail[i].Key;
 			networkMgr.ReloadStartingState();
 			LevelValidator lv2 = new LevelValidator();
-			levelTesterState_s bestWinState2 = lv2.PathfindLevel_BreadthFirst(bestWinState.pathOfActions.trail[i].Key);
+			levelTesterState_s bestWinState2 = lv2.PathfindLevel_BreadthFirst(personToExclude);
 			if (bestWinState2.numStepsToReach != -1)
 			{
 				foundCantClickPerson = true;
-				thisLevel.cantTouch = i;
+				thisLevel.cantTouch = personToExclude;
 				//print (bestWinState.numStepsToReach + ":" + bestWinState2.numStepsToReach);
+				thisLevel.cantTouchPath = bestWinState2.pathOfActions;
+
 			}
 		}
 		if (!foundCantClickPerson) { thisLevel.cantTouch = -1; }

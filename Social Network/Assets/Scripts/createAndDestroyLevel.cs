@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Types;
+using System;
 
 public class createAndDestroyLevel : MonoBehaviour {
 
@@ -55,6 +56,8 @@ public class createAndDestroyLevel : MonoBehaviour {
 	private bool isShowingDebugControls = false;
 	private int currentLevelLoaded;
 
+	System.Random rand = new System.Random();
+
     #endregion
 	
 	#region StartAndUpdate
@@ -87,6 +90,9 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 	void DayEnd()
 	{
+		// show score instructions the first time you finish a day
+		GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(3);
+
 		if (!hasRunDayEnd)
 		{
 			dayComplete = true;
@@ -101,18 +107,21 @@ public class createAndDestroyLevel : MonoBehaviour {
 			if (thisScore > PlayerPrefs.GetInt(thisDayString + "_highestScore"))
 			{ PlayerPrefs.SetInt(thisDayString + "_highestScore", thisScore); }
 
-			if (thisScore >= GetDayRequirements()[0])
+			int[] dayReqs = new int[3];
+			dayReqs = GetDayRequirements();
+			print("0: " + dayReqs[0] + ", 1: " + dayReqs[1] + ", 2: " + dayReqs[2]);
+			if (thisScore >= dayReqs[2])
 			{
 				PlayerPrefs.SetInt(thisDayString + "_starCount", 3);
 				receivedStar = true;
 			}
-			else if (thisScore >= GetDayRequirements()[1]
+			else if (thisScore >= dayReqs[1]
 			         && PlayerPrefs.GetInt(thisDayString + "_starCount", 0) < 2)
 			{
 				PlayerPrefs.SetInt(thisDayString + "_starCount", 2);
 				receivedStar = true;
 			}
-			else if (thisScore >= GetDayRequirements()[2]
+			else if (thisScore >= dayReqs[0]
 			         && PlayerPrefs.GetInt(thisDayString + "_starCount", 0) < 1)
 			{
 				PlayerPrefs.SetInt(thisDayString + "_starCount", 1);
@@ -170,6 +179,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 	// void LoadNewLevel (string _LevelToLoad)
 	void LoadNewLevel (validLevels _aSpecificLevel, bool isFromAppointment)
 	{
+		// if this isn't a level from the clipboard, it needs to be set as the clipboard's nextLevelUp b/c that's where the NetworkMgr looks for it
 		if (!isFromAppointment)
 		{
 			myClipboardComponent.nextLevelUp.myLevel = _aSpecificLevel;
@@ -217,9 +227,10 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 	public void MakeNewTestLevel(int _levelNumber)
 	{
-		int randSeed = Random.Range(0, 1000000);
+		int randSeed = rand.Next(0, 1000000);
+		print (randSeed);
 		DestroyOldLevel();
-		LoadNewLevel(GameObject.Find("LevelSelector").GetComponent<LevelFactory>().GetALevel(Difficulty.Unknown, _levelNumber, randSeed), false);
+		LoadNewLevel(GameObject.Find("LevelSelector").GetComponent<LevelFactory>().GetALevel(Difficulty.Unknown, _levelNumber, randSeed, true), false);
 	}
 
 	void OnGUI()

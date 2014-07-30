@@ -114,12 +114,15 @@ public struct actionTrail
 	public override string ToString()
 	{
 		string returnValue = "";
-		foreach (KeyValuePair<int, bool> step in trail)
+		if (trail != null && trail.Count > 0)
 		{
-			returnValue += step.Key;
-			if (step.Value == true) { returnValue += "T"; }
-			else { returnValue += "F"; }
-			returnValue += "-";
+			foreach (KeyValuePair<int, bool> step in trail)
+			{
+				returnValue += step.Key;
+				if (step.Value == true) { returnValue += "T"; }
+				else { returnValue += "F"; }
+				returnValue += "-";
+			}
 		}
 		//if (returnValue.Length > 1) { returnValue = returnValue.Remove(returnValue.Length - 1); }
 		return returnValue;
