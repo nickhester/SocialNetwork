@@ -133,10 +133,10 @@ public class calendar : MonoBehaviour {
 					_newCalDayComponent.SetSpecialAttributes	(0, 0, 0, 8);
 					break;
 				case 9:	// friday
-					_newCalDayComponent.numAppointments = 		8;
+					_newCalDayComponent.numAppointments = 		4;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 					_newCalDayComponent.SetRequirementsForStars	(10, 20, 30);
-					_newCalDayComponent.SetSpecialAttributes	(2, 2, 2, 2);
+					_newCalDayComponent.SetSpecialAttributes	(1, 1, 1, 1);
 					break;
 
 					// this is a test level

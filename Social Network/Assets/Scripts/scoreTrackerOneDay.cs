@@ -41,10 +41,15 @@ public class scoreTrackerOneDay : MonoBehaviour {
 		int pointsFromLevel = 0;
 		pointsFromLevel += CalculateNumPointsForDifficulty(diff);
 		validLevels thisLevel = GameObject.Find("Clipboard").GetComponent<clipboard>().nextLevelUp.myLevel;
-		pointsFromLevel *= bonusPerfectMultiplier;
+
+		// "perfect" bonus not possible on special levels, cause it's often impossible, and not fair to expect
 		if (isSpecial)
 		{
 			pointsFromLevel *= bonusSpecialMultiplier;
+		}
+		else
+		{
+			pointsFromLevel *= bonusPerfectMultiplier;
 		}
 		maximumPossibleScore += pointsFromLevel;
 
@@ -80,16 +85,14 @@ public class scoreTrackerOneDay : MonoBehaviour {
 		// add score for perfect number of actions
 		validLevels thisLevel = GameObject.Find("Clipboard").GetComponent<clipboard>().nextLevelUp.myLevel;
 
-		if (numActionsTaken <= thisLevel.numClicks)
+		if (numActionsTaken <= thisLevel.numClicks && !isSpecial)
 		{
 			scoreToAdd *= bonusPerfectMultiplier;
 			ScorePopUp spu2 = gameObject.AddComponent<ScorePopUp>();
 			spu2.DisplayScorePopUp("Perfect " + bonusPerfectMultiplier.ToString() + "x", -3, 3);
 			print ("score - w/ perfect bonus (" + numActionsTaken + "/" + thisLevel.numClicks + "):" + scoreToAdd);
 		}
-
-		// add score for it being a special level
-		if (isSpecial)
+		else if (isSpecial)
 		{
 			scoreToAdd *= bonusSpecialMultiplier;
 			ScorePopUp spu3 = gameObject.AddComponent<ScorePopUp>();
