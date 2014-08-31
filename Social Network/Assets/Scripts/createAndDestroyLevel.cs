@@ -170,9 +170,10 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 		st.UpdateMaxScore(myClipboardComponent.currentLevelDifficulty, isSpecialLevel, numActionsTaken);
 		levelsLeftToComplete--;
-		myClipboardComponent.Invoke("BringUpClipboard", (levelSuccess ? 1.0f : 0.0f));
+		float waitTimeForClipboard = (levelSuccess ? 1.0f : 0.0f);
+		myClipboardComponent.Invoke("BringUpClipboard", waitTimeForClipboard);
 		isClipboardUp = true;
-		Invoke ("DestroyOldLevel", 1.0f);
+		Invoke ("DestroyOldLevel", waitTimeForClipboard);
 		if (levelsLeftToComplete == 0) { DayEnd(); }
 	}
 

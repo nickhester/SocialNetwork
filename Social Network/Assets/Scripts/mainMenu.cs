@@ -16,7 +16,9 @@ public class mainMenu : MonoBehaviour {
 	private GameObject mainMenuParent;
 	private float splitSpeed = 9.0f;
 	private float splitCounter = 0.0f;
-	private float splitLimit = 1.0f;
+	private float splitLimit = 2.0f;
+	public Material confirmClearProgressImage;
+	public Material progressClearedImage;
 
 	// Use this for initialization
 	void Start () {
@@ -38,22 +40,7 @@ public class mainMenu : MonoBehaviour {
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit, 10.0f))
 			{
-				if (hit.transform.name == "button_Start")
-				{
-					ClickAButton(hit.transform.gameObject);
-					clickedThisGO = hit.transform.gameObject;
-				}
-				else if (hit.transform.name == "button_options")
-				{
-					ClickAButton(hit.transform.gameObject);
-					clickedThisGO = hit.transform.gameObject;
-				}
-				else if (hit.transform.name == "button_back")
-				{
-					ClickAButton(hit.transform.gameObject);
-					clickedThisGO = hit.transform.gameObject;
-				}
-				else if (hit.transform.name == "button_clearProgress")
+				if (hit.transform.name.StartsWith("button_"))
 				{
 					ClickAButton(hit.transform.gameObject);
 					clickedThisGO = hit.transform.gameObject;
@@ -66,7 +53,10 @@ public class mainMenu : MonoBehaviour {
 			if (clickedThisGO.name == "button_Start") { SplitBackground(); }
 			else if (clickedThisGO.name == "button_options") { isLerpingTowardOptions = true; }
 			else if (clickedThisGO.name == "button_back") { isLerpingTowardOptions = false; }
-			else if (clickedThisGO.name == "button_clearProgress") { PlayerPrefs.DeleteAll(); }
+			else if (clickedThisGO.name == "button_clearProgress") { clickedThisGO.renderer.material = confirmClearProgressImage; clickedThisGO.name = "button_clearProgressConfirm"; }
+			else if (clickedThisGO.name == "button_clearProgressConfirm") { clickedThisGO.renderer.material = progressClearedImage; clickedThisGO.name = "progressCleared"; PlayerPrefs.DeleteAll(); }
+			else if (clickedThisGO.name == "button_audioOn") { TurnAudioOn(); PlayerPrefs.SetInt("isAudioOn", 1); }
+			else if (clickedThisGO.name == "button_audioOff") { TurnAudioOff(); PlayerPrefs.SetInt("isAudioOn", 0); }
 			isClickingButton = false;
 			UnclickAButton(clickedThisGO);
 		}
@@ -86,10 +76,15 @@ public class mainMenu : MonoBehaviour {
 			lh.transform.Translate(Vector3.left * splitSpeed * Time.deltaTime);
 			mainMenuParent.transform.Translate(Vector3.left * splitSpeed * Time.deltaTime);
 			splitCounter += Time.deltaTime;
-		}
-		if (splitCounter >= splitLimit)
-		{
-			Application.LoadLevel("Scene_LevelSelection");
+
+			if (splitCounter >= splitLimit / 2.0f)
+			{
+				Camera.main.backgroundColor = new Color(Camera.main.backgroundColor.r - 0.05f, Camera.main.backgroundColor.g - 0.05f, Camera.main.backgroundColor.b - 0.05f);
+			}
+			if (splitCounter >= splitLimit)
+			{
+				Application.LoadLevel("Scene_LevelSelection");
+			}
 		}
 	}
 
@@ -113,4 +108,16 @@ public class mainMenu : MonoBehaviour {
 		hit.transform.localScale = originalScale;
 	}
 
+	void TurnAudioOff()
+	{
+		AudioSource audio = GameObject.Find("Music Player").GetComponent<AudioSource>();
+		audio.enabled = false;
+	}
+
+	void TurnAudioOn()
+	{
+		AudioSource m_audio = GameObject.Find("Music Player").GetComponent<AudioSource>();
+		m_audio.enabled = true;
+		m_audio.Play();
+	}
 }
