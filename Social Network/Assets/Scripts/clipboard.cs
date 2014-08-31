@@ -5,10 +5,7 @@ using Types;
 using System.Linq;
 
 public class clipboard : MonoBehaviour {
-
-	private bool isDragging = false;
-	private GameObject appointmentBeingDragged;
-	private Vector3 dragOffset;
+	
 	private bool isHiding = false;
 	private Vector3 offscreenPosition;
 	private Vector3 originalPosition;
@@ -111,23 +108,6 @@ public class clipboard : MonoBehaviour {
 						}
 					}
 				}
-			}
-			else if (Input.GetMouseButtonUp(0))
-			{
-				isDragging = false;
-			}
-		}
-
-		if (isDragging)
-		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			appointmentBeingDragged.transform.position = new Vector3(ray.GetPoint(1.0f).x - dragOffset.x,
-			                                                         ray.GetPoint(1.0f).y - dragOffset.y,
-			                                                         appointmentBeingDragged.transform.position.z);
-			if (appointmentBeingDragged.transform.position.y > appointmentTop) {
-				appointmentBeingDragged.transform.position = new Vector3(appointmentBeingDragged.transform.position.x,
-				                                                         appointmentTop,
-				                                                         appointmentBeingDragged.transform.position.z);
 			}
 		}
 
