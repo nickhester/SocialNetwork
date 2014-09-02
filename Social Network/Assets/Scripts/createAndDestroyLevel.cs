@@ -109,7 +109,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 			int[] dayReqs = new int[3];
 			dayReqs = GetDayRequirements();
-			print("0: " + dayReqs[0] + ", 1: " + dayReqs[1] + ", 2: " + dayReqs[2]);
+			//print("0: " + dayReqs[0] + ", 1: " + dayReqs[1] + ", 2: " + dayReqs[2]);
 			if (thisScore >= dayReqs[2])
 			{
 				PlayerPrefs.SetInt(thisDayString + "_starCount", 3);

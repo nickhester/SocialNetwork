@@ -40,6 +40,11 @@ public class class_NetworkMgr : MonoBehaviour {
 	public bool special_CantTouchLines = false;
 	public bool special_NoLines = false;
 
+	// audio
+	private AudioSource myAudioComponent;
+	public AudioClip audioActionPos;
+	public AudioClip audioActionNeg;
+
 	#endregion
 
 	#region StartAndUpdate
@@ -69,6 +74,8 @@ public class class_NetworkMgr : MonoBehaviour {
 			) as GameObject;
 		cursorSecondaryInst.renderer.enabled = false;
 		cursorSecondaryInst.transform.parent = selectionCursorInst.transform;
+
+		myAudioComponent = gameObject.GetComponent<AudioSource>() as AudioSource;
 	}
 
 	void Update ()
@@ -94,11 +101,15 @@ public class class_NetworkMgr : MonoBehaviour {
 				else if (hit.transform.name == "Button_green" && currentlySelectedPerson != null)
 				{
 					TriggerRelationshipChange(currentlySelectedPerson, true);
+					myAudioComponent.clip = audioActionPos;
+					myAudioComponent.Play();
 					numActionsTaken++;
 				}
 				else if (hit.transform.name == "Button_red" && currentlySelectedPerson != null)
 				{
 					TriggerRelationshipChange(currentlySelectedPerson, false);
+					myAudioComponent.clip = audioActionNeg;
+					myAudioComponent.Play();
 					numActionsTaken++;
 				}
 			}
@@ -107,11 +118,15 @@ public class class_NetworkMgr : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Q) && currentlySelectedPerson != null)
 		{
 			TriggerRelationshipChange(currentlySelectedPerson, true);
+			myAudioComponent.clip = audioActionPos;
+			myAudioComponent.Play();
 			numActionsTaken++;
 		}
 		else if (Input.GetKeyDown(KeyCode.W) && currentlySelectedPerson != null)
 		{
 			TriggerRelationshipChange(currentlySelectedPerson, false);
+			myAudioComponent.clip = audioActionNeg;
+			myAudioComponent.Play();
 			numActionsTaken++;
 		}
 		

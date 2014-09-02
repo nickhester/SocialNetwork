@@ -53,7 +53,7 @@ public class scoreTrackerOneDay : MonoBehaviour {
 		}
 		maximumPossibleScore += pointsFromLevel;
 
-		print ("best score is now: " + maximumPossibleScore);
+		//print ("best score is now: " + maximumPossibleScore);
 	}
 
 	public int[] GetStarRequirements()
