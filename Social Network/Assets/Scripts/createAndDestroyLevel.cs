@@ -236,6 +236,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 	void OnGUI()
 	{
+		/*
 		if (GUI.Button(new Rect(0, Screen.height - 40, 40, 20), "Gen"))
 		{ isShowingDebugControls = true; }
 
@@ -256,6 +257,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 				t.levelToLoad = currentLevelLoaded;
 			}
 		}
+		*/
 
 		if (dayComplete)
 		{
@@ -291,17 +293,6 @@ public class createAndDestroyLevel : MonoBehaviour {
 			}
 			resultsNotes.renderer.enabled = true;
 
-//			int percentOfHoriz = 50;
-//			int percentOfVert = 65;
-//			int offsetFromCenterHoriz = -72;
-//			int offsetFromCenterVert = 125;
-//			GUI.Box (new Rect(
-//				(Screen.width/2 - (Screen.width/2.0f)*(percentOfHoriz/100.0f)) + offsetFromCenterHoriz,
-//				(Screen.height/2 - (Screen.height/2.0f)*(percentOfVert/100.0f)) + offsetFromCenterVert,
-//				(Screen.width/2.0f)*(percentOfHoriz/100.0f)*2,
-//				(Screen.height/2.0f)*(percentOfVert/100.0f)*2
-//				), daySummary, dayCompleteScreenStyle);
-
 			foreach (TextMesh scoreText in resultsPage.GetComponentsInChildren<TextMesh>())
 			{
 				scoreText.renderer.enabled = true;
@@ -315,9 +306,5 @@ public class createAndDestroyLevel : MonoBehaviour {
 				}
 			}
 		}
-
-
-
-		//GUI.Box (new Rect(100, Screen.height - 60, 60, 30), ((int)timeLeft).ToString());	// display countdown timer
 	}
 }
