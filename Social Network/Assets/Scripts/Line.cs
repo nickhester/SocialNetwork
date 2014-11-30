@@ -24,11 +24,19 @@ public class Line : MonoBehaviour {
 	private Color myColor;
 	private bool isChanging = false;
 	private float fadeTime = 0.75f;
-	
+	private Color negativeColor;
+	private Color positiveColor;
+
+	public void SetColors (Color _negativeColor, Color _positiveColor)
+	{
+		positiveColor = _positiveColor;
+		negativeColor = _negativeColor;
+	}
+
 	void Start () {
 		if (myState == 0) { renderer.enabled = false; }
-		else if (myState == 1) { myColor = new Color(0, 1, 0); }
-		else if (myState == -1) { myColor = new Color(1, 0, 0); }
+		else if (myState == 1) { myColor = positiveColor; }
+		else if (myState == -1) { myColor = negativeColor; }
 
 		renderer.material.color = myColor;
 		renderer.material.SetColor("_Emission", myColor);

@@ -103,37 +103,37 @@ public class createAndDestroyLevel : MonoBehaviour {
 			string thisDayString = "M1_D" + myClipboardComponent.selectorRef.dayToGenerate.dayIndex;
 			string nextDayString = "M1_D" + (myClipboardComponent.selectorRef.dayToGenerate.dayIndex + 1);
 
-			PlayerPrefs.SetInt(thisDayString + "_hasBeenCompleted", 1);
-			if (thisScore > PlayerPrefs.GetInt(thisDayString + "_highestScore"))
-			{ PlayerPrefs.SetInt(thisDayString + "_highestScore", thisScore); }
+			SaveData.SetInt(thisDayString + "_hasBeenCompleted", 1);
+			if (thisScore > SaveData.GetInt(thisDayString + "_highestScore"))
+			{ SaveData.SetInt(thisDayString + "_highestScore", thisScore); }
 
 			int[] dayReqs = new int[3];
 			dayReqs = GetDayRequirements();
 			//print("0: " + dayReqs[0] + ", 1: " + dayReqs[1] + ", 2: " + dayReqs[2]);
 			if (thisScore >= dayReqs[2])
 			{
-				PlayerPrefs.SetInt(thisDayString + "_starCount", 3);
+				SaveData.SetInt(thisDayString + "_starCount", 3);
 				receivedStar = true;
 			}
 			else if (thisScore >= dayReqs[1]
-			         && PlayerPrefs.GetInt(thisDayString + "_starCount", 0) < 2)
+			         && SaveData.GetInt(thisDayString + "_starCount") < 2)
 			{
-				PlayerPrefs.SetInt(thisDayString + "_starCount", 2);
+				SaveData.SetInt(thisDayString + "_starCount", 2);
 				receivedStar = true;
 			}
 			else if (thisScore >= dayReqs[0]
-			         && PlayerPrefs.GetInt(thisDayString + "_starCount", 0) < 1)
+			         && SaveData.GetInt(thisDayString + "_starCount") < 1)
 			{
-				PlayerPrefs.SetInt(thisDayString + "_starCount", 1);
+				SaveData.SetInt(thisDayString + "_starCount", 1);
 				receivedStar = true;
 			}
 
-			if (receivedStar) { PlayerPrefs.SetInt(nextDayString + "_isPlayable", 1); }
+			if (receivedStar) { SaveData.SetInt(nextDayString + "_isPlayable", 1); }
 
-			PlayerPrefs.SetInt("totalPointsAccumulatedOverall", PlayerPrefs.GetInt("totalPointsAccumulatedOverall", 0) + thisScore);
-			print ("total points accumulated overall: " + (PlayerPrefs.GetInt("totalPointsAccumulatedOverall")));
+			SaveData.SetInt("totalPointsAccumulatedOverall", SaveData.GetInt("totalPointsAccumulatedOverall") + thisScore);
+			print ("total points accumulated overall: " + (SaveData.GetInt("totalPointsAccumulatedOverall")));
 
-			PlayerPrefs.Save();
+			SaveData.Save();
 
 			hasRunDayEnd = true;
 		}

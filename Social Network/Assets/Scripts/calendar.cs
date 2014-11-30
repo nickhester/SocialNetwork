@@ -31,16 +31,16 @@ public class calendar : MonoBehaviour {
 			dayList.Add(_newCalDayComponent);
 
 			// set player pref data
-			if (PlayerPrefs.GetInt("M1_D" + i + "_starCount") == 0)
+			if (SaveData.GetInt("M1_D" + i + "_starCount") == 0)
 			{  }
-			else if (PlayerPrefs.GetInt("M1_D" + i + "_starCount") == 1)
+			else if (SaveData.GetInt("M1_D" + i + "_starCount") == 1)
 			{ _newCalDayComponent.numStars = 1; }
-			else if (PlayerPrefs.GetInt("M1_D" + i + "_starCount") == 2)
+			else if (SaveData.GetInt("M1_D" + i + "_starCount") == 2)
 			{ _newCalDayComponent.numStars = 2; }
-			else if (PlayerPrefs.GetInt("M1_D" + i + "_starCount") == 3)
+			else if (SaveData.GetInt("M1_D" + i + "_starCount") == 3)
 			{ _newCalDayComponent.numStars = 3; }
 
-			if (PlayerPrefs.GetInt("M1_D" + i + "_isPlayable") == 1)
+			if (SaveData.GetInt("M1_D" + i + "_isPlayable") == 1)
 			{
 				_newCalDayComponent.isPlayable = true;
 				viewingWeek = (int)Mathf.Floor(i / 5.0f);

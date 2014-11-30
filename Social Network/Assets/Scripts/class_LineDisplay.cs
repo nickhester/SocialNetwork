@@ -6,10 +6,11 @@ public class class_LineDisplay : MonoBehaviour {
 	
 	private Dictionary<Person, List<GameObject>> lineConnections = new Dictionary<Person, List<GameObject>>();
 	private float lineWidth = 0.1f;
-
 	private bool linesAreInvisible = false;
-
 	private float fadeCounter = 0.0f;
+
+	public Color posColor;
+	public Color negColor;
 	
 	#region StartAndUpdate
 
@@ -42,6 +43,7 @@ public class class_LineDisplay : MonoBehaviour {
 
 				Line thisLine = _lineObject.AddComponent<Line>();
 				thisLine.myState = relState;
+				thisLine.SetColors(negColor, posColor);
 				_lineList.Add(_lineObject);
 			}
 			lineConnections[person] = _lineList;
