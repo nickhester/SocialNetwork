@@ -14,7 +14,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 	[HideInInspector]
 	public int numLevelsCompletedInARow = 0;
 	public GUIStyle dayCompleteScreenStyle;
-	private bool hasRunDayEnd = false;
+	private bool hasDisplayedLevelEndScreen = false;
 	public Material notesFor0Stars;
 	public Material notesFor1Star;
 	public Material notesFor2Stars;
@@ -30,19 +30,18 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 	// level parameters
 	public int m_levelsAvailable = 8;
-	public int m_levelsAvailableOffScreen;
 	private bool hasLevelCountBeenSet = false;
 	public int levelsAvailable
 	{
 		get
 		{
-			if (!hasLevelCountBeenSet) { m_levelsAvailableOffScreen = m_levelsAvailable; hasLevelCountBeenSet = true; }	// save the original value
-			return m_levelsAvailableOffScreen;		// actually set this variable
+			if (!hasLevelCountBeenSet) { hasLevelCountBeenSet = true; }	// save the original value
+			return m_levelsAvailable;		// actually set this variable
 		}
 		set
 		{
-			if (!hasLevelCountBeenSet) { m_levelsAvailableOffScreen = m_levelsAvailable; hasLevelCountBeenSet = true; }
-			m_levelsAvailableOffScreen = value;
+			if (!hasLevelCountBeenSet) { hasLevelCountBeenSet = true; }
+			m_levelsAvailable = value;
 		}
 	}
 	public int levelDuration = 180;
@@ -50,8 +49,9 @@ public class createAndDestroyLevel : MonoBehaviour {
 	// level parameter helpers
 	public float timeLeft;
 	public int levelsLeftToComplete;
-	public bool dayComplete = false;
+	public bool levelComplete = false;
 	private float waitToShowResultsAfterFinished = 2.0f;
+	private float waitToShowResultsAfterFinishedCounter;
 	private bool gameplayHasStarted = false;
 	private bool isShowingDebugControls = false;
 	private int currentLevelLoaded;
@@ -71,81 +71,22 @@ public class createAndDestroyLevel : MonoBehaviour {
 		resultsPage.renderer.enabled = false;
 		resultsNotes = GameObject.Find("results notes");
 		resultsNotes.renderer.enabled = false;
+		waitToShowResultsAfterFinishedCounter = waitToShowResultsAfterFinished;
 	}
 
 	void Update () {
 
-		if (isClipboardUp && timeLeft <= 0)
-		{
-			if (timeLeft <= 0)
-			{
-				myClipboardComponent.ClearClipboard();
-				DayEnd();
-			}
-		}
-		if (dayComplete) { waitToShowResultsAfterFinished -= Time.deltaTime; }
+		if (levelComplete) { waitToShowResultsAfterFinishedCounter -= Time.deltaTime; }
 	}
 
 	#endregion
 
-	void DayEnd()
-	{
-		// show score instructions the first time you finish a day
-		GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(3);
-
-		if (!hasRunDayEnd)
-		{
-			dayComplete = true;
-			bool receivedStar = false;
-			scoreTrackerOneDay st = GetComponent<scoreTrackerOneDay>();
-			int thisScore = st.score;
-
-			string thisDayString = "M1_D" + myClipboardComponent.selectorRef.dayToGenerate.dayIndex;
-			string nextDayString = "M1_D" + (myClipboardComponent.selectorRef.dayToGenerate.dayIndex + 1);
-
-			SaveData.SetInt(thisDayString + "_hasBeenCompleted", 1);
-			if (thisScore > SaveData.GetInt(thisDayString + "_highestScore"))
-			{ SaveData.SetInt(thisDayString + "_highestScore", thisScore); }
-
-			int[] dayReqs = new int[3];
-			dayReqs = GetDayRequirements();
-			//print("0: " + dayReqs[0] + ", 1: " + dayReqs[1] + ", 2: " + dayReqs[2]);
-			if (thisScore >= dayReqs[2])
-			{
-				SaveData.SetInt(thisDayString + "_starCount", 3);
-				receivedStar = true;
-			}
-			else if (thisScore >= dayReqs[1]
-			         && SaveData.GetInt(thisDayString + "_starCount") < 2)
-			{
-				SaveData.SetInt(thisDayString + "_starCount", 2);
-				receivedStar = true;
-			}
-			else if (thisScore >= dayReqs[0]
-			         && SaveData.GetInt(thisDayString + "_starCount") < 1)
-			{
-				SaveData.SetInt(thisDayString + "_starCount", 1);
-				receivedStar = true;
-			}
-
-			if (receivedStar) { SaveData.SetInt(nextDayString + "_isPlayable", 1); }
-
-			SaveData.SetInt("totalPointsAccumulatedOverall", SaveData.GetInt("totalPointsAccumulatedOverall") + thisScore);
-			print ("total points accumulated overall: " + (SaveData.GetInt("totalPointsAccumulatedOverall")));
-
-			SaveData.Save();
-
-			hasRunDayEnd = true;
-		}
-
-	}
-
-	public void ReturnToLevelSelection()
+	public void ReturnToCalendar()
 	{
 		Destroy(myClipboardComponent.selectorRef.dayToGenerate.gameObject);
 		Destroy(myClipboardComponent.selectorRef.gameObject);
 		Destroy(myClipboardComponent.gameObject);
-		Application.LoadLevel("Scene_LevelSelection");
+		Application.LoadLevel("Scene_Calendar");
 		Destroy (gameObject);
 	}
 
@@ -157,6 +98,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 	public void RoundEnd(bool levelSuccess, int numActionsTaken)
 	{
+		// TODO: Get the level that was clicked, which was not necessarily the next level up
 		Appointment _thisLevel = myClipboardComponent.nextLevelUp;
 		bool isSpecialLevel = false;
 		if (_thisLevel.myLevel.isCantTouch || _thisLevel.myLevel.isFallToRed || _thisLevel.myLevel.isNoLines || _thisLevel.myLevel.isOneClick)
@@ -174,10 +116,60 @@ public class createAndDestroyLevel : MonoBehaviour {
 		myClipboardComponent.Invoke("BringUpClipboard", waitTimeForClipboard);
 		isClipboardUp = true;
 		Invoke ("DestroyOldLevel", waitTimeForClipboard);
-		if (levelsLeftToComplete == 0) { DayEnd(); }
-	}
+		//if (levelsLeftToComplete == 0) { DayEnd(); }		// don't need this any more b/c the day never really "ends", but maybe we can use it for some kind of completion screen
 
-	// void LoadNewLevel (string _LevelToLoad)
+		if (!levelSuccess) { return; }
+
+		// show score instructions the first time you finish a round
+		GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(3);
+
+		if (!hasDisplayedLevelEndScreen)
+		{
+			levelComplete = true;
+			myClipboardComponent.HideClipboardAppointments();
+			bool receivedStar = false;
+			int thisScore = st.score;
+
+			// TODO: save by round, not by day
+			string thisDayString = "M1_D" + myClipboardComponent.selectorRef.dayToGenerate.dayIndex;
+			string nextDayString = "M1_D" + (myClipboardComponent.selectorRef.dayToGenerate.dayIndex + 1);
+			
+			SaveData.SetInt(thisDayString + "_hasBeenCompleted", 1);
+			if (thisScore > SaveData.GetInt(thisDayString + "_highestScore"))
+			{ SaveData.SetInt(thisDayString + "_highestScore", thisScore); }
+			
+			int[] levelRequirements = new int[3];
+			levelRequirements = st.GetStarRequirements();
+
+			if (thisScore >= levelRequirements[2])
+			{
+				SaveData.SetInt(thisDayString + "_starCount", 3);
+				receivedStar = true;
+			}
+			else if (thisScore >= levelRequirements[1]
+			         && SaveData.GetInt(thisDayString + "_starCount") < 2)
+			{
+				SaveData.SetInt(thisDayString + "_starCount", 2);
+				receivedStar = true;
+			}
+			else if (thisScore >= levelRequirements[0]
+			         && SaveData.GetInt(thisDayString + "_starCount") < 1)
+			{
+				SaveData.SetInt(thisDayString + "_starCount", 1);
+				receivedStar = true;
+			}
+			
+			if (receivedStar) { SaveData.SetInt(nextDayString + "_isPlayable", 1); }
+			
+			SaveData.SetInt("totalPointsAccumulatedOverall", SaveData.GetInt("totalPointsAccumulatedOverall") + thisScore);
+			print ("total points accumulated overall: " + (SaveData.GetInt("totalPointsAccumulatedOverall")));
+			
+			SaveData.Save();
+			
+			hasDisplayedLevelEndScreen = true;
+		}
+	}
+	
 	void LoadNewLevel (validLevels _aSpecificLevel, bool isFromAppointment)
 	{
 		// if this isn't a level from the clipboard, it needs to be set as the clipboard's nextLevelUp b/c that's where the NetworkMgr looks for it
@@ -220,18 +212,24 @@ public class createAndDestroyLevel : MonoBehaviour {
 		numLevelsCompletedInARow++;
 	}
 
-	int[] GetDayRequirements()
-	{
-		scoreTrackerOneDay st = GetComponent<scoreTrackerOneDay>();
-		return st.GetStarRequirements();
-	}
-
 	public void MakeNewTestLevel(int _levelNumber)
 	{
 		int randSeed = rand.Next(0, 1000000);
 		print (randSeed);
 		DestroyOldLevel();
 		LoadNewLevel(GameObject.Find("LevelSelector").GetComponent<LevelFactory>().GetALevel(Difficulty.Unknown, _levelNumber, randSeed, true), false);
+	}
+
+	public void HideResultsPage()
+	{
+		resultsPage.renderer.enabled = false;
+		foreach (MeshRenderer mr in resultsPage.GetComponentsInChildren<MeshRenderer>())
+		{
+			mr.enabled = false;
+		}
+		isDisplayingScore = false;
+		waitToShowResultsAfterFinishedCounter = waitToShowResultsAfterFinished;
+		levelComplete = false;
 	}
 
 	void OnGUI()
@@ -259,34 +257,34 @@ public class createAndDestroyLevel : MonoBehaviour {
 		}
 		*/
 
-		if (dayComplete)
+		if (levelComplete)
 		{
 			resultsPage.renderer.enabled = true;
 		}
 
-		if (dayComplete && waitToShowResultsAfterFinished <= 0 && !isDisplayingScore)
+		if (levelComplete && waitToShowResultsAfterFinishedCounter <= 0 && !isDisplayingScore)
 		{
 			isDisplayingScore = true;
 
-			scoreTrackerOneDay scoreTrackerComponent = GetComponent<scoreTrackerOneDay>();
-			int resultPoints = scoreTrackerComponent.score;
+			scoreTrackerOneDay st = GetComponent<scoreTrackerOneDay>();
+			int resultPoints = st.score;
 			int resultStars = 0;
-			if (scoreTrackerComponent.score < GetDayRequirements()[0])
+			if (st.score < st.GetStarRequirements()[0])
 			{
 				resultStars = 0;
 				resultsNotes.renderer.material = notesFor0Stars;
 			}
-			else if (scoreTrackerComponent.score < GetDayRequirements()[1])
+			else if (st.score < st.GetStarRequirements()[1])
 			{
 				resultStars = 1;
 				resultsNotes.renderer.material = notesFor1Star;
 			}
-			else if (scoreTrackerComponent.score < GetDayRequirements()[2])
+			else if (st.score < st.GetStarRequirements()[2])
 			{
 				resultStars = 2;
 				resultsNotes.renderer.material = notesFor2Stars;
 			}
-			else if (scoreTrackerComponent.score >= GetDayRequirements()[2])
+			else if (st.score >= st.GetStarRequirements()[2])
 			{
 				resultStars = 3;
 				resultsNotes.renderer.material = notesFor3Stars;

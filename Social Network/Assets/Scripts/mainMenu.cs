@@ -93,7 +93,7 @@ public class mainMenu : MonoBehaviour {
 			}
 			if (splitCounter >= splitLimit)
 			{
-				Application.LoadLevel("Scene_LevelSelection");
+				Application.LoadLevel("Scene_Calendar");
 			}
 		}
 
@@ -112,7 +112,6 @@ public class mainMenu : MonoBehaviour {
 				mainTitleOriginalPosition.z);
 			sinWaveCounter += Time.deltaTime;
 		}
-		print (isMainTitleLerping);
 	}
 
 	void SplitBackground()

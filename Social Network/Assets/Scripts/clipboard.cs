@@ -42,14 +42,20 @@ public class clipboard : MonoBehaviour {
 	public Material buttonTextStart;
 	public Material buttonTextSkip;
 	public Material buttonTextDone;
+	public Material buttonTextBack;
 
     private float watchHandZOffset;
     private GameObject watchHand;
+
+	private bool isSwappingResultsPageForAppointments = false;
+	private float timeToSwap = 2.0f;
+	private float timeToSwapCounter;
 
 	#region StartAndUpdate
 
 	void Start () {
 
+		timeToSwapCounter = timeToSwap;
 		offscreenPosition = new Vector3(transform.position.x, transform.position.y - 13, transform.position.z);
 		originalPosition = transform.position;
 
@@ -80,28 +86,30 @@ public class clipboard : MonoBehaviour {
 				{
 					if (!isHiding)									// if the clipboard is visible
 					{
-						if (hit.transform.name == "StartButton")		// "start/skip" button on clipboard
+						if (hit.transform.tag == "appointment")			// if clicking an appointment
 						{
-							if (buttonState == 0)
+							nextLevelUp = hit.transform.gameObject.GetComponent<Appointment>();
+							createAndDestroyLevelRef.GetStartFromClipboard();
+							currentLevelDifficulty = nextLevelUp.myLevel.difficulty;			// store level difficulty for scoring
+							currentLevelNumBlocks = nextLevelUp.myLevel.level;
+						}
+						else if (hit.transform.name == "StartButton")	// if clicking the "back" button, go back to the calendar
+						{
+							if (buttonState == 0)				// click the "back" button to return to calendar
 							{
-								nextLevelUp = FindTopAppointment();							// figure out which level is up next
-								createAndDestroyLevelRef.GetStartFromClipboard();
-								currentLevelDifficulty = nextLevelUp.myLevel.difficulty;			// store level difficulty for scoring
-								currentLevelNumBlocks = nextLevelUp.myLevel.level;
+								createAndDestroyLevelRef.ReturnToCalendar();
 							}
+
 							else if (buttonState == 2)
 							{
-								createAndDestroyLevelRef.ReturnToLevelSelection();
+								isSwappingResultsPageForAppointments = true;	// if clicking the "done" button from the results screen, go back to clipboard
 							}
-						}
-						else if (hit.transform.name == "QuitButton")
-						{
-							createAndDestroyLevelRef.ReturnToLevelSelection();
+
 						}
 					}
 					else
 					{
-						if (hit.transform.name == "StartButton" && buttonState == 1)	// click the "start/skip" button to give up on the level
+						if (hit.transform.name == "StartButton" && buttonState == 1)			// click the "back" button to give up on the level
 						{
 							createAndDestroyLevelRef.RoundEnd(false);
 							createAndDestroyLevelRef.numLevelsCompletedInARow = 0;
@@ -109,6 +117,24 @@ public class clipboard : MonoBehaviour {
 					}
 				}
 			}
+
+			if (isSwappingResultsPageForAppointments)
+			{
+				if (timeToSwapCounter > 0.0f)
+				{
+					HideClipboard();
+					timeToSwapCounter -= Time.deltaTime;
+				}
+				else
+				{
+					createAndDestroyLevelRef.HideResultsPage();
+					BringUpClipboard();
+					ShowClipboardAppointments();
+					timeToSwapCounter = timeToSwap;
+					isSwappingResultsPageForAppointments = false;
+				}
+			}
+
 		}
 
 		if (isHiding)			// if the clipboard is down
@@ -117,7 +143,7 @@ public class clipboard : MonoBehaviour {
 			transform.position = Vector3.Lerp(_currentPos, offscreenPosition, 0.1f);
 			// end lerp early
 			if (Vector3.Distance(transform.position, offscreenPosition) < 0.1f) { transform.position = offscreenPosition; }
-			startButton.renderer.material = buttonTextSkip; buttonState = 1;
+			buttonState = 1;
 		}
 		else 					// if the clipboard is up
 		{
@@ -125,9 +151,15 @@ public class clipboard : MonoBehaviour {
 			transform.position = Vector3.Lerp(_currentPos, originalPosition, 0.1f);
 			// end lerp early
 			if (Vector3.Distance(transform.position, originalPosition) < 0.1f) { transform.position = originalPosition; }
-			if (!createAndDestroyLevelRef.dayComplete) { startButton.renderer.material = buttonTextStart; buttonState = 0; }
-			else { startButton.renderer.material = buttonTextDone; buttonState = 2; }
+			if (!createAndDestroyLevelRef.levelComplete) { buttonState = 0; }
+			else { buttonState = 2; }
 		}
+
+		// update button with correct text for state
+		if (buttonState == 0) { startButton.renderer.material = buttonTextBack; }
+		else if (buttonState == 1) { startButton.renderer.material = buttonTextBack; }
+		else if (buttonState == 2) { startButton.renderer.material = buttonTextDone; }
+		else { Debug.LogError("Clipboard button state is invalid"); }
 
 		//Check to see if the clipboard is in motion or not
 		if (lastStepPosition != null && lastStepPosition != transform.position)	// if the clipboard is in motion
@@ -329,6 +361,7 @@ public class clipboard : MonoBehaviour {
 		GenerateALevel(ref _appt, _diff, _levelNum, _special_FallToRed, _special_OneClick, _special_CantTouch, _special_NoLines, -1);
 	}
 
+	/*
 	Appointment FindTopAppointment()
 	{
 		Appointment _highestAppointment = null;
@@ -343,16 +376,21 @@ public class clipboard : MonoBehaviour {
 		}
 		return _highestAppointment;
 	}
+	*/
 
+	/*
 	void PopOffFinishedLevel()
 	{
 		try { Destroy(FindTopAppointment().gameObject); }
 		catch { }
 	}
+	*/
 
 	public void BringUpClipboard()
 	{
 		isHiding = false;
+
+		/*
 		PopOffFinishedLevel();								// remove the level that was just played
 
 		if (!createAndDestroyLevelRef.dayComplete)				// if the day is still going...
@@ -363,16 +401,30 @@ public class clipboard : MonoBehaviour {
 				Invoke("CreateAllAppointments", 1.5f);					// ...create new appointments
 			}
 		}
+		*/
 	}
 
-	public void ClearClipboard()
+	public void HideClipboardAppointments()
 	{
 		foreach (Appointment a in transform.GetComponentsInChildren<Appointment>())
 		{
-			Destroy(a.gameObject);					// destroy all remaining appointments
+			a.renderer.enabled = false;	// hide all appointments
+			a.collider.enabled = false;
+			a.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
 		}
 	}
 
+	public void ShowClipboardAppointments()
+	{
+		foreach (Appointment a in transform.GetComponentsInChildren<Appointment>())
+		{
+			a.renderer.enabled = true;	// hide all appointments
+			a.collider.enabled = true;
+			a.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+		}
+	}
+
+	/*
 	void RearrangeAllAppointments()
 	{
 		List<Appointment> _unsortedAppts = new List<Appointment>();
@@ -403,6 +455,7 @@ public class clipboard : MonoBehaviour {
 			i++;
 		}
 	}
+	*/
 
 	public void HideClipboard()
 	{

@@ -244,21 +244,6 @@ public class class_NetworkMgr : MonoBehaviour {
         }
 	}
 
-	// TODO: shouldn't need to calculate store in mood logic
-//	public void CalculateScore()
-//	{
-//	    int counter = 0;
-//	    DebugSummary = "\n==Debug==\n";
-//	    foreach (class_Relationship _relationship in allRelationships)
-//	    {
-//	        DebugSummary += counter + " (" + _relationship.relationshipMembers[0].name.Substring(7) + "," + _relationship.relationshipMembers[1].name.Substring(7) + "): ";
-//	        DebugSummary += _relationship.m_Friendship + "\n";
-//	        counter++;
-//	        
-//	    }
-//	    DebugSummary += "\nStrength: " + changeByAmount;
-//	}
-
 	#endregion
 	
 	#region StartLevelStuff
