@@ -31,6 +31,7 @@ public class calendar : MonoBehaviour {
 			dayList.Add(_newCalDayComponent);
 
 			// set player pref data
+			// TODO: show total star count for day (this should already be determined)
 			if (SaveData.GetInt("M1_D" + i + "_starCount") == 0)
 			{  }
 			else if (SaveData.GetInt("M1_D" + i + "_starCount") == 1)

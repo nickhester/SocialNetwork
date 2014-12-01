@@ -16,6 +16,7 @@ public class Appointment : MonoBehaviour {
 	public GameObject mySpecialOverlay_NoLines;
 
 	public validLevels myLevel;
+	public int levelIndex;
 
 	private string myDisplayText;
 	public string myDisplayText_prop

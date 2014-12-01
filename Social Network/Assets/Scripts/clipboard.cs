@@ -48,7 +48,7 @@ public class clipboard : MonoBehaviour {
     private GameObject watchHand;
 
 	private bool isSwappingResultsPageForAppointments = false;
-	private float timeToSwap = 2.0f;
+	private float timeToSwap = 0.15f;
 	private float timeToSwapCounter;
 
 	#region StartAndUpdate
@@ -240,6 +240,7 @@ public class clipboard : MonoBehaviour {
 					               s1, s2, s3, s4);					// pick a level for the appt
 				}
 
+				_apptComponent.levelIndex = i;
 				listOfLevelDifficulties.RemoveAt(numIndexToGenerate);	// remove used level difficulty
 				listofLevelNumber.RemoveAt(numIndexToGenerate);			// remove used level number
 				listOfSpecialAttributes.RemoveAt(numIndexToGenerate2);	// remove used special item

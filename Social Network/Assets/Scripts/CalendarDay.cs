@@ -65,10 +65,15 @@ public class CalendarDay : MonoBehaviour {
 	#region StartAndUpdate
 
 	void Start () {
+		// create object for the calendar day number
 		GameObject _textNumber = Instantiate(m_text, transform.position, Quaternion.identity) as GameObject;
 		_textNumber.transform.parent = transform;
+		// create object for the week day name
 		GameObject _textDay = Instantiate(m_text, transform.position, Quaternion.identity) as GameObject;
 		_textDay.transform.parent = transform;
+		// create object for the star count
+		GameObject _textStars = Instantiate(m_text, transform.position, Quaternion.identity) as GameObject;
+		_textStars.transform.parent = transform;
 		
 		_textNumber.transform.localScale = _textNumber.transform.localScale * 0.75f;
 		_textNumber.transform.position = new Vector3(transform.position.x - 3.65f, transform.position.y + 0.65f, transform.position.z);
@@ -77,6 +82,11 @@ public class CalendarDay : MonoBehaviour {
 		_textDay.transform.localScale = _textDay.transform.localScale * 0.6f;
 		_textDay.transform.position = new Vector3(transform.position.x, transform.position.y + 0.65f, transform.position.z);
 		_textDay.GetComponent<TextMesh>().text = (dayOfTheWeek.ToString());
+
+		_textStars.transform.localScale = _textStars.transform.localScale * 1.0f;
+		_textStars.transform.position = new Vector3(transform.position.x + 2.0f, transform.position.y + -0.5f, transform.position.z);
+		_textStars.GetComponent<TextMesh>().text = (numStars.ToString() + " / " + "#" + " stars");
+		// TODO: figure out how to display maximum potential number of stars ("3/5 stars")
 	}
 	
 	void Update () {

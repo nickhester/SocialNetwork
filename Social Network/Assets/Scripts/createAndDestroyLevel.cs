@@ -22,6 +22,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 	private GameObject resultsPage;
 	private GameObject resultsNotes;
 	private bool isDisplayingScore = false;
+	private int numActions;
 
 	// clipboard
 	public GameObject myClipboard;
@@ -50,7 +51,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 	public float timeLeft;
 	public int levelsLeftToComplete;
 	public bool levelComplete = false;
-	private float waitToShowResultsAfterFinished = 2.0f;
+	private float waitToShowResultsAfterFinished = 0.0f;
 	private float waitToShowResultsAfterFinishedCounter;
 	private bool gameplayHasStarted = false;
 	private bool isShowingDebugControls = false;
@@ -103,14 +104,18 @@ public class createAndDestroyLevel : MonoBehaviour {
 		bool isSpecialLevel = false;
 		if (_thisLevel.myLevel.isCantTouch || _thisLevel.myLevel.isFallToRed || _thisLevel.myLevel.isNoLines || _thisLevel.myLevel.isOneClick)
 		{ isSpecialLevel = true; }
-		scoreTrackerOneDay st = GetComponent<scoreTrackerOneDay>();
+
+		scoreTrackerOneRound st = GetComponent<scoreTrackerOneRound>();
+		st.Reset();
 
 		if (levelSuccess)
 		{
 			st.UpdateScore(myClipboardComponent.currentLevelDifficulty, numActionsTaken, isSpecialLevel);
+			numActions = numActionsTaken;
 		}
 
 		st.UpdateMaxScore(myClipboardComponent.currentLevelDifficulty, isSpecialLevel, numActionsTaken);
+
 		levelsLeftToComplete--;
 		float waitTimeForClipboard = (levelSuccess ? 1.0f : 0.0f);
 		myClipboardComponent.Invoke("BringUpClipboard", waitTimeForClipboard);
@@ -118,48 +123,61 @@ public class createAndDestroyLevel : MonoBehaviour {
 		Invoke ("DestroyOldLevel", waitTimeForClipboard);
 		//if (levelsLeftToComplete == 0) { DayEnd(); }		// don't need this any more b/c the day never really "ends", but maybe we can use it for some kind of completion screen
 
-		if (!levelSuccess) { return; }
-
-		// show score instructions the first time you finish a round
-		GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(3);
-
-		if (!hasDisplayedLevelEndScreen)
+		if (!hasDisplayedLevelEndScreen && levelSuccess)
 		{
+			// show score instructions the first time you finish a round
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(3);
+
 			levelComplete = true;
 			myClipboardComponent.HideClipboardAppointments();
 			bool receivedStar = false;
 			int thisScore = st.score;
 
-			// TODO: save by round, not by day
+			// TODO: save by round, as well as by day
 			string thisDayString = "M1_D" + myClipboardComponent.selectorRef.dayToGenerate.dayIndex;
 			string nextDayString = "M1_D" + (myClipboardComponent.selectorRef.dayToGenerate.dayIndex + 1);
-			
-			SaveData.SetInt(thisDayString + "_hasBeenCompleted", 1);
-			if (thisScore > SaveData.GetInt(thisDayString + "_highestScore"))
-			{ SaveData.SetInt(thisDayString + "_highestScore", thisScore); }
+			string thisRoundString = thisDayString + "_R" + _thisLevel.levelIndex;
 			
 			int[] levelRequirements = new int[3];
 			levelRequirements = st.GetStarRequirements();
 
 			if (thisScore >= levelRequirements[2])
 			{
-				SaveData.SetInt(thisDayString + "_starCount", 3);
+				SaveData.SetInt(thisRoundString + "_starCount", 3);
 				receivedStar = true;
 			}
 			else if (thisScore >= levelRequirements[1]
-			         && SaveData.GetInt(thisDayString + "_starCount") < 2)
+			         && SaveData.GetInt(thisRoundString + "_starCount") < 2)
 			{
-				SaveData.SetInt(thisDayString + "_starCount", 2);
+				SaveData.SetInt(thisRoundString + "_starCount", 2);
 				receivedStar = true;
 			}
 			else if (thisScore >= levelRequirements[0]
-			         && SaveData.GetInt(thisDayString + "_starCount") < 1)
+			         && SaveData.GetInt(thisRoundString + "_starCount") < 1)
 			{
-				SaveData.SetInt(thisDayString + "_starCount", 1);
+				SaveData.SetInt(thisRoundString + "_starCount", 1);
 				receivedStar = true;
 			}
-			
-			if (receivedStar) { SaveData.SetInt(nextDayString + "_isPlayable", 1); }
+
+			// Check to see if all rounds in day received a star, and also tally stars for the day
+			bool doAllRoundsInDayHaveStars = true;
+			int howManyStarsTotalDay = 0;
+			if (receivedStar)
+			{
+				for (int i = 0; i < myClipboardComponent.selectorRef.dayToGenerate.numAppointments; i++)
+				{
+					int thisDayStarCount = SaveData.GetInt(thisDayString + "_R" + i + "_starCount");
+					howManyStarsTotalDay += thisDayStarCount;
+					if (thisDayStarCount < 1)
+					{
+						doAllRoundsInDayHaveStars = false;
+					}
+				}
+			}
+			// update day's star count
+			SaveData.SetInt(thisDayString + "_starCount", howManyStarsTotalDay);
+			// if so, unlock next day
+			if (receivedStar && doAllRoundsInDayHaveStars) { SaveData.SetInt(nextDayString + "_isPlayable", 1); }
 			
 			SaveData.SetInt("totalPointsAccumulatedOverall", SaveData.GetInt("totalPointsAccumulatedOverall") + thisScore);
 			print ("total points accumulated overall: " + (SaveData.GetInt("totalPointsAccumulatedOverall")));
@@ -230,6 +248,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 		isDisplayingScore = false;
 		waitToShowResultsAfterFinishedCounter = waitToShowResultsAfterFinished;
 		levelComplete = false;
+		hasDisplayedLevelEndScreen = false;
 	}
 
 	void OnGUI()
@@ -266,8 +285,8 @@ public class createAndDestroyLevel : MonoBehaviour {
 		{
 			isDisplayingScore = true;
 
-			scoreTrackerOneDay st = GetComponent<scoreTrackerOneDay>();
-			int resultPoints = st.score;
+			scoreTrackerOneRound st = GetComponent<scoreTrackerOneRound>();
+			int resultActions = numActions;
 			int resultStars = 0;
 			if (st.score < st.GetStarRequirements()[0])
 			{
@@ -291,16 +310,16 @@ public class createAndDestroyLevel : MonoBehaviour {
 			}
 			resultsNotes.renderer.enabled = true;
 
-			foreach (TextMesh scoreText in resultsPage.GetComponentsInChildren<TextMesh>())
+			foreach (TextMesh resultText in resultsPage.GetComponentsInChildren<TextMesh>())
 			{
-				scoreText.renderer.enabled = true;
-				if (scoreText.gameObject.name == "points")
+				resultText.renderer.enabled = true;
+				if (resultText.gameObject.name == "actions")
 				{
-					scoreText.text = resultPoints.ToString();
+					resultText.text = resultActions.ToString();
 				}
-				else if (scoreText.gameObject.name == "stars")
+				else if (resultText.gameObject.name == "stars")
 				{
-					scoreText.text = resultStars.ToString();
+					resultText.text = resultStars.ToString();
 				}
 			}
 		}

@@ -3,29 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 using Types;
 
-public class scoreTrackerOneDay : MonoBehaviour {
+public class scoreTrackerOneRound : MonoBehaviour {
 
-	public int score = 0;
+	public int score;
 
-	private int bonusForVeryEasy = 1;
-	private int bonusForEasy = 2;
-	private int bonusForMedium = 4;
-	private int bonusForHard = 8;
+	private const int bonusForVeryEasy = 1;
+	private const int bonusForEasy = 2;
+	private const int bonusForMedium = 4;
+	private const int bonusForHard = 8;
 	
-	private int bonusSpecialMultiplier = 2;
-	private int bonusPerfectMultiplier = 3;
+	private const int bonusSpecialMultiplier = 2;
+	private const int bonusPerfectMultiplier = 3;
 
-	public int maximumPossibleScore = 0;
+	public int maximumPossibleScore;
+
+	public void Reset ()
+	{
+		score = 0;
+		maximumPossibleScore = 0;
+	}
 
 	// Use this for initialization
 	void Start () {
-		score = 0;
+		Reset();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
 	}
+
 
 	int CalculateNumPointsForDifficulty(Difficulty diff)
 	{
@@ -35,6 +42,7 @@ public class scoreTrackerOneDay : MonoBehaviour {
 		else if (diff == Difficulty.Hard) { return bonusForHard; }
 		return -1;
 	}
+
 
 	public void UpdateMaxScore(Difficulty diff, bool isSpecial, int numActionsTaken)
 	{
@@ -88,21 +96,14 @@ public class scoreTrackerOneDay : MonoBehaviour {
 		if (numActionsTaken <= thisLevel.numClicks && !isSpecial)
 		{
 			scoreToAdd *= bonusPerfectMultiplier;
-			ScorePopUp spu2 = gameObject.AddComponent<ScorePopUp>();
-			spu2.DisplayScorePopUp("Perfect " + bonusPerfectMultiplier.ToString() + "x", -3, 3);
 			print ("score - w/ perfect bonus (" + numActionsTaken + "/" + thisLevel.numClicks + "):" + scoreToAdd);
 		}
 		else if (isSpecial)
 		{
 			scoreToAdd *= bonusSpecialMultiplier;
-			ScorePopUp spu3 = gameObject.AddComponent<ScorePopUp>();
-			spu3.DisplayScorePopUp("Special " + bonusSpecialMultiplier.ToString() + "x", -3, 2);
 			print ("score - w/ special bonus: " + scoreToAdd);
 		}
 
 		score += scoreToAdd;
-
-		ScorePopUp spu = gameObject.AddComponent<ScorePopUp>();
-		spu.DisplayScorePopUp(scoreToAdd.ToString());
 	}
 }
