@@ -24,6 +24,8 @@ public class CalendarDay : MonoBehaviour {
 	}
 	public int numStars;
 	public DayOfTheWeek dayOfTheWeek;
+	private bool hasGottenAllStars = false;
+	private bool hasPassedAllRounds = false;
 
 	// difficulty settings to pass to day creator
 	public int percentVeryEasy = 0;
@@ -57,6 +59,7 @@ public class CalendarDay : MonoBehaviour {
 	public GameObject stars_1;
 	public GameObject stars_2;
 	public GameObject stars_3;
+	public GameObject checkMark;
 	public GameObject overlay_grey;
 
     // text labels
@@ -64,7 +67,7 @@ public class CalendarDay : MonoBehaviour {
 
 	#region StartAndUpdate
 
-	void Start () {
+	void Init () {
 		// create object for the calendar day number
 		GameObject _textNumber = Instantiate(m_text, transform.position, Quaternion.identity) as GameObject;
 		_textNumber.transform.parent = transform;
@@ -83,10 +86,43 @@ public class CalendarDay : MonoBehaviour {
 		_textDay.transform.position = new Vector3(transform.position.x, transform.position.y + 0.65f, transform.position.z);
 		_textDay.GetComponent<TextMesh>().text = (dayOfTheWeek.ToString());
 
-		_textStars.transform.localScale = _textStars.transform.localScale * 1.0f;
-		_textStars.transform.position = new Vector3(transform.position.x + 2.0f, transform.position.y + -0.5f, transform.position.z);
-		_textStars.GetComponent<TextMesh>().text = (numStars.ToString() + " / " + "#" + " stars");
-		// TODO: figure out how to display maximum potential number of stars ("3/5 stars")
+		_textStars.transform.localScale = _textStars.transform.localScale * 0.7f;
+		_textStars.transform.position = new Vector3(transform.position.x + 0.0f, transform.position.y + -0.4f, transform.position.z - 0.2f);
+
+		// show number of rounds completed in that day
+		int numAppointmentsCompleted = 0;
+		int currentNumStars = 0;
+		for (int i = 0; i < numAppointments; i++)
+		{
+			string thisDayString = "M1_D" + dayIndex_internal;
+			string thisRoundString = thisDayString + "_R" + i;
+			int thisRoundNumStars = SaveData.GetInt(thisRoundString + "_starCount");
+			if (thisRoundNumStars > 0)
+			{
+				numAppointmentsCompleted++;
+				currentNumStars += thisRoundNumStars;
+			}
+		}
+		string stringToDisplay = "";
+		if (isPlayable && numAppointmentsCompleted > 0)
+		{
+			stringToDisplay = numAppointmentsCompleted + " of " + numAppointments.ToString() + " sessions";
+			stringToDisplay += "    ";
+			stringToDisplay += currentNumStars.ToString() + " of " + (numAppointments * 3).ToString() + " stars";
+			if (numAppointmentsCompleted == numAppointments)
+			{
+				hasPassedAllRounds = true;
+			}
+			if (currentNumStars == (numAppointments * 3))
+			{
+				hasGottenAllStars = true;
+			}
+		}
+		else
+		{
+			stringToDisplay = "";
+		}
+		_textStars.GetComponent<TextMesh>().text = stringToDisplay;
 	}
 	
 	void Update () {
@@ -105,12 +141,21 @@ public class CalendarDay : MonoBehaviour {
 
 	public void AddStatusOverlay()
 	{
-		Vector3 overlayPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 0.1f);
+		Init();
+
+		Vector3 overlayPosCenter = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 0.1f);
+		Vector3 overlayPosLeft = new Vector3(this.transform.position.x - 2.8f, this.transform.position.y - 0.25f, this.transform.position.z - 0.1f);
+		Vector3 overlayPosRight = new Vector3(this.transform.position.x + 1.0f, this.transform.position.y - 0.25f, this.transform.position.z - 0.1f);
+		/*
 		if (numStars == 1) { GameObject go = Instantiate(stars_1, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
 		else if (numStars == 2) { GameObject go = Instantiate(stars_2, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
 		else if (numStars == 3) { GameObject go = Instantiate(stars_3, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
+		*/
 
-		if (!isPlayable) { GameObject go = Instantiate (overlay_grey, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
+		if (hasPassedAllRounds) { GameObject go = Instantiate(checkMark, overlayPosLeft, Quaternion.identity) as GameObject; go.transform.parent = transform; }
+		if (hasGottenAllStars) { GameObject go = Instantiate(checkMark, overlayPosRight, Quaternion.identity) as GameObject; go.transform.parent = transform; }
+
+		if (!isPlayable) { GameObject go = Instantiate (overlay_grey, overlayPosCenter, Quaternion.identity) as GameObject; go.transform.parent = transform; }
 	}
 
 	public void SetDifficulties(int _VeryEasy, int _Easy, int _Medium, int _Hard)
