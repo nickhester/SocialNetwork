@@ -22,7 +22,7 @@ public class Instructions : MonoBehaviour {
 			// HACK: come up with a better system for showing a series of instructions
 			if (instructionIndex == 2)
 			{
-				SaveData.SetInt("hasSeenInstruction" + instructionIndex, 1);
+				SaveGame.SetSeenInstruction(instructionIndex, true);
 				instructionIndex = 3;
 				ShowInstructions(6);
 			}
@@ -32,7 +32,7 @@ public class Instructions : MonoBehaviour {
 			else if (instructionIndex == 9) { instructionIndex = 10; ShowInstructions(10); }
 			else
 			{
-				SaveData.SetInt("hasSeenInstruction" + instructionIndex, 1);
+				SaveGame.SetSeenInstruction(instructionIndex, true);
 				gameObject.renderer.enabled = false;
 				gameObject.collider.enabled = false;
 			}
@@ -42,7 +42,7 @@ public class Instructions : MonoBehaviour {
 	public void ShowInstructions(int index)
 	{
 		instructionIndex = index;
-		if (SaveData.GetInt("hasSeenInstruction" + instructionIndex) != 1)
+		if (SaveGame.GetSeenInstruction(instructionIndex))
 		{
 			gameObject.renderer.material = instructionMats[instructionIndex];
 			gameObject.renderer.enabled = true;

@@ -18,7 +18,7 @@ public class music : MonoBehaviour {
 
 		myAudioComponent = gameObject.GetComponent<AudioSource>();
 
-		if (SaveData.HasKey("isAudioOn") && SaveData.GetInt("isAudioOn") == 0)
+		if (!SaveGame.GetAudioOn())
 		{
 			myAudioComponent.enabled = false;
 		}

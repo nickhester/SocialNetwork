@@ -32,16 +32,16 @@ public class calendar : MonoBehaviour {
 
 			// set player pref data
 			// TODO: show total star count for day (this should already be determined)
-			if (SaveData.GetInt("M1_D" + i + "_starCount") == 0)
+			if (SaveGame.GetDayStarCount(i) == 0)
 			{  }
-			else if (SaveData.GetInt("M1_D" + i + "_starCount") == 1)
+			else if (SaveGame.GetDayStarCount(i) == 1)
 			{ _newCalDayComponent.numStars = 1; }
-			else if (SaveData.GetInt("M1_D" + i + "_starCount") == 2)
+			else if (SaveGame.GetDayStarCount(i) == 2)
 			{ _newCalDayComponent.numStars = 2; }
-			else if (SaveData.GetInt("M1_D" + i + "_starCount") == 3)
+			else if (SaveGame.GetDayStarCount(i) == 3)
 			{ _newCalDayComponent.numStars = 3; }
 
-			if (SaveData.GetInt("M1_D" + i + "_isPlayable") == 1)
+			if (SaveGame.GetDayIsPlayable(i))
 			{
 				_newCalDayComponent.isPlayable = true;
 				viewingWeek = (int)Mathf.Floor(i / 5.0f);
@@ -61,8 +61,9 @@ public class calendar : MonoBehaviour {
 					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
 
 					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 874353, false, false, false, false));
-					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 278940, false, false, false, false));
-					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 315229, false, false, false, false));
+					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 894346, false, false, false, false));
+					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 577185, false, false, false, false));
+
 					_newCalDayComponent.SetSpecificLevels(reqList);
 
 					break;
@@ -71,10 +72,11 @@ public class calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		4;
 					_newCalDayComponent.SetDifficulties			(50, 50, 0, 0);
 					
-					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 651607, false, false, false, false));
-					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 116645, false, false, false, false));
-					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 213762, false, false, false, false));
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 278940, false, false, false, false));
 					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 85586, false, false, false, false));
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 315229, false, false, false, false));
+					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 651607, false, false, false, false));
+
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					
 					break;
@@ -83,10 +85,11 @@ public class calendar : MonoBehaviour {
 					_newCalDayComponent.SetDifficulties			(25, 75, 0, 0);
 					
 					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 990103, false, false, false, false));
-					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 899196, false, false, false, false));
+					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 116645, false, false, false, false));
+					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 272873, false, false, false, false));
 					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 890388, false, false, false, false));
-					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 595357, false, false, false, false));
 					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 101640, false, false, false, false));
+
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					
 					break;
@@ -94,7 +97,7 @@ public class calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		5;
 					_newCalDayComponent.SetDifficulties			(25, 50, 25, 0);
 					
-					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 653977, false, false, false, false));
+					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 595357, false, false, false, false));
 					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 186873, false, false, false, false));
 					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 950079, false, false, false, false));
 					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 595034, false, false, false, false));

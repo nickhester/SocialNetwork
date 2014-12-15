@@ -14,6 +14,10 @@ public class Appointment : MonoBehaviour {
 	public GameObject mySpecialOverlay_OneClick;
 	public GameObject mySpecialOverlay_CantTouch;
 	public GameObject mySpecialOverlay_NoLines;
+    public GameObject overlay_1Star;
+    public GameObject overlay_2Star;
+    public GameObject overlay_3Star;
+	public GameObject starSlot;
 
 	public validLevels myLevel;
 	public int levelIndex;
@@ -47,31 +51,50 @@ public class Appointment : MonoBehaviour {
 	{
 		// Create text on appointment block
 		myTextObject = Instantiate(textObject, transform.position, Quaternion.identity) as GameObject;
-        myTextObject.transform.localScale = myTextObject.transform.localScale * 0.8f;
+        myTextObject.transform.localScale = myTextObject.transform.localScale * 0.6f;
 		myTextObject.transform.parent = gameObject.transform;
 		myTextComponent = myTextObject.GetComponent<TextMesh>();
 	}
 
 	public void SetMySpecialOverlays()
 	{
+        Vector3 overlaySpecialPos = new Vector3(transform.position.x + 3.8f, transform.position.y, transform.position.z - 0.5f);
+        Vector3 overlaySpecialScale = new Vector3(1, 1, 1);
+
 		if (myLevel.isFallToRed)
-		{ mySpecialOverlay_FallToRed = InstantiateAndPositionOverlay(mySpecialOverlay_FallToRed); }
+		{ mySpecialOverlay_FallToRed = InstantiateAndPositionOverlay(mySpecialOverlay_FallToRed, overlaySpecialPos, overlaySpecialScale); }
 		if (myLevel.isOneClick)
-		{ mySpecialOverlay_OneClick = InstantiateAndPositionOverlay(mySpecialOverlay_OneClick); }
+		{ mySpecialOverlay_OneClick = InstantiateAndPositionOverlay(mySpecialOverlay_OneClick, overlaySpecialPos, overlaySpecialScale); }
 		if (myLevel.isCantTouch)
-		{ mySpecialOverlay_CantTouch = InstantiateAndPositionOverlay(mySpecialOverlay_CantTouch); }
+		{ mySpecialOverlay_CantTouch = InstantiateAndPositionOverlay(mySpecialOverlay_CantTouch, overlaySpecialPos, overlaySpecialScale); }
 		if (myLevel.isNoLines)
-		{ mySpecialOverlay_NoLines = InstantiateAndPositionOverlay(mySpecialOverlay_NoLines); }
+		{ mySpecialOverlay_NoLines = InstantiateAndPositionOverlay(mySpecialOverlay_NoLines, overlaySpecialPos, overlaySpecialScale); }
+        
+		UpdateStarCount();
 	}
 
-	GameObject InstantiateAndPositionOverlay(GameObject _overlay)
+	public void UpdateStarCount()
 	{
-		Vector3 overlayPos = new Vector3(transform.position.x + 3.8f, transform.position.y, transform.position.z - 0.5f);
-		Vector3 overlayScale = new Vector3(1, 1, 1);
+		Vector3 overlayStarPos = new Vector3(transform.position.x + -2.9f, transform.position.y + 0.3f, transform.position.z);
+		Vector3 overlayStarScale = new Vector3(2.0f, 2.0f, 1.0f);
 
-		GameObject returnGO = Instantiate(_overlay, overlayPos, Quaternion.identity) as GameObject;
+		if (starSlot != null) { Destroy(starSlot); }
 
-		returnGO.transform.localScale = overlayScale;
+		int thisAppointmentStarCount = SaveGame.GetRoundStarCount(GameObject.FindObjectOfType<CalendarDay>().dayIndex_internal, levelIndex);
+		if (thisAppointmentStarCount == 3)
+			starSlot = InstantiateAndPositionOverlay(overlay_3Star, overlayStarPos, overlayStarScale);
+		else if (thisAppointmentStarCount == 2)
+			starSlot = InstantiateAndPositionOverlay(overlay_2Star, overlayStarPos, overlayStarScale);
+		else if (thisAppointmentStarCount == 1)
+			starSlot = InstantiateAndPositionOverlay(overlay_1Star, overlayStarPos, overlayStarScale);
+	}
+
+    GameObject InstantiateAndPositionOverlay(GameObject _overlay, Vector3 _overlayPos, Vector3 _overlayScale)
+	{
+
+        GameObject returnGO = Instantiate(_overlay, _overlayPos, Quaternion.identity) as GameObject;
+
+        returnGO.transform.localScale = _overlayScale;
 		returnGO.transform.parent = transform;
 
 		return returnGO;

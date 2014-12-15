@@ -209,6 +209,7 @@ public class clipboard : MonoBehaviour {
 				Appointment _apptComponent = _appt.GetComponent<Appointment>();				// get reference to appointment component
 				_apptComponent.Initialize();
 				_appt.transform.parent = transform;
+				_apptComponent.levelIndex = i;
 
 				int numIndexToGenerate = Random.Range(0, listOfLevelDifficulties.Count);	// this randomizes the order
 				int numIndexToGenerate2 = Random.Range(0, listOfSpecialAttributes.Count);	// this randomizes the order
@@ -240,7 +241,6 @@ public class clipboard : MonoBehaviour {
 					               s1, s2, s3, s4);					// pick a level for the appt
 				}
 
-				_apptComponent.levelIndex = i;
 				listOfLevelDifficulties.RemoveAt(numIndexToGenerate);	// remove used level difficulty
 				listofLevelNumber.RemoveAt(numIndexToGenerate);			// remove used level number
 				listOfSpecialAttributes.RemoveAt(numIndexToGenerate2);	// remove used special item

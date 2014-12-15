@@ -41,32 +41,44 @@ public class mainMenu : MonoBehaviour {
 		mainTitle.transform.position = new Vector3(mainTitleOriginalPosition.x, mainTitleOriginalPosition.y + 6.0f, mainTitleOriginalPosition.z);
 	}
 
+	GameObject getObjectAtMouse()
+	{
+		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+		RaycastHit hit;
+		if (Physics.Raycast (ray, out hit, 10.0f))
+		{
+			if (hit.transform.name.StartsWith("button_"))
+			{
+				return hit.transform.gameObject;
+			}
+		}
+		return null;
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetMouseButton(0))		// when you left click
+		if (Input.GetMouseButtonDown(0))
 		{
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast (ray, out hit, 10.0f))
+			clickedThisGO = getObjectAtMouse();
+			if (clickedThisGO != null)
 			{
-				if (hit.transform.name.StartsWith("button_"))
-				{
-					ClickAButton(hit.transform.gameObject);
-					clickedThisGO = hit.transform.gameObject;
-				}
+				ClickAButton(clickedThisGO);
 			}
 		}
 
 		if (Input.GetMouseButtonUp(0) && clickedThisGO != null)
 		{
-			if (clickedThisGO.name == "button_Start") { SplitBackground(); }
-			else if (clickedThisGO.name == "button_options") { isLerpingTowardOptions = true; }
-			else if (clickedThisGO.name == "button_back") { isLerpingTowardOptions = false; }
-			else if (clickedThisGO.name == "button_clearProgress") { clickedThisGO.renderer.material = confirmClearProgressImage; clickedThisGO.name = "button_clearProgressConfirm"; }
-			else if (clickedThisGO.name == "button_clearProgressConfirm") { clickedThisGO.renderer.material = progressClearedImage; clickedThisGO.name = "progressCleared"; SaveData.DeleteAll(); }
-			else if (clickedThisGO.name == "button_audioOn") { TurnAudioOn(); SaveData.SetInt("isAudioOn", 1); }
-			else if (clickedThisGO.name == "button_audioOff") { TurnAudioOff(); SaveData.SetInt("isAudioOn", 0); }
+			if (clickedThisGO == getObjectAtMouse())
+			{
+				if (clickedThisGO.name == "button_Start") { SplitBackground(); }
+				else if (clickedThisGO.name == "button_options") { isLerpingTowardOptions = true; }
+				else if (clickedThisGO.name == "button_back") { isLerpingTowardOptions = false; }
+				else if (clickedThisGO.name == "button_clearProgress") { clickedThisGO.renderer.material = confirmClearProgressImage; clickedThisGO.name = "button_clearProgressConfirm"; }
+				else if (clickedThisGO.name == "button_clearProgressConfirm") { clickedThisGO.renderer.material = progressClearedImage; clickedThisGO.name = "progressCleared"; SaveGame.DeleteAll(); }
+				else if (clickedThisGO.name == "button_audioOn") { TurnAudioOn(); SaveGame.SetAudioOn(true); }
+				else if (clickedThisGO.name == "button_audioOff") { TurnAudioOff(); SaveGame.SetAudioOn(false); }
+			}
 			isClickingButton = false;
 			UnclickAButton(clickedThisGO);
 		}

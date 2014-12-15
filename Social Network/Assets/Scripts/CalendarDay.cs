@@ -77,15 +77,18 @@ public class CalendarDay : MonoBehaviour {
 		// create object for the star count
 		GameObject _textStars = Instantiate(m_text, transform.position, Quaternion.identity) as GameObject;
 		_textStars.transform.parent = transform;
-		
+
+		// create day number text
 		_textNumber.transform.localScale = _textNumber.transform.localScale * 0.75f;
 		_textNumber.transform.position = new Vector3(transform.position.x - 3.65f, transform.position.y + 0.65f, transform.position.z);
 		_textNumber.GetComponent<TextMesh>().text = ((dayIndex + 1).ToString());
-		
+
+		// create day name text
 		_textDay.transform.localScale = _textDay.transform.localScale * 0.6f;
 		_textDay.transform.position = new Vector3(transform.position.x, transform.position.y + 0.65f, transform.position.z);
 		_textDay.GetComponent<TextMesh>().text = (dayOfTheWeek.ToString());
 
+		// create star count text
 		_textStars.transform.localScale = _textStars.transform.localScale * 0.7f;
 		_textStars.transform.position = new Vector3(transform.position.x + 0.0f, transform.position.y + -0.4f, transform.position.z - 0.2f);
 
@@ -94,9 +97,7 @@ public class CalendarDay : MonoBehaviour {
 		int currentNumStars = 0;
 		for (int i = 0; i < numAppointments; i++)
 		{
-			string thisDayString = "M1_D" + dayIndex_internal;
-			string thisRoundString = thisDayString + "_R" + i;
-			int thisRoundNumStars = SaveData.GetInt(thisRoundString + "_starCount");
+			int thisRoundNumStars = SaveGame.GetRoundStarCount(dayIndex_internal, i);
 			if (thisRoundNumStars > 0)
 			{
 				numAppointmentsCompleted++;

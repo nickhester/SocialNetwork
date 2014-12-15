@@ -10,6 +10,10 @@ public class levelSelector : MonoBehaviour {
 		{
 			_dayToGenerate.collider.enabled = false;
 			_dayToGenerate.renderer.enabled = false;
+			foreach (Renderer r in _dayToGenerate.GetComponentsInChildren<Renderer>())
+			{
+				r.enabled = false;
+			}
 			return this._dayToGenerate;
 		}
 		private set
@@ -31,7 +35,7 @@ public class levelSelector : MonoBehaviour {
 	{
 		foreach (Transform child in _calendarDay.transform.GetComponentsInChildren<Transform>())
 		{
-			if (child != _calendarDay.transform) { Destroy(child.gameObject); }
+			if (child != _calendarDay.transform) {  }
 		}
 		_calendarDay.transform.parent = null;		// unparent calendar day so it doesn't get destroyed with the rest of them
 		DontDestroyOnLoad(_calendarDay.gameObject);

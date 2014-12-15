@@ -99,7 +99,6 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 	public void RoundEnd(bool levelSuccess, int numActionsTaken)
 	{
-		// TODO: Get the level that was clicked, which was not necessarily the next level up
 		Appointment _thisLevel = myClipboardComponent.nextLevelUp;
 		bool isSpecialLevel = false;
 		if (_thisLevel.myLevel.isCantTouch || _thisLevel.myLevel.isFallToRed || _thisLevel.myLevel.isNoLines || _thisLevel.myLevel.isOneClick)
@@ -133,29 +132,26 @@ public class createAndDestroyLevel : MonoBehaviour {
 			bool receivedStar = false;
 			int thisScore = st.score;
 
-			// TODO: save by round, as well as by day
-			string thisDayString = "M1_D" + myClipboardComponent.selectorRef.dayToGenerate.dayIndex;
-			string nextDayString = "M1_D" + (myClipboardComponent.selectorRef.dayToGenerate.dayIndex + 1);
-			string thisRoundString = thisDayString + "_R" + _thisLevel.levelIndex;
+			int currentDayIndex = myClipboardComponent.selectorRef.dayToGenerate.dayIndex;
 			
 			int[] levelRequirements = new int[3];
 			levelRequirements = st.GetStarRequirements();
 
 			if (thisScore >= levelRequirements[2])
 			{
-				SaveData.SetInt(thisRoundString + "_starCount", 3);
+				SaveGame.SetRoundStarCount(currentDayIndex, _thisLevel.levelIndex, 3);
 				receivedStar = true;
 			}
 			else if (thisScore >= levelRequirements[1]
-			         && SaveData.GetInt(thisRoundString + "_starCount") < 2)
+			         && SaveGame.GetRoundStarCount(currentDayIndex, _thisLevel.levelIndex) < 2)
 			{
-				SaveData.SetInt(thisRoundString + "_starCount", 2);
+				SaveGame.SetRoundStarCount(currentDayIndex, _thisLevel.levelIndex, 2);
 				receivedStar = true;
 			}
 			else if (thisScore >= levelRequirements[0]
-			         && SaveData.GetInt(thisRoundString + "_starCount") < 1)
+			         && SaveGame.GetRoundStarCount(currentDayIndex, _thisLevel.levelIndex) < 1)
 			{
-				SaveData.SetInt(thisRoundString + "_starCount", 1);
+				SaveGame.SetRoundStarCount(currentDayIndex, _thisLevel.levelIndex, 1);
 				receivedStar = true;
 			}
 
@@ -166,7 +162,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 			{
 				for (int i = 0; i < myClipboardComponent.selectorRef.dayToGenerate.numAppointments; i++)
 				{
-					int thisDayStarCount = SaveData.GetInt(thisDayString + "_R" + i + "_starCount");
+					int thisDayStarCount = SaveGame.GetRoundStarCount(currentDayIndex, i);
 					howManyStarsTotalDay += thisDayStarCount;
 					if (thisDayStarCount < 1)
 					{
@@ -175,16 +171,15 @@ public class createAndDestroyLevel : MonoBehaviour {
 				}
 			}
 			// update day's star count
-			SaveData.SetInt(thisDayString + "_starCount", howManyStarsTotalDay);
-			// if so, unlock next day
-			if (receivedStar && doAllRoundsInDayHaveStars) { SaveData.SetInt(nextDayString + "_isPlayable", 1); }
-			
-			SaveData.SetInt("totalPointsAccumulatedOverall", SaveData.GetInt("totalPointsAccumulatedOverall") + thisScore);
-			print ("total points accumulated overall: " + (SaveData.GetInt("totalPointsAccumulatedOverall")));
-			
-			SaveData.Save();
+			SaveGame.SetDayStarCount(currentDayIndex, howManyStarsTotalDay);
+			// if true, unlock next day
+			if (receivedStar && doAllRoundsInDayHaveStars) { SaveGame.SetDayIsPlayable(currentDayIndex + 1, true); }
 			
 			hasDisplayedLevelEndScreen = true;
+		}
+		if (levelSuccess)
+		{
+			_thisLevel.UpdateStarCount();
 		}
 	}
 	
