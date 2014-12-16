@@ -42,7 +42,7 @@ public class Instructions : MonoBehaviour {
 	public void ShowInstructions(int index)
 	{
 		instructionIndex = index;
-		if (SaveGame.GetSeenInstruction(instructionIndex))
+		if (!SaveGame.GetSeenInstruction(instructionIndex))
 		{
 			gameObject.renderer.material = instructionMats[instructionIndex];
 			gameObject.renderer.enabled = true;

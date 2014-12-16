@@ -13,12 +13,15 @@ public class parti_pulse : MonoBehaviour {
 	private Color currentColor;
 	private float countDown;
 
+	public Color posColor;
+	public Color negColor;
+
 	// Use this for initialization
 	void Start () {
 		myParti = GetComponent<ParticleSystem>();
 
-		if (isGreenAction) { currentColor = Color.green; }
-		else { currentColor = Color.red; }
+		if (isGreenAction) { currentColor = posColor; }
+		else { currentColor = negColor; }
 		myParti.startColor = currentColor;
 
 		countDown = timeToMove;
@@ -45,11 +48,11 @@ public class parti_pulse : MonoBehaviour {
 			{
 				if (isGreenAction)
 				{
-					currentColor = Color.red;
+					currentColor = negColor;
 				}
 				else
 				{
-					currentColor = Color.green;
+					currentColor = posColor;
 				}
 			}
 		}

@@ -113,13 +113,13 @@ public class calendar : MonoBehaviour {
 					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 29864, false, false, false, false));
 					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 131922, false, false, false, false));
 					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 996259, false, false, false, false));
+					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 362846, false, false, false, false));
 					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 666502, false, false, false, false));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 207756, false, false, false, false));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 
 				// WEEK 2 --------------
-				// This week, the levels are randomly generated, and the hardest levels are introduced
+				// This week "cantTouch" special levels are introduced
 
 				case 5:	// monday
 					_newCalDayComponent.numAppointments = 		4;
@@ -143,8 +143,7 @@ public class calendar : MonoBehaviour {
 					break;
 
 				// WEEK 3 --------------
-				// This week, special levels are introduced with mostly easy levels.
-				// Each appt starts with a chosen level before then being randomly chosen.
+				// This week "oneClick" special levels are introduced
 					
 				case 10:	// monday
 					_newCalDayComponent.numAppointments = 		4;
@@ -185,7 +184,7 @@ public class calendar : MonoBehaviour {
 					break;
 
 				// WEEK 4 --------------
-				// All levels are random now, special levels interspersed manually
+				// This week "fallToRed" special levels are introduced
 					
 				case 15:	// monday
 					_newCalDayComponent.numAppointments = 		3;
@@ -214,7 +213,7 @@ public class calendar : MonoBehaviour {
 					break;
 
 				// WEEK 5 --------------
-				// same as before...
+				// This week "noLines" special levels are introduced
 					
 				case 20:	// monday
 					_newCalDayComponent.numAppointments = 		5;
@@ -243,7 +242,7 @@ public class calendar : MonoBehaviour {
 					break;
 
 				// WEEK 6 --------------
-					// same as before...
+				// everything...
 					
 				case 25:	// monday
 					_newCalDayComponent.numAppointments = 		6;
@@ -281,20 +280,27 @@ public class calendar : MonoBehaviour {
 			_newCalDay.name = (_newCalDayComponent.dayIndex + 1).ToString() + " " + _newCalDayComponent.dayOfTheWeek.ToString();
 			_newCalDayComponent.AddStatusOverlay();
 		}
+
+		// show instructions on specific weeks of the calendar view
 		if (viewingWeek == 0)
 		{
-			// show score instructions the first time see the calendar
 			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(0);
 		}
 		else if (viewingWeek == 1)
 		{
-			// show score instructions when you start the second week
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(4);
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(11);
 		}
 		else if (viewingWeek == 2)
 		{
-			// show score instructions when you start the third week
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(5);
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(12);
+		}
+		else if (viewingWeek == 3)
+		{
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(13);
+		}
+		else if (viewingWeek == 4)
+		{
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(14);
 		}
 	}
 	

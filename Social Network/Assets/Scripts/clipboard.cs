@@ -411,7 +411,10 @@ public class clipboard : MonoBehaviour {
 		{
 			a.renderer.enabled = false;	// hide all appointments
 			a.collider.enabled = false;
-			a.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+			foreach (MeshRenderer childRenderer in a.transform.GetComponentsInChildren<MeshRenderer>())
+			{
+				childRenderer.enabled = false;
+			}
 		}
 	}
 
@@ -421,7 +424,10 @@ public class clipboard : MonoBehaviour {
 		{
 			a.renderer.enabled = true;	// hide all appointments
 			a.collider.enabled = true;
-			a.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+			foreach (MeshRenderer childRenderer in a.transform.GetComponentsInChildren<MeshRenderer>())
+			{
+				childRenderer.enabled = true;
+			}
 		}
 	}
 
