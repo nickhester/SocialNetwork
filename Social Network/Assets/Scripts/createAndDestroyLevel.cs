@@ -113,8 +113,6 @@ public class createAndDestroyLevel : MonoBehaviour {
 			numActions = numActionsTaken;
 		}
 
-		st.UpdateMaxScore(myClipboardComponent.currentLevelDifficulty, isSpecialLevel, numActionsTaken);
-
 		levelsLeftToComplete--;
 		float waitTimeForClipboard = (levelSuccess ? 1.0f : 0.0f);
 		myClipboardComponent.Invoke("BringUpClipboard", waitTimeForClipboard);
@@ -130,30 +128,11 @@ public class createAndDestroyLevel : MonoBehaviour {
 			levelComplete = true;
 			myClipboardComponent.HideClipboardAppointments();
 			bool receivedStar = false;
-			int thisScore = st.score;
 
 			int currentDayIndex = myClipboardComponent.selectorRef.dayToGenerate.dayIndex;
-			
-			int[] levelRequirements = new int[3];
-			levelRequirements = st.GetStarRequirements();
 
-			if (thisScore >= levelRequirements[2])
-			{
-				SaveGame.SetRoundStarCount(currentDayIndex, _thisLevel.levelIndex, 3);
-				receivedStar = true;
-			}
-			else if (thisScore >= levelRequirements[1]
-			         && SaveGame.GetRoundStarCount(currentDayIndex, _thisLevel.levelIndex) < 2)
-			{
-				SaveGame.SetRoundStarCount(currentDayIndex, _thisLevel.levelIndex, 2);
-				receivedStar = true;
-			}
-			else if (thisScore >= levelRequirements[0]
-			         && SaveGame.GetRoundStarCount(currentDayIndex, _thisLevel.levelIndex) < 1)
-			{
-				SaveGame.SetRoundStarCount(currentDayIndex, _thisLevel.levelIndex, 1);
-				receivedStar = true;
-			}
+			SaveGame.SetRoundStarCount(currentDayIndex, _thisLevel.levelIndex, st.score);
+			receivedStar = true;
 
 			// Check to see if all rounds in day received a star, and also tally stars for the day
 			bool doAllRoundsInDayHaveStars = true;
@@ -282,27 +261,20 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 			scoreTrackerOneRound st = GetComponent<scoreTrackerOneRound>();
 			int resultActions = numActions;
-			int resultStars = 0;
-			if (st.score < st.GetStarRequirements()[0])
-			{
-				resultStars = 0;
+			int resultStars = st.score;
+
+			if (resultStars == 0)
 				resultsNotes.renderer.material = notesFor0Stars;
-			}
-			else if (st.score < st.GetStarRequirements()[1])
-			{
-				resultStars = 1;
+
+			else if (resultStars == 1)
 				resultsNotes.renderer.material = notesFor1Star;
-			}
-			else if (st.score < st.GetStarRequirements()[2])
-			{
-				resultStars = 2;
+
+			else if (resultStars == 2)
 				resultsNotes.renderer.material = notesFor2Stars;
-			}
-			else if (st.score >= st.GetStarRequirements()[2])
-			{
-				resultStars = 3;
+
+			else if (resultStars == 3)
 				resultsNotes.renderer.material = notesFor3Stars;
-			}
+
 			resultsNotes.renderer.enabled = true;
 
 			foreach (TextMesh resultText in resultsPage.GetComponentsInChildren<TextMesh>())
