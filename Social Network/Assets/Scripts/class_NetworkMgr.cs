@@ -45,6 +45,8 @@ public class class_NetworkMgr : MonoBehaviour {
 	public AudioClip audioActionPos;
 	public AudioClip audioActionNeg;
 
+	public Material redAndGreenButton_keys;
+
 	#endregion
 
 	#region StartAndUpdate
@@ -76,6 +78,13 @@ public class class_NetworkMgr : MonoBehaviour {
 		cursorSecondaryInst.transform.parent = selectionCursorInst.transform;
 
 		myAudioComponent = gameObject.GetComponent<AudioSource>() as AudioSource;
+
+		#if UNITY_WEBPLAYER
+		
+		GameObject.Find("redAndGreenButtons").renderer.material = redAndGreenButton_keys;
+		print("if statement");
+
+		#endif
 	}
 
 	void Update ()
