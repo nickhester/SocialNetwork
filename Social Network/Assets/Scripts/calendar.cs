@@ -56,6 +56,7 @@ public class calendar : MonoBehaviour {
 
 				case 0:	// monday
 					_newCalDayComponent.isPlayable = true;					// the first level is always playable by default
+					SaveGame.SetDayIsPlayable(0, true);
 
 					_newCalDayComponent.numAppointments = 		3;
 					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
@@ -377,7 +378,16 @@ public class calendar : MonoBehaviour {
 
 		Vector3 targetWeekPosition = new Vector3(-viewingWeek * distanceBetweenWeeks, dayParent.transform.position.y, 0);
 		dayParent.transform.position = Vector3.Lerp(dayParent.transform.position, targetWeekPosition, 0.1f);
+	}
 
+	public int Get_daysToGenerate()
+	{
+		return daysToGenerate;
+	}
+
+	public int Get_dayNumAppointments(int dayIndex)
+	{
+		return dayList[dayIndex].numAppointments;
 	}
 
 	void OnGUI()

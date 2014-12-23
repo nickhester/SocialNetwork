@@ -5,10 +5,7 @@ public class SaveGame {
 
 	public static void SetSeenInstruction(int instructionIndex, bool hasSeen)
 	{
-		if (hasSeen)
-			SaveData.SetInt("hasSeenInstruction" + instructionIndex, 1);
-		else
-			SaveData.SetInt("hasSeenInstruction" + instructionIndex, 0);
+		SaveData.SetInt("hasSeenInstruction" + instructionIndex, (hasSeen ? 1 : 0));
 		SaveAllData();
 	}
 
@@ -19,7 +16,7 @@ public class SaveGame {
 
 	public static void SetDayStarCount(int day, int count)
 	{
-		SaveData.SetInt(GetDayStarCount(day) + "_starCount", count);
+		SaveData.SetInt(FormatDayString(day) + "_starCount", count);
 		SaveAllData();
 	}
 
@@ -37,6 +34,17 @@ public class SaveGame {
 	public static int GetRoundStarCount(int day, int round)
 	{
 		return SaveData.GetInt(FormatRoundString(day, round) + "_starCount");
+	}
+
+	public static void SetHasCompletedAllRoundsInDay(int day, bool hasCompletedAllRounds)
+	{
+		SaveData.SetInt(FormatDayString(day) + "_hasCompletedAllRoundsInDay", (hasCompletedAllRounds ? 1 : 0));
+		SaveAllData();
+	}
+
+	public static bool GetHasCompletedAllRoundsInDay(int day)
+	{
+		return (SaveData.GetInt(FormatDayString(day) + "_hasCompletedAllRoundsInDay") == 1);
 	}
 
 	private static string FormatDayString(int day)

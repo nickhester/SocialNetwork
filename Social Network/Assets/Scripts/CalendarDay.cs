@@ -25,7 +25,7 @@ public class CalendarDay : MonoBehaviour {
 	public int numStars;
 	public DayOfTheWeek dayOfTheWeek;
 	private bool hasGottenAllStars = false;
-	private bool hasPassedAllRounds = false;
+	public bool hasPassedAllRounds = false;
 
 	// difficulty settings to pass to day creator
 	public int percentVeryEasy = 0;
@@ -35,7 +35,6 @@ public class CalendarDay : MonoBehaviour {
 	public int numAppointments;
 	//public int timeLimit;
 	public bool isPlayable = false;
-	public bool hasBeenCompleted = false;
 	public bool hasSpecificLevelRequests = false;
 	public List<validLevels> specificLevelsRequested = new List<validLevels>();
 
@@ -59,24 +58,29 @@ public class CalendarDay : MonoBehaviour {
 	public GameObject stars_1;
 	public GameObject stars_2;
 	public GameObject stars_3;
-	public GameObject checkMark;
+	public GameObject stampCheck;
+	public GameObject stampStar;
 	public GameObject overlay_grey;
 
     // text labels
-    public GameObject m_text;
+    public GameObject m_text1;
+	public GameObject m_text2;
 
 	#region StartAndUpdate
 
 	void Init () {
 		// create object for the calendar day number
-		GameObject _textNumber = Instantiate(m_text, transform.position, Quaternion.identity) as GameObject;
+		GameObject _textNumber = Instantiate(m_text1, transform.position, Quaternion.identity) as GameObject;
+		_textNumber.transform.localScale *= 0.065f;
 		_textNumber.transform.parent = transform;
 		// create object for the week day name
-		GameObject _textDay = Instantiate(m_text, transform.position, Quaternion.identity) as GameObject;
+		GameObject _textDay = Instantiate(m_text1, transform.position, Quaternion.identity) as GameObject;
 		_textDay.transform.parent = transform;
+		_textDay.transform.localScale *= 0.065f;
 		// create object for the star count
-		GameObject _textStars = Instantiate(m_text, transform.position, Quaternion.identity) as GameObject;
+		GameObject _textStars = Instantiate(m_text2, transform.position, Quaternion.identity) as GameObject;
 		_textStars.transform.parent = transform;
+		_textStars.transform.localScale *= 0.06f;
 
 		// create day number text
 		_textNumber.transform.localScale = _textNumber.transform.localScale * 0.75f;
@@ -108,11 +112,12 @@ public class CalendarDay : MonoBehaviour {
 		if (isPlayable && numAppointmentsCompleted > 0)
 		{
 			stringToDisplay = numAppointmentsCompleted + " of " + numAppointments.ToString() + " sessions";
-			stringToDisplay += "    ";
+			stringToDisplay += " - ";
 			stringToDisplay += currentNumStars.ToString() + " of " + (numAppointments * 3).ToString() + " stars";
 			if (numAppointmentsCompleted == numAppointments)
 			{
 				hasPassedAllRounds = true;
+				SaveGame.SetHasCompletedAllRoundsInDay(dayIndex_internal, hasPassedAllRounds);
 			}
 			if (currentNumStars == (numAppointments * 3))
 			{
@@ -145,16 +150,16 @@ public class CalendarDay : MonoBehaviour {
 		Init();
 
 		Vector3 overlayPosCenter = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 0.1f);
-		Vector3 overlayPosLeft = new Vector3(this.transform.position.x - 2.8f, this.transform.position.y - 0.25f, this.transform.position.z - 0.1f);
-		Vector3 overlayPosRight = new Vector3(this.transform.position.x + 1.0f, this.transform.position.y - 0.25f, this.transform.position.z - 0.1f);
+		Vector3 overlayPosLeft = new Vector3(this.transform.position.x - 3.2f, this.transform.position.y - 0.25f, this.transform.position.z - 0.1f);
+		Vector3 overlayPosRight = new Vector3(this.transform.position.x + 3.2f, this.transform.position.y - 0.25f, this.transform.position.z - 0.1f);
 		/*
 		if (numStars == 1) { GameObject go = Instantiate(stars_1, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
 		else if (numStars == 2) { GameObject go = Instantiate(stars_2, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
 		else if (numStars == 3) { GameObject go = Instantiate(stars_3, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
 		*/
 
-		if (hasPassedAllRounds) { GameObject go = Instantiate(checkMark, overlayPosLeft, Quaternion.identity) as GameObject; go.transform.parent = transform; }
-		if (hasGottenAllStars) { GameObject go = Instantiate(checkMark, overlayPosRight, Quaternion.identity) as GameObject; go.transform.parent = transform; }
+		if (hasPassedAllRounds) { GameObject go = Instantiate(stampCheck, overlayPosLeft, Quaternion.identity) as GameObject; go.transform.parent = transform; }
+		if (hasGottenAllStars) { GameObject go = Instantiate(stampStar, overlayPosRight, Quaternion.identity) as GameObject; go.transform.parent = transform; }
 
 		if (!isPlayable) { GameObject go = Instantiate (overlay_grey, overlayPosCenter, Quaternion.identity) as GameObject; go.transform.parent = transform; }
 	}

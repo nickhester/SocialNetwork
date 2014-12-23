@@ -131,7 +131,8 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 			int currentDayIndex = myClipboardComponent.selectorRef.dayToGenerate.dayIndex;
 
-			SaveGame.SetRoundStarCount(currentDayIndex, _thisLevel.levelIndex, st.score);
+			if (st.score > SaveGame.GetRoundStarCount(currentDayIndex, _thisLevel.levelIndex))
+				SaveGame.SetRoundStarCount(currentDayIndex, _thisLevel.levelIndex, st.score);
 			receivedStar = true;
 
 			// Check to see if all rounds in day received a star, and also tally stars for the day
@@ -152,7 +153,11 @@ public class createAndDestroyLevel : MonoBehaviour {
 			// update day's star count
 			SaveGame.SetDayStarCount(currentDayIndex, howManyStarsTotalDay);
 			// if true, unlock next day
-			if (receivedStar && doAllRoundsInDayHaveStars) { SaveGame.SetDayIsPlayable(currentDayIndex + 1, true); }
+			if (receivedStar && doAllRoundsInDayHaveStars)
+			{
+				SaveGame.SetDayIsPlayable(currentDayIndex + 1, true);
+				SaveGame.SetHasCompletedAllRoundsInDay(currentDayIndex, true);
+			}
 			
 			hasDisplayedLevelEndScreen = true;
 		}

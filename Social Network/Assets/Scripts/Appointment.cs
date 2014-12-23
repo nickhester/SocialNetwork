@@ -50,8 +50,8 @@ public class Appointment : MonoBehaviour {
 	public void Initialize()
 	{
 		// Create text on appointment block
-		myTextObject = Instantiate(textObject, transform.position, Quaternion.identity) as GameObject;
-        myTextObject.transform.localScale = myTextObject.transform.localScale * 0.6f;
+		myTextObject = Instantiate(textObject, new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z), Quaternion.identity) as GameObject;
+		myTextObject.transform.localScale = myTextObject.transform.localScale * 0.045f;
 		myTextObject.transform.parent = gameObject.transform;
 		myTextComponent = myTextObject.GetComponent<TextMesh>();
 	}

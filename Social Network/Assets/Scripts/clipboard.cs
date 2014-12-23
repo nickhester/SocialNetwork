@@ -51,6 +51,17 @@ public class clipboard : MonoBehaviour {
 	private float timeToSwap = 0.15f;
 	private float timeToSwapCounter;
 
+	public GameObject badgeCheck;
+	public GameObject badgeStar;
+	private Vector3 badgeCheckOriginalPos;
+	private Vector3 badgeStarOriginalPos;
+	private float distanceToPushBadges = 2.0f;
+	private float lerpSpeed = 0.1f;
+	private bool areBadgesInFinalPosition = false;
+	private bool badgeCheckIsAlreadyShowing = false;
+	private bool badgeStarIsAlreadyShowing = false;
+	private bool needsToCheckProgressAgain = false;
+
 	#region StartAndUpdate
 
 	void Start () {
@@ -72,6 +83,12 @@ public class clipboard : MonoBehaviour {
 		createAndDestroyLevelRef.m_levelsAvailable = selectorRef.dayToGenerate.numAppointments;
 
 		CreateAllAppointments();
+
+		// place badges
+		badgeCheckOriginalPos = badgeCheck.transform.position;
+		badgeStarOriginalPos = badgeStar.transform.position;
+		badgeCheck.transform.position = new Vector3(badgeCheck.transform.position.x, badgeCheck.transform.position.y + distanceToPushBadges, badgeCheck.transform.position.z);
+		badgeStar.transform.position = new Vector3(badgeStar.transform.position.x, badgeStar.transform.position.y + distanceToPushBadges, badgeStar.transform.position.z);
 	}
 
 	// Update is called once per frame
@@ -134,7 +151,6 @@ public class clipboard : MonoBehaviour {
 					isSwappingResultsPageForAppointments = false;
 				}
 			}
-
 		}
 
 		if (isHiding)			// if the clipboard is down
@@ -153,6 +169,46 @@ public class clipboard : MonoBehaviour {
 			if (Vector3.Distance(transform.position, originalPosition) < 0.1f) { transform.position = originalPosition; }
 			if (!createAndDestroyLevelRef.levelComplete) { buttonState = 0; }
 			else { buttonState = 2; }
+
+			// badge stuff
+			if (!areBadgesInFinalPosition && !isInMotion)
+			{
+				bool isCheck = false;
+				bool isStar = false;
+				if (SaveGame.GetHasCompletedAllRoundsInDay(selectorRef.dayToGenerate.dayIndex_internal))
+				{
+					badgeCheck.transform.position = Vector3.Lerp(badgeCheck.transform.position, badgeCheckOriginalPos, lerpSpeed);
+					isCheck = true;
+
+					if ((selectorRef.dayToGenerate.numAppointments * 3) == SaveGame.GetDayStarCount(selectorRef.dayToGenerate.dayIndex_internal))
+					{
+						badgeStar.transform.position = Vector3.Lerp(badgeStar.transform.position, badgeStarOriginalPos, lerpSpeed);
+						isStar = true;
+					}
+				}
+				if (!isCheck && !isStar)
+					areBadgesInFinalPosition = true;
+				else if (isCheck && Mathf.Abs(badgeCheck.transform.position.y - badgeCheckOriginalPos.y) < 0.025f)
+				{
+					badgeCheck.transform.position = badgeCheckOriginalPos;
+					badgeCheckIsAlreadyShowing = true;
+					if (!isStar)
+					{
+						areBadgesInFinalPosition = true;
+					}
+					else if (isStar && Mathf.Abs(badgeStar.transform.position.y - badgeStarOriginalPos.y) < 0.025f)
+					{
+						badgeStar.transform.position = badgeStarOriginalPos;
+						badgeStarIsAlreadyShowing = true;
+						areBadgesInFinalPosition = true;
+					}
+				}
+			}
+			if (needsToCheckProgressAgain && !isInMotion && !isHiding)
+			{
+				areBadgesInFinalPosition = false;
+				needsToCheckProgressAgain = false;
+			}
 		}
 
 		// update button with correct text for state
@@ -362,47 +418,11 @@ public class clipboard : MonoBehaviour {
 		GenerateALevel(ref _appt, _diff, _levelNum, _special_FallToRed, _special_OneClick, _special_CantTouch, _special_NoLines, -1);
 	}
 
-	/*
-	Appointment FindTopAppointment()
-	{
-		Appointment _highestAppointment = null;
-		float _highestYValue = -999.0f;
-		foreach (Appointment a in transform.GetComponentsInChildren<Appointment>())
-		{
-			if (a.transform.position.y > _highestYValue)
-			{
-				_highestYValue = a.transform.position.y;
-				_highestAppointment = a;
-			}
-		}
-		return _highestAppointment;
-	}
-	*/
-
-	/*
-	void PopOffFinishedLevel()
-	{
-		try { Destroy(FindTopAppointment().gameObject); }
-		catch { }
-	}
-	*/
-
 	public void BringUpClipboard()
 	{
 		isHiding = false;
 
-		/*
-		PopOffFinishedLevel();								// remove the level that was just played
-
-		if (!createAndDestroyLevelRef.dayComplete)				// if the day is still going...
-		{
-			Invoke("RearrangeAllAppointments", 0.75f);			// arrange appts
-			if (createAndDestroyLevelRef.levelsAvailable > 0)	// and if there are more to be added to the clipboard...
-			{
-				Invoke("CreateAllAppointments", 1.5f);					// ...create new appointments
-			}
-		}
-		*/
+		needsToCheckProgressAgain = true;
 	}
 
 	public void HideClipboardAppointments()
@@ -430,39 +450,6 @@ public class clipboard : MonoBehaviour {
 			}
 		}
 	}
-
-	/*
-	void RearrangeAllAppointments()
-	{
-		List<Appointment> _unsortedAppts = new List<Appointment>();
-		List<Appointment> _sortedAppts = new List<Appointment>();
-		_unsortedAppts.AddRange(transform.GetComponentsInChildren<Appointment>());
-
-		int counter = 0;
-		while (_unsortedAppts.Count > 0 && counter < 50)
-		{
-			Appointment _nextHighestAppointment = null;
-			foreach (Appointment a in _unsortedAppts)		// find all appointments and sort into a top-down list
-			{
-				if (_nextHighestAppointment == null || _nextHighestAppointment.transform.position.y < a.transform.position.y)
-				{
-					_nextHighestAppointment = a;
-				}
-			}
-			_unsortedAppts.Remove(_nextHighestAppointment);
-			_sortedAppts.Add (_nextHighestAppointment);
-			counter++;
-		}
-
-		int i = 0;
-		foreach (Appointment a in _sortedAppts)
-		{
-			a.myLerpTarget = new Vector3(transform.position.x, transform.position.y - (i*appointmentSpacing) + appointmentTop, transform.position.z - 0.1f);
-			a.isLerping = true;
-			i++;
-		}
-	}
-	*/
 
 	public void HideClipboard()
 	{
