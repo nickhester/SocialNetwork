@@ -61,10 +61,15 @@ public class calendarProgressBar : MonoBehaviour {
 		GameObject barStarsComplete = LineGeneric.CreateLineMesh(starBarStartPos, starBarEndPos, lineWidth, 0.0f, 0.0f);
 		barStarsComplete.renderer.material = new Material(Shader.Find("Transparent/VertexLit"));
 		barStarsComplete.renderer.material.color = barColor;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+		// show game completion notes ("instruction" pages)
+		if (numDaysCompleted == numTotalDays)
+		{
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(15);
+		}
+		if (numStarsAcquired == numTotalPossibleStars)
+		{
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(16);
+		}
 	}
 }

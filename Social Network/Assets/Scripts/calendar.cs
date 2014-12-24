@@ -409,6 +409,14 @@ public class calendar : MonoBehaviour {
 					day.isPlayable = true;
 				}
 			}
+			if (debugActivateClickCount >= 6)
+			{
+				// TODO: iterate through all levels and set save data to having passed all levels
+			}
+			if (debugActivateClickCount >= 7)
+			{
+				// TODO: iterate through all levels and set save data to having earned all stars
+			}
 		}
 	}
 }
