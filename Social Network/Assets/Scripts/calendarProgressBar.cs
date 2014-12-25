@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class calendarProgressBar : MonoBehaviour {
@@ -57,19 +57,21 @@ public class calendarProgressBar : MonoBehaviour {
 		GameObject barSessionsComplete = LineGeneric.CreateLineMesh(sessionBarStartPos, sessionBarEndPos, lineWidth, 0.0f, 0.0f);
 		barSessionsComplete.renderer.material = new Material(Shader.Find("Transparent/VertexLit"));
 		barSessionsComplete.renderer.material.color = barColor;
+		barSessionsComplete.renderer.material.SetColor("_Emission", barColor);
 
 		GameObject barStarsComplete = LineGeneric.CreateLineMesh(starBarStartPos, starBarEndPos, lineWidth, 0.0f, 0.0f);
 		barStarsComplete.renderer.material = new Material(Shader.Find("Transparent/VertexLit"));
 		barStarsComplete.renderer.material.color = barColor;
+		barStarsComplete.renderer.material.SetColor("_Emission", barColor);
 
 		// show game completion notes ("instruction" pages)
 		if (numDaysCompleted == numTotalDays)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(15);
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(15, false);
 		}
 		if (numStarsAcquired == numTotalPossibleStars)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(16);
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(16, false);
 		}
 	}
 }

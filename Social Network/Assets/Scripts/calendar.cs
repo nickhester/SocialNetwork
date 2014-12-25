@@ -325,23 +325,23 @@ public class calendar : MonoBehaviour {
 		// show instructions on specific weeks of the calendar view
 		if (viewingWeek == 0)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(0);
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(0, false);
 		}
 		else if (viewingWeek == 1)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(11);
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(11, false);
 		}
 		else if (viewingWeek == 2)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(12);
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(12, false);
 		}
 		else if (viewingWeek == 3)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(13);
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(13, false);
 		}
 		else if (viewingWeek == 4)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(14);
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(14, false);
 		}
 	}
 	
@@ -400,6 +400,7 @@ public class calendar : MonoBehaviour {
 		{
 			debugActivateClickCount++;
 
+			// show debug button and allow player to click any level (but not save that the level is unlocked)
 			if (debugActivateClickCount >= 5)
 			{
 				GUI.color = new Color(1, 1, 1, 1);
@@ -409,13 +410,37 @@ public class calendar : MonoBehaviour {
 					day.isPlayable = true;
 				}
 			}
-			if (debugActivateClickCount >= 6)
+			// save data that the player has passed every level with 1 star
+			if (debugActivateClickCount == 6)
 			{
-				// TODO: iterate through all levels and set save data to having passed all levels
+				for (int i = 0; i < daysToGenerate; i++) {
+					SaveGame.SetHasCompletedAllRoundsInDay(i, true);
+					SaveGame.SetDayIsPlayable(i, true);
+					SaveGame.SetDayStarCount(i, Get_dayNumAppointments(i));
+					for (int j = 0; j < Get_dayNumAppointments(i); j++) {
+						SaveGame.SetRoundStarCount(i, j, 1);
+					}
+				}
 			}
-			if (debugActivateClickCount >= 7)
+			// save data that the player has passed every level with 2 star
+			if (debugActivateClickCount == 7)
 			{
-				// TODO: iterate through all levels and set save data to having earned all stars
+				for (int i = 0; i < daysToGenerate; i++) {
+					SaveGame.SetDayStarCount(i, Get_dayNumAppointments(i) * 2);
+					for (int j = 0; j < Get_dayNumAppointments(i); j++) {
+						SaveGame.SetRoundStarCount(i, j, 2);
+					}
+				}
+			}
+			// save data that the player has passed every level with 3 star
+			if (debugActivateClickCount == 8)
+			{
+				for (int i = 0; i < daysToGenerate; i++) {
+					SaveGame.SetDayStarCount(i, Get_dayNumAppointments(i) * 3);
+					for (int j = 0; j < Get_dayNumAppointments(i); j++) {
+						SaveGame.SetRoundStarCount(i, j, 3);
+					}
+				}
 			}
 		}
 	}

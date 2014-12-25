@@ -123,7 +123,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 		if (!hasDisplayedLevelEndScreen && levelSuccess)
 		{
 			// show score instructions the first time you finish a round
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructions(3);
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(3, false);
 
 			levelComplete = true;
 			myClipboardComponent.HideClipboardAppointments();
@@ -203,7 +203,11 @@ public class createAndDestroyLevel : MonoBehaviour {
 		difficultySelection = _incomingLevel.difficulty;
 		LoadNewLevel(_incomingLevel);
 
-		//class_NetworkMgr mgr = GameObject.Find("networkMgr").GetComponent<class_NetworkMgr>();
+		// showing instructions on first time play
+		List<int> gameStartInstructionSeries = new List<int>();
+		int[] temp = { 2, 6, 7, 8, 9, 10 };
+		gameStartInstructionSeries.AddRange(temp);
+		GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, false);
 
 		gameplayHasStarted = true;
 		numLevelsCompletedInARow++;

@@ -72,11 +72,13 @@ public class CalendarDay : MonoBehaviour {
 		// create object for the calendar day number
 		GameObject _textNumber = Instantiate(m_text1, transform.position, Quaternion.identity) as GameObject;
 		_textNumber.transform.localScale *= 0.065f;
+		_textNumber.transform.position = new Vector3(transform.position.x, transform.position.y + 0.65f, transform.position.z - 0.1f);
 		_textNumber.transform.parent = transform;
 		// create object for the week day name
 		GameObject _textDay = Instantiate(m_text1, transform.position, Quaternion.identity) as GameObject;
 		_textDay.transform.parent = transform;
 		_textDay.transform.localScale *= 0.065f;
+		_textDay.transform.position = new Vector3(transform.position.x, transform.position.y + 0.65f, transform.position.z - 0.1f);
 		// create object for the star count
 		GameObject _textStars = Instantiate(m_text2, transform.position, Quaternion.identity) as GameObject;
 		_textStars.transform.parent = transform;
@@ -84,12 +86,12 @@ public class CalendarDay : MonoBehaviour {
 
 		// create day number text
 		_textNumber.transform.localScale = _textNumber.transform.localScale * 0.75f;
-		_textNumber.transform.position = new Vector3(transform.position.x - 3.65f, transform.position.y + 0.65f, transform.position.z);
+		_textNumber.transform.position = new Vector3(transform.position.x - 3.65f, transform.position.y + 0.65f, transform.position.z - 0.1f);
 		_textNumber.GetComponent<TextMesh>().text = ((dayIndex + 1).ToString());
 
 		// create day name text
 		_textDay.transform.localScale = _textDay.transform.localScale * 0.6f;
-		_textDay.transform.position = new Vector3(transform.position.x, transform.position.y + 0.65f, transform.position.z);
+		_textDay.transform.position = new Vector3(transform.position.x, transform.position.y + 0.65f, transform.position.z - 0.1f);
 		_textDay.GetComponent<TextMesh>().text = (dayOfTheWeek.ToString());
 
 		// create star count text

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class mainMenu : MonoBehaviour {
 
@@ -78,6 +79,13 @@ public class mainMenu : MonoBehaviour {
 				else if (clickedThisGO.name == "button_clearProgressConfirm") { clickedThisGO.renderer.material = progressClearedImage; clickedThisGO.name = "progressCleared"; SaveGame.DeleteAll(); }
 				else if (clickedThisGO.name == "button_audioOn") { TurnAudioOn(); SaveGame.SetAudioOn(true); }
 				else if (clickedThisGO.name == "button_audioOff") { TurnAudioOff(); SaveGame.SetAudioOn(false); }
+				else if (clickedThisGO.name == "button_viewInstructions")
+				{
+					List<int> gameStartInstructionSeries = new List<int>();
+					int[] temp = { 6, 7, 8, 9, 10 };
+					gameStartInstructionSeries.AddRange(temp);
+					GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, true);
+				}
 			}
 			isClickingButton = false;
 			UnclickAButton(clickedThisGO);

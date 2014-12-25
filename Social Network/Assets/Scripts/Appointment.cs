@@ -50,7 +50,7 @@ public class Appointment : MonoBehaviour {
 	public void Initialize()
 	{
 		// Create text on appointment block
-		myTextObject = Instantiate(textObject, new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z), Quaternion.identity) as GameObject;
+		myTextObject = Instantiate(textObject, new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z - 0.1f), Quaternion.identity) as GameObject;
 		myTextObject.transform.localScale = myTextObject.transform.localScale * 0.045f;
 		myTextObject.transform.parent = gameObject.transform;
 		myTextComponent = myTextObject.GetComponent<TextMesh>();
@@ -75,7 +75,7 @@ public class Appointment : MonoBehaviour {
 
 	public void UpdateStarCount()
 	{
-		Vector3 overlayStarPos = new Vector3(transform.position.x + -2.9f, transform.position.y + 0.3f, transform.position.z);
+		Vector3 overlayStarPos = new Vector3(transform.position.x + -2.9f, transform.position.y + 0.3f, transform.position.z - 0.1f);
 		Vector3 overlayStarScale = new Vector3(2.0f, 2.0f, 1.0f);
 
 		if (starSlot != null) { Destroy(starSlot); }

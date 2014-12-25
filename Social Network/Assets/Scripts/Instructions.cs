@@ -4,49 +4,68 @@ using System.Collections.Generic;
 
 public class Instructions : MonoBehaviour {
 
-	public int instructionIndex;
-	public List<Material> instructionMats;
+	public List<int> instructionsToShow = new List<int>();
+	public List<Material> instructionMats = new List<Material>();
 	public bool hasClickedDown = false;
+	private bool hasBeenDisplayingForOneFrame = false;
 
 	// Use this for initialization
 	void Start () {
-		gameObject.renderer.enabled = false;
-		gameObject.collider.enabled = false;
-		ShowInstructions(instructionIndex);
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown(0) && gameObject.renderer.enabled)
+
+		if (gameObject.renderer.enabled && Input.GetMouseButtonDown(0) && hasBeenDisplayingForOneFrame)
 		{
-			// HACK: come up with a better system for showing a series of instructions
-			if (instructionIndex == 2)
+			if (instructionsToShow.Count != 0)
 			{
-				SaveGame.SetSeenInstruction(instructionIndex, true);
-				instructionIndex = 3;
-				ShowInstructions(6);
+				DisplayNextInstruction(true);
 			}
-			else if (instructionIndex == 6) { instructionIndex = 7; ShowInstructions(7); }
-			else if (instructionIndex == 7) { instructionIndex = 8; ShowInstructions(8); }
-			else if (instructionIndex == 8) { instructionIndex = 9; ShowInstructions(9); }
-			else if (instructionIndex == 9) { instructionIndex = 10; ShowInstructions(10); }
 			else
 			{
-				SaveGame.SetSeenInstruction(instructionIndex, true);
 				gameObject.renderer.enabled = false;
 				gameObject.collider.enabled = false;
 			}
 		}
+
+		// make sure not to take a click from something else
+		if (gameObject.renderer.enabled)
+			hasBeenDisplayingForOneFrame = true;
 	}
 
-	public void ShowInstructions(int index)
+	public void ShowInstruction(int index, bool forceShow)
 	{
-		instructionIndex = index;
-		if (!SaveGame.GetSeenInstruction(instructionIndex))
+		instructionsToShow.Clear();
+		instructionsToShow.Add(index);
+		DisplayNextInstruction(forceShow);
+	}
+
+	private void DisplayNextInstruction(bool forceShow)
+	{
+		bool hasSeenThisOne = SaveGame.GetSeenInstruction(instructionsToShow[0]);
+		if (forceShow || !hasSeenThisOne)
 		{
-			gameObject.renderer.material = instructionMats[instructionIndex];
+			gameObject.renderer.material = instructionMats[instructionsToShow[0]];
 			gameObject.renderer.enabled = true;
 			gameObject.collider.enabled = true;
+			hasBeenDisplayingForOneFrame = false;
 		}
+		if (!forceShow)
+		{
+			SaveGame.SetSeenInstruction(instructionsToShow[0], true);
+		}
+		instructionsToShow.RemoveAt(0);
+	}
+
+	public void ShowInstructionSeries(List<int> indicies, bool forceShow)
+	{
+		instructionsToShow.Clear();
+		foreach (int i in indicies)
+		{
+			instructionsToShow.Add(i);
+		}
+		DisplayNextInstruction(forceShow);
 	}
 }

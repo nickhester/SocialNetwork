@@ -98,5 +98,6 @@ public class SaveGame {
 	public static void DeleteAll()
 	{
 		SaveData.DeleteAll();
+		SaveAllData();
 	}
 }

@@ -89,6 +89,8 @@ public class clipboard : MonoBehaviour {
 		badgeStarOriginalPos = badgeStar.transform.position;
 		badgeCheck.transform.position = new Vector3(badgeCheck.transform.position.x, badgeCheck.transform.position.y + distanceToPushBadges, badgeCheck.transform.position.z);
 		badgeStar.transform.position = new Vector3(badgeStar.transform.position.x, badgeStar.transform.position.y + distanceToPushBadges, badgeStar.transform.position.z);
+
+		GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(1, false);
 	}
 
 	// Update is called once per frame
