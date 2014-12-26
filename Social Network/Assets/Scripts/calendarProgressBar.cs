@@ -10,6 +10,7 @@ public class calendarProgressBar : MonoBehaviour {
 	public float lineWidth;
 	public float lineLength;
 	public Color barColor;
+	public GameObject text;
 
 	// Use this for initialization
 	void Start () {
@@ -73,5 +74,20 @@ public class calendarProgressBar : MonoBehaviour {
 		{
 			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(16, false);
 		}
+
+		// Create text
+		GameObject myTextSessions = Instantiate(text, new Vector3(transform.position.x + 2.4f, transform.position.y + 0.5f, transform.position.z - 0.1f), Quaternion.identity) as GameObject;
+		myTextSessions.transform.localScale = myTextSessions.transform.localScale * 0.033f;
+		myTextSessions.transform.parent = gameObject.transform;
+		TextMesh myTextSessionsComponent = myTextSessions.GetComponent<TextMesh>();
+		myTextSessionsComponent.anchor = TextAnchor.MiddleRight;
+		myTextSessionsComponent.text = numDaysCompleted + "/" + numTotalDays;
+
+		GameObject myTextStars = Instantiate(text, new Vector3(transform.position.x + 2.4f, transform.position.y - 0.2f, transform.position.z - 0.1f), Quaternion.identity) as GameObject;
+		myTextStars.transform.localScale = myTextStars.transform.localScale * 0.033f;
+		myTextStars.transform.parent = gameObject.transform;
+		TextMesh myTextStarsComponent = myTextStars.GetComponent<TextMesh>();
+		myTextStarsComponent.anchor = TextAnchor.MiddleRight;
+		myTextStarsComponent.text = numStarsAcquired + "/" + numTotalPossibleStars;;
 	}
 }

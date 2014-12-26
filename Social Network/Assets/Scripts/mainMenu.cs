@@ -27,6 +27,7 @@ public class mainMenu : MonoBehaviour {
 	private float splitLimit = 2.0f;
 	public Material confirmClearProgressImage;
 	public Material progressClearedImage;
+	public GameObject text;
 
 	// Use this for initialization
 	void Start () {
@@ -40,6 +41,13 @@ public class mainMenu : MonoBehaviour {
 		mainTitle = GameObject.Find("mainTitle");
 		mainTitleOriginalPosition = mainTitle.transform.position;
 		mainTitle.transform.position = new Vector3(mainTitleOriginalPosition.x, mainTitleOriginalPosition.y + 6.0f, mainTitleOriginalPosition.z);
+
+		// display software version number
+		GameObject versionTextObject = Instantiate(text, new Vector3(1.8f, -16.5f, -1.0f), Quaternion.identity) as GameObject;
+		versionTextObject.transform.localScale = versionTextObject.transform.localScale * 0.02f;
+		versionTextObject.transform.parent = gameObject.transform;
+		TextMesh myTextComponent = versionTextObject.GetComponent<TextMesh>();
+		myTextComponent.text = "Version 1.0";
 	}
 
 	GameObject getObjectAtMouse()
@@ -85,6 +93,10 @@ public class mainMenu : MonoBehaviour {
 					int[] temp = { 6, 7, 8, 9, 10 };
 					gameStartInstructionSeries.AddRange(temp);
 					GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, true);
+				}
+				else if (clickedThisGO.name == "button_viewCredits")
+				{
+					GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(17, true);
 				}
 			}
 			isClickingButton = false;
