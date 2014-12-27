@@ -71,20 +71,39 @@ public class SaveGame {
 		return (SaveData.GetInt(FormatDayString(day) + "_isPlayable") == 1);
 	}
 
-	public static void SetAudioOn(bool isOn)
+	public static void SetAudioOn_sfx(bool isOn)
 	{
 		if (isOn)
-			SaveData.SetInt("isAudioOn", 1);
+			SaveData.SetInt("isAudioOn_sfx", 1);
 		else
-			SaveData.SetInt("isAudioOn", 0);
+			SaveData.SetInt("isAudioOn_sfx", 0);
 		SaveAllData();
 	}
 
-	public static bool GetAudioOn()
+	public static bool GetAudioOn_sfx()
 	{
-		if (!SaveData.HasKey("isAudioOn"))	// if it has not been set, audio should be on
+		if (!SaveData.HasKey("isAudioOn_sfx"))	// if it has not been set, audio should be on
 			return true;
-		else if (SaveData.GetInt("isAudioOn") == 1)	// if it has been set to 1, audio should be on
+		else if (SaveData.GetInt("isAudioOn_sfx") == 1)	// if it has been set to 1, audio should be on
+			return true;
+		else
+			return false;
+	}
+
+	public static void SetAudioOn_music(bool isOn)
+	{
+		if (isOn)
+			SaveData.SetInt("isAudioOn_music", 1);
+		else
+			SaveData.SetInt("isAudioOn_music", 0);
+		SaveAllData();
+	}
+	
+	public static bool GetAudioOn_music()
+	{
+		if (!SaveData.HasKey("isAudioOn_music"))	// if it has not been set, audio should be on
+			return true;
+		else if (SaveData.GetInt("isAudioOn_music") == 1)	// if it has been set to 1, audio should be on
 			return true;
 		else
 			return false;

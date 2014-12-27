@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class music : MonoBehaviour {
@@ -18,7 +18,7 @@ public class music : MonoBehaviour {
 
 		myAudioComponent = gameObject.GetComponent<AudioSource>();
 
-		if (!SaveGame.GetAudioOn())
+		if (!SaveGame.GetAudioOn_music())
 		{
 			myAudioComponent.enabled = false;
 		}

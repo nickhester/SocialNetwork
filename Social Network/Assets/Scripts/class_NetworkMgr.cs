@@ -18,7 +18,7 @@ public class class_NetworkMgr : MonoBehaviour {
 	public bool isReadingSeedFromFile;
 	public TextAsset validSeedList;
 	private bool levelIsComplete = false;
-	private int percentHasRelationship = 50;
+	private const int percentHasRelationship = 50;
 	private validLevels levelUsed;
 
 	// Debug and Score
@@ -44,7 +44,10 @@ public class class_NetworkMgr : MonoBehaviour {
 	private AudioSource myAudioComponent;
 	public AudioClip audioActionPos;
 	public AudioClip audioActionNeg;
+	[HideInInspector]
+	public bool isAudioOn_sfx;
 
+	// for webplayer only
 	public Material redAndGreenButton_keys;
 
 	#endregion
@@ -78,6 +81,8 @@ public class class_NetworkMgr : MonoBehaviour {
 		cursorSecondaryInst.transform.parent = selectionCursorInst.transform;
 
 		myAudioComponent = gameObject.GetComponent<AudioSource>() as AudioSource;
+		if (SaveGame.GetAudioOn_sfx()) { isAudioOn_sfx = true; }
+		else { isAudioOn_sfx = false; }
 
 		#if UNITY_WEBPLAYER
 		
@@ -85,6 +90,22 @@ public class class_NetworkMgr : MonoBehaviour {
 		print("if statement");
 
 		#endif
+	}
+
+	private void TakeAction(bool isPositive)
+	{
+		if (isPositive)
+		{
+			TriggerRelationshipChange(currentlySelectedPerson, true);
+			if (isAudioOn_sfx) { myAudioComponent.clip = audioActionPos; }
+		}
+		else
+		{
+			TriggerRelationshipChange(currentlySelectedPerson, false);
+			if (isAudioOn_sfx) { myAudioComponent.clip = audioActionNeg; }
+		}
+		if (isAudioOn_sfx) { myAudioComponent.Play(); }
+		numActionsTaken++;
 	}
 
 	void Update ()
@@ -109,34 +130,22 @@ public class class_NetworkMgr : MonoBehaviour {
 				}
 				else if (hit.transform.name == "Button_green" && currentlySelectedPerson != null)
 				{
-					TriggerRelationshipChange(currentlySelectedPerson, true);
-					myAudioComponent.clip = audioActionPos;
-					myAudioComponent.Play();
-					numActionsTaken++;
+					TakeAction(true);
 				}
 				else if (hit.transform.name == "Button_red" && currentlySelectedPerson != null)
 				{
-					TriggerRelationshipChange(currentlySelectedPerson, false);
-					myAudioComponent.clip = audioActionNeg;
-					myAudioComponent.Play();
-					numActionsTaken++;
+					TakeAction(false);
 				}
 			}
 		}
 
 		if (Input.GetKeyDown(KeyCode.Q) && currentlySelectedPerson != null)
 		{
-			TriggerRelationshipChange(currentlySelectedPerson, true);
-			myAudioComponent.clip = audioActionPos;
-			myAudioComponent.Play();
-			numActionsTaken++;
+			TakeAction(true);
 		}
 		else if (Input.GetKeyDown(KeyCode.W) && currentlySelectedPerson != null)
 		{
-			TriggerRelationshipChange(currentlySelectedPerson, false);
-			myAudioComponent.clip = audioActionNeg;
-			myAudioComponent.Play();
-			numActionsTaken++;
+			TakeAction(false);
 		}
 		
 		selectionCursorInst.transform.position = Vector3.Lerp(selectionCursorCurrentPos, selectionCursorTargetPos, 0.25f);

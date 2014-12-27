@@ -25,9 +25,14 @@ public class mainMenu : MonoBehaviour {
 	private float splitSpeed = 9.0f;
 	private float splitCounter = 0.0f;
 	private float splitLimit = 2.0f;
+
 	public Material confirmClearProgressImage;
 	public Material progressClearedImage;
 	public GameObject text;
+
+	public Material audio_sfx;
+	public Material audio_music;
+	public Material audio_off;
 
 	// Use this for initialization
 	void Start () {
@@ -48,6 +53,12 @@ public class mainMenu : MonoBehaviour {
 		versionTextObject.transform.parent = gameObject.transform;
 		TextMesh myTextComponent = versionTextObject.GetComponent<TextMesh>();
 		myTextComponent.text = "Version 1.0";
+
+		// make sure audio icons check are accurately on or off
+		if (SaveGame.GetAudioOn_music() == false)
+			GameObject.Find("button_music").renderer.material = audio_off;
+		if (SaveGame.GetAudioOn_sfx() == false)
+			GameObject.Find("button_sfx").renderer.material = audio_off;
 	}
 
 	GameObject getObjectAtMouse()
@@ -85,8 +96,37 @@ public class mainMenu : MonoBehaviour {
 				else if (clickedThisGO.name == "button_back") { isLerpingTowardOptions = false; }
 				else if (clickedThisGO.name == "button_clearProgress") { clickedThisGO.renderer.material = confirmClearProgressImage; clickedThisGO.name = "button_clearProgressConfirm"; }
 				else if (clickedThisGO.name == "button_clearProgressConfirm") { clickedThisGO.renderer.material = progressClearedImage; clickedThisGO.name = "progressCleared"; SaveGame.DeleteAll(); }
-				else if (clickedThisGO.name == "button_audioOn") { TurnAudioOn(); SaveGame.SetAudioOn(true); }
-				else if (clickedThisGO.name == "button_audioOff") { TurnAudioOff(); SaveGame.SetAudioOn(false); }
+
+				// AUDIO
+				else if (clickedThisGO.name == "button_sfx")
+				{
+					if (SaveGame.GetAudioOn_sfx())
+					{
+						SaveGame.SetAudioOn_sfx(false);
+						clickedThisGO.renderer.material = audio_off;
+					}
+					else
+					{
+						SaveGame.SetAudioOn_sfx(true);
+						clickedThisGO.renderer.material = audio_sfx;
+					}
+				}
+				else if (clickedThisGO.name == "button_music")
+				{
+					if (SaveGame.GetAudioOn_music())
+					{
+						TurnMusicOff();
+						SaveGame.SetAudioOn_music(false);
+						clickedThisGO.renderer.material = audio_off;
+					}
+					else
+					{
+						TurnMusicOn();
+						SaveGame.SetAudioOn_music(true);
+						clickedThisGO.renderer.material = audio_music;
+					}
+				}
+
 				else if (clickedThisGO.name == "button_viewInstructions")
 				{
 					List<int> gameStartInstructionSeries = new List<int>();
@@ -166,13 +206,13 @@ public class mainMenu : MonoBehaviour {
 		hit.transform.localScale = originalScale;
 	}
 
-	void TurnAudioOff()
+	void TurnMusicOff()
 	{
 		AudioSource audio = GameObject.Find("Music Player").GetComponent<AudioSource>();
 		audio.enabled = false;
 	}
 
-	void TurnAudioOn()
+	void TurnMusicOn()
 	{
 		AudioSource m_audio = GameObject.Find("Music Player").GetComponent<AudioSource>();
 		m_audio.enabled = true;

@@ -6,7 +6,13 @@ public class audioToggle : MonoBehaviour {
 	public Material matOn;
 	public Material matOff;
 
-	private bool musicIsOn;
+	private bool audioIsOn = true;
+	public enum typeOfAudio
+	{
+		music,
+		sfx
+	};
+	public typeOfAudio audioType;
 
 	// Use this for initialization
 	void Start () {
@@ -19,15 +25,32 @@ public class audioToggle : MonoBehaviour {
 		}
 		DontDestroyOnLoad(gameObject);
 
-		if (SaveGame.GetAudioOn() == true)
+		if (audioType == typeOfAudio.sfx)
 		{
-			gameObject.renderer.material = matOn;
-			musicIsOn = true;
+			// TODO: figure out why this isn't working!!!
+			if (SaveGame.GetAudioOn_sfx())
+			{
+				gameObject.renderer.material = matOn;
+				audioIsOn = true;
+			}
+			else
+			{
+				gameObject.renderer.material = matOff;
+				audioIsOn = false;
+			}
 		}
-		else
+		else if (audioType == typeOfAudio.music)
 		{
-			gameObject.renderer.material = matOff;
-			musicIsOn = false;
+			if (SaveGame.GetAudioOn_music())
+			{
+				gameObject.renderer.material = matOn;
+				audioIsOn = true;
+			}
+			else
+			{
+				gameObject.renderer.material = matOff;
+				audioIsOn = false;
+			}
 		}
 	
 	}
@@ -39,24 +62,41 @@ public class audioToggle : MonoBehaviour {
 		{
 			if (getObjectAtMouse() == gameObject)
 			{
-				if (musicIsOn == true)
+				GameObject networkManagerObject = GameObject.Find("networkMgr");
+				if (audioIsOn)
 				{
-					SaveGame.SetAudioOn(false);
-					gameObject.renderer.material = matOff;
-					musicIsOn = false;
+					if (audioType == typeOfAudio.sfx) { SaveGame.SetAudioOn_sfx(false); }
+					else { SaveGame.SetAudioOn_music(false); }
 
+					gameObject.renderer.material = matOff;
+					audioIsOn = false;
+
+					if (audioType == typeOfAudio.music)
+					{
 					AudioSource audio = GameObject.Find("Music Player").GetComponent<AudioSource>();
 					audio.enabled = false;
+					}
+
+
 				}
 				else
 				{
-					SaveGame.SetAudioOn(true);
+					if (audioType == typeOfAudio.sfx) { SaveGame.SetAudioOn_sfx(true); }
+					else { SaveGame.SetAudioOn_music(true); }
 					gameObject.renderer.material = matOn;
-					musicIsOn = true;
+					audioIsOn = true;
 
-					AudioSource m_audio = GameObject.Find("Music Player").GetComponent<AudioSource>();
-					m_audio.enabled = true;
-					m_audio.Play();
+					if (audioType == typeOfAudio.music)
+					{
+						AudioSource m_audio = GameObject.Find("Music Player").GetComponent<AudioSource>();
+						m_audio.enabled = true;
+						m_audio.Play();
+					}
+				}
+				// push bool to network manager
+				if ((audioType == typeOfAudio.sfx) && (networkManagerObject != null))
+				{
+					networkManagerObject.GetComponent<class_NetworkMgr>().isAudioOn_sfx = audioIsOn;
 				}
 			}
 		}
