@@ -12,6 +12,7 @@ public class calendar : MonoBehaviour {
 	private int viewingWeek;
 	private bool isDebugActive = false;
 	private int debugActivateClickCount = 0;
+	private int furthestDayUnlocked = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -31,7 +32,6 @@ public class calendar : MonoBehaviour {
 			dayList.Add(_newCalDayComponent);
 
 			// set player pref data
-			// TODO: show total star count for day (this should already be determined)
 			if (SaveGame.GetDayStarCount(i) == 0)
 			{  }
 			else if (SaveGame.GetDayStarCount(i) == 1)
@@ -45,6 +45,7 @@ public class calendar : MonoBehaviour {
 			{
 				_newCalDayComponent.isPlayable = true;
 				viewingWeek = (int)Mathf.Floor(i / 5.0f);
+				furthestDayUnlocked = i;
 			}
 
 			// configure settings for each day ##################################################
@@ -366,6 +367,15 @@ public class calendar : MonoBehaviour {
 		else if (viewingWeek == 4)
 		{
 			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(14, false);
+		}
+
+		// show instructions on specific days of the calendar view
+		if (furthestDayUnlocked == 1)
+		{
+			List<int> gameStartInstructionSeries = new List<int>();
+			int[] temp = { 18, 19, 20, 21, 22, 23, 24, 25 };
+			gameStartInstructionSeries.AddRange(temp);
+			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, false);
 		}
 	}
 	

@@ -6,7 +6,7 @@ public class audioToggle : MonoBehaviour {
 	public Material matOn;
 	public Material matOff;
 
-	private bool audioIsOn = true;
+	public bool audioIsOn = true;
 	public enum typeOfAudio
 	{
 		music,
@@ -52,7 +52,8 @@ public class audioToggle : MonoBehaviour {
 				audioIsOn = false;
 			}
 		}
-	
+		int a = 1 + 1;
+		int b = a * a;
 	}
 	
 	// Update is called once per frame
@@ -113,5 +114,12 @@ public class audioToggle : MonoBehaviour {
 			return hit.transform.gameObject;
 		}
 		return null;
+	}
+
+
+	void OnLevelWasLoaded(int level)
+	{
+		if (level == 0)
+			Destroy(gameObject);
 	}
 }
