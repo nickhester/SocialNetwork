@@ -260,9 +260,9 @@ level:7,difficulty:Hard,seed:481739,clicks:5,oneClick:True,cantTouch:4,path:0T-2
 level:7,difficulty:Hard,seed:36335,clicks:5,oneClick:True,cantTouch:3,path:3F-0F-5F-2F-1T-,cantTouchPath:4T-0F-5F-2F-1T-
 level:7,difficulty:Hard,seed:658771,clicks:5,oneClick:True,cantTouch:0,path:4T-2F-0F-1T-3T-,cantTouchPath:4T-2F-1T-6T-3T-
 level:7,difficulty:Hard,seed:210624,clicks:5,oneClick:True,cantTouch:6,path:0T-1F-5F-4T-6T-,cantTouchPath:1F-2T-5F-4T-0T-
-level:7,difficulty:Hard,seed:834303,clicks:5,oneClick:True,cantTouch:2,path:0T-2F-1T-3T-5T-,cantTouchPath:0T-4T-1T-3T-5T-
-level:7,difficulty:Hard,seed:488836,clicks:5,oneClick:True,cantTouch:4,path:4F-2F-0T-1T-5T-,cantTouchPath:3T-6T-2F-0T-1T-5T-
 //-----END USED--------------------------------------------------------------------------------------------
+level:7,difficulty:Hard,seed:488836,clicks:5,oneClick:True,cantTouch:4,path:4F-2F-0T-1T-5T-,cantTouchPath:3T-6T-2F-0T-1T-5T-
+level:7,difficulty:Hard,seed:834303,clicks:5,oneClick:True,cantTouch:2,path:0T-2F-1T-3T-5T-,cantTouchPath:0T-4T-1T-3T-5T-
 level:7,difficulty:Hard,seed:983882,clicks:6,oneClick:True,cantTouch:3,path:3T-2T-5T-6F-1F-0T-,cantTouchPath:4F-2T-5T-6F-1F-0T-
 level:7,difficulty:Hard,seed:336096,clicks:5,oneClick:True,cantTouch:1,path:1F-3F-5F-0T-6T-,cantTouchPath:2T-3F-5F-0T-6T-
 level:7,difficulty:Hard,seed:912599,clicks:5,oneClick:True,cantTouch:0,path:0T-4F-5T-1T-3T-,cantTouchPath:2F-4F-5T-1T-3T-
@@ -292,8 +292,8 @@ level:8,difficulty:Medium,seed:216198,clicks:4,oneClick:True,cantTouch:5,path:1F
 level:8,difficulty:Medium,seed:186008,clicks:3,oneClick:True,cantTouch:1,path:0F-1T-6T-,cantTouchPath:2T-0F-6T-
 level:8,difficulty:Medium,seed:143004,clicks:4,oneClick:True,cantTouch:1,path:0T-3T-4T-1T-,cantTouchPath:5T-3T-4F-2T-6F-0T-
 level:8,difficulty:Medium,seed:213262,clicks:4,oneClick:True,cantTouch:2,path:0F-4T-2F-1T-,cantTouchPath:0F-4T-3T-1T-
-level:8,difficulty:Medium,seed:937989,clicks:3,oneClick:True,cantTouch:3,path:0T-7T-3T-,cantTouchPath:6T-4T-0T-
 //-----END USED--------------------------------------------------------------------------------------------
+level:8,difficulty:Medium,seed:937989,clicks:3,oneClick:True,cantTouch:3,path:0T-7T-3T-,cantTouchPath:6T-4T-0T-
 level:8,difficulty:Medium,seed:111197,clicks:3,oneClick:True,cantTouch:0,path:2F-0T-4T-,cantTouchPath:2F-3F-4T-
 level:8,difficulty:Medium,seed:686813,clicks:3,oneClick:True,cantTouch:4,path:0T-3T-4T-,cantTouchPath:0T-1T-7F-3T-
 level:8,difficulty:Medium,seed:380450,clicks:3,oneClick:True,cantTouch:2,path:2T-7F-5T-,cantTouchPath:3T-7F-5T-
@@ -331,25 +331,18 @@ level:8,difficulty:Hard,seed:315767,clicks:5,oneClick:True,cantTouch:1,path:5F-1
 level:8,difficulty:Hard,seed:544317,clicks:5,oneClick:True,cantTouch:0,path:0F-2F-1T-7F-6T-,cantTouchPath:4T-2F-1T-7F-6T-
 level:8,difficulty:Hard,seed:542392,clicks:6,oneClick:True,cantTouch:6,path:0F-6T-4T-3T-7T-5T-,cantTouchPath:1T-0F-4T-3T-7T-5T-
 level:8,difficulty:Hard,seed:610995,clicks:5,oneClick:True,cantTouch:2,path:3F-6F-2F-1T-5T-,cantTouchPath:3F-6F-4T-1T-5T-
-level:8,difficulty:Hard,seed:66778,clicks:5,oneClick:True,cantTouch:5,path:5F-7F-1F-2T-4T-,cantTouchPath:6T-7F-1F-2T-4T-
 level:8,difficulty:Hard,seed:591113,clicks:5,oneClick:True,cantTouch:7,path:0T-7T-6F-5F-4T-,cantTouchPath:0T-1F-3F-6F-5F-4T-
-level:8,difficulty:Hard,seed:198715,clicks:5,oneClick:True,cantTouch:0,path:1F-3T-4T-0T-5T-,cantTouchPath:1F-3T-4T-2T-5T-
 level:8,difficulty:Hard,seed:534160,clicks:5,oneClick:True,cantTouch:6,path:5F-2F-0T-6T-4T-,cantTouchPath:5F-2F-1F-3T-4T-
-level:8,difficulty:Hard,seed:209433,clicks:5,oneClick:True,cantTouch:1,path:2T-3T-7F-0T-1T-,cantTouchPath:2T-7F-0T-5T-3T-
 level:8,difficulty:Hard,seed:75075,clicks:6,oneClick:True,cantTouch:5,path:0F-1F-7F-5F-2F-6T-,cantTouchPath:1F-3F-4F-0F-2F-6T-
 level:8,difficulty:Hard,seed:128387,clicks:5,oneClick:True,cantTouch:4,path:2T-4T-7F-1T-5T-,cantTouchPath:2F-3F-7F-1T-5T-
 level:8,difficulty:Hard,seed:349425,clicks:5,oneClick:True,cantTouch:0,path:0T-6T-5T-1T-3T-,cantTouchPath:4F-6T-5T-1T-3T-
-level:8,difficulty:Hard,seed:225870,clicks:5,oneClick:True,cantTouch:5,path:5F-1T-4T-2F-0T-,cantTouchPath:7T-1T-4T-2F-0T-
-level:8,difficulty:Hard,seed:2487,clicks:5,oneClick:True,cantTouch:3,path:0T-1T-3F-6T-5T-,cantTouchPath:0T-1T-7T-6T-5T-
-level:8,difficulty:Hard,seed:949096,clicks:5,oneClick:True,cantTouch:5,path:0T-5T-2T-4T-6T-,cantTouchPath:0T-7F-2T-4T-6T-
 level:8,difficulty:Hard,seed:153824,clicks:5,oneClick:True,cantTouch:0,path:1T-2F-0F-7F-3T-,cantTouchPath:2F-4F-1T-7F-3T-
 level:8,difficulty:Hard,seed:36163,clicks:5,oneClick:True,cantTouch:4,path:2F-3F-4F-1F-0T-,cantTouchPath:2F-3F-5T-1F-0T-
-//-----END USED--------------------------------------------------------------------------------------------
 level:8,difficulty:Hard,seed:370455,clicks:5,oneClick:True,cantTouch:2,path:1T-3T-4T-2T-7T-,cantTouchPath:1T-3T-0T-4T-5F-7T-
-level:8,difficulty:Hard,seed:544518,clicks:5,oneClick:True,cantTouch:6,path:1T-2F-4F-6T-0T-,cantTouchPath:2F-5F-1F-3F-7F-0T-
-level:8,difficulty:Hard,seed:570884,clicks:5,oneClick:True,cantTouch:3,path:0T-1T-2T-7T-3T-,cantTouchPath:0T-2T-1F-6T-4T-
+level:8,difficulty:Hard,seed:225870,clicks:5,oneClick:True,cantTouch:5,path:5F-1T-4T-2F-0T-,cantTouchPath:7T-1T-4T-2F-0T-
 level:8,difficulty:Hard,seed:871591,clicks:5,oneClick:True,cantTouch:5,path:0T-1F-2F-3T-5T-,cantTouchPath:0T-2T-4T-1F-3T-
 level:8,difficulty:Hard,seed:930252,clicks:5,oneClick:True,cantTouch:2,path:0T-4T-2T-3T-1T-,cantTouchPath:0T-4T-3T-5T-1T-
+//-----END USED--------------------------------------------------------------------------------------------
 level:8,difficulty:Hard,seed:702071,clicks:5,oneClick:True,cantTouch:7,path:0T-1T-2F-6T-7T-,cantTouchPath:1T-2T-0F-3T-6T-
 level:8,difficulty:Hard,seed:621403,clicks:5,oneClick:True,cantTouch:1,path:0T-6F-1F-5T-4T-,cantTouchPath:3F-2F-0T-5T-4T-
 level:8,difficulty:Hard,seed:375408,clicks:5,oneClick:True,cantTouch:4,path:0F-1T-2T-4T-7T-,cantTouchPath:0F-1T-3T-2T-7T-
@@ -375,4 +368,11 @@ level:8,difficulty:Hard,seed:125373,clicks:6,oneClick:True,cantTouch:3,path:1T-2
 level:8,difficulty:Hard,seed:903542,clicks:5,oneClick:True,cantTouch:2,path:0T-1F-2T-3F-5T-,cantTouchPath:1T-0F-4T-3F-5T-
 level:8,difficulty:Hard,seed:99698,clicks:5,oneClick:True,cantTouch:6,path:2F-4T-3F-0T-6T-,cantTouchPath:2T-1T-4T-7T-3F-0T-
 level:8,difficulty:Hard,seed:79366,clicks:5,oneClick:True,cantTouch:0,path:1F-2F-0T-7F-3T-,cantTouchPath:1F-2F-4F-7F-3T-
+//-----NOT THAT HARD----------------------------------------------------------------------------------------
+level:8,difficulty:Hard,seed:198715,clicks:5,oneClick:True,cantTouch:0,path:1F-3T-4T-0T-5T-,cantTouchPath:1F-3T-4T-2T-5T-
+level:8,difficulty:Hard,seed:209433,clicks:5,oneClick:True,cantTouch:1,path:2T-3T-7F-0T-1T-,cantTouchPath:2T-7F-0T-5T-3T-
+level:8,difficulty:Hard,seed:949096,clicks:5,oneClick:True,cantTouch:5,path:0T-5T-2T-4T-6T-,cantTouchPath:0T-7F-2T-4T-6T-
+level:8,difficulty:Hard,seed:2487,clicks:5,oneClick:True,cantTouch:3,path:0T-1T-3F-6T-5T-,cantTouchPath:0T-1T-7T-6T-5T-
+level:8,difficulty:Hard,seed:570884,clicks:5,oneClick:True,cantTouch:3,path:0T-1T-2T-7T-3T-,cantTouchPath:0T-2T-1F-6T-4T-
+level:8,difficulty:Hard,seed:544518,clicks:5,oneClick:True,cantTouch:6,path:1T-2F-4F-6T-0T-,cantTouchPath:2F-5F-1F-3F-7F-0T-
 //---------------------------------------------------------------------------------------------------------
