@@ -15,7 +15,7 @@ public class calendarProgressBar : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		calendar cal = GameObject.Find("Calendar").GetComponent<calendar>();
+		Calendar cal = GameObject.Find("Calendar").GetComponent<Calendar>();
 		int numTotalDays = cal.Get_daysToGenerate();
 		int numDaysCompleted = 0;
 		int numTotalPossibleStars = 0;

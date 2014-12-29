@@ -37,6 +37,7 @@ public class clipboard : MonoBehaviour {
 	private List<Difficulty> listOfLevelDifficulties = new List<Difficulty>();
 	private List<int> listofLevelNumber = new List<int>();
 
+	[HideInInspector]
 	public levelSelector selectorRef;
 	private int buttonState = 0;
 	public Material buttonTextStart;
@@ -61,6 +62,8 @@ public class clipboard : MonoBehaviour {
 	private bool badgeCheckIsAlreadyShowing = false;
 	private bool badgeStarIsAlreadyShowing = false;
 	private bool needsToCheckProgressAgain = false;
+
+	public GameObject text;
 
 	#region StartAndUpdate
 
@@ -91,6 +94,12 @@ public class clipboard : MonoBehaviour {
 		badgeStar.transform.position = new Vector3(badgeStar.transform.position.x, badgeStar.transform.position.y + distanceToPushBadges, badgeStar.transform.position.z);
 
 		GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(1, false);
+
+		GameObject dayLabelText = Instantiate(text, new Vector3(gameObject.transform.position.x + 2.75f, gameObject.transform.position.y - 6.5f, gameObject.transform.position.x - 1.5f), Quaternion.identity) as GameObject;
+		dayLabelText.transform.localScale = gameObject.transform.localScale * 0.003f;
+		dayLabelText.transform.parent = gameObject.transform;
+		TextMesh myLabelTextComponent = dayLabelText.GetComponent<TextMesh>();
+		myLabelTextComponent.text = "Day " + (selectorRef.dayToGenerate.dayIndex_internal + 1);
 	}
 
 	// Update is called once per frame

@@ -87,7 +87,6 @@ public class class_NetworkMgr : MonoBehaviour {
 		#if UNITY_WEBPLAYER
 		
 		GameObject.Find("redAndGreenButtons").renderer.material = redAndGreenButton_keys;
-		print("if statement");
 
 		#endif
 	}
