@@ -1,7 +1,66 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class SaveGame {
+public static class SaveGame {
+
+	public static List<int> numStarsPossiblePerWeek = new List<int>();
+	public static List<int> numStarsAcquiredPerWeek = new List<int>();
+	public static List<int> numAppointmentsPerDay = new List<int>();
+	public static int numTotalPossibleStars;
+	public static int numStarsAcquired;
+	public static int numTotalDays;
+	public static int numDaysCompleted;
+
+	public static void Initialize(List<int> _numStarsPossiblePerWeek, List<int> _numAppointmentsPerDay, int _numTotalPossibleStars, int _numTotalDays)
+	{
+		numStarsPossiblePerWeek = _numStarsPossiblePerWeek;
+		numTotalPossibleStars = _numTotalPossibleStars;
+		numTotalDays = _numTotalDays;
+		numStarsAcquired = AddAllItemsInList(numStarsAcquiredPerWeek);
+		numAppointmentsPerDay = _numAppointmentsPerDay;
+	}
+
+	public static void UpdateGameStats()
+	{
+		List<int> numAcquiredStarsByWeek = new List<int>();
+		int _numDaysCompleted = 0;
+		for (int i = 0; i < numTotalDays; i++)		// "i" represents the day
+		{
+			int weekIndex = i/5;
+			for (int week = 0; week < numTotalDays/5; week++) { numAcquiredStarsByWeek.Add(0); }		// add a "0" to the list for each week
+			
+			if (SaveGame.GetHasCompletedAllRoundsInDay(i))	// if all rounds within have been completed...
+			{
+				_numDaysCompleted = i;										// count it as a completed day
+			}
+			// if it's the first day, if all rounds have been completed, or if it's one day after an allroundscompleted day...
+			if (i == 0 || SaveGame.GetHasCompletedAllRoundsInDay(i) || SaveGame.GetHasCompletedAllRoundsInDay(i - 1))
+			{
+				for (int j = 0; j < numAppointmentsPerDay[i]; j++)
+				{
+					numAcquiredStarsByWeek[weekIndex] += SaveGame.GetRoundStarCount(i, j);		// add each star from each round individually
+				}
+			}
+		}
+
+		// save out updated globals
+		numStarsAcquiredPerWeek = numAcquiredStarsByWeek;
+		numStarsAcquired = AddAllItemsInList(numAcquiredStarsByWeek);
+		numDaysCompleted = _numDaysCompleted;
+
+		Achievements.CheckForNewAchievements();
+	}
+
+	private static int AddAllItemsInList(List<int> inputList)
+	{
+		int total = 0;
+		for (int i = 0; i < inputList.Count; i++)
+		{
+			total += inputList[i];
+		}
+		return total;
+	}
 
 	public static void SetSeenInstruction(int instructionIndex, bool hasSeen)
 	{
@@ -55,20 +114,6 @@ public class SaveGame {
 	private static string FormatRoundString(int day, int round)
 	{
 		return FormatDayString(day) + "_R" + round;
-	}
-
-	public static void SetDayIsPlayable(int day, bool playable)
-	{
-		if (playable)
-			SaveData.SetInt(FormatDayString(day) + "_isPlayable", 1);
-		else
-			SaveData.SetInt(FormatDayString(day) + "_isPlayable", 0);
-		SaveAllData();
-	}
-	
-	public static bool GetDayIsPlayable(int day)
-	{
-		return (SaveData.GetInt(FormatDayString(day) + "_isPlayable") == 1);
 	}
 
 	public static void SetAudioOn_sfx(bool isOn)

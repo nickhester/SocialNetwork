@@ -41,7 +41,7 @@ public class Calendar : MonoBehaviour {
 			else if (SaveGame.GetDayStarCount(i) == 3)
 			{ _newCalDayComponent.numStars = 3; }
 
-			if (SaveGame.GetDayIsPlayable(i))
+			if (i == 0 || SaveGame.GetHasCompletedAllRoundsInDay(i - 1))
 			{
 				_newCalDayComponent.isPlayable = true;
 				viewingWeek = (int)Mathf.Floor(i / 5.0f);
@@ -57,7 +57,6 @@ public class Calendar : MonoBehaviour {
 
 				case 0:	// monday
 					_newCalDayComponent.isPlayable = true;					// the first level is always playable by default
-					SaveGame.SetDayIsPlayable(0, true);
 
 					_newCalDayComponent.numAppointments = 		3;
 					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
@@ -481,6 +480,21 @@ public class Calendar : MonoBehaviour {
 			gameStartInstructionSeries.AddRange(temp);
 			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, false);
 		}
+
+		// initialize save game
+		List<int> numPossibleStars = new List<int>();
+		List<int> numAppointmentsPerDay = new List<int>();
+		int numTotalPossibleStars = 0;
+		for (int i = 0; i < Get_daysToGenerate()/5; i++) { numPossibleStars.Add(0); }		// add a "0" to the list for each week
+		for (int i = 0; i < Get_daysToGenerate(); i++)		// "i" represents the day
+		{
+			numAppointmentsPerDay.Add(Get_dayNumAppointments(i));
+			int weekIndex = i/5;
+			numPossibleStars[weekIndex] += Get_dayNumAppointments(i) * 3;		// assign the max number of stars to each week
+			numTotalPossibleStars += Get_dayNumAppointments(i) * 3;		// keep a running count of all stars possible total
+		}
+		SaveGame.Initialize(numPossibleStars, numAppointmentsPerDay, numTotalPossibleStars, Get_daysToGenerate());
+		SaveGame.UpdateGameStats();
 	}
 	
 	// Update is called once per frame
@@ -562,14 +576,15 @@ public class Calendar : MonoBehaviour {
 
 	void Debug_unlockLevelsOnWeek(int week, int numStars)
 	{
-		for (int i = 0; i < week * 5; i++) {
+		for (int i = 0; i < week * 5; i++)
+		{
 			SaveGame.SetHasCompletedAllRoundsInDay(i, true);
-			SaveGame.SetDayIsPlayable(i, true);
 			SaveGame.SetDayStarCount(i, Get_dayNumAppointments(i) * numStars);
-			SaveGame.SetDayIsPlayable(i + 1, true);
-			for (int j = 0; j < Get_dayNumAppointments(i); j++) {
+			for (int j = 0; j < Get_dayNumAppointments(i); j++)
+			{
 				SaveGame.SetRoundStarCount(i, j, numStars);
 			}
 		}
+		SaveGame.UpdateGameStats();
 	}
 }

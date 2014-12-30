@@ -34,8 +34,19 @@ public class mainMenu : MonoBehaviour {
 	public Material audio_music;
 	public Material audio_off;
 
+	// external API stuff
+	private bool isUsingExternalAPI;
+
 	// Use this for initialization
 	void Start () {
+
+		//initialize external API
+		if (KongregateAPI.isUsingKongregate)
+		{
+			isUsingExternalAPI = true; 
+			KongregateAPI.Initialize();
+		}
+
 		clickScale = 0.9f;
 		cameraStartingPos = Camera.main.transform.position;
 		cameraOptionsPos = new Vector3(cameraStartingPos.x, cameraStartingPos.y - 12.0f, cameraStartingPos.z);
@@ -78,7 +89,7 @@ public class mainMenu : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(0) && (!isUsingExternalAPI || KongregateAPI.isKongregateLoaded))
 		{
 			clickedThisGO = getObjectAtMouse();
 			if (clickedThisGO != null)

@@ -13,27 +13,14 @@ public class calendarProgressBar : MonoBehaviour {
 	public GameObject text;
 
 	// Use this for initialization
-	void Start () {
-
+	void Start ()
+	{
 		Calendar cal = GameObject.Find("Calendar").GetComponent<Calendar>();
 		int numTotalDays = cal.Get_daysToGenerate();
-		int numDaysCompleted = 0;
-		int numTotalPossibleStars = 0;
-		int numStarsAcquired = 0;
-		
-		for (int i = 0; i < numTotalDays; i++)
-		{
-			numTotalPossibleStars += cal.Get_dayNumAppointments(i) * 3;
+		int numDaysCompleted = SaveGame.numDaysCompleted;
+		int numTotalPossibleStars = SaveGame.numTotalPossibleStars;
+		int numStarsAcquired = SaveGame.numStarsAcquired;
 
-			if (SaveGame.GetDayIsPlayable(i))
-			{
-				if (SaveGame.GetHasCompletedAllRoundsInDay(i))
-				{
-					numDaysCompleted = i + 1;
-				}
-				numStarsAcquired += SaveGame.GetDayStarCount(i);
-			}
-		}
 		float progressThroughDays = (float)numDaysCompleted/(float)numTotalDays;
 		float progressThroughStars = (float)numStarsAcquired/(float)numTotalPossibleStars;
 
@@ -88,6 +75,6 @@ public class calendarProgressBar : MonoBehaviour {
 		myTextStars.transform.parent = gameObject.transform;
 		TextMesh myTextStarsComponent = myTextStars.GetComponent<TextMesh>();
 		myTextStarsComponent.anchor = TextAnchor.MiddleRight;
-		myTextStarsComponent.text = numStarsAcquired + "/" + numTotalPossibleStars;;
+		myTextStarsComponent.text = numStarsAcquired + "/" + numTotalPossibleStars;
 	}
 }

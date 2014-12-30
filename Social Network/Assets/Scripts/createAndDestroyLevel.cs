@@ -154,10 +154,8 @@ public class createAndDestroyLevel : MonoBehaviour {
 			SaveGame.SetDayStarCount(currentDayIndex, howManyStarsTotalDay);
 			// if true, unlock next day
 			if (receivedStar && doAllRoundsInDayHaveStars)
-			{
-				SaveGame.SetDayIsPlayable(currentDayIndex + 1, true);
 				SaveGame.SetHasCompletedAllRoundsInDay(currentDayIndex, true);
-			}
+			SaveGame.UpdateGameStats();
 			
 			hasDisplayedLevelEndScreen = true;
 		}
