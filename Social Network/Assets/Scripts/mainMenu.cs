@@ -35,17 +35,11 @@ public class mainMenu : MonoBehaviour {
 	public Material audio_off;
 
 	// external API stuff
-	private bool isUsingExternalAPI;
+	[HideInInspector]
+	public bool isUsingExternalAPI;
 
 	// Use this for initialization
 	void Start () {
-
-		//initialize external API
-		if (KongregateAPI.isUsingKongregate)
-		{
-			isUsingExternalAPI = true; 
-			KongregateAPI.Initialize();
-		}
 
 		clickScale = 0.9f;
 		cameraStartingPos = Camera.main.transform.position;

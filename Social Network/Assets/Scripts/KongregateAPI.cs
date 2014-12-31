@@ -15,7 +15,7 @@ public static class KongregateAPI {
 	{
 		Application.ExternalEval(
 			"if(typeof(kongregateUnitySupport) != 'undefined'){" +
-			" kongregateUnitySupport.initAPI('kongregateAPIObject', 'OnKongregateAPILoaded');" +
+			" kongregateUnitySupport.initAPI('KongregateAPIObject', 'OnKongregateAPILoaded');" +
 			"};"
 			);
 	}
@@ -32,26 +32,31 @@ public static class KongregateAPI {
 
 	public static void ReportStarCount(int starCount)
 	{
+		if (!isUsingKongregate) { return; }
 		Application.ExternalCall("kongregate.stats.submit", "StarCount", starCount);	// max type
 	}
     
 	public static void ReportWeekCompleted(int weekCompleted)
 	{
+		if (!isUsingKongregate) { return; }
 		Application.ExternalCall("kongregate.stats.submit", "Week" + (weekCompleted + 1) + "Completed", 1);	// max type
 	}
 
 	public static void ReportWeekPerfected(int weekPerfected)
 	{
+		if (!isUsingKongregate) { return; }
 		Application.ExternalCall("kongregate.stats.submit", "Week" + (weekPerfected + 1) + "Perfected", 1);	// max type
 	}
 
 	public static void ReportGameCompleted()
 	{
+		if (!isUsingKongregate) { return; }
 		Application.ExternalCall("kongregate.stats.submit", "GameComplete", 1);	// max type
 	}
 
 	public static void ReportGamePerfected()
 	{
+		if (!isUsingKongregate) { return; }
 		Application.ExternalCall("kongregate.stats.submit", "GamePerfected", 1);	// max type
 	}
 }
