@@ -44,8 +44,17 @@ public class Calendar : MonoBehaviour {
 			if (i == 0 || SaveGame.GetHasCompletedAllRoundsInDay(i - 1))
 			{
 				_newCalDayComponent.isPlayable = true;
-				viewingWeek = (int)Mathf.Floor(i / 5.0f);
+				viewingWeek = i/5;
 				furthestDayUnlocked = i;
+			}
+			if (SaveGame.lastCalendarDayClicked != -1)
+			{
+				if (SaveGame.lastCalendarDayClicked % 5 == 4)
+					viewingWeek = SaveGame.lastCalendarDayClicked / 5 + 1;
+				else
+					viewingWeek = SaveGame.lastCalendarDayClicked / 5;
+				if (viewingWeek > (daysToGenerate/5))
+					viewingWeek = daysToGenerate/5;
 			}
 
 			// configure settings for each day ##################################################
@@ -312,7 +321,7 @@ public class Calendar : MonoBehaviour {
 					_newCalDayComponent.SetDifficulties			(0, 0, 40, 60);
 
 					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 927693, false, false, false, true));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 371048, false, false, false, false));
+					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 488836, false, false, false, false));
 					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 452025, false, false, false, false));
 					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 571617, false, false, false, true));
 					_newCalDayComponent.SetSpecificLevels(reqList);
@@ -508,7 +517,9 @@ public class Calendar : MonoBehaviour {
 			{
 				if (hit.transform.tag == "calendarDay" && hit.transform.gameObject.GetComponent<CalendarDay>().isPlayable)
 				{
-					GameObject.Find("LevelSelector").GetComponent<levelSelector>().StartDay(hit.transform.GetComponent<CalendarDay>());
+					CalendarDay hitDay = hit.transform.GetComponent<CalendarDay>();
+					SaveGame.lastCalendarDayClicked = hitDay.dayIndex_internal;
+					GameObject.Find("LevelSelector").GetComponent<levelSelector>().StartDay(hitDay);
 				}
 				else if (hit.transform.name == "MainMenu")
 				{

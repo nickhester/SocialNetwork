@@ -260,8 +260,8 @@ level:7,difficulty:Hard,seed:481739,clicks:5,oneClick:True,cantTouch:4,path:0T-2
 level:7,difficulty:Hard,seed:36335,clicks:5,oneClick:True,cantTouch:3,path:3F-0F-5F-2F-1T-,cantTouchPath:4T-0F-5F-2F-1T-
 level:7,difficulty:Hard,seed:658771,clicks:5,oneClick:True,cantTouch:0,path:4T-2F-0F-1T-3T-,cantTouchPath:4T-2F-1T-6T-3T-
 level:7,difficulty:Hard,seed:210624,clicks:5,oneClick:True,cantTouch:6,path:0T-1F-5F-4T-6T-,cantTouchPath:1F-2T-5F-4T-0T-
-//-----END USED--------------------------------------------------------------------------------------------
 level:7,difficulty:Hard,seed:488836,clicks:5,oneClick:True,cantTouch:4,path:4F-2F-0T-1T-5T-,cantTouchPath:3T-6T-2F-0T-1T-5T-
+//-----END USED--------------------------------------------------------------------------------------------
 level:7,difficulty:Hard,seed:834303,clicks:5,oneClick:True,cantTouch:2,path:0T-2F-1T-3T-5T-,cantTouchPath:0T-4T-1T-3T-5T-
 level:7,difficulty:Hard,seed:983882,clicks:6,oneClick:True,cantTouch:3,path:3T-2T-5T-6F-1F-0T-,cantTouchPath:4F-2T-5T-6F-1F-0T-
 level:7,difficulty:Hard,seed:336096,clicks:5,oneClick:True,cantTouch:1,path:1F-3F-5F-0T-6T-,cantTouchPath:2T-3F-5F-0T-6T-

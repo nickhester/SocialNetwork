@@ -70,6 +70,8 @@ public class mainMenu : MonoBehaviour {
 			GameObject.Find("button_music").renderer.material = audio_off;
 		if (SaveGame.GetAudioOn_sfx() == false)
 			GameObject.Find("button_sfx").renderer.material = audio_off;
+
+		SaveGame.lastCalendarDayClicked = -1;	// reset lastdayclicked counter
 	}
 
 	GameObject getObjectAtMouse()

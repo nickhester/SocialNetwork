@@ -11,6 +11,7 @@ public static class SaveGame {
 	public static int numStarsAcquired;
 	public static int numTotalDays;
 	public static int numDaysCompleted;
+	public static int lastCalendarDayClicked = -1;
 
 	public static void Initialize(List<int> _numStarsPossiblePerWeek, List<int> _numAppointmentsPerDay, int _numTotalPossibleStars, int _numTotalDays)
 	{
@@ -32,7 +33,7 @@ public static class SaveGame {
 			
 			if (SaveGame.GetHasCompletedAllRoundsInDay(i))	// if all rounds within have been completed...
 			{
-				_numDaysCompleted = i;										// count it as a completed day
+				_numDaysCompleted = i + 1;										// count it as a completed day
 			}
 			// if it's the first day, if all rounds have been completed, or if it's one day after an allroundscompleted day...
 			if (i == 0 || SaveGame.GetHasCompletedAllRoundsInDay(i) || SaveGame.GetHasCompletedAllRoundsInDay(i - 1))
@@ -61,6 +62,30 @@ public static class SaveGame {
 		}
 		return total;
 	}
+
+	/*		// for now, I'll just keep sending the achievement each time it checks for it.
+	public static void SetHasCompletedWeek(int week, bool hasCompleted)
+	{
+		SaveData.SetInt("Week" + week + "_hasCompleted", (hasCompleted ? 1 : 0));
+		SaveAllData();
+	}
+
+	public static bool GetHasCompletedWeek(int week)
+	{
+		return (SaveData.GetInt("Week" + week + "_hasCompleted") == 1);
+	}
+
+	public static void SetHasPerfectedWeek(int week, bool hasPerfected)
+	{
+		SaveData.SetInt("Week" + week + "_hasPerfected", (hasPerfected ? 1 : 0));
+		SaveAllData();
+	}
+	
+	public static bool GetHasPerfectedWeek(int week)
+	{
+		return (SaveData.GetInt("Week" + week + "_hasPerfected") == 1);
+	}
+	*/
 
 	public static void SetSeenInstruction(int instructionIndex, bool hasSeen)
 	{

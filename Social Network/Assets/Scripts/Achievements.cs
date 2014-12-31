@@ -54,7 +54,7 @@ public static class Achievements {
 	// Individual achievement
 	private static bool isGameCompleted()
 	{
-		if (SaveGame.GetHasCompletedAllRoundsInDay(SaveGame.numTotalDays))
+		if (SaveGame.numDaysCompleted == SaveGame.numTotalDays)
 		{
 			KongregateAPI.ReportGameCompleted();
 			return true;
