@@ -49,10 +49,13 @@ public class Calendar : MonoBehaviour {
 			}
 			if (SaveGame.lastCalendarDayClicked != -1)
 			{
-				if (SaveGame.lastCalendarDayClicked % 5 == 4)
-					viewingWeek = SaveGame.lastCalendarDayClicked / 5 + 1;
+				// if the last viewed day was a completed friday, then skip to the next week
+				if (SaveGame.lastCalendarDayClicked % 5 == 4 && SaveGame.GetHasCompletedAllRoundsInDay(SaveGame.lastCalendarDayClicked))
+					viewingWeek = (SaveGame.lastCalendarDayClicked / 5) + 1;
+				// otherwise, keep the calendar on the day you last played
 				else
 					viewingWeek = SaveGame.lastCalendarDayClicked / 5;
+				// finally, if the viewing week is a week that doesn't exist, bring it back in
 				if (viewingWeek > (daysToGenerate/5))
 					viewingWeek = daysToGenerate/5;
 			}

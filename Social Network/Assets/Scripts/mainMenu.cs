@@ -85,7 +85,7 @@ public class mainMenu : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetMouseButtonDown(0) && (!isUsingExternalAPI || KongregateAPI.isKongregateLoaded))
+		if (Input.GetMouseButtonDown(0))
 		{
 			clickedThisGO = getObjectAtMouse();
 			if (clickedThisGO != null)
