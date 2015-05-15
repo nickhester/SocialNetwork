@@ -8,8 +8,8 @@ public class levelSelector : MonoBehaviour {
 	{
 		get
 		{
-			_dayToGenerate.collider.enabled = false;
-			_dayToGenerate.renderer.enabled = false;
+			_dayToGenerate.GetComponent<Collider>().enabled = false;
+			_dayToGenerate.GetComponent<Renderer>().enabled = false;
 			foreach (Renderer r in _dayToGenerate.GetComponentsInChildren<Renderer>())
 			{
 				r.enabled = false;

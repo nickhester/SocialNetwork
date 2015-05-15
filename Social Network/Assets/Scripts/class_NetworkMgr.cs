@@ -67,7 +67,7 @@ public class class_NetworkMgr : MonoBehaviour {
 		{ _per.Initialize(); }
 
 		selectionCursorInst = Instantiate(selectionCursor) as GameObject;
-		selectionCursorInst.renderer.enabled = false;
+		selectionCursorInst.GetComponent<Renderer>().enabled = false;
 		selectionCursorInst.transform.parent = transform;
 
 		cursorSecondaryInst = Instantiate
@@ -77,7 +77,7 @@ public class class_NetworkMgr : MonoBehaviour {
 			selectionCursorInst.transform.position.x, selectionCursorInst.transform.position.y, selectionCursorInst.transform.position.z + 1.5f
 			), Quaternion.identity
 			) as GameObject;
-		cursorSecondaryInst.renderer.enabled = false;
+		cursorSecondaryInst.GetComponent<Renderer>().enabled = false;
 		cursorSecondaryInst.transform.parent = selectionCursorInst.transform;
 
 		myAudioComponent = gameObject.GetComponent<AudioSource>() as AudioSource;
@@ -86,7 +86,7 @@ public class class_NetworkMgr : MonoBehaviour {
 
 		#if UNITY_WEBPLAYER
 		
-		GameObject.Find("redAndGreenButtons").renderer.material = redAndGreenButton_keys;
+		GameObject.Find("redAndGreenButtons").GetComponent<Renderer>().material = redAndGreenButton_keys;
 
 		#endif
 	}
@@ -120,8 +120,8 @@ public class class_NetworkMgr : MonoBehaviour {
 				if (hit.transform.tag == "people")							// if you're clicking on a person
 				{
 					// move cursor position on click
-					selectionCursorInst.renderer.enabled = true;		// turn on cursor
-					cursorSecondaryInst.renderer.enabled = true;		// turn on cursor
+					selectionCursorInst.GetComponent<Renderer>().enabled = true;		// turn on cursor
+					cursorSecondaryInst.GetComponent<Renderer>().enabled = true;		// turn on cursor
 					selectionCursorTargetPos = new Vector3(hit.transform.position.x, hit.transform.position.y, hit.transform.position.z + 0.1f);	// move cursor to location
 					currentlySelectedPerson = hit.transform.gameObject;			// set the clicked person as the currently selected person
 					GetComponent<class_LineDisplay>().TurnOffAllLines();		// turn off all the lines
@@ -230,12 +230,12 @@ public class class_NetworkMgr : MonoBehaviour {
 	    {
 	        foreach (Person _person in allPeople)
 	        {
-	            _person.collider.enabled = false;
+	            _person.GetComponent<Collider>().enabled = false;
 	            _person.GetComponent<personMovement>().MoveOut();
 	        }
 	        GetComponent<class_LineDisplay>().TurnOffAllLines();
-	        selectionCursorInst.renderer.enabled = false;
-	        cursorSecondaryInst.renderer.enabled = false;
+	        selectionCursorInst.GetComponent<Renderer>().enabled = false;
+	        cursorSecondaryInst.GetComponent<Renderer>().enabled = false;
 	        WinningScreen();
 	    }
 	}
@@ -284,7 +284,7 @@ public class class_NetworkMgr : MonoBehaviour {
 			{
 				if (secondPerson != person)			// if they haven't already been compared (don't repeat A to A)
 				{
-					class_Relationship newRel = gameObject.AddComponent("class_Relationship") as class_Relationship;
+					class_Relationship newRel = gameObject.AddComponent<class_Relationship>() as class_Relationship;
 					// TODO: is this line necessary? // newRel.relationshipValue = ExponentialWeight(200);		// set random relationship value
 					newRel.relationshipMembers.Add(person);
 					newRel.relationshipMembers.Add (secondPerson);

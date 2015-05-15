@@ -69,9 +69,9 @@ public class createAndDestroyLevel : MonoBehaviour {
 		// add levels available and levels on clipboard (b/c levels available has already been subtracted from)
 		levelsLeftToComplete = m_levelsAvailable;
 		resultsPage = GameObject.Find("results page");
-		resultsPage.renderer.enabled = false;
+		resultsPage.GetComponent<Renderer>().enabled = false;
 		resultsNotes = GameObject.Find("results notes");
-		resultsNotes.renderer.enabled = false;
+		resultsNotes.GetComponent<Renderer>().enabled = false;
 		waitToShowResultsAfterFinishedCounter = waitToShowResultsAfterFinished;
 	}
 
@@ -221,7 +221,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 	public void HideResultsPage()
 	{
-		resultsPage.renderer.enabled = false;
+		resultsPage.GetComponent<Renderer>().enabled = false;
 		foreach (MeshRenderer mr in resultsPage.GetComponentsInChildren<MeshRenderer>())
 		{
 			mr.enabled = false;
@@ -259,7 +259,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 		if (levelComplete)
 		{
-			resultsPage.renderer.enabled = true;
+			resultsPage.GetComponent<Renderer>().enabled = true;
 		}
 
 		if (levelComplete && waitToShowResultsAfterFinishedCounter <= 0 && !isDisplayingScore)
@@ -271,22 +271,22 @@ public class createAndDestroyLevel : MonoBehaviour {
 			int resultStars = st.score;
 
 			if (resultStars == 0)
-				resultsNotes.renderer.material = notesFor0Stars;
+				resultsNotes.GetComponent<Renderer>().material = notesFor0Stars;
 
 			else if (resultStars == 1)
-				resultsNotes.renderer.material = notesFor1Star;
+				resultsNotes.GetComponent<Renderer>().material = notesFor1Star;
 
 			else if (resultStars == 2)
-				resultsNotes.renderer.material = notesFor2Stars;
+				resultsNotes.GetComponent<Renderer>().material = notesFor2Stars;
 
 			else if (resultStars == 3)
-				resultsNotes.renderer.material = notesFor3Stars;
+				resultsNotes.GetComponent<Renderer>().material = notesFor3Stars;
 
-			resultsNotes.renderer.enabled = true;
+			resultsNotes.GetComponent<Renderer>().enabled = true;
 
 			foreach (TextMesh resultText in resultsPage.GetComponentsInChildren<TextMesh>())
 			{
-				resultText.renderer.enabled = true;
+				resultText.GetComponent<Renderer>().enabled = true;
 				if (resultText.gameObject.name == "actions")
 				{
 					resultText.text = resultActions.ToString();

@@ -7,8 +7,8 @@ public static class LineGeneric {
 	{
 		GameObject lineMesh = new GameObject("lineMesh");
 		Mesh newMesh = new Mesh();
-		lineMesh.AddComponent("MeshFilter");
-		lineMesh.AddComponent("MeshRenderer");
+		lineMesh.AddComponent<MeshFilter>();
+		lineMesh.AddComponent<MeshRenderer>();
 		
 		Vector3 widthDirection = (Vector3.Cross (p1 - p2, Vector3.back).normalized) * width;
 		Vector3 depthDirection = Vector3.forward;

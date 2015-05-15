@@ -43,14 +43,14 @@ public class calendarProgressBar : MonoBehaviour {
 		}
 
 		GameObject barSessionsComplete = LineGeneric.CreateLineMesh(sessionBarStartPos, sessionBarEndPos, lineWidth, 0.0f, 0.0f);
-		barSessionsComplete.renderer.material = new Material(Shader.Find("Transparent/VertexLit"));
-		barSessionsComplete.renderer.material.color = barColor;
-		barSessionsComplete.renderer.material.SetColor("_Emission", barColor);
+		barSessionsComplete.GetComponent<Renderer>().material = new Material(Shader.Find("Transparent/VertexLit"));
+		barSessionsComplete.GetComponent<Renderer>().material.color = barColor;
+		barSessionsComplete.GetComponent<Renderer>().material.SetColor("_Emission", barColor);
 
 		GameObject barStarsComplete = LineGeneric.CreateLineMesh(starBarStartPos, starBarEndPos, lineWidth, 0.0f, 0.0f);
-		barStarsComplete.renderer.material = new Material(Shader.Find("Transparent/VertexLit"));
-		barStarsComplete.renderer.material.color = barColor;
-		barStarsComplete.renderer.material.SetColor("_Emission", barColor);
+		barStarsComplete.GetComponent<Renderer>().material = new Material(Shader.Find("Transparent/VertexLit"));
+		barStarsComplete.GetComponent<Renderer>().material.color = barColor;
+		barStarsComplete.GetComponent<Renderer>().material.SetColor("_Emission", barColor);
 
 		// show game completion notes ("instruction" pages)
 		if (numDaysCompleted == numTotalDays)

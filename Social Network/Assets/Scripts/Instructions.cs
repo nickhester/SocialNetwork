@@ -17,7 +17,7 @@ public class Instructions : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (gameObject.renderer.enabled && Input.GetMouseButtonDown(0) && hasBeenDisplayingForOneFrame)
+		if (gameObject.GetComponent<Renderer>().enabled && Input.GetMouseButtonDown(0) && hasBeenDisplayingForOneFrame)
 		{
 			if (instructionsToShow.Count != 0)
 			{
@@ -25,13 +25,13 @@ public class Instructions : MonoBehaviour {
 			}
 			else
 			{
-				gameObject.renderer.enabled = false;
-				gameObject.collider.enabled = false;
+				gameObject.GetComponent<Renderer>().enabled = false;
+				gameObject.GetComponent<Collider>().enabled = false;
 			}
 		}
 
 		// make sure not to take a click from something else
-		if (gameObject.renderer.enabled)
+		if (gameObject.GetComponent<Renderer>().enabled)
 			hasBeenDisplayingForOneFrame = true;
 	}
 
@@ -47,9 +47,9 @@ public class Instructions : MonoBehaviour {
 		bool hasSeenThisOne = SaveGame.GetSeenInstruction(instructionsToShow[0]);
 		if (forceShow || !hasSeenThisOne)
 		{
-			gameObject.renderer.material = instructionMats[instructionsToShow[0]];
-			gameObject.renderer.enabled = true;
-			gameObject.collider.enabled = true;
+			gameObject.GetComponent<Renderer>().material = instructionMats[instructionsToShow[0]];
+			gameObject.GetComponent<Renderer>().enabled = true;
+			gameObject.GetComponent<Collider>().enabled = true;
 			hasBeenDisplayingForOneFrame = false;
 		}
 		if (!forceShow)

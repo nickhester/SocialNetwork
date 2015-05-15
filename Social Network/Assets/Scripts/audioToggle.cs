@@ -30,12 +30,12 @@ public class audioToggle : MonoBehaviour {
 			// TODO: figure out why this isn't working!!!
 			if (SaveGame.GetAudioOn_sfx())
 			{
-				gameObject.renderer.material = matOn;
+				gameObject.GetComponent<Renderer>().material = matOn;
 				audioIsOn = true;
 			}
 			else
 			{
-				gameObject.renderer.material = matOff;
+				gameObject.GetComponent<Renderer>().material = matOff;
 				audioIsOn = false;
 			}
 		}
@@ -43,12 +43,12 @@ public class audioToggle : MonoBehaviour {
 		{
 			if (SaveGame.GetAudioOn_music())
 			{
-				gameObject.renderer.material = matOn;
+				gameObject.GetComponent<Renderer>().material = matOn;
 				audioIsOn = true;
 			}
 			else
 			{
-				gameObject.renderer.material = matOff;
+				gameObject.GetComponent<Renderer>().material = matOff;
 				audioIsOn = false;
 			}
 		}
@@ -69,7 +69,7 @@ public class audioToggle : MonoBehaviour {
 					if (audioType == typeOfAudio.sfx) { SaveGame.SetAudioOn_sfx(false); }
 					else { SaveGame.SetAudioOn_music(false); }
 
-					gameObject.renderer.material = matOff;
+					gameObject.GetComponent<Renderer>().material = matOff;
 					audioIsOn = false;
 
 					if (audioType == typeOfAudio.music)
@@ -84,7 +84,7 @@ public class audioToggle : MonoBehaviour {
 				{
 					if (audioType == typeOfAudio.sfx) { SaveGame.SetAudioOn_sfx(true); }
 					else { SaveGame.SetAudioOn_music(true); }
-					gameObject.renderer.material = matOn;
+					gameObject.GetComponent<Renderer>().material = matOn;
 					audioIsOn = true;
 
 					if (audioType == typeOfAudio.music)

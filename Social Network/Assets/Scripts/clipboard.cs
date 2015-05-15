@@ -223,9 +223,9 @@ public class clipboard : MonoBehaviour {
 		}
 
 		// update button with correct text for state
-		if (buttonState == 0) { startButton.renderer.material = buttonTextBack; }
-		else if (buttonState == 1) { startButton.renderer.material = buttonTextBack; }
-		else if (buttonState == 2) { startButton.renderer.material = buttonTextDone; }
+		if (buttonState == 0) { startButton.GetComponent<Renderer>().material = buttonTextBack; }
+		else if (buttonState == 1) { startButton.GetComponent<Renderer>().material = buttonTextBack; }
+		else if (buttonState == 2) { startButton.GetComponent<Renderer>().material = buttonTextDone; }
 		else { Debug.LogError("Clipboard button state is invalid"); }
 
 		//Check to see if the clipboard is in motion or not
@@ -440,8 +440,8 @@ public class clipboard : MonoBehaviour {
 	{
 		foreach (Appointment a in transform.GetComponentsInChildren<Appointment>())
 		{
-			a.renderer.enabled = false;	// hide all appointments
-			a.collider.enabled = false;
+			a.GetComponent<Renderer>().enabled = false;	// hide all appointments
+			a.GetComponent<Collider>().enabled = false;
 			foreach (MeshRenderer childRenderer in a.transform.GetComponentsInChildren<MeshRenderer>())
 			{
 				childRenderer.enabled = false;
@@ -453,8 +453,8 @@ public class clipboard : MonoBehaviour {
 	{
 		foreach (Appointment a in transform.GetComponentsInChildren<Appointment>())
 		{
-			a.renderer.enabled = true;	// hide all appointments
-			a.collider.enabled = true;
+			a.GetComponent<Renderer>().enabled = true;	// hide all appointments
+			a.GetComponent<Collider>().enabled = true;
 			foreach (MeshRenderer childRenderer in a.transform.GetComponentsInChildren<MeshRenderer>())
 			{
 				childRenderer.enabled = true;

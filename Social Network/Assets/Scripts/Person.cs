@@ -57,7 +57,7 @@ public class Person : MonoBehaviour {
 		Vector3 positionJustBehindPerson = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
 		_myMaxIndicator = Instantiate(myMaxIndicator, positionJustBehindPerson, Quaternion.identity) as GameObject;
 		_myMaxIndicator.transform.localScale = new Vector3(1.9f, 1.9f, 1);
-		_myMaxIndicator.renderer.enabled = false;
+		_myMaxIndicator.GetComponent<Renderer>().enabled = false;
 		_myMaxIndicator.transform.parent = transform;
 		
 		if (!canBeClicked)
@@ -70,15 +70,15 @@ public class Person : MonoBehaviour {
 	void Update () {
 		if (m_Mood == Mood.Negative)
 		{
-			_myMaxIndicator.renderer.enabled = true;
-			_myMaxIndicator.renderer.material = statusCircleRed;
-			renderer.material = facialArt1_sad;
+			_myMaxIndicator.GetComponent<Renderer>().enabled = true;
+			_myMaxIndicator.GetComponent<Renderer>().material = statusCircleRed;
+			GetComponent<Renderer>().material = facialArt1_sad;
 		}
 		if (m_Mood == Mood.Positive)
 		{
-			_myMaxIndicator.renderer.enabled = true;
-			_myMaxIndicator.renderer.material = statusCircleGreen;
-			renderer.material = facialArt1_happy;
+			_myMaxIndicator.GetComponent<Renderer>().enabled = true;
+			_myMaxIndicator.GetComponent<Renderer>().material = statusCircleGreen;
+			GetComponent<Renderer>().material = facialArt1_happy;
 		}
 	}
 

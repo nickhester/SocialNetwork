@@ -61,9 +61,9 @@ public class mainMenu : MonoBehaviour {
 
 		// make sure audio icons check are accurately on or off
 		if (SaveGame.GetAudioOn_music() == false)
-			GameObject.Find("button_music").renderer.material = audio_off;
+			GameObject.Find("button_music").GetComponent<Renderer>().material = audio_off;
 		if (SaveGame.GetAudioOn_sfx() == false)
-			GameObject.Find("button_sfx").renderer.material = audio_off;
+			GameObject.Find("button_sfx").GetComponent<Renderer>().material = audio_off;
 
 		SaveGame.lastCalendarDayClicked = -1;	// reset lastdayclicked counter
 	}
@@ -101,8 +101,8 @@ public class mainMenu : MonoBehaviour {
 				if (clickedThisGO.name == "button_Start") { SplitBackground(); }
 				else if (clickedThisGO.name == "button_options") { isLerpingTowardOptions = true; }
 				else if (clickedThisGO.name == "button_back") { isLerpingTowardOptions = false; }
-				else if (clickedThisGO.name == "button_clearProgress") { clickedThisGO.renderer.material = confirmClearProgressImage; clickedThisGO.name = "button_clearProgressConfirm"; }
-				else if (clickedThisGO.name == "button_clearProgressConfirm") { clickedThisGO.renderer.material = progressClearedImage; clickedThisGO.name = "progressCleared"; SaveGame.DeleteAll(); }
+				else if (clickedThisGO.name == "button_clearProgress") { clickedThisGO.GetComponent<Renderer>().material = confirmClearProgressImage; clickedThisGO.name = "button_clearProgressConfirm"; }
+				else if (clickedThisGO.name == "button_clearProgressConfirm") { clickedThisGO.GetComponent<Renderer>().material = progressClearedImage; clickedThisGO.name = "progressCleared"; SaveGame.DeleteAll(); }
 
 				// AUDIO
 				else if (clickedThisGO.name == "button_sfx")
@@ -110,12 +110,12 @@ public class mainMenu : MonoBehaviour {
 					if (SaveGame.GetAudioOn_sfx())
 					{
 						SaveGame.SetAudioOn_sfx(false);
-						clickedThisGO.renderer.material = audio_off;
+						clickedThisGO.GetComponent<Renderer>().material = audio_off;
 					}
 					else
 					{
 						SaveGame.SetAudioOn_sfx(true);
-						clickedThisGO.renderer.material = audio_sfx;
+						clickedThisGO.GetComponent<Renderer>().material = audio_sfx;
 					}
 				}
 				else if (clickedThisGO.name == "button_music")
@@ -124,13 +124,13 @@ public class mainMenu : MonoBehaviour {
 					{
 						TurnMusicOff();
 						SaveGame.SetAudioOn_music(false);
-						clickedThisGO.renderer.material = audio_off;
+						clickedThisGO.GetComponent<Renderer>().material = audio_off;
 					}
 					else
 					{
 						TurnMusicOn();
 						SaveGame.SetAudioOn_music(true);
-						clickedThisGO.renderer.material = audio_music;
+						clickedThisGO.GetComponent<Renderer>().material = audio_music;
 					}
 				}
 

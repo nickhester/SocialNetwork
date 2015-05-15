@@ -31,8 +31,8 @@ public class class_LineDisplay : MonoBehaviour {
 				string _relName = "rel with " + rel.relationshipMembers[0].name + " & " + rel.relationshipMembers[1].name;
 				_lineObject.gameObject.name = _relName;
 				_lineObject.transform.parent = transform;					// puts the relationship line objects under the network manager
-				_lineObject.renderer.enabled = true;
-				_lineObject.renderer.material = new Material(Shader.Find("Transparent/VertexLit"));
+				_lineObject.GetComponent<Renderer>().enabled = true;
+				_lineObject.GetComponent<Renderer>().material = new Material(Shader.Find("Transparent/VertexLit"));
 				_lineObject.tag = "relationshipLines";
 
 				// figure out state for Line component colors

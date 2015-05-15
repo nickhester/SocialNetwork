@@ -34,12 +34,12 @@ public class Line : MonoBehaviour {
 	}
 
 	void Start () {
-		if (myState == 0) { renderer.enabled = false; }
+		if (myState == 0) { GetComponent<Renderer>().enabled = false; }
 		else if (myState == 1) { myColor = positiveColor; }
 		else if (myState == -1) { myColor = negativeColor; }
 
-		renderer.material.color = myColor;
-		renderer.material.SetColor("_Emission", myColor);
+		GetComponent<Renderer>().material.color = myColor;
+		GetComponent<Renderer>().material.SetColor("_Emission", myColor);
 	}
 
 	void Update () {
@@ -49,11 +49,11 @@ public class Line : MonoBehaviour {
 			if (fadeCounter >= fadeTime) { isChanging = false; }
 		}
 
-		if (isVisible) { myColor = new Color(this.renderer.material.color.r, this.renderer.material.color.g, this.renderer.material.color.b, fadeCounter/fadeTime); }
-		else { myColor = new Color(this.renderer.material.color.r, this.renderer.material.color.g, this.renderer.material.color.b, 0); }
+		if (isVisible) { myColor = new Color(this.GetComponent<Renderer>().material.color.r, this.GetComponent<Renderer>().material.color.g, this.GetComponent<Renderer>().material.color.b, fadeCounter/fadeTime); }
+		else { myColor = new Color(this.GetComponent<Renderer>().material.color.r, this.GetComponent<Renderer>().material.color.g, this.GetComponent<Renderer>().material.color.b, 0); }
 		
-		renderer.material.color = myColor;
-		renderer.material.SetColor("_Emission", myColor);
+		GetComponent<Renderer>().material.color = myColor;
+		GetComponent<Renderer>().material.SetColor("_Emission", myColor);
 	}
 
 }
