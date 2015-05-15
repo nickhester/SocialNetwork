@@ -23,7 +23,7 @@ namespace Types
 		Friday
 	}
 
-	public enum SpecialLevelAttributes
+	public enum SpecialLevel
 	{
 		FallToRed,
 		OneClick,

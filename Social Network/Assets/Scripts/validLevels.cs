@@ -46,6 +46,22 @@ public class validLevels {
 		seed = _seed;
 		SetOnlySpecialAttributes(_isFallToRed, _isOneClick, _isCantTouch, _isNoLines);
 	}
+	public validLevels(int _level, Difficulty _difficulty, int _seed, Types.SpecialLevel _special)
+	{
+		level = _level;
+		difficulty = _difficulty;
+		seed = _seed;
+		if (_special == Types.SpecialLevel.None)
+			SetOnlySpecialAttributes(false, false, false, false);
+		else if (_special == Types.SpecialLevel.FallToRed)
+			SetOnlySpecialAttributes(true, false, false, false);
+		else if (_special == Types.SpecialLevel.OneClick)
+			SetOnlySpecialAttributes(false, true, false, false);
+		else if (_special == Types.SpecialLevel.CantTouch)
+			SetOnlySpecialAttributes(false, false, true, false);
+		else if (_special == Types.SpecialLevel.NoLines)
+			SetOnlySpecialAttributes(false, false, false, true);
+	}
 
 	// overload...
 	public void SetAttributes(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks)

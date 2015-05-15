@@ -13,7 +13,7 @@ public class clipboard : MonoBehaviour {
 	private List<int> listLevel = new List<int>();
 	private createAndDestroyLevel createAndDestroyLevelRef;
 	private bool creatingInitialApptList = true;
-	private List<SpecialLevelAttributes> listOfSpecialAttributes = new List<SpecialLevelAttributes>();
+	private List<SpecialLevel> listOfSpecialAttributes = new List<SpecialLevel>();
 	private List<levelOption> listOfLevelOptions = new List<levelOption>();
 	private List<validLevels> listOfSpecificallyRequestedLevels = new List<validLevels>();
 	private int specificLevelsToCreate = 0;
@@ -282,10 +282,10 @@ public class clipboard : MonoBehaviour {
 				int numIndexToGenerate2 = Random.Range(0, listOfSpecialAttributes.Count);	// this randomizes the order
 
 				bool s1 = false; bool s2 = false; bool s3 = false; bool s4 = false;
-				if (listOfSpecialAttributes[numIndexToGenerate2] == SpecialLevelAttributes.FallToRed ) { s1 = true; }
-				else if (listOfSpecialAttributes[numIndexToGenerate2] == SpecialLevelAttributes.OneClick) { s2 = true; }
-				else if (listOfSpecialAttributes[numIndexToGenerate2] == SpecialLevelAttributes.CantTouch) { s3 = true; }
-				else if (listOfSpecialAttributes[numIndexToGenerate2] == SpecialLevelAttributes.NoLines) { s4 = true; }
+				if (listOfSpecialAttributes[numIndexToGenerate2] == SpecialLevel.FallToRed ) { s1 = true; }
+				else if (listOfSpecialAttributes[numIndexToGenerate2] == SpecialLevel.OneClick) { s2 = true; }
+				else if (listOfSpecialAttributes[numIndexToGenerate2] == SpecialLevel.CantTouch) { s3 = true; }
+				else if (listOfSpecialAttributes[numIndexToGenerate2] == SpecialLevel.NoLines) { s4 = true; }
 
 				if (specificLevelsToCreate > 0)
 				{
@@ -363,27 +363,27 @@ public class clipboard : MonoBehaviour {
 
 			if (selectorRef.dayToGenerate.special_CantTouch > 0)
 			{
-				listOfSpecialAttributes.Add(SpecialLevelAttributes.CantTouch);
+				listOfSpecialAttributes.Add(SpecialLevel.CantTouch);
 				selectorRef.dayToGenerate.special_CantTouch--;
 			}
 			else if (selectorRef.dayToGenerate.special_FallToRed > 0)
 			{
-				listOfSpecialAttributes.Add(SpecialLevelAttributes.FallToRed);
+				listOfSpecialAttributes.Add(SpecialLevel.FallToRed);
 				selectorRef.dayToGenerate.special_FallToRed--;
 			}
 			else if (selectorRef.dayToGenerate.special_NoLines > 0)
 			{
-				listOfSpecialAttributes.Add(SpecialLevelAttributes.NoLines);
+				listOfSpecialAttributes.Add(SpecialLevel.NoLines);
 				selectorRef.dayToGenerate.special_NoLines--;
 			}
 			else if (selectorRef.dayToGenerate.special_OneClick > 0)
 			{
-				listOfSpecialAttributes.Add(SpecialLevelAttributes.OneClick);
+				listOfSpecialAttributes.Add(SpecialLevel.OneClick);
 				selectorRef.dayToGenerate.special_OneClick--;
 			}
 			else
 			{
-				listOfSpecialAttributes.Add(SpecialLevelAttributes.None);
+				listOfSpecialAttributes.Add(SpecialLevel.None);
 			}
 		}
 	}
