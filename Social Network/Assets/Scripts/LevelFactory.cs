@@ -37,9 +37,6 @@ public class LevelFactory : MonoBehaviour {
 				}
 				Debug.LogException(new System.Exception("A requested level was not found in the level list"));
 			}
-//			validLevels aNewRandomLevel = new validLevels(_level, _difficulty, _seed, 0, false, 0);
-//			aNewRandomLevel.SetOnlySpecialAttributes(_fallToRed, _oneClick, _cantTouch, _noLines);
-//			return aNewRandomLevel;
 		}
 
 		// otherwise, find all matching levels
@@ -50,8 +47,6 @@ public class LevelFactory : MonoBehaviour {
 		                          where (_oneClick == true && level.oneClick) || (_oneClick == false)
 		                          where (_cantTouch == true && level.cantTouch >= 0) || (_cantTouch == false)
 		                          select level).ToList();
-
-		//print ("choosing from " + levelsToChooseFrom.Count + " choices");
 
 		if (levelsToChooseFrom.Count == 0)			// if there aren't any found for this level
 		{

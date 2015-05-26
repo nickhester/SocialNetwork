@@ -35,7 +35,6 @@ public class CalendarDay : MonoBehaviour {
 	public int numAppointments;
 	//public int timeLimit;
 	public bool isPlayable = false;
-	public bool hasSpecificLevelRequests = false;
 	public List<validLevels> specificLevelsRequested = new List<validLevels>();
 
     // special day attributes
@@ -173,12 +172,10 @@ public class CalendarDay : MonoBehaviour {
 
 	public void SetSpecificLevel(validLevels levelRequested)
 	{
-		hasSpecificLevelRequests = true;
 		specificLevelsRequested.Add(levelRequested);
 	}
 	public void SetSpecificLevels(List<validLevels> levelsRequested)
 	{
-		hasSpecificLevelRequests = true;
 		specificLevelsRequested.AddRange(levelsRequested);
 	}
 

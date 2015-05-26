@@ -140,8 +140,7 @@ public class Person : MonoBehaviour {
 			}
 		}
 
-		float _animationTime = animationTime;
-		if (isDebugChange) { AffectListOfRelationships(false); _animationTime = 0; }
+		if (isDebugChange) { AffectListOfRelationships(false); }
 		else { Invoke ("AffectListOfRelationships", animationTime); }
 
 		if (!isDebugChange)

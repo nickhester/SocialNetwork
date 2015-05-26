@@ -256,7 +256,7 @@ public class class_NetworkMgr : MonoBehaviour {
 	{
         if (!levelIsComplete)
         {
-            GameObject.FindGameObjectWithTag("persistentObject").GetComponent<createAndDestroyLevel>().RoundEnd(true, numActionsTaken);
+            GameObject.FindGameObjectWithTag("persistentObject").GetComponent<createAndDestroyAppointment>().RoundEnd(true, numActionsTaken);
             levelIsComplete = true;
         }
 	}

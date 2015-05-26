@@ -43,7 +43,7 @@ public class levelTester : MonoBehaviour {
 		{
 			RunOneLevelTrial();
 		}
-		GetComponent<createAndDestroyLevel>().MakeNewTestLevel(levelToLoad);
+		GetComponent<createAndDestroyAppointment>().MakeNewTestLevel(levelToLoad);
 	}
 
 	void FindNetworkManager()

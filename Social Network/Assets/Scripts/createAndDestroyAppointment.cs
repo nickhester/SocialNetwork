@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Types;
 using System;
 
-public class createAndDestroyLevel : MonoBehaviour {
+public class createAndDestroyAppointment : MonoBehaviour {
 
     #region Variables
 
@@ -12,13 +12,9 @@ public class createAndDestroyLevel : MonoBehaviour {
 	[HideInInspector]
 	public Difficulty difficultySelection;
 	[HideInInspector]
-	public int numLevelsCompletedInARow = 0;
 	public GUIStyle dayCompleteScreenStyle;
 	private bool hasDisplayedLevelEndScreen = false;
-	public Material notesFor0Stars;
-	public Material notesFor1Star;
-	public Material notesFor2Stars;
-	public Material notesFor3Stars;
+	public Material[] notesForStars;
 	private GameObject resultsPage;
 	private GameObject resultsNotes;
 	private bool isDisplayingScore = false;
@@ -29,33 +25,20 @@ public class createAndDestroyLevel : MonoBehaviour {
 	public clipboard myClipboardComponent;
 	private bool isClipboardUp = true;
 
-	// level parameters
-	public int m_levelsAvailable = 8;
-	private bool hasLevelCountBeenSet = false;
-	public int levelsAvailable
-	{
-		get
-		{
-			if (!hasLevelCountBeenSet) { hasLevelCountBeenSet = true; }	// save the original value
-			return m_levelsAvailable;		// actually set this variable
-		}
-		set
-		{
-			if (!hasLevelCountBeenSet) { hasLevelCountBeenSet = true; }
-			m_levelsAvailable = value;
-		}
-	}
-	public int levelDuration = 180;
+	// appointment parameters
+	public int levelsAvailable = 8;
 
 	// level parameter helpers
-	public float timeLeft;
-	public int levelsLeftToComplete;
-	public bool levelComplete = false;
+	[HideInInspector]
+	public bool appointmentComplete = false;
 	private float waitToShowResultsAfterFinished = 0.0f;
 	private float waitToShowResultsAfterFinishedCounter;
-	private bool gameplayHasStarted = false;
+
+	// debug stuff that is commented out
+	/*
 	private bool isShowingDebugControls = false;
-	private int currentLevelLoaded;
+	private int currentAppointmentLoaded;
+	*/
 
 	System.Random rand = new System.Random();
 
@@ -65,9 +48,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 	
 	void Start () {
 		myClipboardComponent = myClipboard.GetComponent<clipboard>();
-		timeLeft = levelDuration;
 		// add levels available and levels on clipboard (b/c levels available has already been subtracted from)
-		levelsLeftToComplete = m_levelsAvailable;
 		resultsPage = GameObject.Find("results page");
 		resultsPage.GetComponent<Renderer>().enabled = false;
 		resultsNotes = GameObject.Find("results notes");
@@ -77,7 +58,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 
 	void Update () {
 
-		if (levelComplete) { waitToShowResultsAfterFinishedCounter -= Time.deltaTime; }
+		if (appointmentComplete) { waitToShowResultsAfterFinishedCounter -= Time.deltaTime; }
 	}
 
 	#endregion
@@ -113,19 +94,17 @@ public class createAndDestroyLevel : MonoBehaviour {
 			numActions = numActionsTaken;
 		}
 
-		levelsLeftToComplete--;
 		float waitTimeForClipboard = (levelSuccess ? 1.0f : 0.0f);
 		myClipboardComponent.Invoke("BringUpClipboard", waitTimeForClipboard);
 		isClipboardUp = true;
 		Invoke ("DestroyOldLevel", waitTimeForClipboard);
-		//if (levelsLeftToComplete == 0) { DayEnd(); }		// don't need this any more b/c the day never really "ends", but maybe we can use it for some kind of completion screen
 
 		if (!hasDisplayedLevelEndScreen && levelSuccess)
 		{
 			// show score instructions the first time you finish a round
 			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(3, false);
 
-			levelComplete = true;
+			appointmentComplete = true;
 			myClipboardComponent.HideClipboardAppointments();
 			bool receivedStar = false;
 
@@ -178,7 +157,6 @@ public class createAndDestroyLevel : MonoBehaviour {
 			myClipboardComponent.HideClipboard();
 			isClipboardUp = false;
 		}
-		currentLevelLoaded = _aSpecificLevel.level;
 	}
 
 	// method overload
@@ -206,9 +184,6 @@ public class createAndDestroyLevel : MonoBehaviour {
 		int[] temp = { 2, 6, 7, 8, 9, 10 };
 		gameStartInstructionSeries.AddRange(temp);
 		GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, false);
-
-		gameplayHasStarted = true;
-		numLevelsCompletedInARow++;
 	}
 
 	public void MakeNewTestLevel(int _levelNumber)
@@ -228,7 +203,7 @@ public class createAndDestroyLevel : MonoBehaviour {
 		}
 		isDisplayingScore = false;
 		waitToShowResultsAfterFinishedCounter = waitToShowResultsAfterFinished;
-		levelComplete = false;
+		appointmentComplete = false;
 		hasDisplayedLevelEndScreen = false;
 	}
 
@@ -252,17 +227,17 @@ public class createAndDestroyLevel : MonoBehaviour {
 			{
 				levelTester t = GetComponent<levelTester>();
 				t.numLevelsLeftToRun = t.numLevelsToRun;
-				t.levelToLoad = currentLevelLoaded;
+				t.levelToLoad = currentAppointmentLoaded;
 			}
 		}
 		*/
 
-		if (levelComplete)
+		if (appointmentComplete)
 		{
 			resultsPage.GetComponent<Renderer>().enabled = true;
 		}
 
-		if (levelComplete && waitToShowResultsAfterFinishedCounter <= 0 && !isDisplayingScore)
+		if (appointmentComplete && waitToShowResultsAfterFinishedCounter <= 0 && !isDisplayingScore)
 		{
 			isDisplayingScore = true;
 
@@ -271,16 +246,16 @@ public class createAndDestroyLevel : MonoBehaviour {
 			int resultStars = st.score;
 
 			if (resultStars == 0)
-				resultsNotes.GetComponent<Renderer>().material = notesFor0Stars;
+				resultsNotes.GetComponent<Renderer>().material = notesForStars[0];
 
 			else if (resultStars == 1)
-				resultsNotes.GetComponent<Renderer>().material = notesFor1Star;
+				resultsNotes.GetComponent<Renderer>().material = notesForStars[1];
 
 			else if (resultStars == 2)
-				resultsNotes.GetComponent<Renderer>().material = notesFor2Stars;
+				resultsNotes.GetComponent<Renderer>().material = notesForStars[2];
 
 			else if (resultStars == 3)
-				resultsNotes.GetComponent<Renderer>().material = notesFor3Stars;
+				resultsNotes.GetComponent<Renderer>().material = notesForStars[3];
 
 			resultsNotes.GetComponent<Renderer>().enabled = true;
 

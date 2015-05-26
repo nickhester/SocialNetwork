@@ -13,7 +13,6 @@ public class LevelValidator {
 	private int currentStepsTaken;
 	private Person loopStart;
 	private Person lastVisitedInLoop;
-	private List<Person> loopMembers = new List<Person>();
 	private bool bestWinStateHasBeenFound = false;
 
 	void FindNetworkManager()
@@ -110,22 +109,6 @@ public class LevelValidator {
 			if (_actionPossibility.personIndex == personToExclude)
 			{
 				continue;
-			}
-
-			if (parentState.pathOfActions.trail.Count > 1)							// if this parent state has had more than one parent before it
-			{
-				if (_actionPossibility.personIndex == 0 && _actionPossibility.isGoodAction == true)
-				{
-					int i = 1;
-				}
-			}
-
-			else if (parentState.pathOfActions.trail.Count > 1)
-			{
-				if (parentState.pathOfActions.trail[0].Key == 1 && parentState.pathOfActions.trail[0].Value == true)
-				{
-					int i = 1;
-				}
 			}
 
 			ReturnToPreviousLevelState(parentState);

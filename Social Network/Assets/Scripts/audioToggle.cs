@@ -52,8 +52,6 @@ public class audioToggle : MonoBehaviour {
 				audioIsOn = false;
 			}
 		}
-		int a = 1 + 1;
-		int b = a * a;
 	}
 	
 	// Update is called once per frame
