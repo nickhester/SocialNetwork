@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class cameraSingleton : MonoBehaviour {
+public class CameraSingleton : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

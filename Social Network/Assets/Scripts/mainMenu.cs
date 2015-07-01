@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class mainMenu : MonoBehaviour {
+public class MainMenu : MonoBehaviour {
 
 	private GameObject clickedThisGO;
 	private float clickScale;

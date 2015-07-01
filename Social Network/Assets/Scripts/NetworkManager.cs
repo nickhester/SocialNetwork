@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Types;
 
-public class class_NetworkMgr : MonoBehaviour {
+public class NetworkManager : MonoBehaviour {
 
 	#region Variables
 
 	public List<Person> allPeople = new List<Person>();
-	private List<class_Relationship> savedStateAllRelationships = new List<class_Relationship>();
-	public List<class_Relationship> allRelationships = new List<class_Relationship>();
+	private List<Relationship> savedStateAllRelationships = new List<Relationship>();
+	public List<Relationship> allRelationships = new List<Relationship>();
 	public GameObject hitParticle;
 	public bool isUsingSeed = false;
 	public int randomSeed = 0;
@@ -19,7 +19,7 @@ public class class_NetworkMgr : MonoBehaviour {
 	public TextAsset validSeedList;
 	private bool levelIsComplete = false;
 	private const int percentHasRelationship = 50;
-	private validLevels levelUsed;
+	private ValidLevels levelUsed;
 
 	// Debug and Score
 	[HideInInspector]
@@ -124,8 +124,8 @@ public class class_NetworkMgr : MonoBehaviour {
 					cursorSecondaryInst.GetComponent<Renderer>().enabled = true;		// turn on cursor
 					selectionCursorTargetPos = new Vector3(hit.transform.position.x, hit.transform.position.y, hit.transform.position.z + 0.1f);	// move cursor to location
 					currentlySelectedPerson = hit.transform.gameObject;			// set the clicked person as the currently selected person
-					GetComponent<class_LineDisplay>().TurnOffAllLines();		// turn off all the lines
-					GetComponent<class_LineDisplay>().DisplayLines(hit.transform.GetComponent<Person>());		// turn on only the lines touching the selected person
+					GetComponent<LineDisplay>().TurnOffAllLines();		// turn off all the lines
+					GetComponent<LineDisplay>().DisplayLines(hit.transform.GetComponent<Person>());		// turn on only the lines touching the selected person
 				}
 				else if (hit.transform.name == "Button_green" && currentlySelectedPerson != null)
 				{
@@ -166,7 +166,7 @@ public class class_NetworkMgr : MonoBehaviour {
 
 	void SaveStartingState()
 	{
-		foreach (class_Relationship _rel in allRelationships)
+		foreach (Relationship _rel in allRelationships)
 		{
 			savedStateAllRelationships.Add(_rel);
 		}
@@ -184,7 +184,7 @@ public class class_NetworkMgr : MonoBehaviour {
 	public int SeedTheLevel()
 	{
 		int _usedSeed;
-		levelUsed = GameObject.FindWithTag("clipboard").GetComponent<clipboard>().nextLevelUp.myLevel;
+		levelUsed = GameObject.FindWithTag("clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel;
 
 		if (levelUsed.difficulty == Difficulty.VeryEasy) { isReadingSeedFromFile = true; }
 		else if (levelUsed.difficulty == Difficulty.Easy) { isReadingSeedFromFile = true; }
@@ -225,9 +225,9 @@ public class class_NetworkMgr : MonoBehaviour {
 	        foreach (Person _person in allPeople)
 	        {
 	            _person.GetComponent<Collider>().enabled = false;
-	            _person.GetComponent<personMovement>().MoveOut();
+	            _person.GetComponent<PersonMovement>().MoveOut();
 	        }
-	        GetComponent<class_LineDisplay>().TurnOffAllLines();
+	        GetComponent<LineDisplay>().TurnOffAllLines();
 	        selectionCursorInst.GetComponent<Renderer>().enabled = false;
 	        cursorSecondaryInst.GetComponent<Renderer>().enabled = false;
 	        WinningScreen();
@@ -250,7 +250,7 @@ public class class_NetworkMgr : MonoBehaviour {
 	{
         if (!levelIsComplete)
         {
-            GameObject.FindGameObjectWithTag("persistentObject").GetComponent<createAndDestroyAppointment>().RoundEnd(true, numActionsTaken);
+            GameObject.FindGameObjectWithTag("persistentObject").GetComponent<CreateAndDestroyAppointment>().RoundEnd(true, numActionsTaken);
             levelIsComplete = true;
         }
 	}
@@ -278,7 +278,7 @@ public class class_NetworkMgr : MonoBehaviour {
 			{
 				if (secondPerson != person)			// if they haven't already been compared (don't repeat A to A)
 				{
-					class_Relationship newRel = gameObject.AddComponent<class_Relationship>() as class_Relationship;
+					Relationship newRel = gameObject.AddComponent<Relationship>() as Relationship;
 					// TODO: is this line necessary? // newRel.relationshipValue = ExponentialWeight(200);		// set random relationship value
 					newRel.relationshipMembers.Add(person);
 					newRel.relationshipMembers.Add (secondPerson);
@@ -295,7 +295,7 @@ public class class_NetworkMgr : MonoBehaviour {
 		RelationshipValues = WeightedRelationships(allRelationships.Count, percentHasRelationship);
 
 
-		foreach (class_Relationship rel in allRelationships)
+		foreach (Relationship rel in allRelationships)
 		{
 			if (RelationshipValues.Count > 0)
 			{

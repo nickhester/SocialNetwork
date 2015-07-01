@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Types;
 using System;
 
-public class createAndDestroyAppointment : MonoBehaviour {
+public class CreateAndDestroyAppointment : MonoBehaviour {
 
     #region Variables
 
@@ -23,7 +23,7 @@ public class createAndDestroyAppointment : MonoBehaviour {
 	private int numActions;
 
 	// clipboard
-    private clipboard myClipboardComponent;
+    private Clipboard myClipboardComponent;
 	private bool isClipboardUp = true;
 
 	// appointment parameters
@@ -47,7 +47,7 @@ public class createAndDestroyAppointment : MonoBehaviour {
 	#region StartAndUpdate
 	
 	void Start () {
-        myClipboardComponent = GameObject.FindGameObjectWithTag("clipboard").GetComponent<clipboard>();
+        myClipboardComponent = GameObject.FindGameObjectWithTag("clipboard").GetComponent<Clipboard>();
 		// add levels available and levels on clipboard (b/c levels available has already been subtracted from)
 		resultsPage = GameObject.Find("results page");
 		resultsPage.GetComponent<Renderer>().enabled = false;
@@ -85,7 +85,7 @@ public class createAndDestroyAppointment : MonoBehaviour {
 		if (_thisLevel.myLevel.isCantTouch || _thisLevel.myLevel.isFallToRed || _thisLevel.myLevel.isNoLines || _thisLevel.myLevel.isOneClick)
 		{ isSpecialLevel = true; }
 
-		scoreTrackerOneRound st = GetComponent<scoreTrackerOneRound>();
+		ScoreTrackerOneRound st = GetComponent<ScoreTrackerOneRound>();
 		st.Reset();
 
 		if (levelSuccess)
@@ -144,7 +144,7 @@ public class createAndDestroyAppointment : MonoBehaviour {
 		}
 	}
 	
-	void LoadNewLevel (validLevels _aSpecificLevel, bool isFromAppointment)
+	void LoadNewLevel (ValidLevels _aSpecificLevel, bool isFromAppointment)
 	{
 		// if this isn't a level from the clipboard, it needs to be set as the clipboard's nextLevelUp b/c that's where the NetworkMgr looks for it
 		if (!isFromAppointment)
@@ -160,7 +160,7 @@ public class createAndDestroyAppointment : MonoBehaviour {
 	}
 
 	// method overload
-	void LoadNewLevel(validLevels _aSpecificLevel)
+	void LoadNewLevel(ValidLevels _aSpecificLevel)
 	{
 		LoadNewLevel(_aSpecificLevel, true);
 	}
@@ -175,7 +175,7 @@ public class createAndDestroyAppointment : MonoBehaviour {
 
 	public void GetStartFromClipboard()
 	{
-		validLevels _incomingLevel = myClipboardComponent.nextLevelUp.myLevel;
+		ValidLevels _incomingLevel = myClipboardComponent.nextLevelUp.myLevel;
 		difficultySelection = _incomingLevel.difficulty;
 		LoadNewLevel(_incomingLevel);
 
@@ -227,7 +227,7 @@ public class createAndDestroyAppointment : MonoBehaviour {
 
 			if (GUI.Button(new Rect(Screen.width - 300, Screen.height - 50, 75, 25), "run test"))
 			{
-				GetComponent<levelTester>().RunLevelTests();
+				GetComponent<LevelTester>().RunLevelTests();
 			}
 		}
 		
@@ -242,7 +242,7 @@ public class createAndDestroyAppointment : MonoBehaviour {
 		{
 			isDisplayingScore = true;
 
-			scoreTrackerOneRound st = GetComponent<scoreTrackerOneRound>();
+			ScoreTrackerOneRound st = GetComponent<ScoreTrackerOneRound>();
 			int resultActions = numActions;
 			int resultStars = st.score;
 

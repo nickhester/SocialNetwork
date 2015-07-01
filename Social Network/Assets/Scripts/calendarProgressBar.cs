@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class calendarProgressBar : MonoBehaviour {
+public class CalendarProgressBar : MonoBehaviour {
 
 	private Vector3 sessionBarStartPos;
 	private Vector3 sessionBarEndPos;

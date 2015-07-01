@@ -61,7 +61,7 @@ public class Calendar : MonoBehaviour {
 			}
 
 			// configure settings for each day ##################################################
-			List<validLevels> reqList = new List<validLevels>();
+			List<ValidLevels> reqList = new List<ValidLevels>();
 			switch (i)
 			{
 				// WEEK 1 --------------
@@ -73,9 +73,9 @@ public class Calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		3;
 					_newCalDayComponent.SetDifficulties			(100, 0, 0, 0);
 
-					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 874353, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 894346, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 577185, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(3, Types.Difficulty.VeryEasy, 874353, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(4, Types.Difficulty.VeryEasy, 894346, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(4, Types.Difficulty.VeryEasy, 577185, Types.SpecialLevel.None));
 
 					_newCalDayComponent.SetSpecificLevels(reqList);
 
@@ -85,10 +85,10 @@ public class Calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		4;
 					_newCalDayComponent.SetDifficulties			(50, 50, 0, 0);
 					
-					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 278940, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 85586, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 315229, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 651607, Types.SpecialLevel.None));			//
+					reqList.Add(new ValidLevels(3, Types.Difficulty.VeryEasy, 278940, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(4, Types.Difficulty.VeryEasy, 85586, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(3, Types.Difficulty.VeryEasy, 315229, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(4, Types.Difficulty.VeryEasy, 651607, Types.SpecialLevel.None));			//
 
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					
@@ -97,11 +97,11 @@ public class Calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		5;
 					_newCalDayComponent.SetDifficulties			(25, 75, 0, 0);
 					
-					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 990103, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(3, Types.Difficulty.VeryEasy, 116645, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 272873, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 890388, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 101640, Types.SpecialLevel.None));			//
+					reqList.Add(new ValidLevels(4, Types.Difficulty.VeryEasy, 990103, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(3, Types.Difficulty.VeryEasy, 116645, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(4, Types.Difficulty.VeryEasy, 272873, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(4, Types.Difficulty.Easy, 890388, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Easy, 101640, Types.SpecialLevel.None));			//
 
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					
@@ -110,11 +110,11 @@ public class Calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		5;
 					_newCalDayComponent.SetDifficulties			(25, 50, 25, 0);
 					
-					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 595357, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 186873, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 950079, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 595034, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 773589, Types.SpecialLevel.None));			//
+					reqList.Add(new ValidLevels(4, Types.Difficulty.Easy, 595357, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(4, Types.Difficulty.Easy, 186873, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 950079, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Easy, 595034, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 773589, Types.SpecialLevel.None));			//
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					
 					break;
@@ -122,12 +122,12 @@ public class Calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(0, 50, 50, 0);
 					
-					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 674841, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 29864, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 131922, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 996259, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 362846, Types.SpecialLevel.None));			//
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 666502, Types.SpecialLevel.None));			//
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Easy, 674841, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 29864, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Easy, 131922, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 996259, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(4, Types.Difficulty.Easy, 362846, Types.SpecialLevel.None));			//
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 666502, Types.SpecialLevel.None));			//
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 
@@ -138,59 +138,59 @@ public class Calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		5;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 
-					reqList.Add(new validLevels(4, Types.Difficulty.VeryEasy, 358450, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 594364, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 542022, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 673234, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 35521, Types.SpecialLevel.CantTouch));			//
+					reqList.Add(new ValidLevels(4, Types.Difficulty.VeryEasy, 358450, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Easy, 594364, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(4, Types.Difficulty.Easy, 542022, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 673234, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Easy, 35521, Types.SpecialLevel.CantTouch));			//
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 6:	// tuesday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 
-					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 531692, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 395761, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 273965, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 834762, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(4, Types.Difficulty.Easy, 367595, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 549206, Types.SpecialLevel.None));			//
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 531692, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 395761, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 273965, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 834762, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(4, Types.Difficulty.Easy, 367595, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 549206, Types.SpecialLevel.None));			//
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 7:	// wednesday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 471243, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 135371, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 33313, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 172740, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 734778, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 602047, Types.SpecialLevel.None));			//
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 471243, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Easy, 135371, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 33313, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 172740, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 734778, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 602047, Types.SpecialLevel.None));			//
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 8:	// thursday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 
-					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 694082, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 405497, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 786434, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 408562, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 475095, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 748285, Types.SpecialLevel.CantTouch));			//
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 694082, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 405497, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 786434, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 408562, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 475095, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 748285, Types.SpecialLevel.CantTouch));			//
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 9:	// friday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(25, 25, 25, 25);
 
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 125373, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 639339, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 721178, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 555842, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 971095, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 109204, Types.SpecialLevel.None));			//
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 125373, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 639339, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 721178, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 555842, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 971095, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 109204, Types.SpecialLevel.None));			//
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 
@@ -201,57 +201,57 @@ public class Calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		4;
 					_newCalDayComponent.SetDifficulties			(0, 75, 25, 0);
 
-					reqList.Add(new validLevels(5, Types.Difficulty.Easy, 497006, Types.SpecialLevel.FallToRed));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 568529, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 923075, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 190513, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Easy, 497006, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 568529, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 923075, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 190513, Types.SpecialLevel.FallToRed));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 11:	// tuesday
 					_newCalDayComponent.numAppointments = 		5;
 					_newCalDayComponent.SetDifficulties			(0, 50, 50, 0);
 
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 996834, Types.SpecialLevel.FallToRed));
-					reqList.Add(new validLevels(5, Types.Difficulty.Medium, 563331, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 37622, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 399938, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 523313, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 996834, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 563331, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 37622, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 399938, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 523313, Types.SpecialLevel.None));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 12:	// wednesday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(0, 50, 50, 0);
 
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 393680, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 608186, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 290475, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 225281, Types.SpecialLevel.FallToRed));
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 87679, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 458246, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 393680, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 608186, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 290475, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 225281, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 87679, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 458246, Types.SpecialLevel.None));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 13:	// thursday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(0, 100, 0, 0);
 
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 499828, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 530389, Types.SpecialLevel.FallToRed));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 697705, Types.SpecialLevel.FallToRed));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 941858, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 469668, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 226248, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 499828, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 530389, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 697705, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 941858, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 469668, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 226248, Types.SpecialLevel.None));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 14:	// friday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(0, 50, 50, 0);
 
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 729545, Types.SpecialLevel.FallToRed));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 578373, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 795167, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 498042, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 383528, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 373779, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 729545, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 578373, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 795167, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 498042, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 383528, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 373779, Types.SpecialLevel.FallToRed));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 
@@ -262,57 +262,57 @@ public class Calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		4;
 					_newCalDayComponent.SetDifficulties			(0, 0, 0, 100);
 
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 226841, Types.SpecialLevel.OneClick));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 564213, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 823623, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 173226, Types.SpecialLevel.OneClick));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 226841, Types.SpecialLevel.OneClick));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 564213, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 823623, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 173226, Types.SpecialLevel.OneClick));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 16:	// tuesday
 					_newCalDayComponent.numAppointments = 		5;
 					_newCalDayComponent.SetDifficulties			(0, 25, 75, 0);
 
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 299227, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 350236, Types.SpecialLevel.OneClick));
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 495962, Types.SpecialLevel.FallToRed));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 456126, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 878049, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 299227, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 350236, Types.SpecialLevel.OneClick));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 495962, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 456126, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 878049, Types.SpecialLevel.None));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 17:	// wednesday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(0, 0, 75, 25);
 
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 596355, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 928784, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 831773, Types.SpecialLevel.OneClick));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 900183, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 479115, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 305434, Types.SpecialLevel.OneClick));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 596355, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 928784, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 831773, Types.SpecialLevel.OneClick));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 900183, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 479115, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 305434, Types.SpecialLevel.OneClick));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 18:	// thursday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(0, 0, 60, 40);
 
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 80819, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 471503, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 255441, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 207756, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 425810, Types.SpecialLevel.OneClick));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 459147, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 80819, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 471503, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 255441, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 207756, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 425810, Types.SpecialLevel.OneClick));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 459147, Types.SpecialLevel.FallToRed));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 19:	// friday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(0, 0, 60, 40);
 
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 973499, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 192043, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 83437, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 371048, Types.SpecialLevel.FallToRed));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 607871, Types.SpecialLevel.OneClick));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 22442, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 973499, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 192043, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 83437, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 371048, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 607871, Types.SpecialLevel.OneClick));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 22442, Types.SpecialLevel.None));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 
@@ -323,57 +323,57 @@ public class Calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		4;
 					_newCalDayComponent.SetDifficulties			(0, 0, 40, 60);
 
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 927693, Types.SpecialLevel.NoLines));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 488836, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 452025, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 571617, Types.SpecialLevel.NoLines));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 927693, Types.SpecialLevel.NoLines));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 488836, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 452025, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 571617, Types.SpecialLevel.NoLines));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 21:	// tuesday
 					_newCalDayComponent.numAppointments = 		5;
 					_newCalDayComponent.SetDifficulties			(0, 0, 40, 60);
 
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 460725, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 479409, Types.SpecialLevel.OneClick));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 102959, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 315767, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 780861, Types.SpecialLevel.NoLines));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 460725, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 479409, Types.SpecialLevel.OneClick));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 102959, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 315767, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 780861, Types.SpecialLevel.NoLines));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 22:	// wednesday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(0, 0, 40, 60);
 
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 600791, Types.SpecialLevel.NoLines));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 748769, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 789758, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 903815, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 446865, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 811732, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 600791, Types.SpecialLevel.NoLines));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 748769, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 789758, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 903815, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 446865, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 811732, Types.SpecialLevel.FallToRed));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 23:	// thursday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(0, 0, 40, 60);
 
-					reqList.Add(new validLevels(6, Types.Difficulty.Medium, 225978, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 384622, Types.SpecialLevel.NoLines));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 544317, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 125636, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 216198, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 875004, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 225978, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 384622, Types.SpecialLevel.NoLines));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 544317, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 125636, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 216198, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 875004, Types.SpecialLevel.FallToRed));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 24:	// friday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(0, 0, 40, 60);
 
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 213290, Types.SpecialLevel.OneClick));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 186008, Types.SpecialLevel.NoLines));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 828931, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 542392, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 533452, Types.SpecialLevel.FallToRed));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 304916, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 213290, Types.SpecialLevel.OneClick));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 186008, Types.SpecialLevel.NoLines));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 828931, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 542392, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 533452, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 304916, Types.SpecialLevel.None));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 
@@ -384,57 +384,57 @@ public class Calendar : MonoBehaviour {
 					_newCalDayComponent.numAppointments = 		4;
 					_newCalDayComponent.SetDifficulties			(0, 0, 40, 60);
 
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 143004, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 582033, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 610995, Types.SpecialLevel.OneClick));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 351956, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 143004, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 582033, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 610995, Types.SpecialLevel.OneClick));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 351956, Types.SpecialLevel.None));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 26:	// tuesday
 					_newCalDayComponent.numAppointments = 		5;
 					_newCalDayComponent.SetDifficulties			(0, 0, 40, 60);
 
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 370455, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 492777, Types.SpecialLevel.FallToRed));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 591113, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 482001, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 504389, Types.SpecialLevel.NoLines));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 370455, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 492777, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 591113, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 482001, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 504389, Types.SpecialLevel.NoLines));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 27:	// wednesday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(0, 0, 20, 80);
 
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 643857, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 300787, Types.SpecialLevel.CantTouch));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 871591, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 534160, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Medium, 103389, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(6, Types.Difficulty.Hard, 143765, Types.SpecialLevel.OneClick));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 643857, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 300787, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 871591, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 534160, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 103389, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 143765, Types.SpecialLevel.OneClick));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 28:	// thursday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(0, 0, 20, 80);
 
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 128387, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 481739, Types.SpecialLevel.FallToRed));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 36335, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Medium, 213262, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 210624, Types.SpecialLevel.NoLines));
-					reqList.Add(new validLevels(7, Types.Difficulty.Hard, 658771, Types.SpecialLevel.OneClick));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 128387, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 481739, Types.SpecialLevel.FallToRed));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 36335, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 213262, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 210624, Types.SpecialLevel.NoLines));
+					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 658771, Types.SpecialLevel.OneClick));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 29:	// friday
 					_newCalDayComponent.numAppointments = 		6;
 					_newCalDayComponent.SetDifficulties			(0, 0, 0, 100);
 
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 930252, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 75075, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 349425, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 36163, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 153824, Types.SpecialLevel.None));
-					reqList.Add(new validLevels(8, Types.Difficulty.Hard, 225870, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 930252, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 75075, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 349425, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 36163, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 153824, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 225870, Types.SpecialLevel.None));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 					
@@ -522,11 +522,11 @@ public class Calendar : MonoBehaviour {
 				{
 					CalendarDay hitDay = hit.transform.GetComponent<CalendarDay>();
 					SaveGame.lastCalendarDayClicked = hitDay.dayIndex_internal;
-					GameObject.Find("LevelSelector").GetComponent<levelSelector>().StartDay(hitDay);
+					GameObject.Find("LevelSelector").GetComponent<LevelSelector>().StartDay(hitDay);
 				}
 				else if (hit.transform.name == "MainMenu")
 				{
-					Destroy(GameObject.FindObjectOfType<levelSelector>().gameObject);
+					Destroy(GameObject.FindObjectOfType<LevelSelector>().gameObject);
 					Application.LoadLevel("Scene_MainMenu");
 				}
 				else if (hit.transform.name == "Next Week")

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class parti_pulse : MonoBehaviour {
+public class Parti_Pulse : MonoBehaviour {
 
 	public Vector3 startingPos;
 	public Vector3 endingPos;

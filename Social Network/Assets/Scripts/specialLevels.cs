@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Types;
 
-public class specialLevels : MonoBehaviour {
+public class SpecialLevels : MonoBehaviour {
 
 	private bool fallsToRed = false;
 	private float fallToRedTimer = 0.0f;
-	private class_NetworkMgr manager;
+	private NetworkManager manager;
 	private float fallToRedSeconds = 4.0f;
 
 	void Start ()
 	{
-		if (GameObject.Find("Clipboard").GetComponent<clipboard>().nextLevelUp.myLevel.isFallToRed)
+		if (GameObject.Find("Clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel.isFallToRed)
 		{
 			fallsToRed = true;
 		}
-		manager = GameObject.Find("networkMgr").GetComponent<class_NetworkMgr>();
+		manager = GameObject.Find("networkMgr").GetComponent<NetworkManager>();
 	}
 
 	void Update ()

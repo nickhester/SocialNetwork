@@ -35,7 +35,7 @@ public class CalendarDay : MonoBehaviour {
 	public int numAppointments;
 	//public int timeLimit;
 	public bool isPlayable = false;
-	public List<validLevels> specificLevelsRequested = new List<validLevels>();
+	public List<ValidLevels> specificLevelsRequested = new List<ValidLevels>();
 
     // special day attributes
     public int special_FallToRed = 0;          // people randomly fall back to red
@@ -170,11 +170,11 @@ public class CalendarDay : MonoBehaviour {
 		percentVeryEasy = _VeryEasy; percentEasy = _Easy; percentMedium = _Medium; percentHard = _Hard;
 	}
 
-	public void SetSpecificLevel(validLevels levelRequested)
+	public void SetSpecificLevel(ValidLevels levelRequested)
 	{
 		specificLevelsRequested.Add(levelRequested);
 	}
-	public void SetSpecificLevels(List<validLevels> levelsRequested)
+	public void SetSpecificLevels(List<ValidLevels> levelsRequested)
 	{
 		specificLevelsRequested.AddRange(levelsRequested);
 	}

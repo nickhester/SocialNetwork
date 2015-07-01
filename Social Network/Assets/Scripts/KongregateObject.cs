@@ -8,7 +8,7 @@ public class KongregateObject : MonoBehaviour {
 		//initialize external API
 		if (KongregateAPI.isUsingKongregate && !KongregateAPI.isKongregateLoaded)
 		{
-			GameObject.Find("Main Menu").GetComponent<mainMenu>().isUsingExternalAPI = true; 
+			GameObject.Find("Main Menu").GetComponent<MainMenu>().isUsingExternalAPI = true; 
 			KongregateAPI.Initialize();
 		}
 	}

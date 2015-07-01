@@ -7,14 +7,14 @@ public class Person : MonoBehaviour {
 
 	#region Variables
 
-	public List<class_Relationship> relationshipList;
-	public List<class_Relationship> relationshipListNonZero;
-	public List<class_Relationship> relationshipListNegative;
-	public List<class_Relationship> relationshipListPositive;
+	public List<Relationship> relationshipList;
+	public List<Relationship> relationshipListNonZero;
+	public List<Relationship> relationshipListNegative;
+	public List<Relationship> relationshipListPositive;
 	public int personalIndex;
 	public Mood m_Mood = Mood.Neutral;
 	[HideInInspector]
-	public class_NetworkMgr manager;
+	public NetworkManager manager;
 	[HideInInspector]
 	public Transform myTransform;
 	public GameObject myMaxIndicator;
@@ -31,7 +31,7 @@ public class Person : MonoBehaviour {
 
 	public GameObject pulseParti;
 	public float animationTime = 0.25f;
-	private Dictionary<class_Relationship, Mood> listOfAffectedRels = new Dictionary<class_Relationship, Mood>();
+	private Dictionary<Relationship, Mood> listOfAffectedRels = new Dictionary<Relationship, Mood>();
 	public GameObject Mask_CannotClick;
 	public GameObject myMask_CannotClick;
 
@@ -46,8 +46,8 @@ public class Person : MonoBehaviour {
 	public void Initialize()
 	{
 		myTransform = transform;
-		manager = transform.parent.GetComponent<class_NetworkMgr>() as class_NetworkMgr;
-		foreach (class_Relationship _rel in relationshipList)
+		manager = transform.parent.GetComponent<NetworkManager>() as NetworkManager;
+		foreach (Relationship _rel in relationshipList)
 		{
 			if (_rel.m_Friendship != Friendship.Neutral) { relationshipListNonZero.Add(_rel); }
 			if (_rel.m_Friendship < Friendship.Negative) { relationshipListNegative.Add(_rel); }
@@ -85,7 +85,7 @@ public class Person : MonoBehaviour {
 	#endregion
 	
 	// get my neighbor along a given relationship
-	public Person GetMyNeighbor(class_Relationship _rel, Person _self)
+	public Person GetMyNeighbor(Relationship _rel, Person _self)
 	{
 		foreach (Person _per in _rel.relationshipMembers)
 		{
@@ -98,7 +98,7 @@ public class Person : MonoBehaviour {
 	}
 
 	// duplicate for default value
-	public Person GetMyNeighbor(class_Relationship _rel)
+	public Person GetMyNeighbor(Relationship _rel)
 	{
 		return GetMyNeighbor(_rel, this);
 	}
@@ -112,7 +112,7 @@ public class Person : MonoBehaviour {
 	public void OnActivate(bool isPositiveChange, bool isDebugChange)
 	{
 		// check if in special game, if its already been clicked once. if so, don't allow click
-		if (hasBeenActivatedOnce && GameObject.Find("Clipboard").GetComponent<clipboard>().nextLevelUp.myLevel.isOneClick)
+		if (hasBeenActivatedOnce && GameObject.Find("Clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel.isOneClick)
 		{ return; }
 		if (!canBeClicked)
 		{ return; }
@@ -130,7 +130,7 @@ public class Person : MonoBehaviour {
 		this.m_Mood = changeToMood;
 
 		listOfAffectedRels.Clear();					// start with cleared list of affected relationships
-		foreach (class_Relationship rel in relationshipList)					// go through my relationships
+		foreach (Relationship rel in relationshipList)					// go through my relationships
 		{
 			if (rel.m_Friendship == Friendship.Positive) { listOfAffectedRels.Add(rel, changeToMood); }
 			else if (rel.m_Friendship == Friendship.Negative)
@@ -145,13 +145,13 @@ public class Person : MonoBehaviour {
 
 		if (!isDebugChange)
 		{
-			foreach (class_Relationship _rel in relationshipListNonZero)
+			foreach (Relationship _rel in relationshipListNonZero)
 			{
 				EffectPulse(transform.position, GetMyNeighbor(_rel).gameObject.transform.position, isPositiveChange, (_rel.m_Friendship == Friendship.Negative));
 			}
 		}
 		hasBeenActivatedOnce = true;
-		if (myMask_CannotClick == null && GameObject.Find("Clipboard").GetComponent<clipboard>().nextLevelUp.myLevel.isOneClick)
+		if (myMask_CannotClick == null && GameObject.Find("Clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel.isOneClick)
 		{
 			myMask_CannotClick = Instantiate(Mask_CannotClick, transform.position, Quaternion.identity) as GameObject;
 			myMask_CannotClick.transform.parent = transform;
@@ -173,7 +173,7 @@ public class Person : MonoBehaviour {
 		if (finishIfDone) { manager.EndIfDone(); }
 	}
 	
-	public void AffectRelationship(Mood _moodTarget, class_Relationship _relationship)
+	public void AffectRelationship(Mood _moodTarget, Relationship _relationship)
 	{
 		_relationship.GetOppositeMember(this).m_Mood = _moodTarget;
 	}
@@ -181,7 +181,7 @@ public class Person : MonoBehaviour {
 	void EffectPulse(Vector3 startPos, Vector3 endPos, bool isGreen, bool changesColor)
 	{
 		GameObject _parti = Instantiate(pulseParti, startPos, Quaternion.identity) as GameObject;
-		parti_pulse _partiComponent = _parti.GetComponent<parti_pulse>();
+		Parti_Pulse _partiComponent = _parti.GetComponent<Parti_Pulse>();
 		_partiComponent.startingPos = startPos;
 		_partiComponent.endingPos = endPos;
 		_partiComponent.timeToMove = animationTime;

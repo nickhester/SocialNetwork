@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class class_LineDisplay : MonoBehaviour {
+public class LineDisplay : MonoBehaviour {
 	
 	private Dictionary<Person, List<GameObject>> lineConnections = new Dictionary<Person, List<GameObject>>();
 	private float lineWidth = 0.1f;
@@ -19,11 +19,11 @@ public class class_LineDisplay : MonoBehaviour {
 		foreach (Person person in GetComponentsInChildren<Person>())	// for each person
 		{
 			List<GameObject> _lineList = new List<GameObject>();
-			foreach (class_Relationship rel in person.relationshipList)	// for each of that person's relationships
+			foreach (Relationship rel in person.relationshipList)	// for each of that person's relationships
 			{
 				GameObject _lineObject = LineGeneric.CreateLineMesh(
-					rel.relationshipMembers[0].GetComponent<personMovement>().originalPos,
-					rel.relationshipMembers[1].GetComponent<personMovement>().originalPos,
+					rel.relationshipMembers[0].GetComponent<PersonMovement>().originalPos,
+					rel.relationshipMembers[1].GetComponent<PersonMovement>().originalPos,
 					lineWidth,
 					0.0f,
 					3.0f); // create line using mesh method
@@ -48,7 +48,7 @@ public class class_LineDisplay : MonoBehaviour {
 			}
 			lineConnections[person] = _lineList;
 		}
-		if (GameObject.Find("Clipboard").GetComponent<clipboard>().nextLevelUp.myLevel.isNoLines) { linesAreInvisible = true; }
+		if (GameObject.Find("Clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel.isNoLines) { linesAreInvisible = true; }
 	}
 	
 	// Update is called once per frame

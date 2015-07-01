@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Types;
 
-public class levelTesterState : MonoBehaviour {
+public class LevelTesterState : MonoBehaviour {
 	
 //	public List<bool> myState = new List<bool>();
 //	public bool isWinningState = false;

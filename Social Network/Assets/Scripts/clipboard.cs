@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Types;
 
-public class clipboard : MonoBehaviour {
+public class Clipboard : MonoBehaviour {
 	
 	private bool isHiding = false;
 	private Vector3 offscreenPosition;
 	private Vector3 originalPosition;
-	private createAndDestroyAppointment createAndDestroyLevelRef;
+	private CreateAndDestroyAppointment createAndDestroyLevelRef;
 	private bool creatingInitialApptList = true;
-	private List<validLevels> listOfSpecificallyRequestedLevels = new List<validLevels>();
+	private List<ValidLevels> listOfSpecificallyRequestedLevels = new List<ValidLevels>();
 
 	// appointments
 	public GameObject appointmentObject;
@@ -27,7 +27,7 @@ public class clipboard : MonoBehaviour {
 	private GameObject startButton;
 
 	[HideInInspector]
-	public levelSelector selectorRef;
+	public LevelSelector selectorRef;
 	private int buttonState = 0;
 	public Material buttonTextStart;
 	public Material buttonTextSkip;
@@ -57,13 +57,13 @@ public class clipboard : MonoBehaviour {
 		offscreenPosition = new Vector3(transform.position.x, transform.position.y - 13, transform.position.z);
 		originalPosition = transform.position;
 
-		createAndDestroyLevelRef = GameObject.FindGameObjectWithTag("persistentObject").GetComponent<createAndDestroyAppointment>();
+		createAndDestroyLevelRef = GameObject.FindGameObjectWithTag("persistentObject").GetComponent<CreateAndDestroyAppointment>();
 		foreach (Transform GO in GetComponentsInChildren<Transform>())
 		{
 			if (GO.name == "StartButton") { startButton = GO.gameObject; }		// get reference to start button
 		}
 
-		selectorRef = GameObject.Find("LevelSelector").GetComponent<levelSelector>();
+		selectorRef = GameObject.Find("LevelSelector").GetComponent<LevelSelector>();
 		createAndDestroyLevelRef.levelsAvailable = selectorRef.dayToGenerate.numAppointments;
 
 		CreateAllAppointments();
@@ -272,7 +272,7 @@ public class clipboard : MonoBehaviour {
 
 		createAndDestroyLevelRef.levelsAvailable--;
 
-		validLevels requestedLevel;
+		ValidLevels requestedLevel;
 		if (seed == -1)
 		{
 			requestedLevel = GameObject.Find("LevelSelector").GetComponent<LevelFactory>().GetALevel(

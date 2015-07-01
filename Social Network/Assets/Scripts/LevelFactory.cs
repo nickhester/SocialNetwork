@@ -14,19 +14,19 @@ public class LevelFactory : MonoBehaviour {
 
 	#region GetALevel+overloads
 
-	public validLevels GetALevel(Difficulty _difficulty, int _level, bool _fallToRed, bool _oneClick, bool _cantTouch, bool _noLines, int _seed, bool isCreatingNewLevel)
+	public ValidLevels GetALevel(Difficulty _difficulty, int _level, bool _fallToRed, bool _oneClick, bool _cantTouch, bool _noLines, int _seed, bool isCreatingNewLevel)
 	{
 		// if a seed is entered, then find that exact level
 		if (_seed != -1)
 		{
 			if (isCreatingNewLevel)
 			{
-				validLevels returnLevel = new validLevels(_level, _difficulty, _seed, false, false, false, false);
+				ValidLevels returnLevel = new ValidLevels(_level, _difficulty, _seed, false, false, false, false);
 				return returnLevel;
 			}
 			else
 			{
-				foreach (validLevels level in GenerateValidLevelList ())
+				foreach (ValidLevels level in GenerateValidLevelList ())
 				{
 					if (level.seed == _seed && level.difficulty == _difficulty && level.level == _level)
 					{
@@ -40,7 +40,7 @@ public class LevelFactory : MonoBehaviour {
 		}
 
 		// otherwise, find all matching levels
-		List<validLevels> LevelList = GenerateValidLevelList();
+		List<ValidLevels> LevelList = GenerateValidLevelList();
 		var levelsToChooseFrom = (from level in LevelList
 		                          where level.level == _level
 		                          where level.difficulty == _difficulty
@@ -55,35 +55,35 @@ public class LevelFactory : MonoBehaviour {
 
 		if (levelsToChooseFrom.Count == 0) { Debug.LogException(new System.Exception("warning: no level found to match request. returning null.")); return null; }	// if none were found to match, return null
 
-		validLevels levelToReturn = levelsToChooseFrom[Random.Range(0, levelsToChooseFrom.Count)];	// choose a matching level at random
+		ValidLevels levelToReturn = levelsToChooseFrom[Random.Range(0, levelsToChooseFrom.Count)];	// choose a matching level at random
 		levelToReturn.SetOnlySpecialAttributes(_fallToRed, _oneClick, _cantTouch, _noLines);	// explicitly set all special attributes on this level
 
 		return levelToReturn;
 	}
 
-	public validLevels GetALevel(Difficulty _difficulty, int _level, bool _fallToRed, bool _oneClick, bool _cantTouch, bool _noLines)
+	public ValidLevels GetALevel(Difficulty _difficulty, int _level, bool _fallToRed, bool _oneClick, bool _cantTouch, bool _noLines)
 	{
 		return GetALevel(_difficulty, _level, _fallToRed, _oneClick, _cantTouch, _noLines, -1, false);
 	}
 
-	public validLevels GetALevel(Difficulty _difficulty, int _level)
+	public ValidLevels GetALevel(Difficulty _difficulty, int _level)
 	{
 		return GetALevel(_difficulty, _level, false, false, false, false);
 	}
 
-	public validLevels GetALevel(Difficulty _difficulty, int _level, int _seed)
+	public ValidLevels GetALevel(Difficulty _difficulty, int _level, int _seed)
 	{
 		return GetALevel(_difficulty, _level, false, false, false, false, _seed, false);
 	}
 
-	public validLevels GetALevel(Difficulty _difficulty, int _level, int _seed, bool isCreatingNewLevel)
+	public ValidLevels GetALevel(Difficulty _difficulty, int _level, int _seed, bool isCreatingNewLevel)
 	{
 		return GetALevel(_difficulty, _level, false, false, false, false, _seed, isCreatingNewLevel);
 	}
 
 	#endregion
 
-	List<validLevels> GenerateValidLevelList()
+	List<ValidLevels> GenerateValidLevelList()
 	{
 		if (fp == null) { fp = new FileParse(); }
 		return fp.DeseriealizeLevels();

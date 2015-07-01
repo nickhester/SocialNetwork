@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class audioToggle : MonoBehaviour {
+public class AudioToggle : MonoBehaviour {
 
 	public Material matOn;
 	public Material matOff;
@@ -95,7 +95,7 @@ public class audioToggle : MonoBehaviour {
 				// push bool to network manager
 				if ((audioType == typeOfAudio.sfx) && (networkManagerObject != null))
 				{
-					networkManagerObject.GetComponent<class_NetworkMgr>().isAudioOn_sfx = audioIsOn;
+					networkManagerObject.GetComponent<NetworkManager>().isAudioOn_sfx = audioIsOn;
 				}
 			}
 		}

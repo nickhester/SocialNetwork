@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Types;
 
-public class class_Relationship : MonoBehaviour {
+public class Relationship : MonoBehaviour {
 	
 	public Friendship m_Friendship;
 	public List<Person> relationshipMembers = new List<Person>();

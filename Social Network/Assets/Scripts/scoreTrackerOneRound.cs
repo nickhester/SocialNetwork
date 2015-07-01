@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Types;
 
-public class scoreTrackerOneRound : MonoBehaviour {
+public class ScoreTrackerOneRound : MonoBehaviour {
 
 	public int score;
 	
@@ -27,7 +27,7 @@ public class scoreTrackerOneRound : MonoBehaviour {
 	public void UpdateScore(Difficulty diff, int numActionsTaken, bool isSpecial)
 	{
 		// add score for perfect number of actions
-		validLevels thisLevel = GameObject.Find("Clipboard").GetComponent<clipboard>().nextLevelUp.myLevel;
+		ValidLevels thisLevel = GameObject.Find("Clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel;
 
 		if (!isSpecial)
 		{

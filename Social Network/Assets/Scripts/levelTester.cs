@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Types;
 
-public class levelTester : MonoBehaviour {
+public class LevelTester : MonoBehaviour {
 
 	#region variables
 	
@@ -16,7 +16,7 @@ public class levelTester : MonoBehaviour {
 	
     private int numLevelsLeftToRun;
     private int levelToLoad;
-	private class_NetworkMgr networkMgr;
+	private NetworkManager networkMgr;
 
 	private List<Person> failCaseCheckList = new List<Person>();
 
@@ -38,7 +38,7 @@ public class levelTester : MonoBehaviour {
     public void RunLevelTests()
     {
         numLevelsLeftToRun = numLevelsToRun;
-        levelToLoad = GameObject.FindGameObjectWithTag("clipboard").GetComponent<clipboard>().nextLevelUp.myLevel.level;
+        levelToLoad = GameObject.FindGameObjectWithTag("clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel.level;
     }
 
 	void runTestAndRecord()
@@ -47,12 +47,12 @@ public class levelTester : MonoBehaviour {
 		{
 			RunOneLevelTrial();
 		}
-		GetComponent<createAndDestroyAppointment>().MakeNewTestLevel(levelToLoad);
+		GetComponent<CreateAndDestroyAppointment>().MakeNewTestLevel(levelToLoad);
 	}
 
 	void FindNetworkManager()
 	{
-		networkMgr = GameObject.Find("networkMgr").GetComponent<class_NetworkMgr>();
+		networkMgr = GameObject.Find("networkMgr").GetComponent<NetworkManager>();
 	}
 
 	#region FailCaseChecking
@@ -71,7 +71,7 @@ public class levelTester : MonoBehaviour {
 
 				else if (_person.relationshipListNegative.Count == 2 && _person.relationshipListPositive.Count == 0)	// if the person has just 2 red relationships
 				{
-					class_Relationship _greenRel = null;
+					Relationship _greenRel = null;
 					if (_person.GetMyNeighbor(_person.relationshipListNegative[0], _person).relationshipListPositive.Count == 1
 					    && _person.GetMyNeighbor(_person.relationshipListNegative[0], _person).relationshipListNegative.Count == 1)		// if they have one green and one red relationship
 					{
@@ -124,7 +124,7 @@ public class levelTester : MonoBehaviour {
 				{ return true; }
 			}
 			
-			foreach (class_Relationship _rel in p.relationshipListNonZero)
+			foreach (Relationship _rel in p.relationshipListNonZero)
 			{
 				Person _neighbor = p.GetMyNeighbor(_rel);
 				if (_neighbor != loopStart && _neighbor != lastVisitedInLoop)
@@ -169,7 +169,7 @@ public class levelTester : MonoBehaviour {
 			}
 			else
 			{
-				foreach (class_Relationship _rel in p.relationshipListNegative)
+				foreach (Relationship _rel in p.relationshipListNegative)
 				{
 					if (Recursive_CheckForGreenNeighbors(p.GetMyNeighbor(_rel, p)))
 					{
@@ -186,7 +186,7 @@ public class levelTester : MonoBehaviour {
 	bool RunOneLevelTrial()
 	{
 		FindNetworkManager();
-		validLevels thisLevel = new validLevels();
+		ValidLevels thisLevel = new ValidLevels();
 		LevelValidator lv = new LevelValidator();
 
 		levelTesterState_s bestWinState = lv.PathfindLevel_BreadthFirst();
@@ -269,7 +269,7 @@ public class levelTester : MonoBehaviour {
 		return true;
 	}
 
-	void SaveLevelToFile(validLevels level)
+	void SaveLevelToFile(ValidLevels level)
 	{
 		if (fp == null) { fp = new FileParse(); }
 		fp.SerializeALevel(level);

@@ -12,7 +12,7 @@ public class FileParse {
 		fileIO = new FileIO("validSeedList");
 	}
 
-	public void SerializeALevel(validLevels level)
+	public void SerializeALevel(ValidLevels level)
 	{
 		string formattedString = string.Format("level:{0},difficulty:{1},seed:{2},clicks:{3},oneClick:{4},cantTouch:{5},path:{6},cantTouchPath:{7}\n",
 		                                       level.level.ToString(),
@@ -29,9 +29,9 @@ public class FileParse {
 		fileIO.AppendToFile(formattedString);
 	}
 
-	public List<validLevels> DeseriealizeLevels()
+	public List<ValidLevels> DeseriealizeLevels()
 	{
-		List<validLevels> _list = new List<validLevels>();
+		List<ValidLevels> _list = new List<ValidLevels>();
 
 		string listText = fileIO.GetFileText();
 		
@@ -72,7 +72,7 @@ public class FileParse {
 				if (int.TryParse((tokens[5].Split(':')[1]), out a))	
 				{ thisCantTouch = a; }        							// set who you cant touch, if possible
 				
-				validLevels lvl =  new validLevels(thisLevel, thisDifficulty, thisSeed, thisCantTouch, thisOneClick, thisNumClick);
+				ValidLevels lvl =  new ValidLevels(thisLevel, thisDifficulty, thisSeed, thisCantTouch, thisOneClick, thisNumClick);
 				_list.Add(lvl);
 			}
 		}

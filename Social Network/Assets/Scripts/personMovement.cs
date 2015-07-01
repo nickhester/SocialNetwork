@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class personMovement : MonoBehaviour {
+public class PersonMovement : MonoBehaviour {
 
 	public Vector3 originalPos;
 	private Vector3 startingPos;

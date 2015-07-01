@@ -6,8 +6,8 @@ using Types;
 
 public class LevelValidator {
 
-	public List<validLevels> levelList = new List<validLevels>();
-	private class_NetworkMgr networkMgr;
+	public List<ValidLevels> levelList = new List<ValidLevels>();
+	private NetworkManager networkMgr;
 	private List<levelTesterState_s> statesThatHaveBeenReached = new List<levelTesterState_s>();
 	private levelTesterState_s winState;
 	private int currentStepsTaken;
@@ -17,7 +17,7 @@ public class LevelValidator {
 
 	void FindNetworkManager()
 	{
-		networkMgr = GameObject.Find("networkMgr").GetComponent<class_NetworkMgr>();
+		networkMgr = GameObject.Find("networkMgr").GetComponent<NetworkManager>();
 	}
 
 	public bool CheckIfLevelCanBeOneClick(levelTesterState_s bestLevel)

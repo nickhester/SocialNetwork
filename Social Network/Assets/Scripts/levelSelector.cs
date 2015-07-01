@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class levelSelector : MonoBehaviour {
+public class LevelSelector : MonoBehaviour {
 
 	private CalendarDay _dayToGenerate;
 	public CalendarDay dayToGenerate

@@ -19,7 +19,7 @@ public class Appointment : MonoBehaviour {
     public GameObject overlay_3Star;
 	public GameObject starSlot;
 
-	public validLevels myLevel;
+	public ValidLevels myLevel;
 	public int levelIndex;
 
 	private string myDisplayText;
