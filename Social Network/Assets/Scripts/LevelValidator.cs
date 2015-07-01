@@ -17,7 +17,7 @@ public class LevelValidator {
 
 	void FindNetworkManager()
 	{
-		networkMgr = GameObject.Find("networkMgr").GetComponent<NetworkManager>();
+        networkMgr = GameObject.FindGameObjectWithTag("networkManager").GetComponent<NetworkManager>();
 	}
 
 	public bool CheckIfLevelCanBeOneClick(levelTesterState_s bestLevel)
@@ -50,7 +50,7 @@ public class LevelValidator {
 		bestWinStateHasBeenFound = false;
 		// create winning state for reference
 		List<Mood> allPositive = new List<Mood>();
-		for (int i = 0; i < networkMgr.allPeople.Count; i++)
+		for (int i = 0; i < networkMgr.GetNumPeople(); i++)
 		{
 			allPositive.Add(Mood.Positive);
 		}
@@ -142,7 +142,7 @@ public class LevelValidator {
 	
 	void PerformAnAction(actionPossibility _action)
 	{
-		foreach (Person _per in networkMgr.allPeople)
+		foreach (Person _per in networkMgr.GetAllPeople())
 		{
 			if (_per.personalIndex == _action.personIndex)
 			{
@@ -155,13 +155,13 @@ public class LevelValidator {
 	levelTesterState_s GetLevelState()
 	{
 		List<Mood> statesOfPeople = new List<Mood>();
-		for (int i = 0; i < networkMgr.allPeople.Count; i++)
+		for (int i = 0; i < networkMgr.GetNumPeople(); i++)
 		{
 			statesOfPeople.Add(Mood.Neutral);		// create a place holder list, defaulting everyone to neutral
 		}
-		for (int i = 0; i < networkMgr.allPeople.Count; i++)
+		for (int i = 0; i < networkMgr.GetNumPeople(); i++)
 		{
-			Person _people = networkMgr.allPeople[i];
+			Person _people = networkMgr.GetAllPeople()[i];
 			statesOfPeople[_people.personalIndex] = _people.m_Mood;
 //			if (_people.m_Mood == Mood.Positive)
 //			{
@@ -175,19 +175,20 @@ public class LevelValidator {
 	
 	void ReturnToPreviousLevelState(levelTesterState_s levelStateToReturnTo)
 	{
-		for (int i = 0; i < networkMgr.allPeople.Count; i++)
+		for (int i = 0; i < networkMgr.GetNumPeople(); i++)
 		{
-			networkMgr.allPeople[i].m_Mood = levelStateToReturnTo.myState[networkMgr.allPeople[i].personalIndex];
+            Person p = networkMgr.GetAllPeople()[i];
+            p.m_Mood = levelStateToReturnTo.myState[p.personalIndex];
 		}
 	}
 	
 	List<actionPossibility> FindAllPossibleActions()
 	{
 		List<actionPossibility> listToReturn = new List<actionPossibility>();
-		for (int i = 0; i < networkMgr.allPeople.Count; i++) 		// for every person
+		for (int i = 0; i < networkMgr.GetNumPeople(); i++) 		// for every person
 		{
-			actionPossibility possibility1 = new actionPossibility(true, networkMgr.allPeople[i].personalIndex);
-			actionPossibility possibility2 = new actionPossibility(false, networkMgr.allPeople[i].personalIndex);
+			actionPossibility possibility1 = new actionPossibility(true, networkMgr.GetAllPeople()[i].personalIndex);
+            actionPossibility possibility2 = new actionPossibility(false, networkMgr.GetAllPeople()[i].personalIndex);
 			listToReturn.Add(possibility1);
 			listToReturn.Add(possibility2);
 		}

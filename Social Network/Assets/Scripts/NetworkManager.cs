@@ -8,44 +8,37 @@ public class NetworkManager : MonoBehaviour {
 
 	#region Variables
 
-	public List<Person> allPeople = new List<Person>();
+    private List<Person> allPeople = new List<Person>();
 	private List<Relationship> savedStateAllRelationships = new List<Relationship>();
-	public List<Relationship> allRelationships = new List<Relationship>();
-	public GameObject hitParticle;
-	public bool isUsingSeed = false;
-	public int randomSeed = 0;
-	public int usedSeed;
-	public bool isReadingSeedFromFile;
-	public TextAsset validSeedList;
+    private List<Relationship> allRelationships = new List<Relationship>();
+    [SerializeField] private bool isUsingSeed;
+    [SerializeField] private int randomSeed;
+    public int usedSeed;
+    [SerializeField] private bool isReadingSeedFromFile;
+    private TextAsset validSeedList;        // not being used now, but might be needed to do level "show me"
 	private bool levelIsComplete = false;
-	private const int percentHasRelationship = 50;
-	private ValidLevels levelUsed;
+	private const int percentHasRelationship = 50;  // if this number changes, all random seed values will need to be regenerated (don't do it!)
+	private ValidLevels currentLevelInfo;
+    [SerializeField] private GameObject[] peoplePositionParents;
+    [SerializeField] private GameObject PersonPrefab;
 
-	// Debug and Score
-	[HideInInspector]
-	public int numActionsTaken = 0;
+	// Score
+	private int numActionsTaken = 0;
 	
 	// selection cursor stuff
-	public GameObject selectionCursor;
+    [SerializeField] private GameObject selectionCursor;
 	private GameObject selectionCursorInst;
-	public GameObject cursorSecondary;
+    [SerializeField] private GameObject cursorSecondary;
 	private GameObject cursorSecondaryInst;
 	private Vector3 selectionCursorCurrentPos;
 	private Vector3 selectionCursorTargetPos;
 	private GameObject currentlySelectedPerson;
 
-	// special attributes
-	public bool special_FallToRed = false;
-	public bool special_OneClick = false;
-	public bool special_CantTouchLines = false;
-	public bool special_NoLines = false;
-
 	// audio
 	private AudioSource myAudioComponent;
-	public AudioClip audioActionPos;
-	public AudioClip audioActionNeg;
-	[HideInInspector]
-	public bool isAudioOn_sfx;
+    [SerializeField] private AudioClip audioActionPos;
+    [SerializeField] private AudioClip audioActionNeg;
+	[HideInInspector] public bool isAudioOn_sfx;
 
 	// for webplayer only
 	public Material redAndGreenButton_keys;
@@ -56,15 +49,19 @@ public class NetworkManager : MonoBehaviour {
 
 	void Start ()
 	{
-		allPeople.AddRange(GetComponentsInChildren<Person>());
-
-		usedSeed = SeedTheLevel();
+        validSeedList = Resources.Load("validSeedList") as TextAsset;
+        usedSeed = SeedTheLevel();
+        
+        // spawn appropriate number of people and add them to the allPeople list
+        allPeople.AddRange(SpawnPeople(currentLevelInfo.level));
 
 		InitiateLevel();
 		SaveStartingState();
 
-		foreach (Person _per in allPeople)
-		{ _per.Initialize(); }
+		foreach (Person _person in GetAllPeople())
+		{
+            _person.Initialize();
+        }
 
 		selectionCursorInst = Instantiate(selectionCursor) as GameObject;
 		selectionCursorInst.GetComponent<Renderer>().enabled = false;
@@ -91,7 +88,33 @@ public class NetworkManager : MonoBehaviour {
 		#endif
 	}
 
-	private void TakeAction(bool isPositive)
+    List<Person> SpawnPeople(int _numPeople)
+    {
+        List<Person> retVal = new List<Person>();
+        if (peoplePositionParents[_numPeople] != null)
+        {
+            Transform[] peoplePositions = peoplePositionParents[_numPeople].transform.GetComponentsInChildren<Transform>();
+            foreach (Transform position in peoplePositions)
+            {
+                if (position.gameObject != peoplePositionParents[_numPeople])   // don't include the parent
+                {
+                    GameObject go = Instantiate(PersonPrefab, position.position, Quaternion.identity) as GameObject;
+                    go.transform.SetParent(transform);
+                    retVal.Add(go.GetComponent<Person>());
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("People Position Group not found for current level");
+        }
+
+        retVal = retVal.OrderBy(item => item.gameObject.name).ToList();
+
+        return retVal;
+    }
+
+	void TakeAction(bool isPositive)
 	{
 		if (isPositive)
 		{
@@ -174,7 +197,7 @@ public class NetworkManager : MonoBehaviour {
 
 	public void ReloadStartingState()
 	{
-		foreach (Person _ppl in allPeople)
+		foreach (Person _ppl in GetAllPeople())
 		{
 			_ppl.m_Mood = Mood.Neutral;
 		}
@@ -184,18 +207,18 @@ public class NetworkManager : MonoBehaviour {
 	public int SeedTheLevel()
 	{
 		int _usedSeed;
-		levelUsed = GameObject.FindWithTag("clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel;
+		currentLevelInfo = GameObject.FindWithTag("clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel;
 
-		if (levelUsed.difficulty == Difficulty.VeryEasy) { isReadingSeedFromFile = true; }
-		else if (levelUsed.difficulty == Difficulty.Easy) { isReadingSeedFromFile = true; }
-		else if (levelUsed.difficulty == Difficulty.Medium) { isReadingSeedFromFile = true; }
-		else if (levelUsed.difficulty == Difficulty.Hard) { isReadingSeedFromFile = true; }
-		else if (levelUsed.difficulty == Difficulty.Unknown) { isReadingSeedFromFile = false; isUsingSeed = false; }
+		if (currentLevelInfo.difficulty == Difficulty.VeryEasy) { isReadingSeedFromFile = true; }
+		else if (currentLevelInfo.difficulty == Difficulty.Easy) { isReadingSeedFromFile = true; }
+		else if (currentLevelInfo.difficulty == Difficulty.Medium) { isReadingSeedFromFile = true; }
+		else if (currentLevelInfo.difficulty == Difficulty.Hard) { isReadingSeedFromFile = true; }
+		else if (currentLevelInfo.difficulty == Difficulty.Unknown) { isReadingSeedFromFile = false; isUsingSeed = false; }
 		else { print ("error -- difficulty could not be read (generating level randomly)"); isReadingSeedFromFile = false; isUsingSeed = false; }
 
 		if (isReadingSeedFromFile)	// if using a level from a file
 		{
-			_usedSeed = levelUsed.seed;
+			_usedSeed = currentLevelInfo.seed;
 			Random.seed = _usedSeed;
 		}
 		else if (isUsingSeed)		// if using a set seed
@@ -205,7 +228,7 @@ public class NetworkManager : MonoBehaviour {
 		}
 		else 					// if using a random seed
 		{
-			_usedSeed = levelUsed.seed;
+			_usedSeed = currentLevelInfo.seed;
 			Random.seed = _usedSeed;		// save the seed used
 			// copy used seed to the clipboard (windows clipboard)
 			TextEditor te = new TextEditor(); te.content = new GUIContent(_usedSeed.ToString()); te.SelectAll(); te.Copy();
@@ -222,7 +245,7 @@ public class NetworkManager : MonoBehaviour {
 	{
 	    if (CheckWinningRequirements())
 	    {
-	        foreach (Person _person in allPeople)
+	        foreach (Person _person in GetAllPeople())
 	        {
 	            _person.GetComponent<Collider>().enabled = false;
 	            _person.GetComponent<PersonMovement>().MoveOut();
@@ -236,7 +259,7 @@ public class NetworkManager : MonoBehaviour {
 	
 	public bool CheckWinningRequirements()
 	{
-		foreach (Person _person in allPeople)
+		foreach (Person _person in GetAllPeople())
 		{
 			if (_person.m_Mood != Mood.Positive)
 			{
@@ -263,16 +286,16 @@ public class NetworkManager : MonoBehaviour {
 	{
 		int indexCounter = 0;
 		List<Person> notYetCompared = new List<Person>();
-		notYetCompared.AddRange(allPeople);
+		notYetCompared.AddRange(GetAllPeople());
 
-		foreach (Person person in allPeople)							// go through each person
+		foreach (Person person in GetAllPeople())							// go through each person
 		{
 			person.personalIndex = indexCounter;							// give each one an index
 			person.name = "person " + person.personalIndex.ToString();		// set its name
 			// set special attribute
-			if (levelUsed != null && levelUsed.isCantTouch && indexCounter == levelUsed.cantTouch) { person.canBeClicked = false; }
+			if (currentLevelInfo != null && currentLevelInfo.isCantTouch && indexCounter == currentLevelInfo.cantTouch) { person.canBeClicked = false; }
 			indexCounter++;													// increment the index counter
-			person.manager = this;	// save reference to manager in people
+			person.networkMgr = this;	// save reference to manager in people
 
 			foreach (Person secondPerson in notYetCompared)			// go through each other person
 			{
@@ -350,4 +373,14 @@ public class NetworkManager : MonoBehaviour {
 	    
 	    targetPerson.OnActivate(isPositiveChange, isDebugChange);      // tell that person's component to do what they do when they're activated
 	}
+
+    public List<Person> GetAllPeople()
+    {
+        return allPeople;
+    }
+
+    public int GetNumPeople()
+    {
+        return allPeople.Count;
+    }
 }

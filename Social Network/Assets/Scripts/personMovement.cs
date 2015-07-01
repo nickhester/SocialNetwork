@@ -3,10 +3,8 @@ using System.Collections;
 
 public class PersonMovement : MonoBehaviour {
 
-	public Vector3 originalPos;
+    private Vector3 originalPos;
 	private Vector3 startingPos;
-	public Vector3 startDistance;
-	public float lerpSpeed;
 	private float countdownMultiplier = 3.0f;
 	private float moveSpeed = 3.0f;
 
@@ -14,7 +12,7 @@ public class PersonMovement : MonoBehaviour {
 	private bool isMovingOut = false;
 	
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		originalPos = transform.position;
 		startingPos = transform.position * countdownMultiplier;
 		transform.position = startingPos;
@@ -37,4 +35,9 @@ public class PersonMovement : MonoBehaviour {
 	{
 		isMovingOut = true;
 	}
+
+    public Vector3 GetTargetPosition()
+    {
+        return originalPos;
+    }
 }

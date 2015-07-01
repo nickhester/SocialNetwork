@@ -6,7 +6,7 @@ public class AudioToggle : MonoBehaviour {
 	public Material matOn;
 	public Material matOff;
 
-	public bool audioIsOn = true;
+	public bool isAudioOn = true;
 	public enum typeOfAudio
 	{
 		music,
@@ -31,12 +31,12 @@ public class AudioToggle : MonoBehaviour {
 			if (SaveGame.GetAudioOn_sfx())
 			{
 				gameObject.GetComponent<Renderer>().material = matOn;
-				audioIsOn = true;
+				isAudioOn = true;
 			}
 			else
 			{
 				gameObject.GetComponent<Renderer>().material = matOff;
-				audioIsOn = false;
+				isAudioOn = false;
 			}
 		}
 		else if (audioType == typeOfAudio.music)
@@ -44,12 +44,12 @@ public class AudioToggle : MonoBehaviour {
 			if (SaveGame.GetAudioOn_music())
 			{
 				gameObject.GetComponent<Renderer>().material = matOn;
-				audioIsOn = true;
+				isAudioOn = true;
 			}
 			else
 			{
 				gameObject.GetComponent<Renderer>().material = matOff;
-				audioIsOn = false;
+				isAudioOn = false;
 			}
 		}
 	}
@@ -61,14 +61,14 @@ public class AudioToggle : MonoBehaviour {
 		{
 			if (getObjectAtMouse() == gameObject)
 			{
-				GameObject networkManagerObject = GameObject.Find("networkMgr");
-				if (audioIsOn)
+				GameObject networkManagerObject = GameObject.FindGameObjectWithTag("networkManager");
+				if (isAudioOn)
 				{
 					if (audioType == typeOfAudio.sfx) { SaveGame.SetAudioOn_sfx(false); }
 					else { SaveGame.SetAudioOn_music(false); }
 
 					gameObject.GetComponent<Renderer>().material = matOff;
-					audioIsOn = false;
+					isAudioOn = false;
 
 					if (audioType == typeOfAudio.music)
 					{
@@ -83,7 +83,7 @@ public class AudioToggle : MonoBehaviour {
 					if (audioType == typeOfAudio.sfx) { SaveGame.SetAudioOn_sfx(true); }
 					else { SaveGame.SetAudioOn_music(true); }
 					gameObject.GetComponent<Renderer>().material = matOn;
-					audioIsOn = true;
+					isAudioOn = true;
 
 					if (audioType == typeOfAudio.music)
 					{
@@ -95,7 +95,7 @@ public class AudioToggle : MonoBehaviour {
 				// push bool to network manager
 				if ((audioType == typeOfAudio.sfx) && (networkManagerObject != null))
 				{
-					networkManagerObject.GetComponent<NetworkManager>().isAudioOn_sfx = audioIsOn;
+					networkManagerObject.GetComponent<NetworkManager>().isAudioOn_sfx = isAudioOn;
 				}
 			}
 		}

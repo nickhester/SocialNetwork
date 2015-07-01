@@ -14,7 +14,7 @@ public class Person : MonoBehaviour {
 	public int personalIndex;
 	public Mood m_Mood = Mood.Neutral;
 	[HideInInspector]
-	public NetworkManager manager;
+	public NetworkManager networkMgr;
 	[HideInInspector]
 	public Transform myTransform;
 	public GameObject myMaxIndicator;
@@ -39,14 +39,10 @@ public class Person : MonoBehaviour {
 	
 	#region StartAndUpdate
 
-	void Start () {
-
-	}
-
 	public void Initialize()
 	{
 		myTransform = transform;
-		manager = transform.parent.GetComponent<NetworkManager>() as NetworkManager;
+		networkMgr = GameObject.FindGameObjectWithTag("networkManager").GetComponent<NetworkManager>();
 		foreach (Relationship _rel in relationshipList)
 		{
 			if (_rel.m_Friendship != Friendship.Neutral) { relationshipListNonZero.Add(_rel); }
@@ -170,7 +166,7 @@ public class Person : MonoBehaviour {
 		{
 			AffectRelationship(_rel.Value, _rel.Key);
 		}
-		if (finishIfDone) { manager.EndIfDone(); }
+		if (finishIfDone) { networkMgr.EndIfDone(); }
 	}
 	
 	public void AffectRelationship(Mood _moodTarget, Relationship _relationship)

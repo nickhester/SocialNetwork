@@ -151,7 +151,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		{
 			myClipboardComponent.nextLevelUp.myLevel = _aSpecificLevel;
 		}
-		Application.LoadLevelAdditive("Scene_" + _aSpecificLevel.level + "boxes");
+        Application.LoadLevelAdditive("Scene_Appointment");
 		if (isClipboardUp)
 		{
 			myClipboardComponent.HideClipboard();

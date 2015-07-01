@@ -22,8 +22,8 @@ public class LineDisplay : MonoBehaviour {
 			foreach (Relationship rel in person.relationshipList)	// for each of that person's relationships
 			{
 				GameObject _lineObject = LineGeneric.CreateLineMesh(
-					rel.relationshipMembers[0].GetComponent<PersonMovement>().originalPos,
-					rel.relationshipMembers[1].GetComponent<PersonMovement>().originalPos,
+                    rel.relationshipMembers[0].GetComponent<PersonMovement>().GetTargetPosition(),
+                    rel.relationshipMembers[1].GetComponent<PersonMovement>().GetTargetPosition(),
 					lineWidth,
 					0.0f,
 					3.0f); // create line using mesh method

@@ -4,7 +4,7 @@ using Types;
 
 public class ValidLevels {
 
-	public int level;
+	public int level;       // this value is equal to the number of people, so the minimum number should be 3
 	public Difficulty difficulty;
 	public int seed;
 	public int cantTouch;

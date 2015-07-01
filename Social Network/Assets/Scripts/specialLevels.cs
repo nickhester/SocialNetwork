@@ -16,7 +16,7 @@ public class SpecialLevels : MonoBehaviour {
 		{
 			fallsToRed = true;
 		}
-		manager = GameObject.Find("networkMgr").GetComponent<NetworkManager>();
+        manager = GameObject.FindGameObjectWithTag("networkManager").GetComponent<NetworkManager>();
 	}
 
 	void Update ()
@@ -27,7 +27,7 @@ public class SpecialLevels : MonoBehaviour {
 			if (fallToRedTimer >= fallToRedSeconds)
 			{
 				fallToRedTimer = 0;
-				manager.allPeople[Random.Range(0, manager.allPeople.Count)].m_Mood = Mood.Negative;
+				manager.GetAllPeople()[Random.Range(0, manager.GetNumPeople())].m_Mood = Mood.Negative;
 			}
 		}
 	}

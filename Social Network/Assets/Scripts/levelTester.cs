@@ -52,7 +52,7 @@ public class LevelTester : MonoBehaviour {
 
 	void FindNetworkManager()
 	{
-		networkMgr = GameObject.Find("networkMgr").GetComponent<NetworkManager>();
+        networkMgr = GameObject.FindGameObjectWithTag("networkManager").GetComponent<NetworkManager>();
 	}
 
 	#region FailCaseChecking
@@ -61,7 +61,7 @@ public class LevelTester : MonoBehaviour {
 	{	
 		FindNetworkManager();
 		bool hasAtLeastOnePersonWithAllGreenRelationships = false;
-		foreach (Person _person in networkMgr.allPeople)					// for each person
+		foreach (Person _person in networkMgr.GetAllPeople())					// for each person
 		{
 			if (_person.relationshipListNegative.Count > 0)	// if the person has at least 1 red relationship
 			{
@@ -199,7 +199,7 @@ public class LevelTester : MonoBehaviour {
 			thisLevel.numClicks = bestWinState.numStepsToReach; 					// set number of clicks
 		}
 
-		thisLevel.level = networkMgr.allPeople.Count;		// set how many people on this level
+		thisLevel.level = networkMgr.GetNumPeople();		// set how many people on this level
 
 		if (thisLevel.level == 3)
 		{	thisLevel.difficulty = Difficulty.VeryEasy;	}			// set difficulty from number of clicks and level
