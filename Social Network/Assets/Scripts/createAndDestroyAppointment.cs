@@ -1,3 +1,5 @@
+#define DEBUG_LEVEL_TESTER
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,8 +23,7 @@ public class createAndDestroyAppointment : MonoBehaviour {
 	private int numActions;
 
 	// clipboard
-	public GameObject myClipboard;
-	public clipboard myClipboardComponent;
+    private clipboard myClipboardComponent;
 	private bool isClipboardUp = true;
 
 	// appointment parameters
@@ -34,11 +35,10 @@ public class createAndDestroyAppointment : MonoBehaviour {
 	private float waitToShowResultsAfterFinished = 0.0f;
 	private float waitToShowResultsAfterFinishedCounter;
 
-	// debug stuff that is commented out
-	/*
+#if (DEBUG_LEVEL_TESTER)
+	// debug stuff that is (should be) commented out
 	private bool isShowingDebugControls = false;
-	private int currentAppointmentLoaded;
-	*/
+#endif
 
 	System.Random rand = new System.Random();
 
@@ -47,7 +47,7 @@ public class createAndDestroyAppointment : MonoBehaviour {
 	#region StartAndUpdate
 	
 	void Start () {
-		myClipboardComponent = myClipboard.GetComponent<clipboard>();
+        myClipboardComponent = GameObject.FindGameObjectWithTag("clipboard").GetComponent<clipboard>();
 		// add levels available and levels on clipboard (b/c levels available has already been subtracted from)
 		resultsPage = GameObject.Find("results page");
 		resultsPage.GetComponent<Renderer>().enabled = false;
@@ -209,28 +209,29 @@ public class createAndDestroyAppointment : MonoBehaviour {
 
 	void OnGUI()
 	{
-		/*
+
+#if (DEBUG_LEVEL_TESTER)
+
 		if (GUI.Button(new Rect(0, Screen.height - 40, 40, 20), "Gen"))
 		{ isShowingDebugControls = true; }
 
 		if (isShowingDebugControls)
 			{
 			// Buttons to load new level
-			if (GUI.Button(new Rect(10, 10, 90, 25), "New 3")) { MakeNewTestLevel(3); currentLevelLoaded = 3; }
-			if (GUI.Button(new Rect(10, 40, 90, 25), "New 4")) { MakeNewTestLevel(4); currentLevelLoaded = 4; }
-			if (GUI.Button(new Rect(10, 70, 90, 25), "New 5")) { MakeNewTestLevel(5); currentLevelLoaded = 5; }
-			if (GUI.Button(new Rect(10, 100, 90, 25), "New 6")) { MakeNewTestLevel(6); currentLevelLoaded = 6; }
-			if (GUI.Button(new Rect(10, 130, 90, 25), "New 7")) { MakeNewTestLevel(7); currentLevelLoaded = 7; }
-			if (GUI.Button(new Rect(10, 160, 90, 25), "New 8")) { MakeNewTestLevel(8); currentLevelLoaded = 8; }
+			if (GUI.Button(new Rect(10, 10, 90, 25), "New 3")) { MakeNewTestLevel(3); }
+			if (GUI.Button(new Rect(10, 40, 90, 25), "New 4")) { MakeNewTestLevel(4); }
+			if (GUI.Button(new Rect(10, 70, 90, 25), "New 5")) { MakeNewTestLevel(5); }
+			if (GUI.Button(new Rect(10, 100, 90, 25), "New 6")) { MakeNewTestLevel(6); }
+			if (GUI.Button(new Rect(10, 130, 90, 25), "New 7")) { MakeNewTestLevel(7); }
+			if (GUI.Button(new Rect(10, 160, 90, 25), "New 8")) { MakeNewTestLevel(8); }
 
-			if (GUI.Button(new Rect(Screen.width - 300, Screen.height - 50, 75, 25), "series"))
+			if (GUI.Button(new Rect(Screen.width - 300, Screen.height - 50, 75, 25), "run test"))
 			{
-				levelTester t = GetComponent<levelTester>();
-				t.numLevelsLeftToRun = t.numLevelsToRun;
-				t.levelToLoad = currentAppointmentLoaded;
+				GetComponent<levelTester>().RunLevelTests();
 			}
 		}
-		*/
+		
+#endif
 
 		if (appointmentComplete)
 		{

@@ -164,12 +164,6 @@ public class class_NetworkMgr : MonoBehaviour {
 
 	#region TestRunMethods
 
-//	void RestartCurrentLevel()	// I don't think this is needed. Remove when confirmed
-//	{
-//		isUsingSeed = true;
-//		randomSeed = usedSeed;
-//	}
-
 	void SaveStartingState()
 	{
 		foreach (class_Relationship _rel in allRelationships)

@@ -8,16 +8,14 @@ public class levelTester : MonoBehaviour {
 
 	#region variables
 	
-	FileParse fp;
-	public bool runTestSeries = false;
+    // public variables
+    public bool runTestSeries = false;
+    public int numLevelsToRun;
+
+	private FileParse fp;
 	
-	public int numLevelsToRun = 5;
-	[HideInInspector]
-	public int numLevelsLeftToRun;
-	[HideInInspector]
-	public int levelToLoad;
-	[HideInInspector]
-	public bool isStartingSingleton = false;
+    private int numLevelsLeftToRun;
+    private int levelToLoad;
 	private class_NetworkMgr networkMgr;
 
 	private List<Person> failCaseCheckList = new List<Person>();
@@ -37,7 +35,13 @@ public class levelTester : MonoBehaviour {
 		}
 	}
 
-	public void runTestAndRecord()
+    public void RunLevelTests()
+    {
+        numLevelsLeftToRun = numLevelsToRun;
+        levelToLoad = GameObject.FindGameObjectWithTag("clipboard").GetComponent<clipboard>().nextLevelUp.myLevel.level;
+    }
+
+	void runTestAndRecord()
 	{
 		if (!HasFailCase())
 		{
