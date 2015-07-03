@@ -26,17 +26,80 @@ public class MainMenu : MonoBehaviour {
 	private float splitCounter = 0.0f;
 	private float splitLimit = 2.0f;
 
-	public Material confirmClearProgressImage;
-	public Material progressClearedImage;
-	public GameObject text;
+	[SerializeField] private Material confirmClearProgressImage;
+    [SerializeField] private Material progressClearedImage;
+    [SerializeField] private GameObject text;
 
-	public Material audio_sfx;
-	public Material audio_music;
-	public Material audio_off;
+    [SerializeField] private Material audio_sfx;
+    [SerializeField] private Material audio_music;
+    [SerializeField] private Material audio_off;
 
 	// external API stuff
 	[HideInInspector]
 	public bool isUsingExternalAPI;
+
+    void Awake ()
+    {
+        InputManager.Instance.OnClick += OnClick;
+    }
+
+    void OnClick(GameObject go)
+    {
+        if (go.name == "button_Start") { SplitBackground(); }
+        else if (go.name == "button_options") { isLerpingTowardOptions = true; }
+        else if (go.name == "button_back") { isLerpingTowardOptions = false; }
+        else if (go.name == "button_clearProgress") { go.GetComponent<Renderer>().material = confirmClearProgressImage; go.name = "button_clearProgressConfirm"; }
+        else if (go.name == "button_clearProgressConfirm") { go.GetComponent<Renderer>().material = progressClearedImage; go.name = "progressCleared"; SaveGame.DeleteAll(); }
+
+        // AUDIO
+        else if (go.name == "button_sfx")
+        {
+            if (SaveGame.GetAudioOn_sfx())
+            {
+                SaveGame.SetAudioOn_sfx(false);
+                go.GetComponent<Renderer>().material = audio_off;
+            }
+            else
+            {
+                SaveGame.SetAudioOn_sfx(true);
+                go.GetComponent<Renderer>().material = audio_sfx;
+            }
+        }
+        else if (go.name == "button_music")
+        {
+            if (SaveGame.GetAudioOn_music())
+            {
+                TurnMusicOff();
+                SaveGame.SetAudioOn_music(false);
+                go.GetComponent<Renderer>().material = audio_off;
+            }
+            else
+            {
+                TurnMusicOn();
+                SaveGame.SetAudioOn_music(true);
+                go.GetComponent<Renderer>().material = audio_music;
+            }
+        }
+
+        else if (go.name == "button_viewInstructions")
+        {
+            List<int> gameStartInstructionSeries = new List<int>();
+            int[] temp = { 6, 7, 8, 9, 10 };
+            gameStartInstructionSeries.AddRange(temp);
+            GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, true);
+        }
+        else if (go.name == "button_viewCredits")
+        {
+            GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(17, true);
+        }
+        else if (go.name == "button_viewTips")
+        {
+            List<int> gameStartInstructionSeries = new List<int>();
+            int[] temp = { 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45 };
+            gameStartInstructionSeries.AddRange(temp);
+            GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, true);
+        }
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -90,73 +153,17 @@ public class MainMenu : MonoBehaviour {
 			clickedThisGO = getObjectAtMouse();
 			if (clickedThisGO != null)
 			{
-				ClickAButton(clickedThisGO);
+				DepressAButton(clickedThisGO);
 			}
 		}
-
+        
 		if (Input.GetMouseButtonUp(0) && clickedThisGO != null)
 		{
-			if (clickedThisGO == getObjectAtMouse())
-			{
-				if (clickedThisGO.name == "button_Start") { SplitBackground(); }
-				else if (clickedThisGO.name == "button_options") { isLerpingTowardOptions = true; }
-				else if (clickedThisGO.name == "button_back") { isLerpingTowardOptions = false; }
-				else if (clickedThisGO.name == "button_clearProgress") { clickedThisGO.GetComponent<Renderer>().material = confirmClearProgressImage; clickedThisGO.name = "button_clearProgressConfirm"; }
-				else if (clickedThisGO.name == "button_clearProgressConfirm") { clickedThisGO.GetComponent<Renderer>().material = progressClearedImage; clickedThisGO.name = "progressCleared"; SaveGame.DeleteAll(); }
-
-				// AUDIO
-				else if (clickedThisGO.name == "button_sfx")
-				{
-					if (SaveGame.GetAudioOn_sfx())
-					{
-						SaveGame.SetAudioOn_sfx(false);
-						clickedThisGO.GetComponent<Renderer>().material = audio_off;
-					}
-					else
-					{
-						SaveGame.SetAudioOn_sfx(true);
-						clickedThisGO.GetComponent<Renderer>().material = audio_sfx;
-					}
-				}
-				else if (clickedThisGO.name == "button_music")
-				{
-					if (SaveGame.GetAudioOn_music())
-					{
-						TurnMusicOff();
-						SaveGame.SetAudioOn_music(false);
-						clickedThisGO.GetComponent<Renderer>().material = audio_off;
-					}
-					else
-					{
-						TurnMusicOn();
-						SaveGame.SetAudioOn_music(true);
-						clickedThisGO.GetComponent<Renderer>().material = audio_music;
-					}
-				}
-
-				else if (clickedThisGO.name == "button_viewInstructions")
-				{
-					List<int> gameStartInstructionSeries = new List<int>();
-					int[] temp = { 6, 7, 8, 9, 10 };
-					gameStartInstructionSeries.AddRange(temp);
-					GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, true);
-				}
-				else if (clickedThisGO.name == "button_viewCredits")
-				{
-					GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(17, true);
-				}
-				else if (clickedThisGO.name == "button_viewTips")
-				{
-					List<int> gameStartInstructionSeries = new List<int>();
-					int[] temp = { 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45 };
-					gameStartInstructionSeries.AddRange(temp);
-					GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, true);
-				}
-			}
+			
 			isClickingButton = false;
-			UnclickAButton(clickedThisGO);
+			UnpressAButton(clickedThisGO);
 		}
-
+        
 		if (isLerpingTowardOptions)
 		{
 			Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, cameraOptionsPos, 0.1f);
@@ -209,13 +216,13 @@ public class MainMenu : MonoBehaviour {
 		}
 	}
 
-	void ClickAButton(GameObject hit)
+	void DepressAButton(GameObject hit)
 	{
 		if (!isClickingButton) { originalScale = hit.transform.localScale; isClickingButton = true; }
 		hit.transform.localScale = originalScale * clickScale;
 	}
 
-	void UnclickAButton(GameObject hit)
+	void UnpressAButton(GameObject hit)
 	{
 		hit.transform.localScale = originalScale;
 	}

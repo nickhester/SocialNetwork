@@ -12,7 +12,7 @@ public class SpecialLevels : MonoBehaviour {
 
 	void Start ()
 	{
-		if (GameObject.Find("Clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel.isFallToRed)
+        if (GameObject.Find("Clipboard").GetComponent<Clipboard>().GetNextLevelUp().myLevel.isFallToRed)
 		{
 			fallsToRed = true;
 		}

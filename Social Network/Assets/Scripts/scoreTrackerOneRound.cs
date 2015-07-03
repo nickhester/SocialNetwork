@@ -27,7 +27,7 @@ public class ScoreTrackerOneRound : MonoBehaviour {
 	public void UpdateScore(Difficulty diff, int numActionsTaken, bool isSpecial)
 	{
 		// add score for perfect number of actions
-		ValidLevels thisLevel = GameObject.Find("Clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel;
+        ValidLevels thisLevel = GameObject.Find("Clipboard").GetComponent<Clipboard>().GetNextLevelUp().myLevel;
 
 		if (!isSpecial)
 		{

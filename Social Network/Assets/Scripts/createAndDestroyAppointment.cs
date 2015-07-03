@@ -1,4 +1,4 @@
-#define DEBUG_LEVEL_TESTER
+//#define DEBUG_LEVEL_TESTER
 
 using UnityEngine;
 using System.Collections;
@@ -80,7 +80,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 	public void RoundEnd(bool levelSuccess, int numActionsTaken)
 	{
-		Appointment _thisLevel = myClipboardComponent.nextLevelUp;
+        Appointment _thisLevel = myClipboardComponent.GetNextLevelUp();
 		bool isSpecialLevel = false;
 		if (_thisLevel.myLevel.isCantTouch || _thisLevel.myLevel.isFallToRed || _thisLevel.myLevel.isNoLines || _thisLevel.myLevel.isOneClick)
 		{ isSpecialLevel = true; }
@@ -149,7 +149,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		// if this isn't a level from the clipboard, it needs to be set as the clipboard's nextLevelUp b/c that's where the NetworkMgr looks for it
 		if (!isFromAppointment)
 		{
-			myClipboardComponent.nextLevelUp.myLevel = _aSpecificLevel;
+            myClipboardComponent.GetNextLevelUp().myLevel = _aSpecificLevel;
 		}
         Application.LoadLevelAdditive("Scene_Appointment");
 		if (isClipboardUp)
@@ -175,7 +175,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 	public void GetStartFromClipboard()
 	{
-		ValidLevels _incomingLevel = myClipboardComponent.nextLevelUp.myLevel;
+        ValidLevels _incomingLevel = myClipboardComponent.GetNextLevelUp().myLevel;
 		difficultySelection = _incomingLevel.difficulty;
 		LoadNewLevel(_incomingLevel);
 

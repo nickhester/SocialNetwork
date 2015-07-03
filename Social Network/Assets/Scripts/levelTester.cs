@@ -38,7 +38,7 @@ public class LevelTester : MonoBehaviour {
     public void RunLevelTests()
     {
         numLevelsLeftToRun = numLevelsToRun;
-        levelToLoad = GameObject.FindGameObjectWithTag("clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel.level;
+        levelToLoad = GameObject.FindGameObjectWithTag("clipboard").GetComponent<Clipboard>().GetNextLevelUp().myLevel.level;
     }
 
 	void runTestAndRecord()

@@ -7,10 +7,10 @@ public class CalendarProgressBar : MonoBehaviour {
 	private Vector3 sessionBarEndPos;
 	private Vector3 starBarStartPos;
 	private Vector3 starBarEndPos;
-	public float lineWidth;
-	public float lineLength;
-	public Color barColor;
-	public GameObject text;
+	[SerializeField] private float lineWidth;
+	[SerializeField] private float lineLength;
+	[SerializeField] private Color barColor;
+	[SerializeField] private GameObject text;
 
 	// Use this for initialization
 	void Start ()

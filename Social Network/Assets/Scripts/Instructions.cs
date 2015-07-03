@@ -9,30 +9,35 @@ public class Instructions : MonoBehaviour {
 	public bool hasClickedDown = false;
 	private bool hasBeenDisplayingForOneFrame = false;
 
-	// Use this for initialization
-	void Start () {
+    void Awake()
+    {
+        InputManager.Instance.OnClick += OnClick;
+    }
 
-	}
+    private void OnClick(GameObject go)
+    {
+        if (gameObject.GetComponent<Renderer>().enabled && hasBeenDisplayingForOneFrame)
+        {
+            if (instructionsToShow.Count != 0)
+            {
+                DisplayNextInstruction(true);
+            }
+            else
+            {
+                gameObject.GetComponent<Renderer>().enabled = false;
+                gameObject.GetComponent<Collider>().enabled = false;
+            }
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
 
-		if (gameObject.GetComponent<Renderer>().enabled && Input.GetMouseButtonDown(0) && hasBeenDisplayingForOneFrame)
-		{
-			if (instructionsToShow.Count != 0)
-			{
-				DisplayNextInstruction(true);
-			}
-			else
-			{
-				gameObject.GetComponent<Renderer>().enabled = false;
-				gameObject.GetComponent<Collider>().enabled = false;
-			}
-		}
-
 		// make sure not to take a click from something else
 		if (gameObject.GetComponent<Renderer>().enabled)
+        {
 			hasBeenDisplayingForOneFrame = true;
+        }
 	}
 
 	public void ShowInstruction(int index, bool forceShow)

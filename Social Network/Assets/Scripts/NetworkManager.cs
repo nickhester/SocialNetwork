@@ -41,11 +41,43 @@ public class NetworkManager : MonoBehaviour {
 	[HideInInspector] public bool isAudioOn_sfx;
 
 	// for webplayer only
-	public Material redAndGreenButton_keys;
+	[SerializeField] private Material redAndGreenButton_keys;
 
 	#endregion
 
 	#region StartAndUpdate
+
+    void Awake()
+    {
+        InputManager.Instance.OnClick += OnClick;
+    }
+
+    void OnClick(GameObject go)
+    {
+        if (go.transform.tag == "people")							// if you're clicking on a person
+        {
+            // move cursor position on click
+            selectionCursorInst.GetComponent<Renderer>().enabled = true;		// turn on cursor
+            cursorSecondaryInst.GetComponent<Renderer>().enabled = true;		// turn on cursor
+            selectionCursorTargetPos = new Vector3(go.transform.position.x, go.transform.position.y, go.transform.position.z + 0.1f);	// move cursor to location
+            currentlySelectedPerson = go.transform.gameObject;			// set the clicked person as the currently selected person
+            GetComponent<LineDisplay>().TurnOffAllLines();		// turn off all the lines
+            GetComponent<LineDisplay>().DisplayLines(go.transform.GetComponent<Person>());		// turn on only the lines touching the selected person
+        }
+        else if (go.transform.name == "Button_green" && currentlySelectedPerson != null)
+        {
+            TakeAction(true);
+        }
+        else if (go.transform.name == "Button_red" && currentlySelectedPerson != null)
+        {
+            TakeAction(false);
+        }
+    }
+
+    public void OnDestroy()
+    {
+        InputManager.Instance.OnClick -= OnClick;
+    }
 
 	void Start ()
 	{
@@ -88,79 +120,10 @@ public class NetworkManager : MonoBehaviour {
 		#endif
 	}
 
-    List<Person> SpawnPeople(int _numPeople)
-    {
-        List<Person> retVal = new List<Person>();
-        if (peoplePositionParents[_numPeople] != null)
-        {
-            Transform[] peoplePositions = peoplePositionParents[_numPeople].transform.GetComponentsInChildren<Transform>();
-            foreach (Transform position in peoplePositions)
-            {
-                if (position.gameObject != peoplePositionParents[_numPeople])   // don't include the parent
-                {
-                    GameObject go = Instantiate(PersonPrefab, position.position, Quaternion.identity) as GameObject;
-                    go.transform.SetParent(transform);
-                    retVal.Add(go.GetComponent<Person>());
-                }
-            }
-        }
-        else
-        {
-            Debug.LogError("People Position Group not found for current level");
-        }
-
-        retVal = retVal.OrderBy(item => item.gameObject.name).ToList();
-
-        return retVal;
-    }
-
-	void TakeAction(bool isPositive)
-	{
-		if (isPositive)
-		{
-			TriggerRelationshipChange(currentlySelectedPerson, true);
-			if (isAudioOn_sfx) { myAudioComponent.clip = audioActionPos; }
-		}
-		else
-		{
-			TriggerRelationshipChange(currentlySelectedPerson, false);
-			if (isAudioOn_sfx) { myAudioComponent.clip = audioActionNeg; }
-		}
-		if (isAudioOn_sfx) { myAudioComponent.Play(); }
-		numActionsTaken++;
-	}
-
 	void Update ()
 	{
 		selectionCursorCurrentPos = selectionCursorInst.transform.position;
 		
-		if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))		// if clicking either mouse button
-		{
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast (ray, out hit, 100.0f))
-			{
-				if (hit.transform.tag == "people")							// if you're clicking on a person
-				{
-					// move cursor position on click
-					selectionCursorInst.GetComponent<Renderer>().enabled = true;		// turn on cursor
-					cursorSecondaryInst.GetComponent<Renderer>().enabled = true;		// turn on cursor
-					selectionCursorTargetPos = new Vector3(hit.transform.position.x, hit.transform.position.y, hit.transform.position.z + 0.1f);	// move cursor to location
-					currentlySelectedPerson = hit.transform.gameObject;			// set the clicked person as the currently selected person
-					GetComponent<LineDisplay>().TurnOffAllLines();		// turn off all the lines
-					GetComponent<LineDisplay>().DisplayLines(hit.transform.GetComponent<Person>());		// turn on only the lines touching the selected person
-				}
-				else if (hit.transform.name == "Button_green" && currentlySelectedPerson != null)
-				{
-					TakeAction(true);
-				}
-				else if (hit.transform.name == "Button_red" && currentlySelectedPerson != null)
-				{
-					TakeAction(false);
-				}
-			}
-		}
-
 		if (Input.GetKeyDown(KeyCode.Q) && currentlySelectedPerson != null)
 		{
 			TakeAction(true);
@@ -185,6 +148,49 @@ public class NetworkManager : MonoBehaviour {
 
 	#endregion
 
+    List<Person> SpawnPeople(int _numPeople)
+    {
+        List<Person> retVal = new List<Person>();
+        if (peoplePositionParents[_numPeople] != null)
+        {
+            Transform[] peoplePositions = peoplePositionParents[_numPeople].transform.GetComponentsInChildren<Transform>();
+            foreach (Transform position in peoplePositions)
+            {
+                if (position.gameObject != peoplePositionParents[_numPeople])   // don't include the parent
+                {
+                    GameObject go = Instantiate(PersonPrefab, position.position, Quaternion.identity) as GameObject;
+                    go.transform.SetParent(transform);
+                    go.name = position.gameObject.name;
+                    retVal.Add(go.GetComponent<Person>());
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("People Position Group not found for current level");
+        }
+
+        retVal = retVal.OrderBy(item => item.gameObject.name).ToList();
+
+        return retVal;
+    }
+
+    void TakeAction(bool isPositive)
+    {
+        if (isPositive)
+        {
+            TriggerRelationshipChange(currentlySelectedPerson, true);
+            if (isAudioOn_sfx) { myAudioComponent.clip = audioActionPos; }
+        }
+        else
+        {
+            TriggerRelationshipChange(currentlySelectedPerson, false);
+            if (isAudioOn_sfx) { myAudioComponent.clip = audioActionNeg; }
+        }
+        if (isAudioOn_sfx) { myAudioComponent.Play(); }
+        numActionsTaken++;
+    }
+
 	#region TestRunMethods
 
 	void SaveStartingState()
@@ -207,7 +213,7 @@ public class NetworkManager : MonoBehaviour {
 	public int SeedTheLevel()
 	{
 		int _usedSeed;
-		currentLevelInfo = GameObject.FindWithTag("clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel;
+        currentLevelInfo = GameObject.FindWithTag("clipboard").GetComponent<Clipboard>().GetNextLevelUp().myLevel;
 
 		if (currentLevelInfo.difficulty == Difficulty.VeryEasy) { isReadingSeedFromFile = true; }
 		else if (currentLevelInfo.difficulty == Difficulty.Easy) { isReadingSeedFromFile = true; }
@@ -302,7 +308,6 @@ public class NetworkManager : MonoBehaviour {
 				if (secondPerson != person)			// if they haven't already been compared (don't repeat A to A)
 				{
 					Relationship newRel = gameObject.AddComponent<Relationship>() as Relationship;
-					// TODO: is this line necessary? // newRel.relationshipValue = ExponentialWeight(200);		// set random relationship value
 					newRel.relationshipMembers.Add(person);
 					newRel.relationshipMembers.Add (secondPerson);
 					allRelationships.Add(newRel);

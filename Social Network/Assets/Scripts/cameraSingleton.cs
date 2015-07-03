@@ -16,9 +16,4 @@ public class CameraSingleton : MonoBehaviour {
 			}
 		}	
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

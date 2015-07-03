@@ -48,7 +48,7 @@ public class LineDisplay : MonoBehaviour {
 			}
 			lineConnections[person] = _lineList;
 		}
-		if (GameObject.Find("Clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel.isNoLines) { linesAreInvisible = true; }
+        if (GameObject.Find("Clipboard").GetComponent<Clipboard>().GetNextLevelUp().myLevel.isNoLines) { linesAreInvisible = true; }
 	}
 	
 	// Update is called once per frame

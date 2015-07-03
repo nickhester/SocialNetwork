@@ -108,7 +108,7 @@ public class Person : MonoBehaviour {
 	public void OnActivate(bool isPositiveChange, bool isDebugChange)
 	{
 		// check if in special game, if its already been clicked once. if so, don't allow click
-		if (hasBeenActivatedOnce && GameObject.Find("Clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel.isOneClick)
+        if (hasBeenActivatedOnce && GameObject.Find("Clipboard").GetComponent<Clipboard>().GetNextLevelUp().myLevel.isOneClick)
 		{ return; }
 		if (!canBeClicked)
 		{ return; }
@@ -147,7 +147,7 @@ public class Person : MonoBehaviour {
 			}
 		}
 		hasBeenActivatedOnce = true;
-		if (myMask_CannotClick == null && GameObject.Find("Clipboard").GetComponent<Clipboard>().nextLevelUp.myLevel.isOneClick)
+        if (myMask_CannotClick == null && GameObject.Find("Clipboard").GetComponent<Clipboard>().GetNextLevelUp().myLevel.isOneClick)
 		{
 			myMask_CannotClick = Instantiate(Mask_CannotClick, transform.position, Quaternion.identity) as GameObject;
 			myMask_CannotClick.transform.parent = transform;

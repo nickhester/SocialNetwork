@@ -14,6 +14,36 @@ public class Calendar : MonoBehaviour {
 	private int debugActivateClickCount = 0;
 	private int furthestDayUnlocked = 0;
 
+    void Awake()
+    {
+        InputManager.Instance.OnClick += OnClick;
+    }
+
+    private void OnClick(GameObject go)
+    {
+        if (go.transform.tag == "calendarDay" && go.transform.gameObject.GetComponent<CalendarDay>().isPlayable)
+        {
+            CalendarDay hitDay = go.transform.GetComponent<CalendarDay>();
+            SaveGame.lastCalendarDayClicked = hitDay.dayIndex_internal;
+            GameObject.Find("LevelSelector").GetComponent<LevelSelector>().StartDay(hitDay);
+        }
+        else if (go.transform.name == "MainMenu")
+        {
+            Destroy(GameObject.FindObjectOfType<LevelSelector>().gameObject);
+            Application.LoadLevel("Scene_MainMenu");
+        }
+        else if (go.transform.name == "Next Week")
+        {
+            if (viewingWeek < (Mathf.Floor(daysToGenerate / 5.0f)) - 1)
+            { viewingWeek++; }
+        }
+        else if (go.transform.name == "Last Week")
+        {
+            if (viewingWeek != 0)
+            { viewingWeek--; }
+        }
+    }
+
 	// Use this for initialization
 	void Start () {
 
@@ -510,38 +540,8 @@ public class Calendar : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
-		if (Input.GetMouseButtonDown(0))		// when you left click
-		{
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast (ray, out hit, 10.0f))
-			{
-				if (hit.transform.tag == "calendarDay" && hit.transform.gameObject.GetComponent<CalendarDay>().isPlayable)
-				{
-					CalendarDay hitDay = hit.transform.GetComponent<CalendarDay>();
-					SaveGame.lastCalendarDayClicked = hitDay.dayIndex_internal;
-					GameObject.Find("LevelSelector").GetComponent<LevelSelector>().StartDay(hitDay);
-				}
-				else if (hit.transform.name == "MainMenu")
-				{
-					Destroy(GameObject.FindObjectOfType<LevelSelector>().gameObject);
-					Application.LoadLevel("Scene_MainMenu");
-				}
-				else if (hit.transform.name == "Next Week")
-				{
-					if (viewingWeek < (Mathf.Floor(daysToGenerate/5.0f)) - 1)
-					{ viewingWeek++; }
-				}
-				else if (hit.transform.name == "Last Week")
-				{
-					if (viewingWeek != 0)
-					{ viewingWeek--; }
-				}
-			}
-		}
-
+	void Update ()
+    {
 		Vector3 targetWeekPosition = new Vector3(-viewingWeek * distanceBetweenWeeks, dayParent.transform.position.y, 0);
 		dayParent.transform.position = Vector3.Lerp(dayParent.transform.position, targetWeekPosition, 0.1f);
 	}

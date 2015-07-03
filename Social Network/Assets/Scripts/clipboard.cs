@@ -13,33 +13,29 @@ public class Clipboard : MonoBehaviour {
 	private List<ValidLevels> listOfSpecificallyRequestedLevels = new List<ValidLevels>();
 
 	// appointments
-	public GameObject appointmentObject;
+	[SerializeField] private GameObject appointmentObject;
 	private float appointmentSpacing = 1.75f;
 	private float appointmentTop = 3.5f;
 
-	public bool isInMotion = false;
+    private bool isInMotion = false;
 	private Vector3 lastStepPosition;
-	
-	public Appointment nextLevelUp;
-	[HideInInspector]
-	public Difficulty currentLevelDifficulty;
-	public int currentLevelNumBlocks;
+
+    private Appointment nextLevelUp;
+	[HideInInspector] public Difficulty currentLevelDifficulty;
+    [HideInInspector] public int currentLevelNumBlocks;
 	private GameObject startButton;
 
-	[HideInInspector]
-	public LevelSelector selectorRef;
+	[HideInInspector] public LevelSelector selectorRef;
 	private int buttonState = 0;
-	public Material buttonTextStart;
-	public Material buttonTextSkip;
-	public Material buttonTextDone;
-	public Material buttonTextBack;
+	[SerializeField] private Material buttonTextDone;
+	[SerializeField] private Material buttonTextBack;
 
 	private bool isSwappingResultsPageForAppointments = false;
 	private float timeToSwap = 0.15f;
 	private float timeToSwapCounter;
 
-	public GameObject badgeCheck;
-	public GameObject badgeStar;
+	[SerializeField] private GameObject badgeCheck;
+	[SerializeField] private GameObject badgeStar;
 	private Vector3 badgeCheckOriginalPos;
 	private Vector3 badgeStarOriginalPos;
 	private float distanceToPushBadges = 2.0f;
@@ -47,9 +43,61 @@ public class Clipboard : MonoBehaviour {
 	private bool areBadgesInFinalPosition = false;
 	private bool needsToCheckProgressAgain = false;
 
-	public GameObject text;
+	[SerializeField] private GameObject text;
+    private bool isFirstCreation = true;
+
+    struct levelOption
+    {
+        public Difficulty diff;
+        public int level;
+        public levelOption(int l, Difficulty d)
+        {
+            diff = d;
+            level = l;
+        }
+    }
 
 	#region StartAndUpdate
+
+    void Awake()
+    {
+        InputManager.Instance.OnClick += OnClick;
+    }
+
+    private void OnClick(GameObject go)
+    {
+        if (isInMotion) { return; }      // don't accept clicks if it's in motion
+
+        if (!isHiding)									// if the clipboard is visible
+        {
+            if (go.tag == "appointment")			// if clicking an appointment
+            {
+                nextLevelUp = go.GetComponent<Appointment>();
+                createAndDestroyLevelRef.GetStartFromClipboard();
+                currentLevelDifficulty = nextLevelUp.myLevel.difficulty;			// store level difficulty for scoring
+                currentLevelNumBlocks = nextLevelUp.myLevel.level;
+            }
+            else if (go.name == "StartButton")	// if clicking the "back" button, go back to the calendar
+            {
+                if (buttonState == 0)				// click the "back" button to return to calendar
+                {
+                    createAndDestroyLevelRef.ReturnToCalendar();
+                }
+
+                else if (buttonState == 2)
+                {
+                    isSwappingResultsPageForAppointments = true;	// if clicking the "done" button from the results screen, go back to clipboard
+                }
+            }
+        }
+        else
+        {
+            if (go.name == "StartButton" && buttonState == 1)			// click the "back" button to give up on the level
+            {
+                createAndDestroyLevelRef.RoundEnd(false);
+            }
+        }
+    }
 
 	void Start () {
 
@@ -81,68 +129,29 @@ public class Clipboard : MonoBehaviour {
 		dayLabelText.transform.parent = gameObject.transform;
 		TextMesh myLabelTextComponent = dayLabelText.GetComponent<TextMesh>();
 		myLabelTextComponent.text = "Day " + (selectorRef.dayToGenerate.dayIndex_internal + 1);
+
+        isFirstCreation = false;
 	}
 
 	// Update is called once per frame
-	void Update () {
-		if (!isInMotion)
-		{
-			if (Input.GetMouseButtonDown(0))		// when you click
-			{
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-				RaycastHit hit;
-				if (Physics.Raycast (ray, out hit, 10.0f))
-				{
-					if (!isHiding)									// if the clipboard is visible
-					{
-						if (hit.transform.tag == "appointment")			// if clicking an appointment
-						{
-							nextLevelUp = hit.transform.gameObject.GetComponent<Appointment>();
-							createAndDestroyLevelRef.GetStartFromClipboard();
-							currentLevelDifficulty = nextLevelUp.myLevel.difficulty;			// store level difficulty for scoring
-							currentLevelNumBlocks = nextLevelUp.myLevel.level;
-						}
-						else if (hit.transform.name == "StartButton")	// if clicking the "back" button, go back to the calendar
-						{
-							if (buttonState == 0)				// click the "back" button to return to calendar
-							{
-								createAndDestroyLevelRef.ReturnToCalendar();
-							}
-
-							else if (buttonState == 2)
-							{
-								isSwappingResultsPageForAppointments = true;	// if clicking the "done" button from the results screen, go back to clipboard
-							}
-
-						}
-					}
-					else
-					{
-						if (hit.transform.name == "StartButton" && buttonState == 1)			// click the "back" button to give up on the level
-						{
-							createAndDestroyLevelRef.RoundEnd(false);
-						}
-					}
-				}
-			}
-
-			if (isSwappingResultsPageForAppointments)
-			{
-				if (timeToSwapCounter > 0.0f)
-				{
-					HideClipboard();
-					timeToSwapCounter -= Time.deltaTime;
-				}
-				else
-				{
-					createAndDestroyLevelRef.HideResultsPage();
-					BringUpClipboard();
-					ShowClipboardAppointments();
-					timeToSwapCounter = timeToSwap;
-					isSwappingResultsPageForAppointments = false;
-				}
-			}
-		}
+	void Update ()
+    {
+        if (!isInMotion && isSwappingResultsPageForAppointments)
+        {
+            if (timeToSwapCounter > 0.0f)
+            {
+                HideClipboard();
+                timeToSwapCounter -= Time.deltaTime;
+            }
+            else
+            {
+                createAndDestroyLevelRef.HideResultsPage();
+                BringUpClipboard();
+                ShowClipboardAppointments();
+                timeToSwapCounter = timeToSwap;
+                isSwappingResultsPageForAppointments = false;
+            }
+        }
 
 		if (isHiding)			// if the clipboard is down
 		{
@@ -254,17 +263,6 @@ public class Clipboard : MonoBehaviour {
 		}
 	}
 
-	struct levelOption
-	{
-		public Difficulty diff;
-		public int level;
-		public levelOption(int l, Difficulty d)
-		{
-			diff = d;
-			level = l;
-		}
-	}
-
 	void GenerateALevel(ref Appointment _appt, Difficulty _diff, int _levelNum, bool _special_FallToRed, bool _special_OneClick, bool _special_CantTouch, bool _special_NoLines, int seed)
 	{
 		string _appointmentText = "";
@@ -306,7 +304,7 @@ public class Clipboard : MonoBehaviour {
 		GenerateALevel(ref _appt, _diff, _levelNum, _special_FallToRed, _special_OneClick, _special_CantTouch, _special_NoLines, -1);
 	}
 
-	public void BringUpClipboard()
+	void BringUpClipboard()
 	{
 		isHiding = false;
 
@@ -326,7 +324,7 @@ public class Clipboard : MonoBehaviour {
 		}
 	}
 
-	public void ShowClipboardAppointments()
+	void ShowClipboardAppointments()
 	{
 		foreach (Appointment a in transform.GetComponentsInChildren<Appointment>())
 		{
@@ -343,4 +341,17 @@ public class Clipboard : MonoBehaviour {
 	{
 		isHiding = true;
 	}
+
+    public Appointment GetNextLevelUp()
+    {
+        return nextLevelUp;
+    }
+
+    void OnLevelWasLoaded(int level)
+    {
+        if (!isFirstCreation)
+        {
+            InputManager.Instance.OnClick += OnClick;
+        }
+    }
 }
