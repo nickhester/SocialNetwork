@@ -366,12 +366,13 @@ public class NetworkManager : MonoBehaviour {
 
 	#endregion
 
+    // What to do when you click on a person
 	public void TriggerRelationshipChange(GameObject personObject, bool isPositiveChange)
 	{
 		TriggerRelationshipChange(personObject, isPositiveChange, false);
 	}
 
-	// What to do when you click on a person
+	// overload which doesn't trigger animations
 	public void TriggerRelationshipChange(GameObject personObject, bool isPositiveChange, bool isDebugChange)
 	{
 	    Person targetPerson = personObject.GetComponent<Person>();  // get the clicked object's person component
