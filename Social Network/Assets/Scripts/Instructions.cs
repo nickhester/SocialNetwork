@@ -6,7 +6,6 @@ public class Instructions : MonoBehaviour {
 
 	public List<int> instructionsToShow = new List<int>();
 	public List<Material> instructionMats = new List<Material>();
-	public bool hasClickedDown = false;
 	private bool hasBeenDisplayingForOneFrame = false;
 
     void Awake()

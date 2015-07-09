@@ -5,42 +5,61 @@ public class Finger : MonoBehaviour {
 
     [SerializeField] private GameObject fingerObject;
     private GameObject fingerInstance;
-    private Vector2 fingerOrigin;
+    private Vector3 fingerOrigin;
 
-    private Vector2 currentOrigin;
-    private Vector2 currentTarget;
-
+    private bool fingerIsActive = false;
+    private Vector3 currentOrigin;
+    private Vector3 currentTarget;
+    private bool isTraveling = false;
+    private float hoverCounter = 0.0f;
+    [SerializeField] private float hoverSpeed;
+    [SerializeField] private float hoverAmount;
     [SerializeField] private float moveSpeed;
 
 	void Start ()
     {
-        fingerOrigin = new Vector2(0.0f, -10.0f);
-        fingerInstance = Instantiate(fingerObject, new Vector3(fingerOrigin.x, fingerOrigin.y, transform.position.z), Quaternion.identity) as GameObject;
+        fingerOrigin = new Vector3(0.0f, -10.0f, -1.0f);
+        fingerInstance = Instantiate(fingerObject, fingerOrigin, Quaternion.identity) as GameObject;
 
-        SendFinger(new Vector2(0.0f, 0.0f));
+        //SendFinger(Vector2.zero);
 	}
+
+    void Update()
+    {
+        if (!isTraveling && fingerIsActive)
+        {
+            hoverCounter += Time.deltaTime;
+            fingerInstance.transform.position = new Vector3(currentTarget.x, (currentTarget.y + (Mathf.Sin(hoverCounter * hoverSpeed) * hoverAmount)), fingerInstance.transform.position.z);
+        }
+    }
 
     public void SendFinger(Vector2 target)
     {
+        fingerIsActive = true;
         currentOrigin = fingerInstance.transform.position;
-        currentTarget = target;
+        currentTarget = new Vector3(target.x, target.y, fingerInstance.transform.position.z);
         StartCoroutine("LerpToPosition");
     }
+    
 
     public void SendFingerAway()
     {
         SendFinger(fingerOrigin);
+        fingerIsActive = false;
     }
 
     IEnumerator LerpToPosition()
     {
+        isTraveling = true;
         float progress = 0.0f;
         while (progress < 1.0f)
         {
             progress += Time.deltaTime * moveSpeed;
-            fingerInstance.transform.position = Vector2.Lerp(currentOrigin, currentTarget, Mathf.Sin(progress * (Mathf.PI / 2.0f)));
+            fingerInstance.transform.position = Vector3.Lerp(currentOrigin, currentTarget, Mathf.Sin(progress * (Mathf.PI / 2.0f)));
 
             yield return null;
         }
+        isTraveling = false;
+        hoverCounter = 0.0f;
     }
 }
