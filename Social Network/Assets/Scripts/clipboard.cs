@@ -291,10 +291,10 @@ public class Clipboard : MonoBehaviour {
 		else if (_diff == Difficulty.Easy) { _difficultyText = "Minor"; }
 		else if (_diff == Difficulty.Medium) { _difficultyText = "Major"; }
 		else if (_diff == Difficulty.Hard) { _difficultyText = "Critical"; }
-				
-        _appointmentText += "Patients: ";
+
         _appointmentText += (_appt.myLevel.level).ToString();
-		_appointmentText += ", Issues: ";
+        _appointmentText += " Patients,";
+		_appointmentText += " Issues: ";
 		_appointmentText += _difficultyText;
 		_appt.myDisplayText_prop = _appointmentText;
 	}

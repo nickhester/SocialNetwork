@@ -4,6 +4,8 @@ using System.Collections;
 public class Notification : MonoBehaviour
 {
     [SerializeField] private GameObject quadPrefab;
+    [SerializeField] private GameObject modalBackgroundPrefab;
+    private GameObject modalBackgroundObject;
     private GameObject activeNotification;
     public Texture tempTexture;
     private bool currentNotificationIsModal;
@@ -17,13 +19,6 @@ public class Notification : MonoBehaviour
     {
         InputManager.Instance.OnClick += OnClick;
     }
-
-    /*
-    void Start()
-    {
-        DisplayNotification(tempTexture, "temp", Vector2.zero, 10.0f, 10.0f, true);
-    }
-    */
 
     void OnClick(GameObject go)
     {
@@ -45,7 +40,18 @@ public class Notification : MonoBehaviour
 
     public void DisplayNotification(Texture texture, string name, Vector2 screenPos, float scaleX, float scaleY, bool isModal)
     {
-        activeNotification = Instantiate(quadPrefab, new Vector3(screenPos.x, screenPos.y, -0.5f), Quaternion.identity) as GameObject;
+        if (texture == null)
+        {
+            Debug.LogError("Texture for notification not found");
+            return;
+        }
+
+        if (isModal)
+        {
+            modalBackgroundObject = Instantiate(modalBackgroundPrefab) as GameObject;
+        }
+
+        activeNotification = Instantiate(quadPrefab, new Vector3(screenPos.x, screenPos.y, -0.7f), Quaternion.identity) as GameObject;
         activeNotification.GetComponent<Renderer>().material.SetTexture("_MainTex", texture);
         activeNotification.transform.localScale = new Vector3(scaleX, scaleY, activeNotification.transform.localScale.z);
 

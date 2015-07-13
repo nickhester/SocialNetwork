@@ -481,7 +481,8 @@ public class Calendar : MonoBehaviour {
 		// show instructions on specific weeks of the calendar view
 		if (viewingWeek == 0)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(0, false);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotificationSet(0);
+			//GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(0, false);
 		}
 		else if (viewingWeek == 1)
 		{

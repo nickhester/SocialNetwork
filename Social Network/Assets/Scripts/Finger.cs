@@ -16,7 +16,7 @@ public class Finger : MonoBehaviour {
     [SerializeField] private float hoverAmount;
     [SerializeField] private float moveSpeed;
 
-	void Start ()
+	void Awake ()
     {
         fingerOrigin = new Vector3(0.0f, -10.0f, -1.0f);
         fingerInstance = Instantiate(fingerObject, fingerOrigin, Quaternion.identity) as GameObject;

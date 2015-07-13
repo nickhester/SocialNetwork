@@ -5,19 +5,19 @@ using Types;
 
 public class Appointment : MonoBehaviour {
 
-	public GameObject textObject;
-	public GameObject myTextObject;
-	public TextMesh myTextComponent;
-	public Vector3 myLerpTarget;
-	public bool isLerping = false;
-	public GameObject mySpecialOverlay_FallToRed;
-	public GameObject mySpecialOverlay_OneClick;
-	public GameObject mySpecialOverlay_CantTouch;
-	public GameObject mySpecialOverlay_NoLines;
-    public GameObject overlay_1Star;
-    public GameObject overlay_2Star;
-    public GameObject overlay_3Star;
-	public GameObject starSlot;
+	[SerializeField] private GameObject textObject;
+    [SerializeField] private GameObject myTextObject;
+    [SerializeField] private TextMesh myTextComponent;
+    private Vector3 myLerpTarget;
+	[HideInInspector] public bool isLerping = false;
+    [SerializeField] private GameObject mySpecialOverlay_FallToRed;
+    [SerializeField] private GameObject mySpecialOverlay_OneClick;
+    [SerializeField] private GameObject mySpecialOverlay_CantTouch;
+    [SerializeField] private GameObject mySpecialOverlay_NoLines;
+    [SerializeField] private GameObject overlay_1Star;
+    [SerializeField] private GameObject overlay_2Star;
+    [SerializeField] private GameObject overlay_3Star;
+    [SerializeField] private GameObject starSlot;
 
 	public ValidLevels myLevel;
 	public int levelIndex;
