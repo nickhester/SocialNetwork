@@ -76,7 +76,8 @@ public class NetworkManager : MonoBehaviour {
 
     public void OnDestroy()
     {
-        InputManager.Instance.OnClick -= OnClick;
+        if (InputManager.Instance != null)
+            InputManager.Instance.OnClick -= OnClick;
     }
 
 	void Start ()

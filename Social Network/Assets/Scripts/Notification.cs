@@ -38,7 +38,7 @@ public class Notification : MonoBehaviour
         }
     }
 
-    public void DisplayNotification(Texture texture, string name, Vector2 screenPos, float scaleX, float scaleY, bool isModal)
+    public void DisplayNotification(Texture texture, string name, Vector2 screenPos, float scaleX, float scaleY, bool isModal, bool isDarkened)
     {
         if (texture == null)
         {
@@ -48,10 +48,22 @@ public class Notification : MonoBehaviour
 
         if (isModal)
         {
-            modalBackgroundObject = Instantiate(modalBackgroundPrefab) as GameObject;
+            if (modalBackgroundObject == null)
+            {
+                modalBackgroundObject = Instantiate(modalBackgroundPrefab, new Vector3(0.0f, 0.0f, -2.3f), Quaternion.identity) as GameObject;
+            }
+            
+            if (isDarkened)
+            {
+                modalBackgroundObject.GetComponent<Renderer>().enabled = true;
+            }
+            else
+            {
+                modalBackgroundObject.GetComponent<Renderer>().enabled = false;
+            }
         }
 
-        activeNotification = Instantiate(quadPrefab, new Vector3(screenPos.x, screenPos.y, -0.7f), Quaternion.identity) as GameObject;
+        activeNotification = Instantiate(quadPrefab, new Vector3(screenPos.x, screenPos.y, -2.4f), Quaternion.identity) as GameObject;
         activeNotification.GetComponent<Renderer>().material.SetTexture("_MainTex", texture);
         activeNotification.transform.localScale = new Vector3(scaleX, scaleY, activeNotification.transform.localScale.z);
 
@@ -65,6 +77,10 @@ public class Notification : MonoBehaviour
         if (activeNotification != null)
         {
             Destroy(activeNotification);
+        }
+        if (modalBackgroundObject != null)
+        {
+            Destroy(modalBackgroundObject);
         }
         currentPulseCounter = 0.0f;
     }

@@ -180,10 +180,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		LoadNewLevel(_incomingLevel);
 
 		// showing instructions on first time play
-		List<int> gameStartInstructionSeries = new List<int>();
-		int[] temp = { 2, 6, 7, 8, 9, 10 };
-		gameStartInstructionSeries.AddRange(temp);
-		GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, false);
+		GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(2);
 	}
 
 	public void MakeNewTestLevel(int _levelNumber)

@@ -18,7 +18,7 @@ public class Finger : MonoBehaviour {
 
 	void Awake ()
     {
-        fingerOrigin = new Vector3(0.0f, -10.0f, -1.0f);
+        fingerOrigin = new Vector3(0.0f, -10.0f, -2.5f);
         fingerInstance = Instantiate(fingerObject, fingerOrigin, Quaternion.identity) as GameObject;
 
         //SendFinger(Vector2.zero);
@@ -33,18 +33,30 @@ public class Finger : MonoBehaviour {
         }
     }
 
-    public void SendFinger(Vector2 target)
+    public void SendFinger(Vector2 target, bool isImmediate)
     {
         fingerIsActive = true;
         currentOrigin = fingerInstance.transform.position;
         currentTarget = new Vector3(target.x, target.y, fingerInstance.transform.position.z);
-        StartCoroutine("LerpToPosition");
+        if (isImmediate)
+        {
+            fingerInstance.transform.position = currentTarget;
+        }
+        else
+        {
+            StartCoroutine("LerpToPosition");
+        }
+        
+    }
+
+    public void SendFinger(Vector2 target)
+    {
+        SendFinger(target, false);
     }
     
-
-    public void SendFingerAway()
+    public void SendFingerAway(bool isImmediate)
     {
-        SendFinger(fingerOrigin);
+        SendFinger(fingerOrigin, isImmediate);
         fingerIsActive = false;
     }
 

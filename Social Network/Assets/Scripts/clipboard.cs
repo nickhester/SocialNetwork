@@ -77,7 +77,7 @@ public class Clipboard : MonoBehaviour {
                 currentLevelDifficulty = nextLevelUp.myLevel.difficulty;			// store level difficulty for scoring
                 currentLevelNumBlocks = nextLevelUp.myLevel.level;
             }
-            else if (go.name == "StartButton")	// if clicking the "back" button, go back to the calendar
+            else if (go.name == "BackButton")	// if clicking the "back" button, go back to the calendar
             {
                 if (buttonState == 0)				// click the "back" button to return to calendar
                 {
@@ -92,7 +92,7 @@ public class Clipboard : MonoBehaviour {
         }
         else
         {
-            if (go.name == "StartButton" && buttonState == 1)			// click the "back" button to give up on the level
+            if (go.name == "BackButton" && buttonState == 1)			// click the "back" button to give up on the level
             {
                 createAndDestroyLevelRef.RoundEnd(false);
             }
@@ -108,7 +108,7 @@ public class Clipboard : MonoBehaviour {
 		createAndDestroyLevelRef = GameObject.FindGameObjectWithTag("persistentObject").GetComponent<CreateAndDestroyAppointment>();
 		foreach (Transform GO in GetComponentsInChildren<Transform>())
 		{
-			if (GO.name == "StartButton") { startButton = GO.gameObject; }		// get reference to start button
+            if (GO.name == "BackButton") { startButton = GO.gameObject; }		// get reference to start button
 		}
 
 		selectorRef = GameObject.Find("LevelSelector").GetComponent<LevelSelector>();
@@ -122,7 +122,7 @@ public class Clipboard : MonoBehaviour {
 		badgeCheck.transform.position = new Vector3(badgeCheck.transform.position.x, badgeCheck.transform.position.y + distanceToPushBadges, badgeCheck.transform.position.z);
 		badgeStar.transform.position = new Vector3(badgeStar.transform.position.x, badgeStar.transform.position.y + distanceToPushBadges, badgeStar.transform.position.z);
 
-		GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(1, false);
+		GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(1);
 
 		GameObject dayLabelText = Instantiate(text, new Vector3(gameObject.transform.position.x + 2.75f, gameObject.transform.position.y - 6.5f, gameObject.transform.position.x - 1.5f), Quaternion.identity) as GameObject;
 		dayLabelText.transform.localScale = gameObject.transform.localScale * 0.003f;
@@ -246,6 +246,7 @@ public class Clipboard : MonoBehaviour {
 		{
 			Vector3 _pos = new Vector3(transform.position.x, transform.position.y - (i*appointmentSpacing) + appointmentTop, transform.position.z - 0.1f);
 			GameObject _appt = Instantiate(appointmentObject, _pos, Quaternion.identity) as GameObject;
+            _appt.name = "appointment " + i;
 			Appointment _apptComponent = _appt.GetComponent<Appointment>();				// get reference to appointment component
 			_apptComponent.Initialize();
 			_appt.transform.parent = transform;

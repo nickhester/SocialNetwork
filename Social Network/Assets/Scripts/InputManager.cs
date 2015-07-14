@@ -6,6 +6,9 @@ public class InputManager : MonoBehaviour {
     // event handler
     public delegate void OnClickEvent(GameObject go);
     public event OnClickEvent OnClick;
+    // exclusive event handler
+    public delegate void OnClickEvent_Exclusive(GameObject go);
+    public event OnClickEvent_Exclusive OnClick_Exclusive;
     // singleton
     private static InputManager instance;
     // constructor
@@ -23,6 +26,8 @@ public class InputManager : MonoBehaviour {
         }
     }
     private GameObject objectMousedDownOn;
+    private bool isSendingExclusiveEvents = false;
+    private Object exclusiveReceiver;
 
     void Update()
     {
@@ -44,10 +49,35 @@ public class InputManager : MonoBehaviour {
                 if (objectMousedDownOn != null && hit.transform.gameObject == objectMousedDownOn)
                 {
                     // notify of the event
-                    OnClick(hit.transform.gameObject);
+                    if (isSendingExclusiveEvents)
+                    {
+                        OnClick_Exclusive(hit.transform.gameObject);
+                    }
+                    else
+                    {
+                        OnClick(hit.transform.gameObject);
+                    }
+                    
                 }
 
             }
         }
+    }
+
+    public void RequestExclusiveControl(Object obj)
+    {
+        exclusiveReceiver = obj;
+        isSendingExclusiveEvents = true;
+    }
+
+    public void EndExclusiveControl()
+    {
+        exclusiveReceiver = null;
+        isSendingExclusiveEvents = false;
+    }
+
+    public void ManuallySendEvent(GameObject obj)
+    {
+        OnClick(obj);
     }
 }
