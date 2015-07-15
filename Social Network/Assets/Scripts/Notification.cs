@@ -38,7 +38,7 @@ public class Notification : MonoBehaviour
         }
     }
 
-    public void DisplayNotification(Texture texture, string name, Vector2 screenPos, float scaleX, float scaleY, bool isModal, bool isDarkened)
+    public void DisplayNotification(Texture texture, string name, Vector2 screenPos, bool isModal, bool isDarkened)
     {
         if (texture == null)
         {
@@ -65,7 +65,6 @@ public class Notification : MonoBehaviour
 
         activeNotification = Instantiate(quadPrefab, new Vector3(screenPos.x, screenPos.y, -2.4f), Quaternion.identity) as GameObject;
         activeNotification.GetComponent<Renderer>().material.SetTexture("_MainTex", texture);
-        activeNotification.transform.localScale = new Vector3(scaleX, scaleY, activeNotification.transform.localScale.z);
 
         currentNotificationOriginalScale = activeNotification.transform.localScale;
         currentNotificationIsModal = isModal;
@@ -81,6 +80,7 @@ public class Notification : MonoBehaviour
         if (modalBackgroundObject != null)
         {
             Destroy(modalBackgroundObject);
+            modalBackgroundObject = null;
         }
         currentPulseCounter = 0.0f;
     }
