@@ -16,7 +16,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 	[HideInInspector]
 	public GUIStyle dayCompleteScreenStyle;
 	private bool hasDisplayedLevelEndScreen = false;
-	public Material[] notesForStars;
+	[SerializeField] private Material[] notesForStars;
 	private GameObject resultsPage;
 	private GameObject resultsNotes;
 	private bool isDisplayingScore = false;
@@ -101,11 +101,14 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 		if (!hasDisplayedLevelEndScreen && levelSuccess)
 		{
-			// show score instructions the first time you finish a round
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(3, false);
-
+			// show score notifications on level end
+            if (_thisLevel.GetMyDayIndex() == 0)
+            {
+                GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(3);
+            }
+            
 			appointmentComplete = true;
-			myClipboardComponent.HideClipboardAppointments();
+            myClipboardComponent.ShowClipboardAppointments(false);
 			bool receivedStar = false;
 
 			int currentDayIndex = myClipboardComponent.selectorRef.dayToGenerate.dayIndex;

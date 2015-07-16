@@ -183,18 +183,18 @@ public class NotificationManager : MonoBehaviour
             {
                 m_finger.SendFingerAway(false);
                 m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level_3"), "first level 3", new Vector2(0.0f, -2.1f), true, false);
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level_3"), "first level 3", new Vector2(0.0f, -2.1f), true, true);
                 EndExclusiveControl();
             }
             else if (_indexWithinSet == 4)
             {
                 m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level_4"), "first level 4", new Vector2(0.0f, -2.1f), true, false);
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level_4"), "first level 4", new Vector2(0.0f, -2.1f), true, true);
             }
             else if (_indexWithinSet == 5)
             {
                 m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level_5"), "first level 5", new Vector2(0.0f, -2.1f), true, false);
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level_5"), "first level 5", new Vector2(0.0f, -2.1f), true, true);
             }
             else if (_indexWithinSet == 6)
             {
@@ -207,6 +207,32 @@ public class NotificationManager : MonoBehaviour
                 m_finger.SendFinger(new Vector2(-3.3f, -5.7f));
                 RequestExclusiveControl();
                 AllowActions(new List<string> { "Button_green" }, new List<string>(), new List<string>());
+            }
+            else
+            {
+                SaveGame.SetSeenInstruction(_setIndex, true);
+                EndNotification();
+            }
+        }
+        else if (_setIndex == 3)      // first time completing session =====================================================
+        {
+            if (_indexWithinSet == 0)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_levelSuccess"), "levelSuccess", new Vector2(0.0f, 0.0f), true, true);
+            }
+            else
+            {
+                SaveGame.SetSeenInstruction(_setIndex, true);
+                EndNotification();
+            }
+        }
+        else if (_setIndex == 4)      // first time returning to clipboard after a session ===================================
+        {
+            if (_indexWithinSet == 0)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_returnToClipboard"), "returnToClipboard", new Vector2(0.0f, 0.0f), true, true);
             }
             else
             {

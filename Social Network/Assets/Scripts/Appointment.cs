@@ -80,7 +80,7 @@ public class Appointment : MonoBehaviour {
 
 		if (starSlot != null) { Destroy(starSlot); }
 
-		int thisAppointmentStarCount = SaveGame.GetRoundStarCount(GameObject.FindObjectOfType<CalendarDay>().dayIndex_internal, levelIndex);
+        int thisAppointmentStarCount = SaveGame.GetRoundStarCount(GetMyDayIndex(), GetMyLevelIndex());
 		if (thisAppointmentStarCount == 3)
 			starSlot = InstantiateAndPositionOverlay(overlay_3Star, overlayStarPos, overlayStarScale);
 		else if (thisAppointmentStarCount == 2)
@@ -99,4 +99,14 @@ public class Appointment : MonoBehaviour {
 
 		return returnGO;
 	}
+
+    public int GetMyDayIndex()
+    {
+        return GameObject.FindObjectOfType<CalendarDay>().dayIndex_internal;
+    }
+
+    public int GetMyLevelIndex()
+    {
+        return levelIndex;
+    }
 }

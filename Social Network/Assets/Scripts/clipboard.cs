@@ -39,7 +39,8 @@ public class Clipboard : MonoBehaviour {
 	private Vector3 badgeCheckOriginalPos;
 	private Vector3 badgeStarOriginalPos;
 	private float distanceToPushBadges = 2.0f;
-	private float lerpSpeed = 0.1f;
+    [SerializeField] private float lerpSpeed;
+    private Vector3 currentLerpTarget;
 	private bool areBadgesInFinalPosition = false;
 	private bool needsToCheckProgressAgain = false;
 
@@ -100,7 +101,6 @@ public class Clipboard : MonoBehaviour {
     }
 
 	void Start () {
-
 		timeToSwapCounter = timeToSwap;
 		offscreenPosition = new Vector3(transform.position.x, transform.position.y - 13, transform.position.z);
 		originalPosition = transform.position;
@@ -147,7 +147,7 @@ public class Clipboard : MonoBehaviour {
             {
                 createAndDestroyLevelRef.HideResultsPage();
                 BringUpClipboard();
-                ShowClipboardAppointments();
+                ShowClipboardAppointments(true);
                 timeToSwapCounter = timeToSwap;
                 isSwappingResultsPageForAppointments = false;
             }
@@ -155,18 +155,10 @@ public class Clipboard : MonoBehaviour {
 
 		if (isHiding)			// if the clipboard is down
 		{
-			Vector3 _currentPos = transform.position;
-			transform.position = Vector3.Lerp(_currentPos, offscreenPosition, 0.1f);
-			// end lerp early
-			if (Vector3.Distance(transform.position, offscreenPosition) < 0.1f) { transform.position = offscreenPosition; }
-			buttonState = 1;
+            buttonState = 1;
 		}
 		else 					// if the clipboard is up
 		{
-			Vector3 _currentPos = transform.position;
-			transform.position = Vector3.Lerp(_currentPos, originalPosition, 0.1f);
-			// end lerp early
-			if (Vector3.Distance(transform.position, originalPosition) < 0.1f) { transform.position = originalPosition; }
 			if (!createAndDestroyLevelRef.appointmentComplete) { buttonState = 0; }
 			else { buttonState = 2; }
 
@@ -307,40 +299,37 @@ public class Clipboard : MonoBehaviour {
 
 	void BringUpClipboard()
 	{
-		isHiding = false;
+        // this is only for bringing up a clipboard after a session, not when coming from the calendar view
+
+        BringUpClipboard_c();
 
 		needsToCheckProgressAgain = true;
+
+        /*
+        // show notification on first time returning to clipboard after completing a level
+        if (GetNextLevelUp().GetMyDayIndex() == 0)
+        {
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(4);
+        }
+        */
 	}
 
-	public void HideClipboardAppointments()
+	public void ShowClipboardAppointments(bool show)
 	{
 		foreach (Appointment a in transform.GetComponentsInChildren<Appointment>())
 		{
-			a.GetComponent<Renderer>().enabled = false;	// hide all appointments
-			a.GetComponent<Collider>().enabled = false;
+            a.GetComponent<Renderer>().enabled = show;	// show all appointments
+            a.GetComponent<Collider>().enabled = show;
 			foreach (MeshRenderer childRenderer in a.transform.GetComponentsInChildren<MeshRenderer>())
 			{
-				childRenderer.enabled = false;
-			}
-		}
-	}
-
-	void ShowClipboardAppointments()
-	{
-		foreach (Appointment a in transform.GetComponentsInChildren<Appointment>())
-		{
-			a.GetComponent<Renderer>().enabled = true;	// hide all appointments
-			a.GetComponent<Collider>().enabled = true;
-			foreach (MeshRenderer childRenderer in a.transform.GetComponentsInChildren<MeshRenderer>())
-			{
-				childRenderer.enabled = true;
+                childRenderer.enabled = show;
 			}
 		}
 	}
 
 	public void HideClipboard()
 	{
-		isHiding = true;
+        HideClipboard_c();
 	}
 
     public Appointment GetNextLevelUp()
@@ -354,5 +343,42 @@ public class Clipboard : MonoBehaviour {
         {
             InputManager.Instance.OnClick += OnClick;
         }
+    }
+
+    //==============================================================================================================================
+
+    public void HideClipboard_c()
+    {
+        currentLerpTarget = offscreenPosition;
+        isHiding = true;
+        StartCoroutine("LerpClipboard_c");
+    }
+
+    public void BringUpClipboard_c()
+    {
+        currentLerpTarget = originalPosition;
+        isHiding = false;
+        StartCoroutine("LerpClipboard_c");
+    }
+
+    void ClipboardFinishedLerping()
+    {
+        
+    }
+
+    IEnumerator LerpClipboard_c()
+    {
+        isInMotion = true;
+        float progress = 0.0f;
+        Vector3 startingPos = transform.position;
+        Vector3 targetPos = currentLerpTarget;
+        while (progress < 1.0f)
+        {
+            transform.position = Vector3.Lerp(startingPos, targetPos, Mathf.Sin(progress * (Mathf.PI / 2.0f)));
+            progress += Time.deltaTime * lerpSpeed;
+            yield return null;
+        }
+        isInMotion = false;
+        ClipboardFinishedLerping();
     }
 }
