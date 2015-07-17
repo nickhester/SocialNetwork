@@ -8,8 +8,6 @@ public class Appointment : MonoBehaviour {
 	[SerializeField] private GameObject textObject;
     [SerializeField] private GameObject myTextObject;
     [SerializeField] private TextMesh myTextComponent;
-    private Vector3 myLerpTarget;
-	[HideInInspector] public bool isLerping = false;
     [SerializeField] private GameObject mySpecialOverlay_FallToRed;
     [SerializeField] private GameObject mySpecialOverlay_OneClick;
     [SerializeField] private GameObject mySpecialOverlay_CantTouch;
@@ -34,17 +32,6 @@ public class Appointment : MonoBehaviour {
 			this.myDisplayText = value;
 			myTextComponent.text = value;
 		}
-	}
-	
-	void Start ()
-	{
-			myLerpTarget = transform.position;
-	}
-
-	void Update () { 
-		if (isLerping) { transform.position = Vector3.Lerp(transform.position, myLerpTarget, 0.1f); }
-		// end lerp early
-		if (Vector3.Distance(transform.position, myLerpTarget) < 0.1f) { transform.position = myLerpTarget; }
 	}
 
 	public void Initialize()

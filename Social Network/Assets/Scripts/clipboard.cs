@@ -18,7 +18,6 @@ public class Clipboard : MonoBehaviour {
 	private float appointmentTop = 3.5f;
 
     private bool isInMotion = false;
-	private Vector3 lastStepPosition;
 
     private Appointment nextLevelUp;
 	[HideInInspector] public Difficulty currentLevelDifficulty;
@@ -30,9 +29,7 @@ public class Clipboard : MonoBehaviour {
 	[SerializeField] private Material buttonTextDone;
 	[SerializeField] private Material buttonTextBack;
 
-	private bool isSwappingResultsPageForAppointments = false;
-	private float timeToSwap = 0.15f;
-	private float timeToSwapCounter;
+	private float timeToSwap = 0.68f;
 
 	[SerializeField] private GameObject badgeCheck;
 	[SerializeField] private GameObject badgeStar;
@@ -42,7 +39,6 @@ public class Clipboard : MonoBehaviour {
     [SerializeField] private float lerpSpeed;
     private Vector3 currentLerpTarget;
 	private bool areBadgesInFinalPosition = false;
-	private bool needsToCheckProgressAgain = false;
 
 	[SerializeField] private GameObject text;
     private bool isFirstCreation = true;
@@ -87,7 +83,8 @@ public class Clipboard : MonoBehaviour {
 
                 else if (buttonState == 2)
                 {
-                    isSwappingResultsPageForAppointments = true;	// if clicking the "done" button from the results screen, go back to clipboard
+                    HideClipboard();                              // if clicking the "done" button from the results screen, go back to clipboard
+                    Invoke("SwapClipboardPages", timeToSwap);
                 }
             }
         }
@@ -101,7 +98,6 @@ public class Clipboard : MonoBehaviour {
     }
 
 	void Start () {
-		timeToSwapCounter = timeToSwap;
 		offscreenPosition = new Vector3(transform.position.x, transform.position.y - 13, transform.position.z);
 		originalPosition = transform.position;
 
@@ -117,8 +113,8 @@ public class Clipboard : MonoBehaviour {
 		CreateAllAppointments();
 
 		// place badges
-		badgeCheckOriginalPos = badgeCheck.transform.position;
-		badgeStarOriginalPos = badgeStar.transform.position;
+		badgeCheckOriginalPos = badgeCheck.transform.localPosition;
+        badgeStarOriginalPos = badgeStar.transform.localPosition;
 		badgeCheck.transform.position = new Vector3(badgeCheck.transform.position.x, badgeCheck.transform.position.y + distanceToPushBadges, badgeCheck.transform.position.z);
 		badgeStar.transform.position = new Vector3(badgeStar.transform.position.x, badgeStar.transform.position.y + distanceToPushBadges, badgeStar.transform.position.z);
 
@@ -133,94 +129,56 @@ public class Clipboard : MonoBehaviour {
         isFirstCreation = false;
 	}
 
-	// Update is called once per frame
+    void SwapClipboardPages()
+    {
+        createAndDestroyLevelRef.HideResultsPage();
+        BringUpClipboard();
+        ShowClipboardAppointments(true);
+    }
+
 	void Update ()
     {
-        if (!isInMotion && isSwappingResultsPageForAppointments)
-        {
-            if (timeToSwapCounter > 0.0f)
-            {
-                HideClipboard();
-                timeToSwapCounter -= Time.deltaTime;
-            }
-            else
-            {
-                createAndDestroyLevelRef.HideResultsPage();
-                BringUpClipboard();
-                ShowClipboardAppointments(true);
-                timeToSwapCounter = timeToSwap;
-                isSwappingResultsPageForAppointments = false;
-            }
-        }
-
 		if (isHiding)			// if the clipboard is down
 		{
             buttonState = 1;
 		}
 		else 					// if the clipboard is up
 		{
-			if (!createAndDestroyLevelRef.appointmentComplete) { buttonState = 0; }
-			else { buttonState = 2; }
+			if (!createAndDestroyLevelRef.appointmentComplete)
+            {
+                buttonState = 0;
+            }
+			else
+            {
+                buttonState = 2;
+            }
 
 			// badge stuff
-			if (!areBadgesInFinalPosition && !isInMotion)
+			if (!isInMotion && SaveGame.GetHasCompletedAllRoundsInDay(selectorRef.dayToGenerate.dayIndex_internal))
 			{
-				bool isCheck = false;
-				bool isStar = false;
-				if (SaveGame.GetHasCompletedAllRoundsInDay(selectorRef.dayToGenerate.dayIndex_internal))
-				{
-					badgeCheck.transform.position = Vector3.Lerp(badgeCheck.transform.position, badgeCheckOriginalPos, lerpSpeed);
-					isCheck = true;
+                StartCoroutine("SlideBadgeCheck");
 
-					if ((selectorRef.dayToGenerate.numAppointments * 3) == SaveGame.GetDayStarCount(selectorRef.dayToGenerate.dayIndex_internal))
-					{
-						badgeStar.transform.position = Vector3.Lerp(badgeStar.transform.position, badgeStarOriginalPos, lerpSpeed);
-						isStar = true;
-					}
-				}
-				if (!isCheck && !isStar)
-					areBadgesInFinalPosition = true;
-				else if (isCheck && Mathf.Abs(badgeCheck.transform.position.y - badgeCheckOriginalPos.y) < 0.025f)
+				if ((selectorRef.dayToGenerate.numAppointments * 3) == SaveGame.GetDayStarCount(selectorRef.dayToGenerate.dayIndex_internal))
 				{
-					badgeCheck.transform.position = badgeCheckOriginalPos;
-					if (!isStar)
-					{
-						areBadgesInFinalPosition = true;
-					}
-					else if (isStar && Mathf.Abs(badgeStar.transform.position.y - badgeStarOriginalPos.y) < 0.025f)
-					{
-						badgeStar.transform.position = badgeStarOriginalPos;
-						areBadgesInFinalPosition = true;
-					}
+                    StartCoroutine("SlideBadgeStar");
 				}
-			}
-			if (needsToCheckProgressAgain && !isInMotion && !isHiding)
-			{
-				areBadgesInFinalPosition = false;
-				needsToCheckProgressAgain = false;
 			}
 		}
 
 		// update button with correct text for state
-		if (buttonState == 0) { startButton.GetComponent<Renderer>().material = buttonTextBack; }
-		else if (buttonState == 1) { startButton.GetComponent<Renderer>().material = buttonTextBack; }
-		else if (buttonState == 2) { startButton.GetComponent<Renderer>().material = buttonTextDone; }
+		if (buttonState == 0)
+        {
+            startButton.GetComponent<Renderer>().material = buttonTextBack;
+        }
+		else if (buttonState == 1) 
+        {
+            startButton.GetComponent<Renderer>().material = buttonTextBack;
+        }
+		else if (buttonState == 2) 
+        {
+            startButton.GetComponent<Renderer>().material = buttonTextDone;
+        }
 		else { Debug.LogError("Clipboard button state is invalid"); }
-
-		//Check to see if the clipboard is in motion or not
-		if (lastStepPosition != null && lastStepPosition != transform.position)	// if the clipboard is in motion
-		{
-			if (!isInMotion)
-			{
-				isInMotion = true;
-				foreach (Appointment _a in transform.GetComponentsInChildren<Appointment>())
-				{ _a.isLerping = false; }
-			}
-		}
-		else { if (isInMotion)
-			{ isInMotion = false; }
-		}
-		lastStepPosition = transform.position;
 	}
 
 	#endregion
@@ -297,23 +255,6 @@ public class Clipboard : MonoBehaviour {
 		GenerateALevel(ref _appt, _diff, _levelNum, _special_FallToRed, _special_OneClick, _special_CantTouch, _special_NoLines, -1);
 	}
 
-	void BringUpClipboard()
-	{
-        // this is only for bringing up a clipboard after a session, not when coming from the calendar view
-
-        BringUpClipboard_c();
-
-		needsToCheckProgressAgain = true;
-
-        /*
-        // show notification on first time returning to clipboard after completing a level
-        if (GetNextLevelUp().GetMyDayIndex() == 0)
-        {
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(4);
-        }
-        */
-	}
-
 	public void ShowClipboardAppointments(bool show)
 	{
 		foreach (Appointment a in transform.GetComponentsInChildren<Appointment>())
@@ -325,11 +266,6 @@ public class Clipboard : MonoBehaviour {
                 childRenderer.enabled = show;
 			}
 		}
-	}
-
-	public void HideClipboard()
-	{
-        HideClipboard_c();
 	}
 
     public Appointment GetNextLevelUp()
@@ -345,28 +281,22 @@ public class Clipboard : MonoBehaviour {
         }
     }
 
-    //==============================================================================================================================
-
-    public void HideClipboard_c()
+    public void HideClipboard()
     {
         currentLerpTarget = offscreenPosition;
         isHiding = true;
-        StartCoroutine("LerpClipboard_c");
+        StartCoroutine("LerpClipboard");
     }
 
-    public void BringUpClipboard_c()
+    void BringUpClipboard()
     {
+        // note: this is not called the first time the clipboard is seen b/c it starts already up
         currentLerpTarget = originalPosition;
         isHiding = false;
-        StartCoroutine("LerpClipboard_c");
+        StartCoroutine("LerpClipboard");
     }
 
-    void ClipboardFinishedLerping()
-    {
-        
-    }
-
-    IEnumerator LerpClipboard_c()
+    IEnumerator LerpClipboard()
     {
         isInMotion = true;
         float progress = 0.0f;
@@ -374,11 +304,46 @@ public class Clipboard : MonoBehaviour {
         Vector3 targetPos = currentLerpTarget;
         while (progress < 1.0f)
         {
-            transform.position = Vector3.Lerp(startingPos, targetPos, Mathf.Sin(progress * (Mathf.PI / 2.0f)));
+            transform.position = Vector3.Lerp(startingPos, targetPos, Lerp_FastInEaseOut(progress));
             progress += Time.deltaTime * lerpSpeed;
             yield return null;
         }
         isInMotion = false;
-        ClipboardFinishedLerping();
+    }
+
+    IEnumerator SlideBadgeCheck()
+    {
+        float progress = 0.0f;
+        Vector3 startingPos = badgeCheck.transform.localPosition;
+        Vector3 targetPos = badgeCheckOriginalPos;
+        while (progress < 1.0f)
+        {
+            badgeCheck.transform.localPosition = Vector3.Lerp(startingPos, targetPos, Lerp_FastInEaseOut(progress));
+            progress += Time.deltaTime * lerpSpeed;
+            yield return null;
+        }
+    }
+
+    IEnumerator SlideBadgeStar()
+    {
+        float progress = 0.0f;
+        Vector3 startingPos = badgeStar.transform.localPosition;
+        Vector3 targetPos = badgeStarOriginalPos;
+        while (progress < 1.0f)
+        {
+            badgeStar.transform.localPosition = Vector3.Lerp(startingPos, targetPos, Lerp_FastInEaseOut(progress));
+            progress += Time.deltaTime * lerpSpeed;
+            yield return null;
+        }
+    }
+
+    float Lerp_FastInEaseOut(float _progress)
+    {
+        return Mathf.Sin(_progress * (Mathf.PI / 2.0f));
+    }
+
+    public bool GetIsClipboardUp()
+    {
+        return !isHiding;
     }
 }

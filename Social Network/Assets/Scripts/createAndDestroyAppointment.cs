@@ -24,7 +24,6 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 	// clipboard
     private Clipboard myClipboardComponent;
-	private bool isClipboardUp = true;
 
 	// appointment parameters
 	public int levelsAvailable = 8;
@@ -96,7 +95,6 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 		float waitTimeForClipboard = (levelSuccess ? 1.0f : 0.0f);
 		myClipboardComponent.Invoke("BringUpClipboard", waitTimeForClipboard);
-		isClipboardUp = true;
 		Invoke ("DestroyOldLevel", waitTimeForClipboard);
 
 		if (!hasDisplayedLevelEndScreen && levelSuccess)
@@ -155,10 +153,9 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
             myClipboardComponent.GetNextLevelUp().myLevel = _aSpecificLevel;
 		}
         Application.LoadLevelAdditive("Scene_Appointment");
-		if (isClipboardUp)
+        if (myClipboardComponent.GetIsClipboardUp())
 		{
 			myClipboardComponent.HideClipboard();
-			isClipboardUp = false;
 		}
 	}
 
