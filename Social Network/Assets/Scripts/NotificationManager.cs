@@ -20,6 +20,12 @@ public class NotificationManager : MonoBehaviour
     private List<string> allowedObjects_NotificationEnds;
     private bool isInExclusiveEvent = false;
 
+    // saved positions
+    private Vector2 screenPos_greenButton = new Vector2(-3.3f, -5.7f);
+    private Vector2 screenPos_patients_3_2 = new Vector2(-0.5f, 3.5f);
+    private Vector2 screenPos_patients_3_1 = new Vector2(1.9f, -0.8f);
+    private Vector2 screenPos_patients_3_0 = new Vector2(-3.3f, -0.8f);
+
     void Awake()
     {
         InputManager.Instance.OnClick += OnClick;
@@ -161,11 +167,11 @@ public class NotificationManager : MonoBehaviour
             if (_indexWithinSet == 0)
             {
                 m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level"), "first level 0", new Vector2(0.0f, -2.1f), true, true);
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level_0"), "first level 0", new Vector2(0.0f, -2.1f), true, true);
             }
             else if (_indexWithinSet == 1)
             {
-                m_finger.SendFinger(new Vector2(-0.5f, 3.5f));
+                m_finger.SendFinger(screenPos_patients_3_2);
                 m_notification.DisplayNotification(
                     Resources.Load<Texture>("textures/instructions/Instruction Paper_level_1"), "first level 1", new Vector2(0.0f, -2.1f), false, false);
                 RequestExclusiveControl();
@@ -173,10 +179,9 @@ public class NotificationManager : MonoBehaviour
             }
             else if (_indexWithinSet == 2)
             {
-                m_finger.SendFinger(new Vector2(-3.3f, -5.7f));
+                m_finger.SendFinger(screenPos_greenButton);
                 m_notification.DisplayNotification(
                     Resources.Load<Texture>("textures/instructions/Instruction Paper_level_2"), "first level 2", new Vector2(0.0f, -2.1f), false, false);
-                RequestExclusiveControl();
                 AllowActions(new List<string> { "Button_green" }, new List<string>(), new List<string>());
             }
             else if (_indexWithinSet == 3)
@@ -198,14 +203,13 @@ public class NotificationManager : MonoBehaviour
             }
             else if (_indexWithinSet == 6)
             {
-                m_finger.SendFinger(new Vector2(1.9f, -0.8f));
+                m_finger.SendFinger(screenPos_patients_3_1);
                 RequestExclusiveControl();
                 AllowActions(new List<string> { "person 1" }, new List<string>(), new List<string>());
             }
             else if (_indexWithinSet == 7)
             {
-                m_finger.SendFinger(new Vector2(-3.3f, -5.7f));
-                RequestExclusiveControl();
+                m_finger.SendFinger(screenPos_greenButton);
                 AllowActions(new List<string> { "Button_green" }, new List<string>(), new List<string>());
             }
             else
@@ -236,6 +240,75 @@ public class NotificationManager : MonoBehaviour
             }
             else
             {
+                SaveGame.SetSeenInstruction(_setIndex, true);
+                EndNotification();
+            }
+        }
+        else if (_setIndex == 5)        // first session tutorial =====================================================
+        {
+            if (_indexWithinSet == 0)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level2_0"), "level 2 0", new Vector2(0.0f, -2.1f), true, true);
+            }
+            else if (_indexWithinSet == 1)
+            {
+                m_finger.SendFinger(screenPos_patients_3_2);
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level2_1"), "level 2 1", new Vector2(0.0f, -2.1f), false, false);
+                RequestExclusiveControl();
+                AllowActions(new List<string> { "person 2" }, new List<string>(), new List<string>());
+            }
+            else if (_indexWithinSet == 2)
+            {
+                m_finger.SendFingerAway(false);
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level2_2"), "level 2 2", new Vector2(0.0f, -4.5f), true, false);
+                EndExclusiveControl();
+            }
+            else if (_indexWithinSet == 3)
+            {
+                m_finger.SendFinger(screenPos_greenButton);
+                RequestExclusiveControl();
+                AllowActions(new List<string> { "Button_green" }, new List<string>(), new List<string>());
+            }
+            else if (_indexWithinSet == 4)
+            {
+                m_finger.SendFingerAway(false);
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level2_3"), "level 2 3", new Vector2(0.0f, -2.1f), true, true);
+                EndExclusiveControl();
+            }
+            else if (_indexWithinSet == 5)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level2_4"), "level 2 4", new Vector2(0.0f, -2.1f), true, true);
+            }
+            else if (_indexWithinSet == 6)
+            {
+                m_finger.SendFinger(screenPos_patients_3_0);
+                RequestExclusiveControl();
+                AllowActions(new List<string> { "person 0" }, new List<string>(), new List<string>());
+            }
+            else if (_indexWithinSet == 7)
+            {
+                m_finger.SendFinger(screenPos_greenButton);
+                AllowActions(new List<string> { "Button_green" }, new List<string>(), new List<string>());
+            }
+            else if (_indexWithinSet == 8)
+            {
+                m_finger.SendFinger(screenPos_patients_3_1);
+                RequestExclusiveControl();
+                AllowActions(new List<string> { "person 1" }, new List<string>(), new List<string>());
+            }
+            else if (_indexWithinSet == 9)
+            {
+                m_finger.SendFinger(screenPos_greenButton);
+                AllowActions(new List<string> { "Button_green" }, new List<string>(), new List<string>());
+            }
+            else
+            {
+                EndExclusiveControl();
                 SaveGame.SetSeenInstruction(_setIndex, true);
                 EndNotification();
             }

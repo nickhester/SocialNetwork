@@ -175,12 +175,22 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 	public void GetStartFromClipboard()
 	{
-        ValidLevels _incomingLevel = myClipboardComponent.GetNextLevelUp().myLevel;
+        Appointment _nextAppointment = myClipboardComponent.GetNextLevelUp();
+
+        ValidLevels _incomingLevel = _nextAppointment.myLevel;
 		difficultySelection = _incomingLevel.difficulty;
 		LoadNewLevel(_incomingLevel);
 
 		// showing instructions on first time play
-		GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(2);
+
+        if (_nextAppointment.GetMyDayIndex() == 0 && _nextAppointment.levelIndex == 0)
+        {
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(2);
+        }
+		else if (_nextAppointment.GetMyDayIndex() == 1 && _nextAppointment.levelIndex == 0)
+        {
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(5);
+        }
 	}
 
 	public void MakeNewTestLevel(int _levelNumber)
