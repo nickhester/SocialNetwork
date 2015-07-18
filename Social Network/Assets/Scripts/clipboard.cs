@@ -40,21 +40,27 @@ public class Clipboard : MonoBehaviour {
     private Vector3 currentLerpTarget;
 	private bool areBadgesInFinalPosition = false;
 
+    [SerializeField] private GameObject showMeBanner;
+    private Vector3 showMeOutPosition;
+    private Vector3 showMeInPosition;
+    private float distanceToPushShowMeBanner = 3.0f;
+
 	[SerializeField] private GameObject text;
     private bool isFirstCreation = true;
 
-    struct levelOption
+    struct LerpPackage
     {
-        public Difficulty diff;
-        public int level;
-        public levelOption(int l, Difficulty d)
+        public GameObject go;
+        public Vector3 start;
+        public Vector3 end;
+
+        public LerpPackage(GameObject _go, Vector3 _start, Vector3 _end)
         {
-            diff = d;
-            level = l;
+            go = _go;
+            start = _start;
+            end = _end;
         }
     }
-
-	#region StartAndUpdate
 
     void Awake()
     {
@@ -69,10 +75,18 @@ public class Clipboard : MonoBehaviour {
         {
             if (go.tag == "appointment")			// if clicking an appointment
             {
-                nextLevelUp = go.GetComponent<Appointment>();
+                SetNextLevelUp(go.GetComponent<Appointment>());
                 createAndDestroyLevelRef.GetStartFromClipboard();
-                currentLevelDifficulty = nextLevelUp.myLevel.difficulty;			// store level difficulty for scoring
-                currentLevelNumBlocks = nextLevelUp.myLevel.level;
+                currentLevelDifficulty = GetNextLevelUp().myLevel.difficulty;			// store level difficulty for scoring
+                currentLevelNumBlocks = GetNextLevelUp().myLevel.level;
+
+                // bring up the ShowMe banner if first week
+                // ShowMe stuff
+                Appointment _currentAppointment = GetNextLevelUp();
+                if (_currentAppointment.GetMyDayIndex() < 5 && !(_currentAppointment.GetMyDayIndex() == 0 && _currentAppointment.GetMyLevelIndex() == 0))
+                {
+                    StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeInPosition, showMeOutPosition)));
+                }
             }
             else if (go.name == "BackButton")	// if clicking the "back" button, go back to the calendar
             {
@@ -97,6 +111,8 @@ public class Clipboard : MonoBehaviour {
         }
     }
 
+	#region StartAndUpdate
+
 	void Start () {
 		offscreenPosition = new Vector3(transform.position.x, transform.position.y - 13, transform.position.z);
 		originalPosition = transform.position;
@@ -118,6 +134,11 @@ public class Clipboard : MonoBehaviour {
 		badgeCheck.transform.position = new Vector3(badgeCheck.transform.position.x, badgeCheck.transform.position.y + distanceToPushBadges, badgeCheck.transform.position.z);
 		badgeStar.transform.position = new Vector3(badgeStar.transform.position.x, badgeStar.transform.position.y + distanceToPushBadges, badgeStar.transform.position.z);
 
+        // place showMe banner
+        showMeOutPosition = showMeBanner.transform.position;
+        showMeInPosition = new Vector3(showMeBanner.transform.position.x - distanceToPushShowMeBanner, showMeBanner.transform.position.y, showMeBanner.transform.position.z);
+        showMeBanner.transform.position = showMeInPosition;
+
 		GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(1);
 
 		GameObject dayLabelText = Instantiate(text, new Vector3(gameObject.transform.position.x + 2.75f, gameObject.transform.position.y - 6.5f, gameObject.transform.position.x - 1.5f), Quaternion.identity) as GameObject;
@@ -128,13 +149,6 @@ public class Clipboard : MonoBehaviour {
 
         isFirstCreation = false;
 	}
-
-    void SwapClipboardPages()
-    {
-        createAndDestroyLevelRef.HideResultsPage();
-        BringUpClipboard();
-        ShowClipboardAppointments(true);
-    }
 
 	void Update ()
     {
@@ -156,11 +170,11 @@ public class Clipboard : MonoBehaviour {
 			// badge stuff
 			if (!isInMotion && SaveGame.GetHasCompletedAllRoundsInDay(selectorRef.dayToGenerate.dayIndex_internal))
 			{
-                StartCoroutine("SlideBadgeCheck");
+                StartCoroutine(SlideObject(new LerpPackage(badgeCheck, badgeCheck.transform.localPosition, badgeCheckOriginalPos)));
 
 				if ((selectorRef.dayToGenerate.numAppointments * 3) == SaveGame.GetDayStarCount(selectorRef.dayToGenerate.dayIndex_internal))
 				{
-                    StartCoroutine("SlideBadgeStar");
+                    StartCoroutine(SlideObject(new LerpPackage(badgeStar, badgeStar.transform.localPosition, badgeStarOriginalPos)));
 				}
 			}
 		}
@@ -182,6 +196,13 @@ public class Clipboard : MonoBehaviour {
 	}
 
 	#endregion
+
+    void SwapClipboardPages()
+    {
+        createAndDestroyLevelRef.HideResultsPage();
+        BringUpClipboard();
+        ShowClipboardAppointments(true);
+    }
 
 	void CreateAllAppointments()
 	{
@@ -273,6 +294,11 @@ public class Clipboard : MonoBehaviour {
         return nextLevelUp;
     }
 
+    public void SetNextLevelUp(Appointment _a)
+    {
+        nextLevelUp = _a;
+    }
+
     void OnLevelWasLoaded(int level)
     {
         if (!isFirstCreation)
@@ -285,7 +311,7 @@ public class Clipboard : MonoBehaviour {
     {
         currentLerpTarget = offscreenPosition;
         isHiding = true;
-        StartCoroutine("LerpClipboard");
+        StartCoroutine(SlideObject(new LerpPackage(gameObject, transform.position, currentLerpTarget)));
     }
 
     void BringUpClipboard()
@@ -293,47 +319,46 @@ public class Clipboard : MonoBehaviour {
         // note: this is not called the first time the clipboard is seen b/c it starts already up
         currentLerpTarget = originalPosition;
         isHiding = false;
-        StartCoroutine("LerpClipboard");
+        StartCoroutine(SlideObject(new LerpPackage(gameObject, transform.position, currentLerpTarget)));
+        StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeOutPosition, showMeInPosition)));
     }
 
-    IEnumerator LerpClipboard()
+    IEnumerator SlideObject(LerpPackage _input)
     {
-        isInMotion = true;
-        float progress = 0.0f;
-        Vector3 startingPos = transform.position;
-        Vector3 targetPos = currentLerpTarget;
-        while (progress < 1.0f)
+        bool _isMovingClipboard = false;
+        if (_input.go == this.gameObject)   // special case for moving clipboard
         {
-            transform.position = Vector3.Lerp(startingPos, targetPos, Lerp_FastInEaseOut(progress));
-            progress += Time.deltaTime * lerpSpeed;
-            yield return null;
+            _isMovingClipboard = true;
+            
         }
-        isInMotion = false;
-    }
-
-    IEnumerator SlideBadgeCheck()
-    {
-        float progress = 0.0f;
-        Vector3 startingPos = badgeCheck.transform.localPosition;
-        Vector3 targetPos = badgeCheckOriginalPos;
-        while (progress < 1.0f)
+        if (_isMovingClipboard)
         {
-            badgeCheck.transform.localPosition = Vector3.Lerp(startingPos, targetPos, Lerp_FastInEaseOut(progress));
-            progress += Time.deltaTime * lerpSpeed;
-            yield return null;
+            isInMotion = true;
         }
-    }
-
-    IEnumerator SlideBadgeStar()
-    {
+        
         float progress = 0.0f;
-        Vector3 startingPos = badgeStar.transform.localPosition;
-        Vector3 targetPos = badgeStarOriginalPos;
-        while (progress < 1.0f)
+        Vector3 startingPos = _input.start;
+        Vector3 targetPos = _input.end;
+
+        // early out if the object is already basically there
+        if (Vector3.Distance(_input.go.transform.position, targetPos) < 0.1f)
         {
-            badgeStar.transform.localPosition = Vector3.Lerp(startingPos, targetPos, Lerp_FastInEaseOut(progress));
-            progress += Time.deltaTime * lerpSpeed;
-            yield return null;
+            _input.go.transform.localPosition = targetPos;
+        }
+        else
+        {
+            while (progress < 1.0f)
+            {
+                // lerp in local position
+                _input.go.transform.localPosition = Vector3.Lerp(startingPos, targetPos, Lerp_FastInEaseOut(progress));
+                progress += Time.deltaTime * lerpSpeed;
+                yield return null;
+            }
+        }
+        
+        if (_isMovingClipboard)
+        {
+            isInMotion = false;
         }
     }
 
