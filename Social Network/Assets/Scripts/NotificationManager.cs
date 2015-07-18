@@ -176,6 +176,7 @@ public class NotificationManager : MonoBehaviour
                     Resources.Load<Texture>("textures/instructions/Instruction Paper_level_1"), "first level 1", new Vector2(0.0f, -2.1f), false, false);
                 RequestExclusiveControl();
                 AllowActions(new List<string> { "person 2" }, new List<string>(), new List<string>());
+                //Invoke("ClickAtFinger", 1.0f);  // TODO : move this to the "ShowMe" option
             }
             else if (_indexWithinSet == 2)
             {
@@ -360,5 +361,15 @@ public class NotificationManager : MonoBehaviour
         allowedObjects_NotificationStays.Add("audioToggle_sfx");
         allowedObjects_NotificationEnds.Add("MainMenu");
         allowedObjects_NotificationEnds.Add("BackButton");
+    }
+
+    void ClickAtFinger()
+    {
+        inputManager.SendMouseClick(m_finger.FingerClick());
+    }
+
+    void FingerCompletedClick()
+    {
+        // send callback
     }
 }

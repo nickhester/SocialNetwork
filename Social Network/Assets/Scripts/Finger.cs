@@ -60,6 +60,20 @@ public class Finger : MonoBehaviour {
         fingerIsActive = false;
     }
 
+    public GameObject FingerClick()
+    {
+        Vector3 fingerTipPosition = new Vector3(fingerInstance.transform.position.x + 0.7f, fingerInstance.transform.position.y + 0.7f, fingerInstance.transform.position.z);
+        Debug.DrawLine(fingerTipPosition, fingerTipPosition + Vector3.forward, Color.red, 5.0f);
+
+        Ray ray = new Ray(fingerTipPosition, Vector3.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100.0f))
+        {
+            return hit.transform.gameObject;
+        };
+        return null;
+    }
+
     IEnumerator LerpToPosition()
     {
         isTraveling = true;

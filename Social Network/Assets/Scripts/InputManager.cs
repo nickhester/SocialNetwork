@@ -48,19 +48,22 @@ public class InputManager : MonoBehaviour {
             {
                 if (objectMousedDownOn != null && hit.transform.gameObject == objectMousedDownOn)
                 {
-                    // notify of the event
-                    if (isSendingExclusiveEvents)
-                    {
-                        OnClick_Exclusive(hit.transform.gameObject);
-                    }
-                    else
-                    {
-                        OnClick(hit.transform.gameObject);
-                    }
-                    
+                    SendMouseClick(hit.transform.gameObject);
                 }
-
             }
+        }
+    }
+
+    public void SendMouseClick(GameObject go)
+    {
+        // notify of the event
+        if (isSendingExclusiveEvents)
+        {
+            OnClick_Exclusive(go);
+        }
+        else
+        {
+            OnClick(go);
         }
     }
 
