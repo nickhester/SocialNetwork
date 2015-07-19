@@ -181,15 +181,22 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		difficultySelection = _incomingLevel.difficulty;
 		LoadNewLevel(_incomingLevel);
 
-		// showing instructions on first time play
-
+		// showing instructions at beginning of session
         if (_nextAppointment.GetMyDayIndex() == 0 && _nextAppointment.levelIndex == 0)
         {
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(2);
         }
+        else if (_nextAppointment.GetMyDayIndex() == 0 && (_nextAppointment.levelIndex == 1 || _nextAppointment.levelIndex == 2))
+        {
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(6);
+        }
 		else if (_nextAppointment.GetMyDayIndex() == 1 && _nextAppointment.levelIndex == 0)
         {
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(5);
+        }
+        else if (_nextAppointment.GetMyDayIndex() == 2 && _nextAppointment.levelIndex == 0)
+        {
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(7);
         }
 	}
 

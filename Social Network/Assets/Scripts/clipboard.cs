@@ -154,8 +154,16 @@ public class Clipboard : MonoBehaviour
         showMeInPosition = new Vector3(showMeBanner.transform.position.x - distanceToPushShowMeBanner, showMeBanner.transform.position.y, showMeBanner.transform.position.z);
         showMeBanner.transform.position = showMeInPosition;
 
-		GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(1);
-
+        // show notifications at start of clipboard
+        if (selectorRef.dayToGenerate.dayIndex_internal == 0)
+        {
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(1);
+        }
+        else if (selectorRef.dayToGenerate.dayIndex_internal == 4)
+        {
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(9);
+        }
+		
 		GameObject dayLabelText = Instantiate(text, new Vector3(gameObject.transform.position.x + 2.75f, gameObject.transform.position.y - 6.5f, gameObject.transform.position.x - 1.5f), Quaternion.identity) as GameObject;
 		dayLabelText.transform.localScale = gameObject.transform.localScale * 0.003f;
 		dayLabelText.transform.parent = gameObject.transform;
@@ -217,6 +225,12 @@ public class Clipboard : MonoBehaviour
         createAndDestroyLevelRef.HideResultsPage();
         BringUpClipboard();
         ShowClipboardAppointments(true);
+        OnReturnToClipboard();
+    }
+
+    void OnReturnToClipboard()
+    {
+        GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(4);
     }
 
 	void CreateAllAppointments()
@@ -336,6 +350,8 @@ public class Clipboard : MonoBehaviour
         isHiding = false;
         StartCoroutine(SlideObject(new LerpPackage(gameObject, transform.position, currentLerpTarget)));
         StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeOutPosition, showMeInPosition)));
+
+
     }
 
     IEnumerator SlideObject(LerpPackage _input)

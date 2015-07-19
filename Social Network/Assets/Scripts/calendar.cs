@@ -501,19 +501,9 @@ public class Calendar : MonoBehaviour {
 		}
 
 		// show instructions on specific days of the calendar view
-		if (furthestDayUnlocked == 2)
+		if (furthestDayUnlocked == 4)
 		{
-			List<int> gameStartInstructionSeries = new List<int>();
-			int[] temp = { 18, 19, 20, 21, 22, 23, 24, 25 };
-			gameStartInstructionSeries.AddRange(temp);
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, false);
-		}
-		else if (furthestDayUnlocked == 4)
-		{
-			List<int> gameStartInstructionSeries = new List<int>();
-			int[] temp = { 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38 };
-			gameStartInstructionSeries.AddRange(temp);
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, false);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(8);
         }
 		else if (furthestDayUnlocked == 8)
 		{
