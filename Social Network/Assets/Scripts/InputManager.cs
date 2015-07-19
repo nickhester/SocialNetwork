@@ -28,6 +28,7 @@ public class InputManager : MonoBehaviour {
     private GameObject objectMousedDownOn;
     private bool isSendingExclusiveEvents = false;
     private Object exclusiveReceiver;
+    private bool isIgnoringUserInput = false;
 
     void Update()
     {
@@ -40,7 +41,7 @@ public class InputManager : MonoBehaviour {
                 objectMousedDownOn = hit.transform.gameObject;
             }
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0) && !isIgnoringUserInput)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -82,5 +83,15 @@ public class InputManager : MonoBehaviour {
     public void ManuallySendEvent(GameObject obj)
     {
         OnClick(obj);
+    }
+
+    public void IgnoreUserInput()
+    {
+        isIgnoringUserInput = true;
+    }
+
+    public void ResumeUserInput()
+    {
+        isIgnoringUserInput = false;
     }
 }

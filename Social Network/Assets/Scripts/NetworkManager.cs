@@ -21,6 +21,7 @@ public class NetworkManager : MonoBehaviour {
 	private ValidLevels currentLevelInfo;
     [SerializeField] private GameObject[] peoplePositionParents;
     [SerializeField] private GameObject PersonPrefab;
+    private bool isDemonstrationMode = false;
 
 	// Score
 	private int numActionsTaken = 0;
@@ -46,39 +47,6 @@ public class NetworkManager : MonoBehaviour {
 	#endregion
 
 	#region StartAndUpdate
-
-    void Awake()
-    {
-        InputManager.Instance.OnClick += OnClick;
-    }
-
-    void OnClick(GameObject go)
-    {
-        if (go.transform.tag == "people")							// if you're clicking on a person
-        {
-            // move cursor position on click
-            selectionCursorInst.GetComponent<Renderer>().enabled = true;		// turn on cursor
-            cursorSecondaryInst.GetComponent<Renderer>().enabled = true;		// turn on cursor
-            selectionCursorTargetPos = new Vector3(go.transform.position.x, go.transform.position.y, go.transform.position.z + 0.1f);	// move cursor to location
-            currentlySelectedPerson = go.transform.gameObject;			// set the clicked person as the currently selected person
-            GetComponent<LineDisplay>().TurnOffAllLines();		// turn off all the lines
-            GetComponent<LineDisplay>().DisplayLines(go.transform.GetComponent<Person>());		// turn on only the lines touching the selected person
-        }
-        else if (go.transform.name == "Button_green" && currentlySelectedPerson != null)
-        {
-            TakeAction(true);
-        }
-        else if (go.transform.name == "Button_red" && currentlySelectedPerson != null)
-        {
-            TakeAction(false);
-        }
-    }
-
-    public void OnDestroy()
-    {
-        if (InputManager.Instance != null)
-            InputManager.Instance.OnClick -= OnClick;
-    }
 
 	void Start ()
 	{
@@ -149,6 +117,39 @@ public class NetworkManager : MonoBehaviour {
 
 	#endregion
 
+    void Awake()
+    {
+        InputManager.Instance.OnClick += OnClick;
+    }
+
+    void OnClick(GameObject go)
+    {
+        if (go.transform.tag == "people")							// if you're clicking on a person
+        {
+            // move cursor position on click
+            selectionCursorInst.GetComponent<Renderer>().enabled = true;		// turn on cursor
+            cursorSecondaryInst.GetComponent<Renderer>().enabled = true;		// turn on cursor
+            selectionCursorTargetPos = new Vector3(go.transform.position.x, go.transform.position.y, go.transform.position.z + 0.1f);	// move cursor to location
+            currentlySelectedPerson = go.transform.gameObject;			// set the clicked person as the currently selected person
+            GetComponent<LineDisplay>().TurnOffAllLines();		// turn off all the lines
+            GetComponent<LineDisplay>().DisplayLines(go.transform.GetComponent<Person>());		// turn on only the lines touching the selected person
+        }
+        else if (go.transform.name == "Button_green" && currentlySelectedPerson != null)
+        {
+            TakeAction(true);
+        }
+        else if (go.transform.name == "Button_red" && currentlySelectedPerson != null)
+        {
+            TakeAction(false);
+        }
+    }
+
+    public void OnDestroy()
+    {
+        if (InputManager.Instance != null)
+            InputManager.Instance.OnClick -= OnClick;
+    }
+
     List<Person> SpawnPeople(int _numPeople)
     {
         List<Person> retVal = new List<Person>();
@@ -208,7 +209,13 @@ public class NetworkManager : MonoBehaviour {
 		{
 			_ppl.m_Mood = Mood.Neutral;
 		}
+        numActionsTaken = 0;
 	}
+
+    public void SetAsDemonstration(bool _isDemonstration)
+    {
+        isDemonstrationMode = _isDemonstration;
+    }
 
 	// save seed used whether randomly generated or user set
 	public int SeedTheLevel()
@@ -273,6 +280,11 @@ public class NetworkManager : MonoBehaviour {
 				return false;
 			}
 		}
+
+        if (isDemonstrationMode)
+        {
+            return false;
+        }
 		return true;
 	}
 

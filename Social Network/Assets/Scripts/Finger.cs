@@ -16,6 +16,8 @@ public class Finger : MonoBehaviour {
     [SerializeField] private float hoverAmount;
     [SerializeField] private float moveSpeed;
 
+    private Vector2 fingerTipOffset = new Vector2(0.7f, 0.7f);
+
 	void Awake ()
     {
         fingerOrigin = new Vector3(0.0f, -10.0f, -2.5f);
@@ -62,7 +64,7 @@ public class Finger : MonoBehaviour {
 
     public GameObject FingerClick()
     {
-        Vector3 fingerTipPosition = new Vector3(fingerInstance.transform.position.x + 0.7f, fingerInstance.transform.position.y + 0.7f, fingerInstance.transform.position.z);
+        Vector3 fingerTipPosition = new Vector3(fingerInstance.transform.position.x + fingerTipOffset.x, fingerInstance.transform.position.y + fingerTipOffset.y, fingerInstance.transform.position.z);
         Debug.DrawLine(fingerTipPosition, fingerTipPosition + Vector3.forward, Color.red, 5.0f);
 
         Ray ray = new Ray(fingerTipPosition, Vector3.forward);
@@ -87,5 +89,10 @@ public class Finger : MonoBehaviour {
         }
         isTraveling = false;
         hoverCounter = 0.0f;
+    }
+
+    public Vector2 GetFingerTipOffset()
+    {
+        return fingerTipOffset;
     }
 }

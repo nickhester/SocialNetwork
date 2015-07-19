@@ -11,15 +11,15 @@ public class ValidLevels {
 	public bool oneClick;
 	public int numClicks;
 
-	public actionTrail path;
-	public actionTrail cantTouchPath;
+    public ActionTrail path;
+    public ActionTrail cantTouchPath;
 
 	public bool isFallToRed = false;
 	public bool isOneClick = false;
 	public bool isCantTouch = false;
 	public bool isNoLines = false;
 
-	public void SetAttributes(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks,
+	void SetAttributes(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks,
 	                          bool _isFallToRed, bool _isOneClick, bool _isCantTouch, bool _isNoLines)
 	{
 		level = _level;
@@ -38,7 +38,9 @@ public class ValidLevels {
 	{
 		SetAttributes(_level, _difficulty, _seed, _cantTouch, _oneClick, _numClicks);
 	}
+
 	public ValidLevels() { }
+
 	public ValidLevels(int _level, Difficulty _difficulty, int _seed, bool _isFallToRed, bool _isOneClick, bool _isCantTouch, bool _isNoLines)
 	{
 		level = _level;
@@ -46,6 +48,7 @@ public class ValidLevels {
 		seed = _seed;
 		SetOnlySpecialAttributes(_isFallToRed, _isOneClick, _isCantTouch, _isNoLines);
 	}
+
 	public ValidLevels(int _level, Difficulty _difficulty, int _seed, Types.SpecialLevel _special)
 	{
 		level = _level;

@@ -70,12 +70,17 @@ public class Person : MonoBehaviour {
 			_myMaxIndicator.GetComponent<Renderer>().material = statusCircleRed;
 			GetComponent<Renderer>().material = facialArt1_sad;
 		}
-		if (m_Mood == Mood.Positive)
+		else if (m_Mood == Mood.Positive)
 		{
 			_myMaxIndicator.GetComponent<Renderer>().enabled = true;
 			_myMaxIndicator.GetComponent<Renderer>().material = statusCircleGreen;
 			GetComponent<Renderer>().material = facialArt1_happy;
 		}
+        else if (m_Mood == Mood.Neutral)
+        {
+            _myMaxIndicator.GetComponent<Renderer>().enabled = false;
+            GetComponent<Renderer>().material = facialArt1_normal;
+        }
 	}
 
 	#endregion

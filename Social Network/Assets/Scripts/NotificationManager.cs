@@ -22,6 +22,7 @@ public class NotificationManager : MonoBehaviour
 
     // saved positions
     private Vector2 screenPos_greenButton = new Vector2(-3.3f, -5.7f);
+    private Vector2 screenPos_redButton = new Vector2(1.3f, -5.7f);
     private Vector2 screenPos_patients_3_2 = new Vector2(-0.5f, 3.5f);
     private Vector2 screenPos_patients_3_1 = new Vector2(1.9f, -0.8f);
     private Vector2 screenPos_patients_3_0 = new Vector2(-3.3f, -0.8f);
@@ -176,7 +177,6 @@ public class NotificationManager : MonoBehaviour
                     Resources.Load<Texture>("textures/instructions/Instruction Paper_level_1"), "first level 1", new Vector2(0.0f, -2.1f), false, false);
                 RequestExclusiveControl();
                 AllowActions(new List<string> { "person 2" }, new List<string>(), new List<string>());
-                //Invoke("ClickAtFinger", 1.0f);  // TODO : move this to the "ShowMe" option
             }
             else if (_indexWithinSet == 2)
             {
@@ -314,10 +314,70 @@ public class NotificationManager : MonoBehaviour
                 EndNotification();
             }
         }
+        else if (_setIndex == 100)        // Show Me =====================================================
+        {
+            // take exclusive control
+            
+            // use the "_indexWithinSet" to make an action for the player
+            // trigger each one with a timer
+
+            StartCoroutine(DisplayShowMeSeries());
+
+            // return exclusive control
+
+            // send callback message to clipboard
+            
+            // ? maybe use a for loop with increasing "invoke" calls to call all actions at once?
+        }
         else
         {
             Debug.LogError("Attempting to view notification that doesn't exist");
         }
+    }
+
+    IEnumerator DisplayShowMeSeries()
+    {
+        inputManager.IgnoreUserInput();
+
+        ValidLevels currentLevel = GameObject.FindGameObjectWithTag("clipboard").GetComponent<Clipboard>().GetNextLevelUp().myLevel;
+        ActionTrail currentLevelPath = currentLevel.path;
+
+        List<Person> allPeople = GameObject.FindGameObjectWithTag("networkManager").GetComponent<NetworkManager>().GetAllPeople();
+
+        float currentDelay = 0.9f;
+
+        for (int i = 0; i < currentLevelPath.trail.Count; i++)
+        {
+            Vector3 personPos = allPeople[currentLevelPath.trail[i].Key].gameObject.transform.position;
+            Vector2 personPosOffset = (Vector2)personPos - m_finger.GetFingerTipOffset();
+            m_finger.SendFinger(personPosOffset);
+
+            yield return new WaitForSeconds(currentDelay);
+
+            ClickAtFinger();
+
+            yield return new WaitForSeconds(currentDelay);
+
+            if (currentLevelPath.trail[i].Value)
+            {
+                m_finger.SendFinger(screenPos_greenButton);
+            }
+            else
+            {
+                m_finger.SendFinger(screenPos_redButton);
+            }
+            
+
+            yield return new WaitForSeconds(currentDelay);
+
+            ClickAtFinger();
+
+            yield return new WaitForSeconds(currentDelay);
+        }
+
+        m_finger.SendFingerAway(false);
+        inputManager.ResumeUserInput();
+        GameObject.FindGameObjectWithTag("clipboard").GetComponent<Clipboard>().Callback_CompletedShowMe();
     }
 
     void EndNotification(bool isImmediate)

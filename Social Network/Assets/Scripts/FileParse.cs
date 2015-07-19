@@ -23,7 +23,6 @@ public class FileParse {
 		                                       level.cantTouch.ToString(),
 		                                       level.path,
 		                                       level.cantTouchPath
-
 		                     );
 
 		fileIO.AppendToFile(formattedString);
@@ -72,7 +71,8 @@ public class FileParse {
 				if (int.TryParse((tokens[5].Split(':')[1]), out a))	
 				{ thisCantTouch = a; }        							// set who you cant touch, if possible
 				
-				ValidLevels lvl =  new ValidLevels(thisLevel, thisDifficulty, thisSeed, thisCantTouch, thisOneClick, thisNumClick);
+				ValidLevels lvl = new ValidLevels(thisLevel, thisDifficulty, thisSeed, thisCantTouch, thisOneClick, thisNumClick);
+                lvl.path = new ActionTrail(tokens[6]);
 				_list.Add(lvl);
 			}
 		}

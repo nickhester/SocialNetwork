@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Types;
 
-public class Clipboard : MonoBehaviour {
-	
-	private bool isHiding = false;
+public class Clipboard : MonoBehaviour
+{
+    #region Variables
+
+    private bool isHiding = false;
 	private Vector3 offscreenPosition;
 	private Vector3 originalPosition;
 	private CreateAndDestroyAppointment createAndDestroyLevelRef;
@@ -30,15 +32,14 @@ public class Clipboard : MonoBehaviour {
 	[SerializeField] private Material buttonTextBack;
 
 	private float timeToSwap = 0.68f;
+    [SerializeField] private float lerpSpeed;
 
 	[SerializeField] private GameObject badgeCheck;
 	[SerializeField] private GameObject badgeStar;
 	private Vector3 badgeCheckOriginalPos;
 	private Vector3 badgeStarOriginalPos;
 	private float distanceToPushBadges = 2.0f;
-    [SerializeField] private float lerpSpeed;
     private Vector3 currentLerpTarget;
-	private bool areBadgesInFinalPosition = false;
 
     [SerializeField] private GameObject showMeBanner;
     private Vector3 showMeOutPosition;
@@ -61,6 +62,8 @@ public class Clipboard : MonoBehaviour {
             end = _end;
         }
     }
+
+    #endregion
 
     void Awake()
     {
@@ -108,7 +111,19 @@ public class Clipboard : MonoBehaviour {
             {
                 createAndDestroyLevelRef.RoundEnd(false);
             }
+            else if (go == showMeBanner)
+            {
+                // restart the level and set level as not winnable/trackable
+                createAndDestroyLevelRef.RestartLevel(true);
+                GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(100);
+                // wait for callback
+            }
         }
+    }
+
+    public void Callback_CompletedShowMe()
+    {
+        createAndDestroyLevelRef.RestartLevel(false);
     }
 
 	#region StartAndUpdate

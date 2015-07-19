@@ -214,6 +214,13 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		hasDisplayedLevelEndScreen = false;
 	}
 
+    public void RestartLevel(bool _isDemonstration)
+    {
+        NetworkManager nm = GameObject.FindGameObjectWithTag("networkManager").GetComponent<NetworkManager>();
+        nm.ReloadStartingState();
+        nm.SetAsDemonstration(_isDemonstration);
+    }
+
 	void OnGUI()
 	{
 
