@@ -80,24 +80,9 @@ public class MainMenu : MonoBehaviour {
                 go.GetComponent<Renderer>().material = audio_music;
             }
         }
-
-        else if (go.name == "button_viewInstructions")
-        {
-            List<int> gameStartInstructionSeries = new List<int>();
-            int[] temp = { 6, 7, 8, 9, 10 };
-            gameStartInstructionSeries.AddRange(temp);
-            GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, true);
-        }
         else if (go.name == "button_viewCredits")
         {
-            GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(17, true);
-        }
-        else if (go.name == "button_viewTips")
-        {
-            List<int> gameStartInstructionSeries = new List<int>();
-            int[] temp = { 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45 };
-            gameStartInstructionSeries.AddRange(temp);
-            GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, true);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(17);
         }
     }
 

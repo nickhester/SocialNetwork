@@ -460,6 +460,140 @@ public class NotificationManager : MonoBehaviour
                 EndNotification();
             }
         }
+        else if (_setIndex == 10)        // tip on last move =====================================================
+        {
+            if (_indexWithinSet == 0)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip3_1"), "tip 3 1", Vector2.zero, true, true);
+            }
+            else if (_indexWithinSet == 1)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip3_2"), "tip 3 2", Vector2.zero, true, true);
+            }
+            else if (_indexWithinSet == 2)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip3_3"), "tip 3 3", Vector2.zero, true, true);
+            }
+            else if (_indexWithinSet == 3)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip3_4"), "tip 3 4", Vector2.zero, true, true);
+            }
+            else if (_indexWithinSet == 4)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip3_5"), "tip 3 5", Vector2.zero, true, true);
+            }
+            else if (_indexWithinSet == 5)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip3_6"), "tip 3 6", Vector2.zero, true, true);
+            }
+            else if (_indexWithinSet == 6)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip3_7"), "tip 3 7", Vector2.zero, true, true);
+            }
+            else
+            {
+                SaveGame.SetSeenInstruction(_setIndex, true);
+                EndNotification();
+            }
+        }
+        else if (_setIndex == 11)        // introducing special - cant touch =====================================================
+        {
+            if (_indexWithinSet == 0)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_special_cantTouch"), "special cant touch", Vector2.zero, true, true);
+            }
+            else
+            {
+                SaveGame.SetSeenInstruction(_setIndex, true);
+                EndNotification();
+            }
+        }
+        else if (_setIndex == 12)        // introducing special - fall to red =====================================================
+        {
+            if (_indexWithinSet == 0)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_special_fallToRed"), "special fall to red", Vector2.zero, true, true);
+            }
+            else
+            {
+                SaveGame.SetSeenInstruction(_setIndex, true);
+                EndNotification();
+            }
+        }
+        else if (_setIndex == 13)        // introducing special - one click =====================================================
+        {
+            if (_indexWithinSet == 0)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_special_oneClick"), "special one click", Vector2.zero, true, true);
+            }
+            else
+            {
+                SaveGame.SetSeenInstruction(_setIndex, true);
+                EndNotification();
+            }
+        }
+        else if (_setIndex == 14)        // introducing special - no lines =====================================================
+        {
+            if (_indexWithinSet == 0)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_special_noLines"), "special no lines", Vector2.zero, true, true);
+            }
+            else
+            {
+                SaveGame.SetSeenInstruction(_setIndex, true);
+                EndNotification();
+            }
+        }
+        else if (_setIndex == 15)        // congratulations: all sessions completed =====================================================
+        {
+            if (_indexWithinSet == 0)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_allSessionsCompleted"), "all sessions completed", Vector2.zero, true, true);
+            }
+            else
+            {
+                SaveGame.SetSeenInstruction(_setIndex, true);
+                EndNotification();
+            }
+        }
+        else if (_setIndex == 16)        // congratulations: all stars earned =====================================================
+        {
+            if (_indexWithinSet == 0)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_allStarsEarned"), "all stars earned", Vector2.zero, true, true);
+            }
+            else
+            {
+                SaveGame.SetSeenInstruction(_setIndex, true);
+                EndNotification();
+            }
+        }
+        else if (_setIndex == 17)        // credits =====================================================
+        {
+            if (_indexWithinSet == 0)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_credits"), "credits", new Vector2(0.0f, -12.0f), true, true);
+            }
+            else
+            {
+                SaveGame.SetSeenInstruction(_setIndex, true);
+                EndNotification();
+            }
+        }
         else if (_setIndex == 100)        // Show Me =====================================================
         {
             StartCoroutine(DisplayShowMeSeries());

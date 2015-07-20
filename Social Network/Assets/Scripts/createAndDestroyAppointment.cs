@@ -181,7 +181,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		difficultySelection = _incomingLevel.difficulty;
 		LoadNewLevel(_incomingLevel);
 
-		// showing instructions at beginning of session
+		// showing notifications at beginning of sessions
         if (_nextAppointment.GetMyDayIndex() == 0 && _nextAppointment.levelIndex == 0)
         {
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(2);

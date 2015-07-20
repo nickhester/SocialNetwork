@@ -478,39 +478,36 @@ public class Calendar : MonoBehaviour {
 			_newCalDayComponent.AddStatusOverlay();
 		}
 
-		// show instructions on specific weeks of the calendar view
+		// show notifications on specific weeks of the calendar view
 		if (viewingWeek == 0)
 		{
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(0);
 		}
 		else if (viewingWeek == 1)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(11, false);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(11);
 		}
 		else if (viewingWeek == 2)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(13, false);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(12);
 		}
 		else if (viewingWeek == 3)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(12, false);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(13);
 		}
 		else if (viewingWeek == 4)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(14, false);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(14);
 		}
 
-		// show instructions on specific days of the calendar view
+        // show notifications on specific days of the calendar view
 		if (furthestDayUnlocked == 4)
 		{
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(8);
         }
 		else if (furthestDayUnlocked == 8)
 		{
-			List<int> gameStartInstructionSeries = new List<int>();
-			int[] temp = { 39, 40, 41, 42, 43, 44, 45 };
-			gameStartInstructionSeries.AddRange(temp);
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstructionSeries(gameStartInstructionSeries, false);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(10);
 		}
 
 		// initialize save game

@@ -52,14 +52,14 @@ public class CalendarProgressBar : MonoBehaviour {
 		barStarsComplete.GetComponent<Renderer>().material.color = barColor;
 		barStarsComplete.GetComponent<Renderer>().material.SetColor("_Emission", barColor);
 
-		// show game completion notes ("instruction" pages)
+		// show game completion notes ("notification" pages)
 		if (numDaysCompleted == numTotalDays)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(15, false);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(15);
 		}
 		if (numStarsAcquired == numTotalPossibleStars)
 		{
-			GameObject.Find("instructions").GetComponent<Instructions>().ShowInstruction(16, false);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(16);
 		}
 
 		// Create text
