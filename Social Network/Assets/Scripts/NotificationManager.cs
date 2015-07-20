@@ -94,7 +94,7 @@ public class NotificationManager : MonoBehaviour
 
     void Start()
     {
-        //DisplayNotificationSet(0);
+        inputManager = Camera.main.GetComponent<InputManager>();
     }
 
     void OnLevelWasLoaded(int level)
@@ -102,12 +102,12 @@ public class NotificationManager : MonoBehaviour
         inputManager = Camera.main.GetComponent<InputManager>();
     }
 
-    public void DisplayNotification(int _setIndex)
+    public void DisplayNotification(int _setIndex, bool _forceShow)
     {
         // trigger correct notifications
 
         // check to see if it's been seen
-        if (SaveGame.GetSeenInstruction(_setIndex))
+        if (SaveGame.GetSeenInstruction(_setIndex) && !_forceShow)
         {
             return;
         }
@@ -586,7 +586,7 @@ public class NotificationManager : MonoBehaviour
             if (_indexWithinSet == 0)
             {
                 m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_credits"), "credits", new Vector2(0.0f, -12.0f), true, true);
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_credits"), "credits", new Vector2(0.0f, -19.2f), true, true);
             }
             else
             {

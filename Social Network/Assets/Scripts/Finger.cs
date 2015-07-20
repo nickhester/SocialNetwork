@@ -20,7 +20,7 @@ public class Finger : MonoBehaviour {
 
 	void Awake ()
     {
-        fingerOrigin = new Vector3(0.0f, -20.0f, -2.5f);
+        fingerOrigin = new Vector3(0.0f, -30.0f, -2.5f);
         fingerInstance = Instantiate(fingerObject, fingerOrigin, Quaternion.identity) as GameObject;
 
         //SendFinger(Vector2.zero);

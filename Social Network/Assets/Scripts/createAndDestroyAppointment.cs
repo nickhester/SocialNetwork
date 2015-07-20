@@ -102,7 +102,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 			// show score notifications on level end
             if (_thisLevel.GetMyDayIndex() == 0)
             {
-                GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(3);
+                GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(3, false);
             }
             
 			appointmentComplete = true;
@@ -184,19 +184,19 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		// showing notifications at beginning of sessions
         if (_nextAppointment.GetMyDayIndex() == 0 && _nextAppointment.levelIndex == 0)
         {
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(2);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(2, false);
         }
         else if (_nextAppointment.GetMyDayIndex() == 0 && (_nextAppointment.levelIndex == 1 || _nextAppointment.levelIndex == 2))
         {
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(6);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(6, false);
         }
 		else if (_nextAppointment.GetMyDayIndex() == 1 && _nextAppointment.levelIndex == 0)
         {
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(5);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(5, false);
         }
         else if (_nextAppointment.GetMyDayIndex() == 2 && _nextAppointment.levelIndex == 0)
         {
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(7);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(7, false);
         }
 	}
 

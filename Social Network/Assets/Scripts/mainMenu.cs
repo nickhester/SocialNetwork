@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour {
 	private Vector3 originalScale;
 	private Vector3 cameraStartingPos;
 	private Vector3 cameraOptionsPos;
+    private float cameraOptionsPosOffset = 19.2f;
 	private bool isLerpingTowardOptions = false;
 	private bool isClickingButton = false;
 	private bool backgroundIsSplitting = false;
@@ -17,9 +18,10 @@ public class MainMenu : MonoBehaviour {
 	private GameObject mainMenuParent;
 	private GameObject mainTitle;
 	private Vector3 mainTitleOriginalPosition;
+    private float mainTitleDistanceStartUp = 10.0f;
 	private bool isMainTitleLerping = true;
 	private float mainTitleSinSpeed = 1.25f;
-	private float mainTitleSinSize = 0.1f;
+	private float mainTitleSinSize = 0.16f;
 	private float sinWaveCounter = 0.0f;
 
 	private float splitSpeed = 9.0f;
@@ -82,7 +84,7 @@ public class MainMenu : MonoBehaviour {
         }
         else if (go.name == "button_viewCredits")
         {
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(17);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(17, true);
         }
     }
 
@@ -91,21 +93,21 @@ public class MainMenu : MonoBehaviour {
 
 		clickScale = 0.9f;
 		cameraStartingPos = Camera.main.transform.position;
-		cameraOptionsPos = new Vector3(cameraStartingPos.x, cameraStartingPos.y - 12.0f, cameraStartingPos.z);
+        cameraOptionsPos = new Vector3(cameraStartingPos.x, cameraStartingPos.y - cameraOptionsPosOffset, cameraStartingPos.z);
 
 		rh = GameObject.Find("Main Menu background rightHalf");
 		lh = GameObject.Find("Main Menu background leftHalf");
 		mainMenuParent = GameObject.Find("Main Menu");
 		mainTitle = GameObject.Find("mainTitle");
 		mainTitleOriginalPosition = mainTitle.transform.position;
-		mainTitle.transform.position = new Vector3(mainTitleOriginalPosition.x, mainTitleOriginalPosition.y + 6.0f, mainTitleOriginalPosition.z);
+        mainTitle.transform.position = new Vector3(mainTitleOriginalPosition.x, mainTitleOriginalPosition.y + mainTitleDistanceStartUp, mainTitleOriginalPosition.z);
 
 		// display software version number
-		GameObject versionTextObject = Instantiate(text, new Vector3(1.8f, -16.5f, -1.0f), Quaternion.identity) as GameObject;
-		versionTextObject.transform.localScale = versionTextObject.transform.localScale * 0.02f;
+		GameObject versionTextObject = Instantiate(text, new Vector3(3.5f, -26.4f, -1.0f), Quaternion.identity) as GameObject;
+		versionTextObject.transform.localScale = versionTextObject.transform.localScale * 0.04f;
 		versionTextObject.transform.parent = gameObject.transform;
 		TextMesh myTextComponent = versionTextObject.GetComponent<TextMesh>();
-		myTextComponent.text = "Version 1.0";
+		myTextComponent.text = "Version 2.0";
 
 		// make sure audio icons check are accurately on or off
 		if (SaveGame.GetAudioOn_music() == false)

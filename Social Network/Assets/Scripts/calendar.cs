@@ -481,33 +481,33 @@ public class Calendar : MonoBehaviour {
 		// show notifications on specific weeks of the calendar view
 		if (viewingWeek == 0)
 		{
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(0);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(0, false);
 		}
 		else if (viewingWeek == 1)
 		{
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(11);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(11, false);
 		}
 		else if (viewingWeek == 2)
 		{
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(12);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(12, false);
 		}
 		else if (viewingWeek == 3)
 		{
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(13);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(13, false);
 		}
 		else if (viewingWeek == 4)
 		{
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(14);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(14, false);
 		}
 
         // show notifications on specific days of the calendar view
 		if (furthestDayUnlocked == 4)
 		{
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(8);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(8, false);
         }
 		else if (furthestDayUnlocked == 8)
 		{
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(10);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(10, false);
 		}
 
 		// initialize save game

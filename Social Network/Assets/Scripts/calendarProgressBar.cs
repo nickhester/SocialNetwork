@@ -55,11 +55,11 @@ public class CalendarProgressBar : MonoBehaviour {
 		// show game completion notes ("notification" pages)
 		if (numDaysCompleted == numTotalDays)
 		{
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(15);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(15, false);
 		}
 		if (numStarsAcquired == numTotalPossibleStars)
 		{
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(16);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(16, false);
 		}
 
 		// Create text

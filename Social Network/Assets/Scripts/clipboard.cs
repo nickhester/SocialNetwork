@@ -115,7 +115,7 @@ public class Clipboard : MonoBehaviour
             {
                 // restart the level and set level as not winnable/trackable
                 createAndDestroyLevelRef.RestartLevel(true);
-                GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(100);
+                GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(100, true);
                 // wait for callback
             }
         }
@@ -157,11 +157,11 @@ public class Clipboard : MonoBehaviour
         // show notifications at start of clipboard
         if (selectorRef.dayToGenerate.dayIndex_internal == 0)
         {
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(1);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(1, false);
         }
         else if (selectorRef.dayToGenerate.dayIndex_internal == 4)
         {
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(9);
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(9, false);
         }
 		
 		GameObject dayLabelText = Instantiate(text, new Vector3(gameObject.transform.position.x + 2.75f, gameObject.transform.position.y - 6.5f, gameObject.transform.position.x - 1.5f), Quaternion.identity) as GameObject;
@@ -230,7 +230,7 @@ public class Clipboard : MonoBehaviour
 
     void OnReturnToClipboard()
     {
-        GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(4);
+        GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(4, false);
     }
 
 	void CreateAllAppointments()
