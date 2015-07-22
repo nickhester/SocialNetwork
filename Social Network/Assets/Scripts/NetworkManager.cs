@@ -142,6 +142,10 @@ public class NetworkManager : MonoBehaviour {
         {
             TakeAction(false);
         }
+        else if (go.transform.name == "restartLevel")
+        {
+            ReloadStartingState();
+        }
     }
 
     public void OnDestroy()

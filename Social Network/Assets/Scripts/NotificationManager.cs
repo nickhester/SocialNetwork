@@ -28,7 +28,7 @@ public class NotificationManager : MonoBehaviour
     private Vector2 screenPos_patients_3_1 = new Vector2(1.9f, -0.8f);
     private Vector2 screenPos_patients_3_0 = new Vector2(-3.3f, -0.8f);
     private Vector2 screenPos_patients_4_1 = new Vector2(-3.0f, 2.9f);
-    private Vector2 screenPos_showMeButton = new Vector2(-4.0f, 5.8f);
+    private Vector2 screenPos_showMeButton = new Vector2(-4.3f, 6.0f);
     private Vector2 screenPos_smallStripBelowPeople = new Vector2(0.0f, -2.1f);
     private Vector2 screenPos_largeStripBelowPeople = new Vector2(0.0f, -4.5f);
 
@@ -587,6 +587,35 @@ public class NotificationManager : MonoBehaviour
             {
                 m_notification.DisplayNotification(
                     Resources.Load<Texture>("textures/instructions/Instruction Paper_credits"), "credits", new Vector2(0.0f, -19.2f), true, true);
+            }
+            else
+            {
+                SaveGame.SetSeenInstruction(_setIndex, true);
+                EndNotification();
+            }
+        }
+        else if (_setIndex == 18)        // restart level =====================================================
+        {
+            if (_indexWithinSet == 0)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_restartLevel_0"), "restart level 0", Vector2.zero, true, true);
+            }
+            else if (_indexWithinSet == 1)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_restartLevel_1"), "restart level 1", Vector2.zero, true, true);
+            }
+            else if (_indexWithinSet == 2)
+            {
+                m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_restartLevel_2"), "restart level 2", Vector2.zero, true, true);
+            }
+            else if (_indexWithinSet == 3)
+            {
+                m_finger.SendFinger(new Vector2(2.3f, 6.3f));
+                RequestExclusiveControl();
+                AllowActions(new List<string> { "restartLevel" }, new List<string>(), new List<string>());
             }
             else
             {

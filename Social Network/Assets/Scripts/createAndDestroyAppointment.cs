@@ -186,9 +186,13 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
         {
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(2, false);
         }
-        else if (_nextAppointment.GetMyDayIndex() == 0 && (_nextAppointment.levelIndex == 1 || _nextAppointment.levelIndex == 2))
+        else if (_nextAppointment.GetMyDayIndex() == 0 && _nextAppointment.levelIndex == 1)
         {
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(6, false);
+        }
+        else if (_nextAppointment.GetMyDayIndex() == 0 && _nextAppointment.levelIndex == 2)
+        {
+            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(18, false);
         }
 		else if (_nextAppointment.GetMyDayIndex() == 1 && _nextAppointment.levelIndex == 0)
         {
