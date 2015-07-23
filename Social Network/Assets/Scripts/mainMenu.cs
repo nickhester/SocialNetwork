@@ -24,7 +24,7 @@ public class MainMenu : MonoBehaviour {
 	private float mainTitleSinSize = 0.16f;
 	private float sinWaveCounter = 0.0f;
 
-	private float splitSpeed = 9.0f;
+	private float splitSpeed = 13.0f;
 	private float splitCounter = 0.0f;
 	private float splitLimit = 2.0f;
 
