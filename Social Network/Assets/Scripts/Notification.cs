@@ -14,6 +14,7 @@ public class Notification : MonoBehaviour
     private float currentPulseCounter = 0.0f;
     [SerializeField] private float pulseSpeed;
     [SerializeField] private float pulseAmount;
+	private float scaleFactor = 0.9f;
 
     void Awake()
     {
@@ -66,7 +67,7 @@ public class Notification : MonoBehaviour
         activeNotification = Instantiate(quadPrefab, new Vector3(screenPos.x, screenPos.y, -2.4f), Quaternion.identity) as GameObject;
         activeNotification.GetComponent<Renderer>().material.SetTexture("_MainTex", texture);
 
-        currentNotificationOriginalScale = activeNotification.transform.localScale;
+		currentNotificationOriginalScale = activeNotification.transform.localScale * scaleFactor;
         currentNotificationIsModal = isModal;
         currentNotificationName = name;
     }

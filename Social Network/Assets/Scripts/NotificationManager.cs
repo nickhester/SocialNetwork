@@ -156,7 +156,7 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_finger.SendFinger(new Vector2(-4.5f, 2.5f));
+                m_finger.SendFinger(new Vector2(-3.5f, 2.3f));
                 m_notification.DisplayNotification(
                     Resources.Load<Texture>("textures/instructions/Instruction Paper_appointments"), "appointments", new Vector2(0.0f, -1.5f), false, false);
                 RequestExclusiveControl();
@@ -613,7 +613,7 @@ public class NotificationManager : MonoBehaviour
             }
             else if (_indexWithinSet == 3)
             {
-                m_finger.SendFinger(new Vector2(2.3f, 6.3f));
+                m_finger.SendFinger(GameObject.Find("restartLevel"));
                 RequestExclusiveControl();
                 AllowActions(new List<string> { "restartLevel" }, new List<string>(), new List<string>());
             }

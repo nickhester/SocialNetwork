@@ -42,9 +42,12 @@ public class Clipboard : MonoBehaviour
     private Vector3 currentLerpTarget;
 
     [SerializeField] private GameObject showMeBanner;
+	private int showMeBannerScreenPos_X = 40;
+	private int showMeBannerScreenPos_Y = -30;
     private Vector3 showMeOutPosition;
     private Vector3 showMeInPosition;
     private float distanceToPushShowMeBanner = 3.0f;
+	
 
 	[SerializeField] private GameObject text;
     private bool isFirstCreation = true;
@@ -150,8 +153,12 @@ public class Clipboard : MonoBehaviour
 		badgeStar.transform.position = new Vector3(badgeStar.transform.position.x, badgeStar.transform.position.y + distanceToPushBadges, badgeStar.transform.position.z);
 
         // place showMe banner
-        showMeOutPosition = showMeBanner.transform.position;
-        showMeInPosition = new Vector3(showMeBanner.transform.position.x - distanceToPushShowMeBanner, showMeBanner.transform.position.y, showMeBanner.transform.position.z);
+		Vector3 showMeScreenEdge = Camera.main.ScreenToWorldPoint(new Vector3(showMeBannerScreenPos_X, Screen.height + showMeBannerScreenPos_Y));
+        showMeOutPosition = new Vector3(
+			showMeScreenEdge.x,
+			showMeScreenEdge.y,
+			showMeBanner.transform.position.z);
+		showMeInPosition = new Vector3(showMeOutPosition.x - distanceToPushShowMeBanner, showMeOutPosition.y, showMeOutPosition.z);
         showMeBanner.transform.position = showMeInPosition;
 
         // show notifications at start of clipboard

@@ -14,6 +14,10 @@ public class Calendar : MonoBehaviour {
 	private int debugActivateClickCount = 0;
 	private int furthestDayUnlocked = 0;
 
+	private int audioButtonScreenPos_X = -17;
+	private int audioButtonScreenPos_Y = -17;
+	private float audioIconSpacing = 0.81f;
+
     void Awake()
     {
         InputManager.Instance.OnClick += OnClick;
@@ -46,6 +50,13 @@ public class Calendar : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		// position audio icons on edge of screen
+		Vector3 audioIconPositions = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width + audioButtonScreenPos_X, Screen.height + audioButtonScreenPos_Y));
+		GameObject iconAudio = GameObject.Find("audioToggle_music");
+		GameObject iconSfx = GameObject.Find("audioToggle_sfx");
+		iconAudio.transform.position = new Vector3(audioIconPositions.x - audioIconSpacing, audioIconPositions.y, iconAudio.transform.position.z);
+		iconSfx.transform.position = new Vector3(audioIconPositions.x, audioIconPositions.y, iconSfx.transform.position.z);
 
 		float calendarDaySeparationVertical = 2.0f;
 		dayParent = new GameObject("dayParent");

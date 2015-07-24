@@ -16,7 +16,8 @@ public class Finger : MonoBehaviour {
     [SerializeField] private float hoverAmount;
     [SerializeField] private float moveSpeed;
 
-    private Vector2 fingerTipOffset = new Vector2(0.7f, 0.7f);
+	private Vector2 fingerTipOffset = new Vector2(0.7f, 0.7f);
+	private Vector2 fingerTipOffsetVisible = new Vector2(0.9f, 1.1f);
 
 	void Awake ()
     {
@@ -55,6 +56,11 @@ public class Finger : MonoBehaviour {
     {
         SendFinger(target, false);
     }
+
+	public void SendFinger(GameObject go)
+	{
+		SendFinger(new Vector2(go.transform.position.x - fingerTipOffsetVisible.x, go.transform.position.y - fingerTipOffsetVisible.y), false);
+	}
     
     public void SendFingerAway(bool isImmediate)
     {

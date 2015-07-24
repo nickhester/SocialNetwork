@@ -44,6 +44,8 @@ public class NetworkManager : MonoBehaviour {
 	// for webplayer only
 	[SerializeField] private Material redAndGreenButton_keys;
 
+	private float restartButtonOffset = -0.8f;
+
 	#endregion
 
 	#region StartAndUpdate
@@ -81,6 +83,14 @@ public class NetworkManager : MonoBehaviour {
 		myAudioComponent = gameObject.GetComponent<AudioSource>() as AudioSource;
 		if (SaveGame.GetAudioOn_sfx()) { isAudioOn_sfx = true; }
 		else { isAudioOn_sfx = false; }
+
+		// set restart button position (just put it to the left of the audio icons
+		Vector3 audioButtonPos = GameObject.Find("audioToggle_music").transform.position;
+		GameObject restartLevelButton = GameObject.Find("restartLevel");
+		if (restartLevelButton != null)
+		{
+			restartLevelButton.transform.position = new Vector3(audioButtonPos.x + restartButtonOffset, audioButtonPos.y, audioButtonPos.z);
+		}
 
 		#if UNITY_WEBPLAYER
 		
