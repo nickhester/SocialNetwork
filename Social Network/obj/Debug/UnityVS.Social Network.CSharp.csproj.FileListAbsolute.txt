@@ -9,3 +9,9 @@ C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Deb
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\obj\Debug\UnityVS.Social Network.CSharp.csprojResolveAssemblyReference.cache
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\obj\Debug\Assembly-CSharp.dll
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\obj\Debug\Assembly-CSharp.pdb
+C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEngine.xml
+C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEditor.xml
+C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEngine.UI.xml
+C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEngine.Networking.xml
+C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEngine.Analytics.xml
+C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEditor.iOS.Extensions.Xcode.xml

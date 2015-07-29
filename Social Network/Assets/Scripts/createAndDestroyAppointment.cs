@@ -82,7 +82,9 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
         Appointment _thisLevel = myClipboardComponent.GetNextLevelUp();
 		bool isSpecialLevel = false;
 		if (_thisLevel.myLevel.isCantTouch || _thisLevel.myLevel.isFallToRed || _thisLevel.myLevel.isNoLines || _thisLevel.myLevel.isOneClick)
-		{ isSpecialLevel = true; }
+		{
+			isSpecialLevel = true;
+		}
 
 		ScoreTrackerOneRound st = GetComponent<ScoreTrackerOneRound>();
 		st.Reset();
@@ -97,6 +99,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		myClipboardComponent.Invoke("BringUpClipboard", waitTimeForClipboard);
 		Invoke ("DestroyOldLevel", waitTimeForClipboard);
 
+		// display level end screen, etc.
 		if (!hasDisplayedLevelEndScreen && levelSuccess)
 		{
 			// show score notifications on level end
@@ -107,34 +110,35 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
             
 			appointmentComplete = true;
             myClipboardComponent.ShowClipboardAppointments(false);
-			bool receivedStar = false;
 
 			int currentDayIndex = myClipboardComponent.selectorRef.dayToGenerate.dayIndex;
 
 			if (st.score > SaveGame.GetRoundStarCount(currentDayIndex, _thisLevel.levelIndex))
+			{
 				SaveGame.SetRoundStarCount(currentDayIndex, _thisLevel.levelIndex, st.score);
-			receivedStar = true;
+			}
 
 			// Check to see if all rounds in day received a star, and also tally stars for the day
 			bool doAllRoundsInDayHaveStars = true;
 			int howManyStarsTotalDay = 0;
-			if (receivedStar)
+
+			for (int i = 0; i < myClipboardComponent.selectorRef.dayToGenerate.numAppointments; i++)
 			{
-				for (int i = 0; i < myClipboardComponent.selectorRef.dayToGenerate.numAppointments; i++)
+				int thisDayStarCount = SaveGame.GetRoundStarCount(currentDayIndex, i);
+				howManyStarsTotalDay += thisDayStarCount;
+				if (thisDayStarCount < 1)
 				{
-					int thisDayStarCount = SaveGame.GetRoundStarCount(currentDayIndex, i);
-					howManyStarsTotalDay += thisDayStarCount;
-					if (thisDayStarCount < 1)
-					{
-						doAllRoundsInDayHaveStars = false;
-					}
+					doAllRoundsInDayHaveStars = false;
 				}
 			}
+
 			// update day's star count
 			SaveGame.SetDayStarCount(currentDayIndex, howManyStarsTotalDay);
 			// if true, unlock next day
-			if (receivedStar && doAllRoundsInDayHaveStars)
+			if (doAllRoundsInDayHaveStars)
+			{
 				SaveGame.SetHasCompletedAllRoundsInDay(currentDayIndex, true);
+			}
 			SaveGame.UpdateGameStats();
 			
 			hasDisplayedLevelEndScreen = true;
