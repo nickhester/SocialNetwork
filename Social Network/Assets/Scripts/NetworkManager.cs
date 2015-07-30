@@ -155,6 +155,13 @@ public class NetworkManager : MonoBehaviour {
         else if (go.transform.name == "restartLevel")
         {
             ReloadStartingState();
+			if (currentLevelInfo.isOneClick)
+			{
+				foreach (Person person in allPeople)
+				{
+					person.DisableOneClickMask();
+				}
+			}
         }
     }
 

@@ -367,18 +367,15 @@ public class Calendar : MonoBehaviour {
 					//reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 446865, Types.SpecialLevel.None));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
-
-				//=============================================== CULLING LEVEL MARK ============================//
-
 				case 23:	// thursday
-                    _newCalDayComponent.numAppointments = 6; //4;
+                    _newCalDayComponent.numAppointments = 4;
 
 					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 225978, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 384622, Types.SpecialLevel.NoLines));
-					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 544317, Types.SpecialLevel.CantTouch));
-					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 125636, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 216198, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 875004, Types.SpecialLevel.FallToRed));
+					//reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 544317, Types.SpecialLevel.CantTouch));
+					//reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 125636, Types.SpecialLevel.None));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 24:	// friday
@@ -389,7 +386,7 @@ public class Calendar : MonoBehaviour {
 					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 828931, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 542392, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 533452, Types.SpecialLevel.FallToRed));
-					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 304916, Types.SpecialLevel.None));
+					//reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 304916, Types.SpecialLevel.None));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 
@@ -409,21 +406,21 @@ public class Calendar : MonoBehaviour {
                     _newCalDayComponent.numAppointments = 4;
 
 					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 370455, Types.SpecialLevel.None));
-					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 492777, Types.SpecialLevel.FallToRed));
 					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 591113, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 482001, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 504389, Types.SpecialLevel.NoLines));
+					//reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 492777, Types.SpecialLevel.FallToRed));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 27:	// wednesday
                     _newCalDayComponent.numAppointments = 5;
 
 					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 643857, Types.SpecialLevel.None));
-					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 300787, Types.SpecialLevel.CantTouch));
 					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 871591, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 534160, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(7, Types.Difficulty.Medium, 103389, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(6, Types.Difficulty.Hard, 143765, Types.SpecialLevel.OneClick));
+					//reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 300787, Types.SpecialLevel.CantTouch));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 28:	// thursday
@@ -432,20 +429,20 @@ public class Calendar : MonoBehaviour {
 					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 128387, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 481739, Types.SpecialLevel.FallToRed));
 					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 36335, Types.SpecialLevel.None));
-					reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 213262, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 210624, Types.SpecialLevel.NoLines));
 					reqList.Add(new ValidLevels(7, Types.Difficulty.Hard, 658771, Types.SpecialLevel.OneClick));
+					//reqList.Add(new ValidLevels(8, Types.Difficulty.Medium, 213262, Types.SpecialLevel.None));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 29:	// friday
                     _newCalDayComponent.numAppointments = 5;
 
 					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 930252, Types.SpecialLevel.None));
-					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 75075, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 349425, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 36163, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 153824, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 225870, Types.SpecialLevel.None));
+					//reqList.Add(new ValidLevels(8, Types.Difficulty.Hard, 75075, Types.SpecialLevel.None));
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 					
@@ -527,33 +524,36 @@ public class Calendar : MonoBehaviour {
 
 	void OnGUI()
 	{
-		// make any day playable whether or not you've "unlocked" it
-		if (!isDebugActive)
-			GUI.color = new Color(0, 0, 0, 0);
-
-		if (GUI.Button(new Rect((Screen.width/2) - 50, Screen.height - 40, 100, 40), "*debug mode*\nall levels open"))
+		if (Debug.isDebugBuild)
 		{
-			debugActivateClickCount++;
+			// make any day playable whether or not you've "unlocked" it
+			if (!isDebugActive)
+				GUI.color = new Color(0, 0, 0, 0);
 
-			// show debug button and allow player to click any level (but not save that the level is unlocked)
-			if (debugActivateClickCount >= 5)
+			if (GUI.Button(new Rect((Screen.width/2) - 50, Screen.height - 40, 100, 40), "*debug mode*\nall levels open"))
 			{
-				GUI.color = new Color(1, 1, 1, 1);
-				isDebugActive = true;
-				foreach (CalendarDay day in dayList)
+				debugActivateClickCount++;
+
+				// show debug button and allow player to click any level (but not save that the level is unlocked)
+				if (debugActivateClickCount >= 5)
 				{
-					day.isPlayable = true;
+					GUI.color = new Color(1, 1, 1, 1);
+					isDebugActive = true;
+					foreach (CalendarDay day in dayList)
+					{
+						day.isPlayable = true;
+					}
 				}
+				// save data that the player has passed every day of a week, one week at a time
+				if (debugActivateClickCount == 6)  { Debug_unlockLevelsOnWeek(1, 1); }
+				if (debugActivateClickCount == 7)  { Debug_unlockLevelsOnWeek(2, 1); }
+				if (debugActivateClickCount == 8)  { Debug_unlockLevelsOnWeek(3, 1); }
+				if (debugActivateClickCount == 9)  { Debug_unlockLevelsOnWeek(4, 1); }
+				if (debugActivateClickCount == 10) { Debug_unlockLevelsOnWeek(5, 1); }
+				if (debugActivateClickCount == 11) { Debug_unlockLevelsOnWeek(6, 1); }
+				// all levels will be 3-stared
+				if (debugActivateClickCount == 12) { Debug_unlockLevelsOnWeek(6, 3); }
 			}
-			// save data that the player has passed every day of a week, one week at a time
-			if (debugActivateClickCount == 6)  { Debug_unlockLevelsOnWeek(1, 1); }
-			if (debugActivateClickCount == 7)  { Debug_unlockLevelsOnWeek(2, 1); }
-			if (debugActivateClickCount == 8)  { Debug_unlockLevelsOnWeek(3, 1); }
-			if (debugActivateClickCount == 9)  { Debug_unlockLevelsOnWeek(4, 1); }
-			if (debugActivateClickCount == 10) { Debug_unlockLevelsOnWeek(5, 1); }
-			if (debugActivateClickCount == 11) { Debug_unlockLevelsOnWeek(6, 1); }
-			// all levels will be 3-stared
-			if (debugActivateClickCount == 12) { Debug_unlockLevelsOnWeek(6, 3); }
 		}
 	}
 

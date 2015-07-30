@@ -154,9 +154,22 @@ public class Person : MonoBehaviour {
 		hasBeenActivatedOnce = true;
         if (myMask_CannotClick == null && GameObject.Find("Clipboard").GetComponent<Clipboard>().GetNextLevelUp().myLevel.isOneClick)
 		{
-			myMask_CannotClick = Instantiate(Mask_CannotClick, transform.position, Quaternion.identity) as GameObject;
-			myMask_CannotClick.transform.parent = transform;
+			EnableOneClickMask();
 		}
+	}
+
+	void EnableOneClickMask()
+	{
+		myMask_CannotClick = Instantiate(Mask_CannotClick, transform.position, Quaternion.identity) as GameObject;
+		myMask_CannotClick.transform.parent = transform;
+	}
+
+	public void DisableOneClickMask()
+	{
+		Destroy(myMask_CannotClick);
+		myMask_CannotClick = null;
+		hasBeenActivatedOnce = false;
+		canBeClicked = true;
 	}
 
 	// default method

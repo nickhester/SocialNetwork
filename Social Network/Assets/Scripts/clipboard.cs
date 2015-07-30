@@ -16,8 +16,8 @@ public class Clipboard : MonoBehaviour
 
 	// appointments
 	[SerializeField] private GameObject appointmentObject;
-	private float appointmentSpacing = 1.75f;
-	private float appointmentTop = 3.5f;
+	private float appointmentSpacing = 2.0f;
+	private float appointmentTop = 3.2f;
 
     private bool isInMotion = false;
 
