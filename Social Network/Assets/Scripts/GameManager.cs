@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour {
 	private float appointmentStartTime;
 	private int numAppointmentsThisSession = 0;
 	private Clipboard currentClipboard;
+	private float currentGameSessionTime = 0.0f;
 
 	void Start()
 	{
@@ -21,9 +22,43 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 	}
 
+	void Update()
+	{
+		currentGameSessionTime += Time.deltaTime;
+	}
+
 	public void Register_Clipboard(Clipboard _myClipboard)
 	{
 		currentClipboard = _myClipboard;
+	}
+
+	public Clipboard GetClipboard()
+	{
+		return currentClipboard;
+	}
+
+	public int GetCurrentDay()
+	{
+		if (currentClipboard == null)
+		{
+			return currentClipboard.GetNextLevelUp().GetMyDayIndex();
+		}
+		else
+		{
+			return -1;
+		}
+	}
+
+	public int GetCurrentAppointment()
+	{
+		if (currentClipboard == null)
+		{
+			return currentClipboard.GetNextLevelUp().GetMyLevelIndex();
+		}
+		else
+		{
+			return -1;
+		}
 	}
 
 	#region events
@@ -43,13 +78,16 @@ public class GameManager : MonoBehaviour {
 	{
 		float appointmentDuration = Time.time - appointmentStartTime;
 
-		MetricsLogger.Instance.LogMetric("AppointmentLength " + _level, appointmentDuration);
+		MetricsLogger.Instance.LogCustomEvent("Appointment", "AppointmentLength", _level, appointmentDuration);
 	}
 
 	#endregion
 
 	void OnApplicationQuit()
 	{
-		MetricsLogger.Instance.LogMetric("AppointmentsPlayedThisSession ", numAppointmentsThisSession);
+		// log num appointments played this session
+		MetricsLogger.Instance.LogCustomEvent("GameSession", "AppointmentsPlayedThisSession", "", numAppointmentsThisSession);
+		// log this session play time
+		MetricsLogger.Instance.LogCustomEvent("GameSession", "PlayTimeThisGameSession", "", currentGameSessionTime);
 	}
 }

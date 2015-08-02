@@ -69,7 +69,7 @@ public class MainMenu : MonoBehaviour {
 			go.GetComponent<Renderer>().material = progressClearedImage;
 			go.name = "progressCleared";
 			SaveGame.DeleteAll();
-			MetricsLogger.Instance.LogMetric("ClearGameProgress", 1);
+			MetricsLogger.Instance.LogCustomEvent("Settings", "ClearGameProgress", "");
 		}
 
         // AUDIO
@@ -79,13 +79,13 @@ public class MainMenu : MonoBehaviour {
             {
                 SaveGame.SetAudioOn_sfx(false);
                 go.GetComponent<Renderer>().material = audio_off;
-				MetricsLogger.Instance.LogMetric("TurnOffSFX", 1);
+				MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOffSFX", "MainMenu");
             }
             else
             {
                 SaveGame.SetAudioOn_sfx(true);
                 go.GetComponent<Renderer>().material = audio_sfx;
-				MetricsLogger.Instance.LogMetric("TurnOnSFX", 1);
+				MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOnSFX", "MainMenu");
             }
         }
         else if (go.name == "button_music")
@@ -95,14 +95,14 @@ public class MainMenu : MonoBehaviour {
                 TurnMusicOff();
                 SaveGame.SetAudioOn_music(false);
                 go.GetComponent<Renderer>().material = audio_off;
-				MetricsLogger.Instance.LogMetric("TurnOffMusic", 1);
+				MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOffMusic", "MainMenu");
             }
             else
             {
                 TurnMusicOn();
                 SaveGame.SetAudioOn_music(true);
                 go.GetComponent<Renderer>().material = audio_music;
-				MetricsLogger.Instance.LogMetric("TurnOnMusic", 1);
+				MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOnMusic", "MainMenu");
             }
         }
         else if (go.name == "button_viewCredits")

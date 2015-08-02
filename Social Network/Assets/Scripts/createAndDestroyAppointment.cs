@@ -22,8 +22,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 	private bool isDisplayingScore = false;
 	private int numActions;
 
-	// clipboard
-    private Clipboard myClipboardComponent;
+	private GameManager gameManager;
 
 	// appointment parameters
 	public int levelsAvailable = 8;
@@ -45,8 +44,9 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 	
 	#region StartAndUpdate
 	
-	void Start () {
-        myClipboardComponent = GameObject.FindGameObjectWithTag("clipboard").GetComponent<Clipboard>();
+	void Start ()
+	{
+		gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 		// add levels available and levels on clipboard (b/c levels available has already been subtracted from)
 		resultsPage = GameObject.Find("results page");
 		resultsPage.GetComponent<Renderer>().enabled = false;
@@ -55,7 +55,8 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		waitToShowResultsAfterFinishedCounter = waitToShowResultsAfterFinished;
 	}
 
-	void Update () {
+	void Update ()
+	{
 
 		if (appointmentComplete) { waitToShowResultsAfterFinishedCounter -= Time.deltaTime; }
 	}
@@ -64,9 +65,9 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 	public void ReturnToCalendar()
 	{
-		Destroy(myClipboardComponent.selectorRef.dayToGenerate.gameObject);
-		Destroy(myClipboardComponent.selectorRef.gameObject);
-		Destroy(myClipboardComponent.gameObject);
+		Destroy(gameManager.GetClipboard().selectorRef.dayToGenerate.gameObject);
+		Destroy(gameManager.GetClipboard().selectorRef.gameObject);
+		Destroy(gameManager.GetClipboard().gameObject);
 		Application.LoadLevel("Scene_Calendar");
 		Destroy (gameObject);
 	}
@@ -79,7 +80,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 	public void RoundEnd(bool levelSuccess, int numActionsTaken)
 	{
-        Appointment _thisLevel = myClipboardComponent.GetNextLevelUp();
+		Appointment _thisLevel = gameManager.GetClipboard().GetNextLevelUp();
 		bool isSpecialLevel = false;
 		if (_thisLevel.myLevel.isCantTouch || _thisLevel.myLevel.isFallToRed || _thisLevel.myLevel.isNoLines || _thisLevel.myLevel.isOneClick)
 		{
@@ -91,20 +92,20 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 		if (levelSuccess)
 		{
-			st.UpdateScore(myClipboardComponent.currentLevelDifficulty, numActionsTaken, isSpecialLevel);
+			st.UpdateScore(gameManager.GetClipboard().currentLevelDifficulty, numActionsTaken, isSpecialLevel);
 			numActions = numActionsTaken;
 
-			string levelNumberList = "Level:" + _thisLevel.GetMyDayIndex() + "-" + _thisLevel.GetMyLevelIndex();
+			string levelNumberList = _thisLevel.GetMyDayIndex() + "-" + _thisLevel.GetMyLevelIndex();
 			// log event to game manager
 			GameObject.FindWithTag("GameManager").GetComponent<GameManager>().Event_AppointmentEnd(levelNumberList);
 			// log metrics
-			MetricsLogger.Instance.LogProgressionEvent("level", "Day " + _thisLevel.GetMyDayIndex(), "Appointment " + _thisLevel.GetMyLevelIndex(), st.GetScore());
-			MetricsLogger.Instance.LogMetric("NumActions " + levelNumberList, numActionsTaken);
-			MetricsLogger.Instance.LogMetric("NumStars " + levelNumberList, st.GetScore());
+			MetricsLogger.Instance.LogProgressionEvent("Appointment", levelNumberList, "", st.GetScore());
+			MetricsLogger.Instance.LogCustomEvent("Appointment", "NumActions", levelNumberList, numActionsTaken);
+			MetricsLogger.Instance.LogCustomEvent("Appointment", "NumStars", levelNumberList, st.GetScore());
 		}
 
 		float waitTimeForClipboard = (levelSuccess ? 1.0f : 0.0f);
-		myClipboardComponent.Invoke("BringUpClipboard", waitTimeForClipboard);
+		gameManager.GetClipboard().Invoke("BringUpClipboard", waitTimeForClipboard);
 		Invoke ("DestroyOldLevel", waitTimeForClipboard);
 
 		// display level end screen, etc.
@@ -117,9 +118,9 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
             }
             
 			appointmentComplete = true;
-            myClipboardComponent.ShowClipboardAppointments(false);
+			gameManager.GetClipboard().ShowClipboardAppointments(false);
 
-			int currentDayIndex = myClipboardComponent.selectorRef.dayToGenerate.dayIndex;
+			int currentDayIndex = gameManager.GetClipboard().selectorRef.dayToGenerate.dayIndex;
 
 			if (st.GetScore() > SaveGame.GetRoundStarCount(currentDayIndex, _thisLevel.levelIndex))
 			{
@@ -130,7 +131,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 			bool doAllRoundsInDayHaveStars = true;
 			int howManyStarsTotalDay = 0;
 
-			for (int i = 0; i < myClipboardComponent.selectorRef.dayToGenerate.numAppointments; i++)
+			for (int i = 0; i < gameManager.GetClipboard().selectorRef.dayToGenerate.numAppointments; i++)
 			{
 				int thisDayStarCount = SaveGame.GetRoundStarCount(currentDayIndex, i);
 				howManyStarsTotalDay += thisDayStarCount;
@@ -162,12 +163,12 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		// if this isn't a level from the clipboard, it needs to be set as the clipboard's nextLevelUp b/c that's where the NetworkMgr looks for it
 		if (!isFromAppointment)
 		{
-            myClipboardComponent.GetNextLevelUp().myLevel = _aSpecificLevel;
+			gameManager.GetClipboard().GetNextLevelUp().myLevel = _aSpecificLevel;
 		}
         Application.LoadLevelAdditive("Scene_Appointment");
-        if (myClipboardComponent.GetIsClipboardUp())
+		if (gameManager.GetClipboard().GetIsClipboardUp())
 		{
-			myClipboardComponent.HideClipboard();
+			gameManager.GetClipboard().HideClipboard();
 		}
 	}
 
@@ -187,7 +188,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 	public void GetStartFromClipboard()
 	{
-        Appointment _nextAppointment = myClipboardComponent.GetNextLevelUp();
+		Appointment _nextAppointment = gameManager.GetClipboard().GetNextLevelUp();
 
         ValidLevels _incomingLevel = _nextAppointment.myLevel;
 		difficultySelection = _incomingLevel.difficulty;

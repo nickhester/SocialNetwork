@@ -162,8 +162,8 @@ public class NetworkManager : MonoBehaviour {
 					person.DisableOneClickMask();
 				}
 			}
-			Clipboard cb = GameObject.FindWithTag("clipboard").GetComponent<Clipboard>();
-			MetricsLogger.Instance.LogMetric("RestartUsed Level:" + cb.GetNextLevelUp().GetMyDayIndex() + "-" + cb.GetNextLevelUp().GetMyLevelIndex(), 1);
+			GameManager gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+			MetricsLogger.Instance.LogCustomEvent("Appointment", "RestartUsed", gm.GetCurrentDay() + "-" + gm.GetCurrentAppointment());
         }
     }
 

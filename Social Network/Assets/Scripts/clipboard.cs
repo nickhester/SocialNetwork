@@ -122,7 +122,7 @@ public class Clipboard : MonoBehaviour
                 // restart the level and set level as not winnable/trackable
                 createAndDestroyLevelRef.RestartLevel(true);
                 GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(100, true);
-				MetricsLogger.Instance.LogMetric("HelpMeUsed Level:" + GetNextLevelUp().GetMyDayIndex() + "-" + GetNextLevelUp().GetMyLevelIndex(), 1);
+				MetricsLogger.Instance.LogCustomEvent("Appointment", "HelpMeUsed", GetNextLevelUp().GetMyDayIndex() + "-" + GetNextLevelUp().GetMyLevelIndex());
                 // wait for callback
             }
         }
@@ -136,6 +136,8 @@ public class Clipboard : MonoBehaviour
 	#region StartAndUpdate
 
 	void Start () {
+		GameObject.FindWithTag("GameManager").GetComponent<GameManager>().Register_Clipboard(this);
+
 		offscreenPosition = new Vector3(transform.position.x, transform.position.y - 13, transform.position.z);
 		originalPosition = transform.position;
 
