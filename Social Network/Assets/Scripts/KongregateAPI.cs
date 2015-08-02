@@ -4,7 +4,7 @@ using System.Collections;
 public static class KongregateAPI {
 
 	// set this to "true" manually if using Kongregate API
-	public static bool isUsingKongregate = true;
+	public static bool isUsingKongregate = false;
 
 	public static bool isKongregateLoaded = false;
 	public static int userId = 0;

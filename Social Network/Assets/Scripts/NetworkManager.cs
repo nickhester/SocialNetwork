@@ -162,6 +162,8 @@ public class NetworkManager : MonoBehaviour {
 					person.DisableOneClickMask();
 				}
 			}
+			Clipboard cb = GameObject.FindWithTag("clipboard").GetComponent<Clipboard>();
+			MetricsLogger.Instance.LogMetric("RestartUsed Level:" + cb.GetNextLevelUp().GetMyDayIndex() + "-" + cb.GetNextLevelUp().GetMyLevelIndex(), 1);
         }
     }
 
@@ -226,6 +228,7 @@ public class NetworkManager : MonoBehaviour {
 
 	public void ReloadStartingState()
 	{
+		GameObject.FindWithTag("GameManager").GetComponent<GameManager>().Event_AppointmentReset();
 		foreach (Person _ppl in GetAllPeople())
 		{
 			_ppl.m_Mood = Mood.Neutral;

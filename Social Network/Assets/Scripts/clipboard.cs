@@ -81,6 +81,9 @@ public class Clipboard : MonoBehaviour
         {
             if (go.tag == "appointment")			// if clicking an appointment
             {
+				// log event to game manager
+				GameObject.FindWithTag("GameManager").GetComponent<GameManager>().Event_AppointmentStart();
+
                 SetNextLevelUp(go.GetComponent<Appointment>());
                 createAndDestroyLevelRef.GetStartFromClipboard();
                 currentLevelDifficulty = GetNextLevelUp().myLevel.difficulty;			// store level difficulty for scoring
@@ -119,6 +122,7 @@ public class Clipboard : MonoBehaviour
                 // restart the level and set level as not winnable/trackable
                 createAndDestroyLevelRef.RestartLevel(true);
                 GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(100, true);
+				MetricsLogger.Instance.LogMetric("HelpMeUsed Level:" + GetNextLevelUp().GetMyDayIndex() + "-" + GetNextLevelUp().GetMyLevelIndex(), 1);
                 // wait for callback
             }
         }

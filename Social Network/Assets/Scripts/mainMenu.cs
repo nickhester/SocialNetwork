@@ -47,11 +47,30 @@ public class MainMenu : MonoBehaviour {
 
     void OnClick(GameObject go)
     {
-        if (go.name == "button_Start") { SplitBackground(); }
-        else if (go.name == "button_options") { isLerpingTowardOptions = true; }
-        else if (go.name == "button_back") { isLerpingTowardOptions = false; }
-        else if (go.name == "button_clearProgress") { go.GetComponent<Renderer>().material = confirmClearProgressImage; go.name = "button_clearProgressConfirm"; }
-        else if (go.name == "button_clearProgressConfirm") { go.GetComponent<Renderer>().material = progressClearedImage; go.name = "progressCleared"; SaveGame.DeleteAll(); }
+        if (go.name == "button_Start")
+		{
+			SplitBackground();
+		}
+        else if (go.name == "button_options")
+		{
+			isLerpingTowardOptions = true;
+		}
+        else if (go.name == "button_back")
+		{
+			isLerpingTowardOptions = false;
+		}
+        else if (go.name == "button_clearProgress")
+		{
+			go.GetComponent<Renderer>().material = confirmClearProgressImage;
+			go.name = "button_clearProgressConfirm";
+		}
+        else if (go.name == "button_clearProgressConfirm")
+		{
+			go.GetComponent<Renderer>().material = progressClearedImage;
+			go.name = "progressCleared";
+			SaveGame.DeleteAll();
+			MetricsLogger.Instance.LogMetric("ClearGameProgress", 1);
+		}
 
         // AUDIO
         else if (go.name == "button_sfx")
@@ -60,11 +79,13 @@ public class MainMenu : MonoBehaviour {
             {
                 SaveGame.SetAudioOn_sfx(false);
                 go.GetComponent<Renderer>().material = audio_off;
+				MetricsLogger.Instance.LogMetric("TurnOffSFX", 1);
             }
             else
             {
                 SaveGame.SetAudioOn_sfx(true);
                 go.GetComponent<Renderer>().material = audio_sfx;
+				MetricsLogger.Instance.LogMetric("TurnOnSFX", 1);
             }
         }
         else if (go.name == "button_music")
@@ -74,12 +95,14 @@ public class MainMenu : MonoBehaviour {
                 TurnMusicOff();
                 SaveGame.SetAudioOn_music(false);
                 go.GetComponent<Renderer>().material = audio_off;
+				MetricsLogger.Instance.LogMetric("TurnOffMusic", 1);
             }
             else
             {
                 TurnMusicOn();
                 SaveGame.SetAudioOn_music(true);
                 go.GetComponent<Renderer>().material = audio_music;
+				MetricsLogger.Instance.LogMetric("TurnOnMusic", 1);
             }
         }
         else if (go.name == "button_viewCredits")

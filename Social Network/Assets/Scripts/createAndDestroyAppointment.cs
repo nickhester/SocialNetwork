@@ -93,6 +93,14 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		{
 			st.UpdateScore(myClipboardComponent.currentLevelDifficulty, numActionsTaken, isSpecialLevel);
 			numActions = numActionsTaken;
+
+			string levelNumberList = "Level:" + _thisLevel.GetMyDayIndex() + "-" + _thisLevel.GetMyLevelIndex();
+			// log event to game manager
+			GameObject.FindWithTag("GameManager").GetComponent<GameManager>().Event_AppointmentEnd(levelNumberList);
+			// log metrics
+			MetricsLogger.Instance.LogProgressionEvent("level", "Day " + _thisLevel.GetMyDayIndex(), "Appointment " + _thisLevel.GetMyLevelIndex(), st.GetScore());
+			MetricsLogger.Instance.LogMetric("NumActions " + levelNumberList, numActionsTaken);
+			MetricsLogger.Instance.LogMetric("NumStars " + levelNumberList, st.GetScore());
 		}
 
 		float waitTimeForClipboard = (levelSuccess ? 1.0f : 0.0f);
@@ -113,9 +121,9 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 			int currentDayIndex = myClipboardComponent.selectorRef.dayToGenerate.dayIndex;
 
-			if (st.score > SaveGame.GetRoundStarCount(currentDayIndex, _thisLevel.levelIndex))
+			if (st.GetScore() > SaveGame.GetRoundStarCount(currentDayIndex, _thisLevel.levelIndex))
 			{
-				SaveGame.SetRoundStarCount(currentDayIndex, _thisLevel.levelIndex, st.score);
+				SaveGame.SetRoundStarCount(currentDayIndex, _thisLevel.levelIndex, st.GetScore());
 			}
 
 			// Check to see if all rounds in day received a star, and also tally stars for the day
@@ -273,7 +281,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 			ScoreTrackerOneRound st = GetComponent<ScoreTrackerOneRound>();
 			int resultActions = numActions;
-			int resultStars = st.score;
+			int resultStars = st.GetScore();
 
 			if (resultStars == 0)
 				resultsNotes.GetComponent<Renderer>().material = notesForStars[0];

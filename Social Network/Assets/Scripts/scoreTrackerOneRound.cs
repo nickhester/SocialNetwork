@@ -5,7 +5,7 @@ using Types;
 
 public class ScoreTrackerOneRound : MonoBehaviour {
 
-	public int score;
+	private int score;
 	
 
 	public void Reset ()
@@ -23,6 +23,10 @@ public class ScoreTrackerOneRound : MonoBehaviour {
 
 	}
 
+	public int GetScore()
+	{
+		return score;
+	}
 
 	public void UpdateScore(Difficulty diff, int numActionsTaken, bool isSpecial)
 	{

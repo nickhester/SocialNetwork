@@ -46,8 +46,16 @@ public class AudioToggle : MonoBehaviour {
             GameObject networkManagerObject = GameObject.FindGameObjectWithTag("networkManager");
             if (isAudioOn)
             {
-                if (audioType == typeOfAudio.sfx) { SaveGame.SetAudioOn_sfx(false); }
-                else { SaveGame.SetAudioOn_music(false); }
+                if (audioType == typeOfAudio.sfx)
+				{
+					SaveGame.SetAudioOn_sfx(false);
+					MetricsLogger.Instance.LogMetric("TurnOffSFX", 1);
+				}
+                else
+				{
+					SaveGame.SetAudioOn_music(false);
+					MetricsLogger.Instance.LogMetric("TurnOffMusic", 1);
+				}
 
                 gameObject.GetComponent<Renderer>().material = matOff;
                 isAudioOn = false;
@@ -60,8 +68,16 @@ public class AudioToggle : MonoBehaviour {
             }
             else
             {
-                if (audioType == typeOfAudio.sfx) { SaveGame.SetAudioOn_sfx(true); }
-                else { SaveGame.SetAudioOn_music(true); }
+                if (audioType == typeOfAudio.sfx)
+				{
+					SaveGame.SetAudioOn_sfx(true);
+					MetricsLogger.Instance.LogMetric("TurnOnSFX", 1);
+				}
+                else
+				{
+					SaveGame.SetAudioOn_music(true);
+					MetricsLogger.Instance.LogMetric("TurnOnMusic", 1);
+				}
                 gameObject.GetComponent<Renderer>().material = matOn;
                 isAudioOn = true;
 
