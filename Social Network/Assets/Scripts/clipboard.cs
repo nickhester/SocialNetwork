@@ -47,7 +47,8 @@ public class Clipboard : MonoBehaviour
     private Vector3 showMeOutPosition;
     private Vector3 showMeInPosition;
     private float distanceToPushShowMeBanner = 3.0f;
-	
+
+	private GameManager gameManager;
 
 	[SerializeField] private GameObject text;
     private bool isFirstCreation = true;
@@ -81,9 +82,6 @@ public class Clipboard : MonoBehaviour
         {
             if (go.tag == "appointment")			// if clicking an appointment
             {
-				// log event to game manager
-				GameObject.FindWithTag("GameManager").GetComponent<GameManager>().Event_AppointmentStart();
-
                 SetNextLevelUp(go.GetComponent<Appointment>());
                 createAndDestroyLevelRef.GetStartFromClipboard();
                 currentLevelDifficulty = GetNextLevelUp().myLevel.difficulty;			// store level difficulty for scoring
@@ -96,6 +94,9 @@ public class Clipboard : MonoBehaviour
                 {
                     StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeInPosition, showMeOutPosition)));
                 }
+
+				// log event to game manager
+				gameManager.Event_AppointmentStart();
             }
             else if (go.name == "BackButton")	// if clicking the "back" button, go back to the calendar
             {
@@ -122,7 +123,7 @@ public class Clipboard : MonoBehaviour
                 // restart the level and set level as not winnable/trackable
                 createAndDestroyLevelRef.RestartLevel(true);
                 GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(100, true);
-				MetricsLogger.Instance.LogCustomEvent("Appointment", "HelpMeUsed", GetNextLevelUp().GetMyDayIndex() + "-" + GetNextLevelUp().GetMyLevelIndex());
+				MetricsLogger.Instance.LogCustomEvent("Appointment", "HelpMeUsed", gameManager.FormatDayAndLevel());
                 // wait for callback
             }
         }
@@ -136,7 +137,8 @@ public class Clipboard : MonoBehaviour
 	#region StartAndUpdate
 
 	void Start () {
-		GameObject.FindWithTag("GameManager").GetComponent<GameManager>().Register_Clipboard(this);
+		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+		gameManager.Register_Clipboard(this);
 
 		offscreenPosition = new Vector3(transform.position.x, transform.position.y - 13, transform.position.z);
 		originalPosition = transform.position;

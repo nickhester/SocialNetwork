@@ -50,12 +50,12 @@ public class AudioToggle : MonoBehaviour {
                 if (audioType == typeOfAudio.sfx)
 				{
 					SaveGame.SetAudioOn_sfx(false);
-					MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOffSFX", gm.GetCurrentDay() + "-" + gm.GetCurrentAppointment());
+					MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOffSFX", gm.FormatDayAndLevel());
 				}
                 else
 				{
 					SaveGame.SetAudioOn_music(false);
-					MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOffMusic", gm.GetCurrentDay() + "-" + gm.GetCurrentAppointment());
+					MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOffMusic", gm.FormatDayAndLevel());
 				}
 
                 gameObject.GetComponent<Renderer>().material = matOff;
@@ -72,12 +72,12 @@ public class AudioToggle : MonoBehaviour {
                 if (audioType == typeOfAudio.sfx)
 				{
 					SaveGame.SetAudioOn_sfx(true);
-					MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOnSFX", gm.GetCurrentDay() + "-" + gm.GetCurrentAppointment());
+					MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOnSFX", gm.FormatDayAndLevel());
 				}
                 else
 				{
 					SaveGame.SetAudioOn_music(true);
-					MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOnMusic", gm.GetCurrentDay() + "-" + gm.GetCurrentAppointment());
+					MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOnMusic", gm.FormatDayAndLevel());
 				}
                 gameObject.GetComponent<Renderer>().material = matOn;
                 isAudioOn = true;

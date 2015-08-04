@@ -163,7 +163,7 @@ public class NetworkManager : MonoBehaviour {
 				}
 			}
 			GameManager gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-			MetricsLogger.Instance.LogCustomEvent("Appointment", "RestartUsed", gm.GetCurrentDay() + "-" + gm.GetCurrentAppointment());
+			MetricsLogger.Instance.LogCustomEvent("Appointment", "RestartUsed", gm.FormatDayAndLevel());
         }
     }
 

@@ -20,6 +20,22 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 		DontDestroyOnLoad(gameObject);
+
+		RestartSessionMetrics();
+	}
+
+	void RestartSessionMetrics()
+	{
+		numAppointmentsThisSession = 0;
+		currentGameSessionTime = 0.0f;
+	}
+
+	void SendSessionMetrics()
+	{
+		// log num appointments played this session
+		MetricsLogger.Instance.LogCustomEvent("GameSession", "AppointmentsPlayedThisSession", "", numAppointmentsThisSession);
+		// log this session play time
+		MetricsLogger.Instance.LogCustomEvent("GameSession", "PlayTimeThisGameSession", "", currentGameSessionTime);
 	}
 
 	void Update()
@@ -39,7 +55,7 @@ public class GameManager : MonoBehaviour {
 
 	public int GetCurrentDay()
 	{
-		if (currentClipboard == null)
+		if (currentClipboard != null)
 		{
 			return currentClipboard.GetNextLevelUp().GetMyDayIndex();
 		}
@@ -51,7 +67,7 @@ public class GameManager : MonoBehaviour {
 
 	public int GetCurrentAppointment()
 	{
-		if (currentClipboard == null)
+		if (currentClipboard != null)
 		{
 			return currentClipboard.GetNextLevelUp().GetMyLevelIndex();
 		}
@@ -65,6 +81,7 @@ public class GameManager : MonoBehaviour {
 
 	public void Event_AppointmentStart()
 	{
+		MetricsLogger.Instance.LogProgressionEvent_Start(FormatDayAndLevel());
 		appointmentStartTime = Time.time;
 		numAppointmentsThisSession++;
 	}
@@ -74,20 +91,30 @@ public class GameManager : MonoBehaviour {
 		appointmentStartTime = Time.time;
 	}
 
-	public void Event_AppointmentEnd(string _level)
+	public void Event_AppointmentEnd()
 	{
 		float appointmentDuration = Time.time - appointmentStartTime;
 
-		MetricsLogger.Instance.LogCustomEvent("Appointment", "AppointmentLength", _level, appointmentDuration);
+		MetricsLogger.Instance.LogCustomEvent("Appointment", "AppointmentLength", FormatDayAndLevel(), appointmentDuration);
+		MetricsLogger.Instance.LogProgressionEvent_Complete(FormatDayAndLevel());
 	}
 
 	#endregion
 
 	void OnApplicationQuit()
 	{
-		// log num appointments played this session
-		MetricsLogger.Instance.LogCustomEvent("GameSession", "AppointmentsPlayedThisSession", "", numAppointmentsThisSession);
-		// log this session play time
-		MetricsLogger.Instance.LogCustomEvent("GameSession", "PlayTimeThisGameSession", "", currentGameSessionTime);
+		
+	}
+
+	public string FormatDayAndLevel()
+	{
+		if (GetClipboard() == null)
+		{
+			return "-1--1";
+		}
+		else
+		{
+			return GetClipboard().GetNextLevelUp().GetMyDayIndex().ToString("D2") + "-" + GetClipboard().GetNextLevelUp().GetMyLevelIndex().ToString("D2");
+		}
 	}
 }

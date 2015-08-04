@@ -36,8 +36,13 @@ public class MetricsLogger : MonoBehaviour {
 		GameAnalytics.NewBusinessEventGooglePlay(_currency, _amount, _itemType, _itemId, _cartType, _receipt, _signature);
 	}
 
-	public void LogProgressionEvent(string _01, string _02, string _03, int score)
+	public void LogProgressionEvent_Complete(string _01)
 	{
-		GameAnalytics.NewProgressionEvent(GA_Progression.GAProgressionStatus.GAProgressionStatusComplete, _01, _02, _03, score);
+		GameAnalytics.NewProgressionEvent(GA_Progression.GAProgressionStatus.GAProgressionStatusComplete, _01);
+	}
+
+	public void LogProgressionEvent_Start(string _01)
+	{
+		GameAnalytics.NewProgressionEvent(GA_Progression.GAProgressionStatus.GAProgressionStatusStart, _01);
 	}
 }
