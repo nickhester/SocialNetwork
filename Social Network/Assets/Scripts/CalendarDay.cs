@@ -22,36 +22,35 @@ public class CalendarDay : MonoBehaviour {
 			else if (value%5 == 4) { dayOfTheWeek = DayOfTheWeek.Friday; }
 		}
 	}
-	public int numStars;
-	public DayOfTheWeek dayOfTheWeek;
+	private int numStars;
+	private DayOfTheWeek dayOfTheWeek;
 	private bool hasGottenAllStars = false;
 	public bool hasPassedAllRounds = false;
 
 	// difficulty settings to pass to day creator
-	public int percentVeryEasy = 0;
-	public int percentEasy = 0;
-	public int percentMedium = 0;
-	public int percentHard = 0;
+	private int percentVeryEasy = 0;
+	private int percentEasy = 0;
+	private int percentMedium = 0;
+	private int percentHard = 0;
 	public int numAppointments;
 	//public int timeLimit;
 	public bool isPlayable = false;
 	public List<ValidLevels> specificLevelsRequested = new List<ValidLevels>();
 
     // special day attributes
-    public int special_FallToRed = 0;          // people randomly fall back to red
-	public int special_OneClick = 0;           // can only click each person once
-	public int special_CantTouch = 0;          // a certain person you can't click on
-	public int special_NoLines = 0;            // lines do not display
+    private int special_FallToRed = 0;          // people randomly fall back to red
+	private int special_OneClick = 0;           // can only click each person once
+	private int special_CantTouch = 0;          // a certain person you can't click on
+	private int special_NoLines = 0;            // lines do not display
 	public GameObject specialMask_FallToRed;
 	public GameObject specialMask_OneClick;
 	public GameObject specialMask_CantTouch;
 	public GameObject specialMask_NoLines;
 
 	// requirements for this level
-	public int pointsRequiredForOneStar = 0;
-	public int pointsRequiredForTwoStars = 0;
-	public int pointsRequiredForThreeStars = 0;
-	public int topScore = 0;
+	private int pointsRequiredForOneStar = 0;
+	private int pointsRequiredForTwoStars = 0;
+	private int pointsRequiredForThreeStars = 0;
 
 	// overlays
 	public GameObject stars_1;
@@ -182,5 +181,20 @@ public class CalendarDay : MonoBehaviour {
 	public void SetRequirementsForStars(int _oneStar, int _twoStars, int _threeStars)
 	{
 		pointsRequiredForOneStar = _oneStar; pointsRequiredForTwoStars = _twoStars; pointsRequiredForThreeStars = _threeStars;
+	}
+
+	public int GetNumStars()
+	{
+		return numStars;
+	}
+
+	public void SetNumStars(int _stars)
+	{
+		numStars = _stars;
+	}
+
+	public DayOfTheWeek GetDayOfTheWeek()
+	{
+		return dayOfTheWeek;
 	}
 }

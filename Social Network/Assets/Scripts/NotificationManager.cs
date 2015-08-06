@@ -623,7 +623,26 @@ public class NotificationManager : MonoBehaviour
                 EndNotification();
             }
         }
-        else if (_setIndex == 100)        // Show Me =====================================================
+		else if (_setIndex == 19)			// First time completing all levels in day, back at clipboard
+		{
+			if (_indexWithinSet == 0)
+			{
+				m_notification.DisplayNotification(
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_completeFirstDay"), "restart level 2", Vector2.zero, true, true);
+			}
+			else if (_indexWithinSet == 1)
+			{
+				m_finger.SendFinger(GameObject.Find("BackButton"));
+				RequestExclusiveControl();
+				AllowActions(new List<string> { "BackButton" }, new List<string>(), new List<string>());
+			}
+			else
+			{
+				SaveGame.SetSeenInstruction(_setIndex, true);
+				EndNotification();
+			}
+		}
+        else if (_setIndex == 100)			// Show Me =====================================================
         {
             StartCoroutine(DisplayShowMeSeries());
         }

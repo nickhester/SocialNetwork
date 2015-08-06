@@ -42,13 +42,15 @@ public class Clipboard : MonoBehaviour
     private Vector3 currentLerpTarget;
 
     [SerializeField] private GameObject showMeBanner;
-	private int showMeBannerScreenPos_X = 40;
-	private int showMeBannerScreenPos_Y = -30;
+	private float showMeBannerScreenPos_X = 0.084f;
+	private float showMeBannerScreenPos_Y = 0.95f;
     private Vector3 showMeOutPosition;
     private Vector3 showMeInPosition;
     private float distanceToPushShowMeBanner = 3.0f;
+	private int daysToShowBanner = 5;
 
 	private GameManager gameManager;
+	private GameObject restartFromResultsScreenButton;
 
 	[SerializeField] private GameObject text;
     private bool isFirstCreation = true;
@@ -90,7 +92,7 @@ public class Clipboard : MonoBehaviour
                 // bring up the ShowMe banner if first week
                 // ShowMe stuff
                 Appointment _currentAppointment = GetNextLevelUp();
-                if (_currentAppointment.GetMyDayIndex() < 5 && !(_currentAppointment.GetMyDayIndex() == 0 && _currentAppointment.GetMyLevelIndex() == 0))
+				if (_currentAppointment.GetMyDayIndex() < daysToShowBanner && !(_currentAppointment.GetMyDayIndex() == 0 && _currentAppointment.GetMyLevelIndex() == 0))
                 {
                     StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeInPosition, showMeOutPosition)));
                 }
@@ -111,6 +113,20 @@ public class Clipboard : MonoBehaviour
                     Invoke("SwapClipboardPages", timeToSwap);
                 }
             }
+			else if (go.name == "RestartFromResultsScreenButton")	// if clicking the restart button from the clipboard, immediately restart previous level
+			{
+				HideClipboard();
+				Invoke("CloseResultsPage", timeToSwap);
+
+				// the following includes some copy/paste from the previous appointment start section. I'm not proud of that.
+				createAndDestroyLevelRef.GetStartFromClipboard();
+				Appointment _currentAppointment = GetNextLevelUp();
+				if (_currentAppointment.GetMyDayIndex() < daysToShowBanner)
+				{
+					StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeInPosition, showMeOutPosition)));
+				}
+				gameManager.Event_AppointmentStart();
+			}
         }
         else
         {
@@ -161,7 +177,7 @@ public class Clipboard : MonoBehaviour
 		badgeStar.transform.position = new Vector3(badgeStar.transform.position.x, badgeStar.transform.position.y + distanceToPushBadges, badgeStar.transform.position.z);
 
         // place showMe banner
-		Vector3 showMeScreenEdge = Camera.main.ScreenToWorldPoint(new Vector3(showMeBannerScreenPos_X, Screen.height + showMeBannerScreenPos_Y));
+		Vector3 showMeScreenEdge = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * showMeBannerScreenPos_X, Screen.height * showMeBannerScreenPos_Y));
         showMeOutPosition = new Vector3(
 			showMeScreenEdge.x,
 			showMeScreenEdge.y,
@@ -184,6 +200,9 @@ public class Clipboard : MonoBehaviour
 		dayLabelText.transform.parent = gameObject.transform;
 		TextMesh myLabelTextComponent = dayLabelText.GetComponent<TextMesh>();
 		myLabelTextComponent.text = "Day " + (selectorRef.dayToGenerate.dayIndex_internal + 1);
+
+		restartFromResultsScreenButton = GameObject.Find("RestartFromResultsScreenButton");
+		ShowRestartButton(false);
 
         isFirstCreation = false;
 	}
@@ -237,15 +256,26 @@ public class Clipboard : MonoBehaviour
 
     void SwapClipboardPages()
     {
-        createAndDestroyLevelRef.HideResultsPage();
+		CloseResultsPage();
         BringUpClipboard();
-        ShowClipboardAppointments(true);
         OnReturnToClipboard();
     }
 
+	void CloseResultsPage()
+	{
+		createAndDestroyLevelRef.HideResultsPage();
+		ShowClipboardAppointments(true);
+		ShowRestartButton(false);
+	}
+
     void OnReturnToClipboard()
     {
-        GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(4, false);
+		GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(4, false);
+
+		if (SaveGame.GetHasCompletedAllRoundsInDay(0))
+		{
+			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(19, false);
+		}
     }
 
 	void CreateAllAppointments()
@@ -365,8 +395,6 @@ public class Clipboard : MonoBehaviour
         isHiding = false;
         StartCoroutine(SlideObject(new LerpPackage(gameObject, transform.position, currentLerpTarget)));
         StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeOutPosition, showMeInPosition)));
-
-
     }
 
     IEnumerator SlideObject(LerpPackage _input)
@@ -400,6 +428,8 @@ public class Clipboard : MonoBehaviour
                 progress += Time.deltaTime * lerpSpeed;
                 yield return null;
             }
+			// make sure it makes it all the way down
+			_input.go.transform.localPosition = targetPos;
         }
         
         if (_isMovingClipboard)
@@ -417,4 +447,17 @@ public class Clipboard : MonoBehaviour
     {
         return !isHiding;
     }
+
+	public void ShowRestartButton(bool _show)
+	{
+		
+		if (_show)
+		{
+			restartFromResultsScreenButton.SetActive(true);
+		}
+		else
+		{
+			restartFromResultsScreenButton.SetActive(false);
+		}
+	}
 }

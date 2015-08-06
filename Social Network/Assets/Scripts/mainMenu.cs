@@ -126,11 +126,11 @@ public class MainMenu : MonoBehaviour {
         mainTitle.transform.position = new Vector3(mainTitleOriginalPosition.x, mainTitleOriginalPosition.y + mainTitleDistanceStartUp, mainTitleOriginalPosition.z);
 
 		// display software version number
-		GameObject versionTextObject = Instantiate(text, new Vector3(3.5f, -26.4f, -1.0f), Quaternion.identity) as GameObject;
+		GameObject versionTextObject = Instantiate(text, new Vector3(2.5f, -26.4f, -1.0f), Quaternion.identity) as GameObject;
 		versionTextObject.transform.localScale = versionTextObject.transform.localScale * 0.04f;
 		versionTextObject.transform.parent = gameObject.transform;
 		TextMesh myTextComponent = versionTextObject.GetComponent<TextMesh>();
-		myTextComponent.text = "Version 2.01";
+		myTextComponent.text = "Version 2.02";
 
 		// make sure audio icons check are accurately on or off
 		if (SaveGame.GetAudioOn_music() == false)

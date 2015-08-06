@@ -118,6 +118,12 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 			appointmentComplete = true;
 			gameManager.GetClipboard().ShowClipboardAppointments(false);
 
+			// show "restart" button if earned less than 3 stars
+			if (st.GetScore() < 3)
+			{
+				gameManager.GetClipboard().ShowRestartButton(true);
+			}
+
 			int currentDayIndex = gameManager.GetClipboard().selectorRef.dayToGenerate.dayIndex;
 
 			if (st.GetScore() > SaveGame.GetRoundStarCount(currentDayIndex, _thisLevel.levelIndex))

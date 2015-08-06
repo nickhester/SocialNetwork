@@ -14,8 +14,8 @@ public class Calendar : MonoBehaviour {
 	private int debugActivateClickCount = 0;
 	private int furthestDayUnlocked = 0;
 
-	private int audioButtonScreenPos_X = -17;
-	private int audioButtonScreenPos_Y = -17;
+	private float audioButtonScreenPos_X = 0.95f;
+	private float audioButtonScreenPos_Y = 0.97f;
 	private float audioIconSpacing = 0.81f;
 
     void Awake()
@@ -52,7 +52,7 @@ public class Calendar : MonoBehaviour {
 	void Start () {
 
 		// position audio icons on edge of screen
-		Vector3 audioIconPositions = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width + audioButtonScreenPos_X, Screen.height + audioButtonScreenPos_Y));
+		Vector3 audioIconPositions = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * audioButtonScreenPos_X, Screen.height * audioButtonScreenPos_Y));
 		GameObject iconAudio = GameObject.Find("audioToggle_music");
 		GameObject iconSfx = GameObject.Find("audioToggle_sfx");
 		iconAudio.transform.position = new Vector3(audioIconPositions.x - audioIconSpacing, audioIconPositions.y, iconAudio.transform.position.z);
@@ -76,11 +76,17 @@ public class Calendar : MonoBehaviour {
 			if (SaveGame.GetDayStarCount(i) == 0)
 			{  }
 			else if (SaveGame.GetDayStarCount(i) == 1)
-			{ _newCalDayComponent.numStars = 1; }
+			{
+				_newCalDayComponent.SetNumStars(1);
+			}
 			else if (SaveGame.GetDayStarCount(i) == 2)
-			{ _newCalDayComponent.numStars = 2; }
+			{
+				_newCalDayComponent.SetNumStars(2);
+			}
 			else if (SaveGame.GetDayStarCount(i) == 3)
-			{ _newCalDayComponent.numStars = 3; }
+			{
+				_newCalDayComponent.SetNumStars(3);
+			}
 
 			if (i == 0 || SaveGame.GetHasCompletedAllRoundsInDay(i - 1))
 			{
@@ -453,7 +459,7 @@ public class Calendar : MonoBehaviour {
 					break;
 			}
 
-			_newCalDay.name = (_newCalDayComponent.dayIndex + 1).ToString() + " " + _newCalDayComponent.dayOfTheWeek.ToString();
+			_newCalDay.name = (_newCalDayComponent.dayIndex + 1).ToString() + " " + _newCalDayComponent.GetDayOfTheWeek().ToString();
 			_newCalDayComponent.AddStatusOverlay();
 		}
 
