@@ -52,6 +52,8 @@ public class NetworkManager : MonoBehaviour {
 
 	void Start ()
 	{
+		GameObject.FindGameObjectWithTag("persistentObject").GetComponent<CreateAndDestroyAppointment>().OnAppointmentStarted();
+
         validSeedList = Resources.Load("validSeedList") as TextAsset;
         usedSeed = SeedTheLevel();
         

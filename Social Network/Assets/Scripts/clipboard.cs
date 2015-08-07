@@ -126,6 +126,7 @@ public class Clipboard : MonoBehaviour
 					StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeInPosition, showMeOutPosition)));
 				}
 				gameManager.Event_AppointmentStart();
+				MetricsLogger.Instance.LogCustomEvent("Appointment", "RestartUsed", gameManager.FormatDayAndLevel());
 			}
         }
         else

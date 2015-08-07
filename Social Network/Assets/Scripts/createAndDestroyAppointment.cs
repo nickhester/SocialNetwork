@@ -170,6 +170,10 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 			gameManager.GetClipboard().GetNextLevelUp().myLevel = _aSpecificLevel;
 		}
         Application.LoadLevelAdditive("Scene_Appointment");
+	}
+
+	public void OnAppointmentStarted()
+	{
 		if (gameManager.GetClipboard().GetIsClipboardUp())
 		{
 			gameManager.GetClipboard().HideClipboard();
