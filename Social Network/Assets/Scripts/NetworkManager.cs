@@ -15,7 +15,6 @@ public class NetworkManager : MonoBehaviour {
     [SerializeField] private int randomSeed;
     public int usedSeed;
     [SerializeField] private bool isReadingSeedFromFile;
-    private TextAsset validSeedList;        // not being used now, but might be needed to do level "show me"
 	private bool levelIsComplete = false;
 	private const int percentHasRelationship = 50;  // if this number changes, all random seed values will need to be regenerated (don't do it!)
 	private ValidLevels currentLevelInfo;
@@ -44,8 +43,6 @@ public class NetworkManager : MonoBehaviour {
 	// for webplayer only
 	[SerializeField] private Material redAndGreenButton_keys;
 
-	private float restartButtonOffset = -0.8f;
-
 	#endregion
 
 	#region StartAndUpdate
@@ -54,7 +51,6 @@ public class NetworkManager : MonoBehaviour {
 	{
 		GameObject.FindGameObjectWithTag("persistentObject").GetComponent<CreateAndDestroyAppointment>().OnAppointmentStarted();
 
-        validSeedList = Resources.Load("validSeedList") as TextAsset;
         usedSeed = SeedTheLevel();
         
         // spawn appropriate number of people and add them to the allPeople list
@@ -86,12 +82,14 @@ public class NetworkManager : MonoBehaviour {
 		if (SaveGame.GetAudioOn_sfx()) { isAudioOn_sfx = true; }
 		else { isAudioOn_sfx = false; }
 
-		// set restart button position (just put it to the left of the audio icons
-		Vector3 audioButtonPos = GameObject.Find("audioToggle_music").transform.position;
+		// set restart button position (to the left of the audio icons)
+		Vector3 MusicButtonPos = GameObject.Find("audioToggle_music").transform.position;
+		Vector3 SFXButtonPos = GameObject.Find("audioToggle_sfx").transform.position;
+		float difference = Vector3.Distance(MusicButtonPos, SFXButtonPos);
 		GameObject restartLevelButton = GameObject.Find("restartLevel");
 		if (restartLevelButton != null)
 		{
-			restartLevelButton.transform.position = new Vector3(audioButtonPos.x + restartButtonOffset, audioButtonPos.y, audioButtonPos.z);
+			restartLevelButton.transform.position = new Vector3(MusicButtonPos.x - difference, MusicButtonPos.y, MusicButtonPos.z);
 		}
 
 		#if UNITY_WEBPLAYER

@@ -26,6 +26,7 @@ C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Deb
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\obj\Debug\UnityVS.Social Network.CSharp.Editor.csprojResolveAssemblyReference.cache
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\obj\Debug\Assembly-CSharp-Editor.dll
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\obj\Debug\Assembly-CSharp-Editor.pdb
+C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEditor.Tizen.Extensions.dll
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEngine.xml
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEditor.xml
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEngine.UI.xml
@@ -39,6 +40,7 @@ C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Deb
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEditor.WP8.Extensions.xml
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEditor.Metro.Extensions.xml
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEditor.BB10.Extensions.xml
+C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEditor.Tizen.Extensions.xml
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEditor.SamsungTV.Extensions.xml
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEditor.WebGL.Extensions.xml
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEditor.LinuxStandalone.Extensions.xml

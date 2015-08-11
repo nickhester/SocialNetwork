@@ -8,8 +8,8 @@ public static class KongregateAPI {
 
 	public static bool isKongregateLoaded = false;
 	public static int userId = 0;
-	static string username = "Guest";
-	static string gameAuthToken = "";
+	//static string username = "Guest";
+	//static string gameAuthToken = "";
 
 	public static void Initialize()
 	{
@@ -26,8 +26,8 @@ public static class KongregateAPI {
 
 		string[] parameters = userInfoString.Split('|');
 		userId = int.Parse(parameters[0]);
-		username = parameters[1];
-		gameAuthToken = parameters[2];
+		//username = parameters[1];
+		//gameAuthToken = parameters[2];
     }
 
 	public static void ReportStarCount(int starCount)

@@ -223,6 +223,14 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
         {
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(7, false);
         }
+		else if (_nextAppointment.GetMyDayIndex() == 3 && _nextAppointment.levelIndex == 0)
+		{
+			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(8, false);
+		}
+		else if (_nextAppointment.GetMyDayIndex() == 4 && _nextAppointment.levelIndex == 2)
+		{
+			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(10, false);
+		}
 	}
 
 	public void MakeNewTestLevel(int _levelNumber)

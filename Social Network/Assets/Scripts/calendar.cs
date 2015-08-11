@@ -138,11 +138,10 @@ public class Calendar : MonoBehaviour {
 					
 					break;
 				case 2:	// wednesday
-                    _newCalDayComponent.numAppointments = 4;
+                    _newCalDayComponent.numAppointments = 3;
 					
 					reqList.Add(new ValidLevels(4, Types.Difficulty.VeryEasy, 990103, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(3, Types.Difficulty.VeryEasy, 116645, Types.SpecialLevel.None));
-					reqList.Add(new ValidLevels(4, Types.Difficulty.Easy, 890388, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(5, Types.Difficulty.Easy, 101640, Types.SpecialLevel.None));
 
 					_newCalDayComponent.SetSpecificLevels(reqList);
@@ -184,13 +183,14 @@ public class Calendar : MonoBehaviour {
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
 				case 6:	// tuesday
-                    _newCalDayComponent.numAppointments = 3;
+                    _newCalDayComponent.numAppointments = 4;
 
                     reqList.Add(new ValidLevels(4, Types.Difficulty.Easy, 367595, Types.SpecialLevel.CantTouch));
 					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 549206, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 395761, Types.SpecialLevel.CantTouch));
+					reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 834762, Types.SpecialLevel.None));
 					// cull //reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 531692, Types.SpecialLevel.CantTouch));
-					// cull //reqList.Add(new ValidLevels(6, Types.Difficulty.Medium, 834762, Types.SpecialLevel.None));
+					
 					
 					_newCalDayComponent.SetSpecificLevels(reqList);
 					break;
@@ -486,14 +486,12 @@ public class Calendar : MonoBehaviour {
 		}
 
         // show notifications on specific days of the calendar view
-		if (furthestDayUnlocked == 4)
+		/*
+		if (furthestDayUnlocked == 6)
 		{
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(8, false);
-        }
-		else if (furthestDayUnlocked == 6)
-		{
-            GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(10, false);
+            // none
 		}
+		*/
 
 		// initialize save game
 		List<int> numPossibleStars = new List<int>();

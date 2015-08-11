@@ -101,9 +101,17 @@ public class GameManager : MonoBehaviour {
 
 	#endregion
 
-	void OnApplicationQuit()
+	//void OnApplicationQuit()
+	void OnApplicationFocus(bool hasFocus)
 	{
-		
+		if (hasFocus)
+		{
+			SendSessionMetrics();
+		}
+		else
+		{
+			RestartSessionMetrics();
+		}
 	}
 
 	public string FormatDayAndLevel()
