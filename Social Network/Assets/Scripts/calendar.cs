@@ -486,12 +486,14 @@ public class Calendar : MonoBehaviour {
 		}
 
         // show notifications on specific days of the calendar view
-		/*
 		if (furthestDayUnlocked == 6)
 		{
-            // none
+			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(20, false);
 		}
-		*/
+		else if (furthestDayUnlocked == 8)
+		{
+			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(21, false);
+		}
 
 		// initialize save game
 		List<int> numPossibleStars = new List<int>();

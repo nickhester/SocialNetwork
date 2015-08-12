@@ -704,13 +704,39 @@ public class NotificationManager : MonoBehaviour
 			if (_indexWithinSet == 0)
 			{
 				m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_completeFirstDay"), "restart level 2", Vector2.zero, true, true);
+                    Resources.Load<Texture>("textures/instructions/Instruction Paper_completeFirstDay"), "back to calendar", Vector2.zero, true, true);
 			}
 			else if (_indexWithinSet == 1)
 			{
 				m_finger.SendFinger(GameObject.Find("BackButton"));
 				RequestExclusiveControl();
 				AllowActions(new List<string> { "BackButton" }, new List<string>(), new List<string>());
+			}
+			else
+			{
+				SaveGame.SetSeenInstruction(_setIndex, true);
+				EndNotification();
+			}
+		}
+		else if (_setIndex == 20)        // Upgrade Warning =====================================================
+		{
+			if (_indexWithinSet == 0)
+			{
+				m_notification.DisplayNotification(
+					Resources.Load<Texture>("textures/instructions/Instruction Paper_UpgradeWarning"), "upgrade warning", Vector2.zero, true, true);
+			}
+			else
+			{
+				SaveGame.SetSeenInstruction(_setIndex, true);
+				EndNotification();
+			}
+		}
+		else if (_setIndex == 21)        // Upgrade Final =====================================================
+		{
+			if (_indexWithinSet == 0)
+			{
+				m_notification.DisplayNotification(
+					Resources.Load<Texture>("textures/instructions/Instruction Paper_UpgradeFinal"), "upgrade final", Vector2.zero, true, true);
 			}
 			else
 			{

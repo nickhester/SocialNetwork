@@ -38,6 +38,30 @@ public class GameManager : MonoBehaviour {
 		MetricsLogger.Instance.LogCustomEvent("GameSession", "PlayTimeThisGameSession", "", currentGameSessionTime);
 	}
 
+	void SendSessionMetrics2()
+	{
+		// log num appointments played this session
+		MetricsLogger.Instance.LogCustomEvent("GameSession", "AppointmentsPlayedThisSession2", "", numAppointmentsThisSession);
+		// log this session play time
+		MetricsLogger.Instance.LogCustomEvent("GameSession", "PlayTimeThisGameSession2", "", currentGameSessionTime);
+	}
+
+	void SendSessionMetrics3()
+	{
+		// log num appointments played this session
+		MetricsLogger.Instance.LogCustomEvent("GameSession", "AppointmentsPlayedThisSession3", "close", numAppointmentsThisSession);
+		// log this session play time
+		MetricsLogger.Instance.LogCustomEvent("GameSession", "PlayTimeThisGameSession3", "close", currentGameSessionTime);
+	}
+
+	void SendSessionMetrics4()
+	{
+		// log num appointments played this session
+		MetricsLogger.Instance.LogCustomEvent("GameSession", "AppointmentsPlayedThisSession4", "close", numAppointmentsThisSession);
+		// log this session play time
+		MetricsLogger.Instance.LogCustomEvent("GameSession", "PlayTimeThisGameSession4", "close", currentGameSessionTime);
+	}
+
 	void Update()
 	{
 		currentGameSessionTime += Time.deltaTime;
@@ -101,12 +125,17 @@ public class GameManager : MonoBehaviour {
 
 	#endregion
 
-	//void OnApplicationQuit()
+	void OnApplicationQuit()
+	{
+		SendSessionMetrics2();
+		SendSessionMetrics3();
+	}
 	void OnApplicationFocus(bool hasFocus)
 	{
 		if (hasFocus)
 		{
 			SendSessionMetrics();
+			SendSessionMetrics4();
 		}
 		else
 		{
