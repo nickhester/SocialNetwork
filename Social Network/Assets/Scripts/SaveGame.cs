@@ -189,4 +189,16 @@ public static class SaveGame {
 		SaveData.DeleteAll();
 		SaveAllData();
 	}
+
+	// debug only
+	public static void SetCustomString(string key, string value)
+	{
+		SaveData.SetString(key, value);
+		SaveAllData();
+	}
+
+	public static string GetCustomString(string key)
+	{
+		return SaveData.GetString(key);
+	}
 }

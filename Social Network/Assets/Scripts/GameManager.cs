@@ -124,24 +124,35 @@ public class GameManager : MonoBehaviour {
 	}
 
 	#endregion
-
+	
 	void OnApplicationQuit()
 	{
 		SendSessionMetrics2();
-		SendSessionMetrics3();
 	}
+	
 	void OnApplicationFocus(bool hasFocus)
 	{
-		if (hasFocus)
+		if (!hasFocus)
 		{
 			SendSessionMetrics();
-			SendSessionMetrics4();
 		}
 		else
 		{
 			RestartSessionMetrics();
 		}
 	}
+	void OnApplicationPause(bool pauseStatus)
+	{
+		if (pauseStatus)
+		{
+			SendSessionMetrics3();
+		}
+		else
+		{
+			RestartSessionMetrics();
+		}
+	}
+
 
 	public string FormatDayAndLevel()
 	{
