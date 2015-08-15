@@ -490,7 +490,8 @@ public class Calendar : MonoBehaviour {
 		{
 			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(20, false);
 		}
-		else if (furthestDayUnlocked == 8)
+		//else if (furthestDayUnlocked == 8)
+		else if (furthestDayUnlocked == 7)
 		{
 			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(21, false);
 		}

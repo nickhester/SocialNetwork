@@ -29,37 +29,12 @@ public class GameManager : MonoBehaviour {
 		numAppointmentsThisSession = 0;
 		currentGameSessionTime = 0.0f;
 	}
-
 	void SendSessionMetrics()
 	{
 		// log num appointments played this session
-		MetricsLogger.Instance.LogCustomEvent("GameSession", "AppointmentsPlayedThisSession", "", numAppointmentsThisSession);
+		MetricsLogger.Instance.LogCustomEvent("GameSession", "AppointmentsPlayedThisSession", "close", numAppointmentsThisSession);
 		// log this session play time
-		MetricsLogger.Instance.LogCustomEvent("GameSession", "PlayTimeThisGameSession", "", currentGameSessionTime);
-	}
-
-	void SendSessionMetrics2()
-	{
-		// log num appointments played this session
-		MetricsLogger.Instance.LogCustomEvent("GameSession", "AppointmentsPlayedThisSession2", "", numAppointmentsThisSession);
-		// log this session play time
-		MetricsLogger.Instance.LogCustomEvent("GameSession", "PlayTimeThisGameSession2", "", currentGameSessionTime);
-	}
-
-	void SendSessionMetrics3()
-	{
-		// log num appointments played this session
-		MetricsLogger.Instance.LogCustomEvent("GameSession", "AppointmentsPlayedThisSession3", "close", numAppointmentsThisSession);
-		// log this session play time
-		MetricsLogger.Instance.LogCustomEvent("GameSession", "PlayTimeThisGameSession3", "close", currentGameSessionTime);
-	}
-
-	void SendSessionMetrics4()
-	{
-		// log num appointments played this session
-		MetricsLogger.Instance.LogCustomEvent("GameSession", "AppointmentsPlayedThisSession4", "close", numAppointmentsThisSession);
-		// log this session play time
-		MetricsLogger.Instance.LogCustomEvent("GameSession", "PlayTimeThisGameSession4", "close", currentGameSessionTime);
+		MetricsLogger.Instance.LogCustomEvent("GameSession", "PlayTimeThisGameSession", "close", currentGameSessionTime);
 	}
 
 	void Update()
@@ -124,7 +99,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	#endregion
-	
+	/*
 	void OnApplicationQuit()
 	{
 		SendSessionMetrics2();
@@ -141,11 +116,12 @@ public class GameManager : MonoBehaviour {
 			RestartSessionMetrics();
 		}
 	}
+	*/
 	void OnApplicationPause(bool pauseStatus)
 	{
 		if (pauseStatus)
 		{
-			SendSessionMetrics3();
+			SendSessionMetrics();
 		}
 		else
 		{
