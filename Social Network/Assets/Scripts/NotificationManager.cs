@@ -734,6 +734,8 @@ public class NotificationManager : MonoBehaviour
 			{
 				m_notification.DisplayNotification(
 					Resources.Load<Texture>("textures/instructions/Instruction Paper_UpgradeWarning"), Vector2.zero, true, true, 0);
+				RequestExclusiveControl();
+				AllowActions(new List<string> { "UpgradeButton_Yes", "UpgradeButton_KeepPlaying" }, new List<string>(), new List<string>());
 			}
 			else
 			{
@@ -747,6 +749,8 @@ public class NotificationManager : MonoBehaviour
 			{
 				m_notification.DisplayNotification(
 					Resources.Load<Texture>("textures/instructions/Instruction Paper_UpgradeFinal"), Vector2.zero, true, true, 1);
+				RequestExclusiveControl();
+				AllowActions(new List<string> { "UpgradeButton_Yes", "UpgradeButton_No" }, new List<string>(), new List<string>());
 			}
 			else
 			{
@@ -760,6 +764,8 @@ public class NotificationManager : MonoBehaviour
 			{
 				m_notification.DisplayNotification(
 					Resources.Load<Texture>("textures/instructions/Instruction Paper_UpgradeChoice"), Vector2.zero, true, true, 2);
+				RequestExclusiveControl();
+				AllowActions(new List<string> { "UpgradeButton_Unlock", "UpgradeButton_Cancel" }, new List<string>(), new List<string>());
 			}
 			else
 			{

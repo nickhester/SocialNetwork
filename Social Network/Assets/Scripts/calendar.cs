@@ -33,8 +33,7 @@ public class Calendar : MonoBehaviour {
         }
         else if (go.transform.name == "MainMenu")
         {
-            Destroy(GameObject.FindObjectOfType<LevelSelector>().gameObject);
-            Application.LoadLevel("Scene_MainMenu");
+			UnloadCalendarAndLoadLevel("Scene_MainMenu");
         }
         else if (go.transform.name == "Next Week")
         {
@@ -46,6 +45,38 @@ public class Calendar : MonoBehaviour {
             if (viewingWeek != 0)
             { viewingWeek--; }
         }
+		else if (go.transform.name.StartsWith("UpgradeButton_Yes"))
+		{
+			print("YES!");
+			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(22, true);
+			MetricsLogger.Instance.LogCustomEvent("Game", "Unlock", "Yes");
+		}
+		else if (go.transform.name.StartsWith("UpgradeButton_KeepPlaying"))
+		{
+			print("KeepPlaying");
+			MetricsLogger.Instance.LogCustomEvent("Game", "Unlock", "KeepPlaying");
+		}
+		else if (go.transform.name.StartsWith("UpgradeButton_No"))
+		{
+			print("NO!");
+			MetricsLogger.Instance.LogCustomEvent("Game", "Unlock", "No");
+		}
+		else if (go.transform.name.StartsWith("UpgradeButton_Unlock"))
+		{
+			Upgrade.PurchaseUpgrade(1);
+			MetricsLogger.Instance.LogBusinessEvent("US Dollars", 199, "GameUpgrade", "N/A", "N/A", "N/A", "N/A");
+			ReloadCalendar();
+		}
+		else if (go.transform.name.StartsWith("UpgradeButton_Cancel"))
+		{
+			print("Cancel");
+			MetricsLogger.Instance.LogCustomEvent("Game", "Unlock", "Cancel");
+		}
+		else if (go.transform.name.StartsWith("Lock"))
+		{
+			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(21, true);
+		}
+
     }
 
 	// Use this for initialization
@@ -90,7 +121,15 @@ public class Calendar : MonoBehaviour {
 
 			if (i == 0 || SaveGame.GetHasCompletedAllRoundsInDay(i - 1))
 			{
-				_newCalDayComponent.isPlayable = true;
+				if (i == Upgrade.dayLocked && !Upgrade.canVerifyUpgrade())
+				{
+					// if the unlock has not been purchased, show the lock icon
+					_newCalDayComponent.ShowLock();
+				}
+				else
+				{
+					_newCalDayComponent.isPlayable = true;
+				}
 				viewingWeek = i/5;
 				furthestDayUnlocked = i;
 			}
@@ -486,14 +525,13 @@ public class Calendar : MonoBehaviour {
 		}
 
         // show notifications on specific days of the calendar view
-		if (furthestDayUnlocked == 6)
+		if (furthestDayUnlocked == Upgrade.dayToWarn && !Upgrade.canVerifyUpgrade())
 		{
 			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(20, false);
 		}
-		//else if (furthestDayUnlocked == 8)
-		else if (furthestDayUnlocked == 7)
+		else if (furthestDayUnlocked == Upgrade.dayLocked && !Upgrade.canVerifyUpgrade())
 		{
-			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(21, false);
+			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(21, true);
 		}
 
 		// initialize save game
@@ -576,5 +614,16 @@ public class Calendar : MonoBehaviour {
 			}
 		}
 		SaveGame.UpdateGameStats();
+	}
+
+	void UnloadCalendarAndLoadLevel(string _levelName)
+	{
+		Destroy(GameObject.FindObjectOfType<LevelSelector>().gameObject);
+		Application.LoadLevel(_levelName);
+	}
+
+	void ReloadCalendar()
+	{
+		UnloadCalendarAndLoadLevel("Scene_Calendar");
 	}
 }
