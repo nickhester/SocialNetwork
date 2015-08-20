@@ -137,7 +137,7 @@ public class AudioToggle : MonoBehaviour {
             InputManager.Instance.OnClick += OnClick;
         }
 
-        if (level == 0)
+        if (Application.loadedLevelName == "Scene_MainMenu")
         {
             Destroy(gameObject);
         }

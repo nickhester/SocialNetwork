@@ -70,10 +70,10 @@ public class NetworkManager : MonoBehaviour {
 
 		cursorSecondaryInst = Instantiate
 			(
-			cursorSecondary, new Vector3
-			(
-			selectionCursorInst.transform.position.x, selectionCursorInst.transform.position.y, selectionCursorInst.transform.position.z + 1.5f
-			), Quaternion.identity
+				cursorSecondary, new Vector3
+				(
+					selectionCursorInst.transform.position.x, selectionCursorInst.transform.position.y, selectionCursorInst.transform.position.z + 1.5f
+				), Quaternion.identity
 			) as GameObject;
 		cursorSecondaryInst.GetComponent<Renderer>().enabled = false;
 		cursorSecondaryInst.transform.parent = selectionCursorInst.transform;
@@ -167,6 +167,14 @@ public class NetworkManager : MonoBehaviour {
         }
     }
 
+	public void DeselectAllPeople()
+	{
+		selectionCursorInst.GetComponent<Renderer>().enabled = false;
+		cursorSecondaryInst.GetComponent<Renderer>().enabled = false;
+		currentlySelectedPerson = null;
+		GetComponent<LineDisplay>().TurnOffAllLines();
+	}
+
     public void OnDestroy()
     {
         if (InputManager.Instance != null)
@@ -234,6 +242,7 @@ public class NetworkManager : MonoBehaviour {
 			_ppl.m_Mood = Mood.Neutral;
 		}
         numActionsTaken = 0;
+		DeselectAllPeople();
 	}
 
     public void SetAsDemonstration(bool _isDemonstration)
