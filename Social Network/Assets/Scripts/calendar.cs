@@ -47,18 +47,15 @@ public class Calendar : MonoBehaviour {
         }
 		else if (go.transform.name.StartsWith("UpgradeButton_Yes"))
 		{
-			print("YES!");
 			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(22, true);
 			MetricsLogger.Instance.LogCustomEvent("Game", "Unlock", "Yes");
 		}
 		else if (go.transform.name.StartsWith("UpgradeButton_KeepPlaying"))
 		{
-			print("KeepPlaying");
 			MetricsLogger.Instance.LogCustomEvent("Game", "Unlock", "KeepPlaying");
 		}
 		else if (go.transform.name.StartsWith("UpgradeButton_No"))
 		{
-			print("NO!");
 			MetricsLogger.Instance.LogCustomEvent("Game", "Unlock", "No");
 		}
 		else if (go.transform.name.StartsWith("UpgradeButton_Unlock"))
@@ -69,7 +66,6 @@ public class Calendar : MonoBehaviour {
 		}
 		else if (go.transform.name.StartsWith("UpgradeButton_Cancel"))
 		{
-			print("Cancel");
 			MetricsLogger.Instance.LogCustomEvent("Game", "Unlock", "Cancel");
 		}
 		else if (go.transform.name.StartsWith("Lock"))

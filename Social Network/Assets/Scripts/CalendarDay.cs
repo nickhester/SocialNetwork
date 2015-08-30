@@ -202,6 +202,7 @@ public class CalendarDay : MonoBehaviour {
 	{
 		GameObject lockObject = GameObject.Find("Lock");
 		lockObject.GetComponent<Renderer>().enabled = true;
+		lockObject.GetComponent<Collider>().enabled = true;
 		lockObject.transform.position = new Vector3(transform.position.x, transform.position.y - 0.3f, transform.position.z - 0.5f);
 		lockObject.transform.SetParent(transform);
 	}

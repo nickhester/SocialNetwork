@@ -20,6 +20,10 @@ public class SpecialEffects : MonoBehaviour
 
 	public void ShakeExcitedly(GameObject go)
 	{
+		if (shakingObject != null)
+		{
+			shakingObject.GetComponent<Person>().SetAsExcited(false);
+		}
 		isShaking = true;
 		shakingObject = go;
 		go.GetComponent<Person>().SetAsExcited(true);
