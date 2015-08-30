@@ -15,3 +15,6 @@ C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Deb
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEngine.Networking.xml
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEngine.Analytics.xml
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\UnityEditor.iOS.Extensions.Xcode.xml
+C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\soomla-wp-core.dll
+C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\wp-store.dll
+C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.pdb

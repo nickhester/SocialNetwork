@@ -32,21 +32,27 @@ public class PersonMovement : MonoBehaviour {
 	void Update () {
 		if (!hasMovedIn)
         {
-            MoveIn ();
+            MoveIn();
+			Move();
         }
 		
-        if (isMovingOut)
+		if (isMovingOut)
         {
             positionScaler += moveSpeed * (startingPositionScaler - 1.0f) * Time.deltaTime;
+			Move();
         }
-
-        if (!isMovingOut && progress >= 1.0f)
+		
+		if (!hasMovedIn && !isMovingOut && progress >= 1.0f)
         {
             positionScaler = 1.0f;
             hasMovedIn = true;
+			Move();
         }
-		
-        transform.position = originalPos * positionScaler;
+	}
+
+	void Move()
+	{
+		transform.position = originalPos * positionScaler;
 	}
 
 	void MoveIn()

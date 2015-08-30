@@ -19,7 +19,7 @@ public class NotificationManager : MonoBehaviour
     private List<string> allowedObjects_NotificationStays;
     private List<string> allowedObjects_NotificationEnds;
     private bool isInExclusiveEvent = false;
-    private float showMeInterval = 0.7f;
+    private float showMeInterval = 0.6f;
 
     // saved positions
     private Vector2 screenPos_greenButton = new Vector2(-3.3f, -5.7f);

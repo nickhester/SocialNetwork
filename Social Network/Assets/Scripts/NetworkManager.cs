@@ -40,6 +40,8 @@ public class NetworkManager : MonoBehaviour {
     [SerializeField] private AudioClip audioActionNeg;
 	[HideInInspector] public bool isAudioOn_sfx;
 
+	private SpecialEffects specialEffects;
+
 	// for webplayer only
 	[SerializeField] private Material redAndGreenButton_keys;
 
@@ -91,6 +93,8 @@ public class NetworkManager : MonoBehaviour {
 		{
 			restartLevelButton.transform.position = new Vector3(MusicButtonPos.x - difference, MusicButtonPos.y, MusicButtonPos.z);
 		}
+
+		specialEffects = GetComponent<SpecialEffects>();
 
 		#if UNITY_WEBPLAYER
 		
@@ -243,6 +247,7 @@ public class NetworkManager : MonoBehaviour {
 		}
         numActionsTaken = 0;
 		DeselectAllPeople();
+		specialEffects.StopShakingExcitedly();
 	}
 
     public void SetAsDemonstration(bool _isDemonstration)
@@ -304,7 +309,7 @@ public class NetworkManager : MonoBehaviour {
 	    }
 	}
 	
-	public bool CheckWinningRequirements()
+	bool CheckWinningRequirements()
 	{
 		foreach (Person _person in GetAllPeople())
 		{
@@ -435,4 +440,69 @@ public class NetworkManager : MonoBehaviour {
     {
         return allPeople.Count;
     }
+
+	public void CheckFinalMove()
+	{
+		Person finalMovePerson = null;
+
+		List<Person> peopleWithOnlyPositiveRelationships = new List<Person>();
+		List<Person> peopleWhoAreUnhappy = new List<Person>();
+		foreach (Person _person in GetAllPeople())
+		{
+			if (_person.relationshipListNegative.Count() == 0)
+			{
+				peopleWithOnlyPositiveRelationships.Add(_person);
+			}
+
+			if (_person.m_Mood != Mood.Positive)
+			{
+				peopleWhoAreUnhappy.Add(_person);
+			}
+		}
+
+		foreach (Person _person in peopleWithOnlyPositiveRelationships)
+		{
+			bool logDebug = true;
+			if (logDebug) { print("checking " + _person.name); }
+			bool hasFoundSolution = true;
+			List<Person> allMyFriends = new List<Person>();
+			foreach (Relationship _relation in _person.relationshipListPositive)
+			{
+				if (logDebug) { print("adding " + _relation.GetOppositeMember(_person).name + " to allMyFriends list"); }
+				allMyFriends.Add(_relation.GetOppositeMember(_person));
+			}
+			// are all of peopleWhoAreUnhappy contained in allMyFriends?
+			foreach (Person _unhappyPerson in peopleWhoAreUnhappy)
+			{
+				if (logDebug) { print("am i friends with " + _unhappyPerson + "?"); }
+				if (_person != _unhappyPerson && !allMyFriends.Contains(_unhappyPerson))
+				{
+					if (logDebug) { print("no"); }
+					hasFoundSolution = false;
+				}
+				else
+				{
+					if (logDebug) { print("yes"); }
+				}
+			}
+			if (hasFoundSolution)
+			{
+				if (logDebug) { print("that'll do it!"); }
+				finalMovePerson = _person;
+				break;
+			}
+		}
+
+		// if it found one...
+		if (finalMovePerson != null)
+		{
+			specialEffects.ShakeExcitedly(finalMovePerson);
+			print("found final move");
+		}
+		else
+		{
+			specialEffects.StopShakingExcitedly();
+			print("no final move");
+		}
+	}
 }

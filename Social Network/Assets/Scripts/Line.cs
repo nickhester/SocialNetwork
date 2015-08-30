@@ -23,9 +23,10 @@ public class Line : MonoBehaviour {
 
 	private Color myColor;
 	private bool isChanging = false;
-	private float fadeTime = 0.75f;
+	private const float fadeTime = 0.75f;
 	private Color negativeColor;
 	private Color positiveColor;
+	private const float fadedAlphaValue = 0.0f;
 
 	public void SetColors (Color _negativeColor, Color _positiveColor)
 	{
@@ -46,12 +47,20 @@ public class Line : MonoBehaviour {
 		if (isChanging)
 		{
 			fadeCounter += Time.deltaTime;
-			if (fadeCounter >= fadeTime) { isChanging = false; }
+			if (fadeCounter >= fadeTime)
+			{
+				isChanging = false;
+			}
 		}
 
-		if (isVisible) { myColor = new Color(this.GetComponent<Renderer>().material.color.r, this.GetComponent<Renderer>().material.color.g, this.GetComponent<Renderer>().material.color.b, fadeCounter/fadeTime); }
-		else { myColor = new Color(this.GetComponent<Renderer>().material.color.r, this.GetComponent<Renderer>().material.color.g, this.GetComponent<Renderer>().material.color.b, 0); }
-		
+		if (isVisible)
+		{
+			myColor = new Color(this.GetComponent<Renderer>().material.color.r, this.GetComponent<Renderer>().material.color.g, this.GetComponent<Renderer>().material.color.b, (fadeCounter/fadeTime) + fadedAlphaValue);
+		}
+		else
+		{
+			myColor = new Color(this.GetComponent<Renderer>().material.color.r, this.GetComponent<Renderer>().material.color.g, this.GetComponent<Renderer>().material.color.b, fadedAlphaValue);
+		}		
 		GetComponent<Renderer>().material.color = myColor;
 		GetComponent<Renderer>().material.SetColor("_Emission", myColor);
 	}

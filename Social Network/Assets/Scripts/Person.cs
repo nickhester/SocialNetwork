@@ -26,6 +26,7 @@ public class Person : MonoBehaviour {
 	public Material facialArt1_happy;
 	public Material facialArt1_sad;
 	public Material facialArt1_normal;
+	public Material facialArt1_excited;
 	public Material statusCircleGreen;
 	public Material statusCircleRed;
 
@@ -34,6 +35,8 @@ public class Person : MonoBehaviour {
 	private Dictionary<Relationship, Mood> listOfAffectedRels = new Dictionary<Relationship, Mood>();
 	public GameObject Mask_CannotClick;
 	public GameObject myMask_CannotClick;
+
+	private bool isExcited = false;
 
 	#endregion
 	
@@ -46,8 +49,8 @@ public class Person : MonoBehaviour {
 		foreach (Relationship _rel in relationshipList)
 		{
 			if (_rel.m_Friendship != Friendship.Neutral) { relationshipListNonZero.Add(_rel); }
-			if (_rel.m_Friendship < Friendship.Negative) { relationshipListNegative.Add(_rel); }
-			if (_rel.m_Friendship > Friendship.Positive) { relationshipListPositive.Add(_rel); }
+			if (_rel.m_Friendship == Friendship.Negative) { relationshipListNegative.Add(_rel); }
+			if (_rel.m_Friendship == Friendship.Positive) { relationshipListPositive.Add(_rel); }
 		}
 		
 		Vector3 positionJustBehindPerson = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
@@ -63,7 +66,8 @@ public class Person : MonoBehaviour {
 		}
 	}
 
-	void Update () {
+	void Update ()
+	{
 		if (m_Mood == Mood.Negative)
 		{
 			_myMaxIndicator.GetComponent<Renderer>().enabled = true;
@@ -81,6 +85,11 @@ public class Person : MonoBehaviour {
             _myMaxIndicator.GetComponent<Renderer>().enabled = false;
             GetComponent<Renderer>().material = facialArt1_normal;
         }
+
+		if (isExcited)
+		{
+			GetComponent<Renderer>().material = facialArt1_excited;
+		}
 	}
 
 	#endregion
@@ -184,7 +193,11 @@ public class Person : MonoBehaviour {
 		{
 			AffectRelationship(_rel.Value, _rel.Key);
 		}
-		if (finishIfDone) { networkMgr.EndIfDone(); }
+		if (finishIfDone)
+		{
+			networkMgr.EndIfDone();
+		}
+		networkMgr.CheckFinalMove();
 	}
 	
 	public void AffectRelationship(Mood _moodTarget, Relationship _relationship)
@@ -207,5 +220,10 @@ public class Person : MonoBehaviour {
 		else { _partiComponent.changesColor = false; }
 
 		Destroy (_parti, animationTime + 0.5f);
+	}
+
+	public void SetAsExcited(bool _isExcited)
+	{
+		isExcited = _isExcited;
 	}
 }
