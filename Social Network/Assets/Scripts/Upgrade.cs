@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Soomla.Store;
 
 public static class Upgrade {
 
@@ -9,12 +10,21 @@ public static class Upgrade {
 
 	public static void PurchaseUpgrade(int paymentOption)
 	{
-		// TODO: send player to app store for order transaction and confirmation
-
-		// for now just save to player save data
-		SaveGame.SetCustomString("hasUpgraded", "true");
-
+		// purchase upgrade through Soomla store
+		StoreInventory.BuyItem(SoomlaStoreAssets.UNLOCK_ALL_LEVELS_ID);
 		MonoBehaviour.print("Purchasing upgrade!");
+
+#if UNITY_EDITOR
+		// if you're in the editor, just send the callback immediately
+		PurchaseUpgrade_callback(true);
+		MonoBehaviour.print("Just approve it (unity editor)");
+#endif
+
+	}
+
+	public static void PurchaseUpgrade_callback(bool success)
+	{
+		SaveGame.SetCustomString("hasUpgraded", "true");
 		hasVerifiedUpgrade = true;
 	}
 

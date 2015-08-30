@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Soomla.Store;
 
 public class GameManager : MonoBehaviour {
 
@@ -19,9 +20,34 @@ public class GameManager : MonoBehaviour {
 				Destroy(gameObject);
 			}
 		}
+		Initialize();
+	}
+
+	void Initialize()
+	{
 		DontDestroyOnLoad(gameObject);
 
 		RestartSessionMetrics();
+
+		// soomla store stuff
+		StoreEvents.OnItemPurchased += onItemPurchased;
+		StoreEvents.OnRestoreTransactionsFinished += onRestoreTransactionsFinished;
+		if (!SoomlaStore.Initialized)
+		{
+			SoomlaStore.Initialize(new SoomlaStoreAssets());
+		}
+	}
+
+	// soomla event - item purchased
+	public void onItemPurchased(PurchasableVirtualItem pvi, string payload)
+	{
+		Upgrade.PurchaseUpgrade_callback(true);
+	}
+
+	// soomla event - restore transactions
+	public void onRestoreTransactionsFinished(bool success)
+	{
+
 	}
 
 	void RestartSessionMetrics()
@@ -29,6 +55,7 @@ public class GameManager : MonoBehaviour {
 		numAppointmentsThisSession = 0;
 		currentGameSessionTime = 0.0f;
 	}
+
 	void SendSessionMetrics()
 	{
 		// log num appointments played this session
