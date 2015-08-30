@@ -462,7 +462,7 @@ public class NetworkManager : MonoBehaviour {
 
 		foreach (Person _person in peopleWithOnlyPositiveRelationships)
 		{
-			bool logDebug = true;
+			bool logDebug = false;
 			if (logDebug) { print("checking " + _person.name); }
 			bool hasFoundSolution = true;
 			List<Person> allMyFriends = new List<Person>();
@@ -497,12 +497,10 @@ public class NetworkManager : MonoBehaviour {
 		if (finalMovePerson != null)
 		{
 			specialEffects.ShakeExcitedly(finalMovePerson);
-			print("found final move");
 		}
 		else
 		{
 			specialEffects.StopShakingExcitedly();
-			print("no final move");
 		}
 	}
 }

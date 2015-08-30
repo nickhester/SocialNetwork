@@ -37,7 +37,7 @@ public class FileParse {
 		List<string> _eachLine = new List<string>();
 		_eachLine.AddRange(listText.Split('\n'));
 		if (_eachLine.Contains("")) { _eachLine.Remove(""); }   // remove possible trailing line
-		foreach (var line in _eachLine)
+		foreach (string line in _eachLine)
 		{
 			if (!line.StartsWith("//"))
 			{
@@ -47,8 +47,9 @@ public class FileParse {
 				int thisCantTouch = 0;
 				bool thisOneClick = false;
 				int thisNumClick = 0;
-				
-				string[] tokens = line.Split(',');
+
+				string lineWithoutEnding = line.Split('\r')[0];
+				string[] tokens = lineWithoutEnding.Split(',');
 				int a;
 				bool b;
 				if (int.TryParse((tokens[0].Split(':')[1]), out a)) { thisLevel = a; }      // set the level
@@ -73,6 +74,7 @@ public class FileParse {
 				
 				ValidLevels lvl = new ValidLevels(thisLevel, thisDifficulty, thisSeed, thisCantTouch, thisOneClick, thisNumClick);
                 lvl.path = new ActionTrail(tokens[6]);
+				lvl.cantTouchPath = new ActionTrail(tokens[7]);
 				_list.Add(lvl);
 			}
 		}

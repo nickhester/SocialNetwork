@@ -92,7 +92,8 @@ public class Clipboard : MonoBehaviour
                 // bring up the ShowMe banner if first week
                 // ShowMe stuff
                 Appointment _currentAppointment = GetNextLevelUp();
-				if (_currentAppointment.GetMyDayIndex() < daysToShowBanner && !(_currentAppointment.GetMyDayIndex() == 0 && _currentAppointment.GetMyLevelIndex() == 0))
+				//if (_currentAppointment.GetMyDayIndex() < daysToShowBanner && !(_currentAppointment.GetMyDayIndex() == 0 && _currentAppointment.GetMyLevelIndex() == 0))
+				if (!(_currentAppointment.GetMyDayIndex() == 0 && _currentAppointment.GetMyLevelIndex() == 0))
                 {
                     StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeInPosition, showMeOutPosition)));
                 }

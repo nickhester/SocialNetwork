@@ -17,7 +17,7 @@ public class ActionTrail {
 
     public ActionTrail(string _recordedTrail)
     {
-        string[] justData = _recordedTrail.Split(':');
+		string[] justData = _recordedTrail.Split(':');
         string[] tokens = justData[1].Split('-');
         foreach (string token in tokens)
         {

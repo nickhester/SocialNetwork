@@ -788,8 +788,16 @@ public class NotificationManager : MonoBehaviour
         inputManager.IgnoreUserInput();
 
         ValidLevels currentLevel = GameObject.FindGameObjectWithTag("clipboard").GetComponent<Clipboard>().GetNextLevelUp().myLevel;
-        ActionTrail currentLevelPath = currentLevel.path;
-
+        ActionTrail currentLevelPath;
+		if (currentLevel.isCantTouch)
+		{
+			currentLevelPath = currentLevel.cantTouchPath;
+		}
+		else
+		{
+			currentLevelPath = currentLevel.path;
+		}
+		
         List<Person> allPeople = GameObject.FindGameObjectWithTag("networkManager").GetComponent<NetworkManager>().GetAllPeople();
 
         for (int i = 0; i < currentLevelPath.trail.Count; i++)
