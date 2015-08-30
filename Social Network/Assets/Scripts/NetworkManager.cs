@@ -159,13 +159,6 @@ public class NetworkManager : MonoBehaviour {
         else if (go.transform.name == "restartLevel")
         {
             ReloadStartingState();
-			if (currentLevelInfo.isOneClick)
-			{
-				foreach (Person person in allPeople)
-				{
-					person.DisableOneClickMask();
-				}
-			}
 			GameManager gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 			MetricsLogger.Instance.LogCustomEvent("Appointment", "RestartUsed", gm.FormatDayAndLevel());
         }
@@ -244,6 +237,7 @@ public class NetworkManager : MonoBehaviour {
 		foreach (Person _ppl in GetAllPeople())
 		{
 			_ppl.m_Mood = Mood.Neutral;
+			_ppl.DisableOneClickMask();
 		}
         numActionsTaken = 0;
 		DeselectAllPeople();
