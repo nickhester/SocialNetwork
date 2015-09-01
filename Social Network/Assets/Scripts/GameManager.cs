@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour {
 	// soomla event - item purchased
 	public void onItemPurchased(PurchasableVirtualItem pvi, string payload)
 	{
+		GameObject.FindObjectOfType<Calendar>().ReloadCalendar();
 		Upgrade.PurchaseUpgrade_callback(true);
 	}
 

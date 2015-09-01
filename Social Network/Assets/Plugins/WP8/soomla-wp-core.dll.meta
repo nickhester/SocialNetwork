@@ -25,22 +25,9 @@ labels:
 - in app purchase builder
 - stan
 - stans assets
-PluginImporter:
-  serializedVersion: 1
-  iconMap: {}
-  executionOrder: {}
-  isPreloaded: 0
-  platformData:
-    Any:
-      enabled: 0
-      settings: {}
-    Editor:
-      enabled: 0
-      settings:
-        DefaultValueInitialized: true
-    WP8:
-      enabled: 1
-      settings: {}
+- transaction
+- payment
+DefaultImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 

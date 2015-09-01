@@ -62,7 +62,6 @@ public class Calendar : MonoBehaviour {
 		{
 			Upgrade.PurchaseUpgrade(1);
 			MetricsLogger.Instance.LogBusinessEvent("US Dollars", 199, "GameUpgrade", "N/A", "N/A", "N/A", "N/A");
-			ReloadCalendar();
 		}
 		else if (go.transform.name.StartsWith("UpgradeButton_Cancel"))
 		{
@@ -618,7 +617,7 @@ public class Calendar : MonoBehaviour {
 		Application.LoadLevel(_levelName);
 	}
 
-	void ReloadCalendar()
+	public void ReloadCalendar()
 	{
 		UnloadCalendarAndLoadLevel("Scene_Calendar");
 	}

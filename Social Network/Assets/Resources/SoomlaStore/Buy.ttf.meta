@@ -25,6 +25,8 @@ labels:
 - in app purchase builder
 - stan
 - stans assets
+- transaction
+- payment
 TrueTypeFontImporter:
   serializedVersion: 2
   fontSize: 10

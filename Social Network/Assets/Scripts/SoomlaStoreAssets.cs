@@ -35,7 +35,7 @@ public class SoomlaStoreAssets : IStoreAssets {
 		"Unlock All Levels",					// Description
 		UNLOCK_ALL_LEVELS_ID,						// Item ID
 		new PurchaseWithMarket(					// Purchase type (with real money $)
-			"unlockAllLevels",					// Product ID
+			UNLOCK_ALL_LEVELS_ID,					// Product ID
 			1.99								// Price (in real money $)
 		)
 	);

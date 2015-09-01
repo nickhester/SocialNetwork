@@ -25,6 +25,8 @@ labels:
 - in app purchase builder
 - stan
 - stans assets
+- transaction
+- payment
 PluginImporter:
   serializedVersion: 1
   iconMap: {}
@@ -34,10 +36,6 @@ PluginImporter:
     Any:
       enabled: 1
       settings: {}
-    Editor:
-      enabled: 0
-      settings:
-        DefaultValueInitialized: true
   userData: 
   assetBundleName: 
   assetBundleVariant: 

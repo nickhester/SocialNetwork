@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4fe39a4f0d8e243cb9e9c6e72623f62f
+guid: 4b577086ef40e453dbb819733e0e1945
 labels:
 - soomla
 - store
@@ -25,6 +25,8 @@ labels:
 - in app purchase builder
 - stan
 - stans assets
+- transaction
+- payment
 DefaultImporter:
   userData: 
   assetBundleName: 
