@@ -13,7 +13,7 @@ public static class Upgrade {
 		// purchase upgrade through Soomla store
 		StoreInventory.BuyItem(SoomlaStoreAssets.UNLOCK_ALL_LEVELS_ID);
 		MonoBehaviour.print("Purchasing upgrade!");
-
+		
 #if UNITY_EDITOR
 		// if you're in the editor, just send the callback immediately
 		PurchaseUpgrade_callback(true);

@@ -28,23 +28,26 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 
 		RestartSessionMetrics();
+		MetricsLogger.Instance.SendDataOnStart();
 
 		// soomla store stuff
+		
 		StoreEvents.OnItemPurchased += onItemPurchased;
 		StoreEvents.OnRestoreTransactionsFinished += onRestoreTransactionsFinished;
 		if (!SoomlaStore.Initialized)
 		{
 			SoomlaStore.Initialize(new SoomlaStoreAssets());
 		}
+		
 	}
-
+	
 	// soomla event - item purchased
 	public void onItemPurchased(PurchasableVirtualItem pvi, string payload)
 	{
 		GameObject.FindObjectOfType<Calendar>().ReloadCalendar();
 		Upgrade.PurchaseUpgrade_callback(true);
 	}
-
+	
 	// soomla event - restore transactions
 	public void onRestoreTransactionsFinished(bool success)
 	{
