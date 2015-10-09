@@ -62,10 +62,8 @@ public class GameManager : MonoBehaviour {
 
 	void SendSessionMetrics()
 	{
-		// log num appointments played this session
-		MetricsLogger.Instance.LogCustomEvent("GameSession", "AppointmentsPlayedThisSession", "close", numAppointmentsThisSession);
-		// log this session play time
-		MetricsLogger.Instance.LogCustomEvent("GameSession", "PlayTimeThisGameSession", "close", currentGameSessionTime);
+		// log session end metrics
+		MetricsLogger.Instance.LogOnSessionEnd(numAppointmentsThisSession, currentGameSessionTime);
 	}
 
 	void Update()
@@ -121,12 +119,16 @@ public class GameManager : MonoBehaviour {
 		appointmentStartTime = Time.time;
 	}
 
-	public void Event_AppointmentEnd()
+	public void Event_AppointmentEnd(int _numActionsTaken, int _score)
 	{
 		float appointmentDuration = Time.time - appointmentStartTime;
 
-		MetricsLogger.Instance.LogCustomEvent("Appointment", "AppointmentLength", FormatDayAndLevel(), appointmentDuration);
-		MetricsLogger.Instance.LogProgressionEvent_Complete(FormatDayAndLevel());
+		MetricsLogger.Instance.LogOnAppointmentEnd(
+			GetClipboard().GetNextLevelUp().GetMyDayIndex(),
+			GetClipboard().GetNextLevelUp().GetMyLevelIndex(),
+			_numActionsTaken,
+			_score,
+			appointmentDuration);
 	}
 
 	#endregion
@@ -171,5 +173,15 @@ public class GameManager : MonoBehaviour {
 		{
 			return GetClipboard().GetNextLevelUp().GetMyDayIndex().ToString("D2") + "-" + GetClipboard().GetNextLevelUp().GetMyLevelIndex().ToString("D2");
 		}
+	}
+
+	public int GetDay()
+	{
+		return GetClipboard().GetNextLevelUp().GetMyDayIndex();
+	}
+
+	public int GetLevel()
+	{
+		return GetClipboard().GetNextLevelUp().GetMyLevelIndex();
 	}
 }

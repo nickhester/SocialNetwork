@@ -69,7 +69,7 @@ public class MainMenu : MonoBehaviour {
 			go.GetComponent<Renderer>().material = progressClearedImage;
 			go.name = "progressCleared";
 			SaveGame.DeleteAll();
-			MetricsLogger.Instance.LogCustomEvent("Settings", "ClearGameProgress", "");
+			MetricsLogger.Instance.LogCustomEvent("Settings.ClearGameProgress", -1, -1);
 		}
 
         // AUDIO
@@ -79,13 +79,13 @@ public class MainMenu : MonoBehaviour {
             {
                 SaveGame.SetAudioOn_sfx(false);
                 go.GetComponent<Renderer>().material = audio_off;
-				MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOffSFX", "MainMenu");
+				MetricsLogger.Instance.LogCustomEvent("Settings.TurnOffSFX", -1, -1);
             }
             else
             {
                 SaveGame.SetAudioOn_sfx(true);
                 go.GetComponent<Renderer>().material = audio_sfx;
-				MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOnSFX", "MainMenu");
+				MetricsLogger.Instance.LogCustomEvent("Settings.TurnOnSFX", -1, -1);
             }
         }
         else if (go.name == "button_music")
@@ -95,14 +95,14 @@ public class MainMenu : MonoBehaviour {
                 TurnMusicOff();
                 SaveGame.SetAudioOn_music(false);
                 go.GetComponent<Renderer>().material = audio_off;
-				MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOffMusic", "MainMenu");
+				MetricsLogger.Instance.LogCustomEvent("Settings.TurnOffMusic", -1, -1);
             }
             else
             {
                 TurnMusicOn();
                 SaveGame.SetAudioOn_music(true);
                 go.GetComponent<Renderer>().material = audio_music;
-				MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOnMusic", "MainMenu");
+				MetricsLogger.Instance.LogCustomEvent("Settings.TurnOnMusic", -1, -1);
             }
         }
         else if (go.name == "button_viewCredits")
@@ -130,7 +130,7 @@ public class MainMenu : MonoBehaviour {
 		versionTextObject.transform.localScale = versionTextObject.transform.localScale * 0.04f;
 		versionTextObject.transform.parent = gameObject.transform;
 		TextMesh myTextComponent = versionTextObject.GetComponent<TextMesh>();
-		myTextComponent.text = "Version 2.09";
+		myTextComponent.text = "Version 2.10";
 
 		// make sure audio icons check are accurately on or off
 		if (SaveGame.GetAudioOn_music() == false)

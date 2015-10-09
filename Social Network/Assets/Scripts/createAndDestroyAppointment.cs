@@ -96,10 +96,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 			numActions = numActionsTaken;
 
 			// log event to game manager
-			gameManager.Event_AppointmentEnd();
-			// log metrics
-			MetricsLogger.Instance.LogCustomEvent("Appointment", "NumActions", gameManager.FormatDayAndLevel(), numActionsTaken);
-			MetricsLogger.Instance.LogCustomEvent("Appointment", "NumStars", gameManager.FormatDayAndLevel(), st.GetScore());
+			gameManager.Event_AppointmentEnd(numActionsTaken, st.GetScore());
 		}
 
 		float waitTimeForClipboard = (levelSuccess ? 1.0f : 0.0f);
