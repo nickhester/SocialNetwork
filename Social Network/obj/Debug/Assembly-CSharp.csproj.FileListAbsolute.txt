@@ -23,7 +23,3 @@ C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\obj\Debug\Assembly-C
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\bin\Debug\soomla-wp-core.dll
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\bin\Debug\wp-store.dll
 C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb
-C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\bin\Debug\UnityEngine.Analytics.dll
-C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\bin\Debug\UnityEngine.Analytics.xml
-C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\bin\Debug\UnityEngine.Advertisements.dll
-C:\Users\Nick\Documents\GitHub\SocialNetwork\Social Network\Temp\bin\Debug\UnityEngine.Advertisements.xml
