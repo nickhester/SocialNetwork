@@ -160,7 +160,7 @@ public class NetworkManager : MonoBehaviour {
         {
             ReloadStartingState();
 			GameManager gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-			MetricsLogger.Instance.LogCustomEvent("RestartUsed", gm.GetDay(), gm.GetLevel());
+			MetricsLogger.Instance.LogCustomEvent("Appointment", "RestartUsed", gm.FormatDayAndLevel());
         }
     }
 

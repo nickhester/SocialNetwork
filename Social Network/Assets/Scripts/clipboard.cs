@@ -127,7 +127,7 @@ public class Clipboard : MonoBehaviour
 					StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeInPosition, showMeOutPosition)));
 				}
 				gameManager.Event_AppointmentStart();
-				MetricsLogger.Instance.LogCustomEvent("Appointment.RestartUsed", gameManager.GetDay(), gameManager.GetLevel());
+				MetricsLogger.Instance.LogCustomEvent("Appointment", "RestartUsed", gameManager.FormatDayAndLevel());
 			}
         }
         else
@@ -141,7 +141,7 @@ public class Clipboard : MonoBehaviour
                 // restart the level and set level as not winnable/trackable
                 createAndDestroyLevelRef.RestartLevel(true);
                 GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(100, true);
-				MetricsLogger.Instance.LogCustomEvent("Appointment.HelpMeUsed", gameManager.GetDay(), gameManager.GetLevel());
+				MetricsLogger.Instance.LogCustomEvent("Appointment", "HelpMeUsed", gameManager.FormatDayAndLevel());
                 // wait for callback
             }
         }
