@@ -38,15 +38,15 @@ namespace Soomla.Store
 		}
 		
 		protected override UpgradeVG _getCurrentUpgrade(VirtualGood good) {
-			SoomlaWpStore.domain.virtualGoods.UpgradeVG uvg = null;
+			string upgradeVGItemId = null;
             SoomlaWpStore.domain.virtualGoods.VirtualGood vg = (SoomlaWpStore.domain.virtualGoods.VirtualGood)SoomlaWpStore.data.StoreInfo.getVirtualItem(good.ItemId);
             if (vg is SoomlaWpStore.domain.virtualGoods.UpgradeVG)
             {
-                uvg = SoomlaWpStore.data.StorageManager.getVirtualGoodsStorage().getCurrentUpgrade(vg);
+                upgradeVGItemId = SoomlaWpStore.data.StorageManager.getVirtualGoodsStorage().getCurrentUpgrade(vg).getItemId();
             }
             
-			if (uvg!=null) {
-				return (UpgradeVG) StoreInfo.GetItemByItemId(uvg.GetId());
+			if (!string.IsNullOrEmpty(upgradeVGItemId)) {
+				return (UpgradeVG) StoreInfo.GetItemByItemId(upgradeVGItemId);
 			}
 
 			return null;
