@@ -11,7 +11,7 @@ public static class Upgrade {
 	public static void PurchaseUpgrade(int paymentOption)
 	{
 		// purchase upgrade through Soomla store
-		StoreInventory.BuyItem(SoomlaStoreAssets.UNLOCK_ALL_LEVELS_ID);
+		StoreInventory.BuyItem(SoomlaStoreAssets.UNLOCK_ALL_LEVELS_ITEM_ID);
 		MonoBehaviour.print("Purchasing upgrade!");
 
 #if UNITY_EDITOR
@@ -24,6 +24,7 @@ public static class Upgrade {
 
 	public static void PurchaseUpgrade_callback(bool success)
 	{
+		MonoBehaviour.print("Purchasing callback received");
 		SaveGame.SetCustomString("hasUpgraded", "true");
 		hasVerifiedUpgrade = true;
 	}

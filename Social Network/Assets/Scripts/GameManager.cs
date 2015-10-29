@@ -36,11 +36,14 @@ public class GameManager : MonoBehaviour {
 		{
 			SoomlaStore.Initialize(new SoomlaStoreAssets());
 		}
+
+		GooglePlayAPI.Initialize();
 	}
 
 	// soomla event - item purchased
 	public void onItemPurchased(PurchasableVirtualItem pvi, string payload)
 	{
+		print ("onItemPurchased called");
 		GameObject.FindObjectOfType<Calendar>().ReloadCalendar();
 		Upgrade.PurchaseUpgrade_callback(true);
 	}
