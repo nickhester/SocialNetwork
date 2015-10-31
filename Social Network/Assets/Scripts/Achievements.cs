@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GooglePlayGames;
+using UnityEngine.SocialPlatforms;
 
 public static class Achievements {
 
@@ -22,7 +24,10 @@ public static class Achievements {
 	{
 		int r = SaveGame.numStarsAcquired;
 		if (r > 0)
+		{
 			KongregateAPI.ReportStarCount(r);
+			GooglePlayAPI.ReportStarCount(r);
+		}
 		return r;
 	}
 
@@ -36,7 +41,9 @@ public static class Achievements {
 				return false;
 			}
 		}
+		// note: week is 0 based
 		KongregateAPI.ReportWeekCompleted(week);
+		GooglePlayAPI.ReportWeekCompleted(week);
 		return true;
 	}
 
@@ -45,7 +52,9 @@ public static class Achievements {
 	{
 		if (SaveGame.numStarsAcquiredPerWeek[week] == SaveGame.numStarsPossiblePerWeek[week])
 		{
+			// note: week is 0 based
 			KongregateAPI.ReportWeekPerfected(week);
+			GooglePlayAPI.ReportWeekPerfected(week);
 			return true;
 		}
 		return false;
@@ -57,6 +66,7 @@ public static class Achievements {
 		if (SaveGame.numDaysCompleted == SaveGame.numTotalDays)
 		{
 			KongregateAPI.ReportGameCompleted();
+			GooglePlayAPI.ReportGameCompleted();
 			return true;
 		}
 		return false;
@@ -71,6 +81,7 @@ public static class Achievements {
 				return false;
 		}
 		KongregateAPI.ReportGamePerfected();
+		GooglePlayAPI.ReportGamePerfected();
 		return true;
 	}
 
