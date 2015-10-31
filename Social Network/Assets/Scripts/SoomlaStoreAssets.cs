@@ -4,11 +4,12 @@ using System.Collections.Generic;
 public class SoomlaStoreAssets : IStoreAssets {
 
 	public const string UNLOCK_ALL_LEVELS_ITEM_ID = "unlock_all_levels_item_id";
-	public const string UNLOCK_ALL_LEVELS_PRODUCT_ID = "unlock_all_levels_product_id";
+	//public const string UNLOCK_ALL_LEVELS_PRODUCT_ID = "android.test.purchased";
+	public const string UNLOCK_ALL_LEVELS_PRODUCT_ID = "unlock_all_levels";
 
 	public int GetVersion()
 	{
-		return 1;
+		return 3;
 	}
 
 	public VirtualCurrency[] GetCurrencies()

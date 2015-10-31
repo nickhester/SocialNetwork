@@ -564,7 +564,7 @@ public class Calendar : MonoBehaviour {
 
 	void OnGUI()
 	{
-		if (Debug.isDebugBuild)
+		if (true)//Debug.isDebugBuild)
 		{
 			// make any day playable whether or not you've "unlocked" it
 			if (!isDebugActive)
