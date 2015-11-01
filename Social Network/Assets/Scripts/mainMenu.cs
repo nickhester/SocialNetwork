@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using GooglePlayGames;
+using UnityEngine.SocialPlatforms;
 
 public class MainMenu : MonoBehaviour {
 
@@ -71,6 +73,11 @@ public class MainMenu : MonoBehaviour {
 			SaveGame.DeleteAll();
 			MetricsLogger.Instance.LogCustomEvent("Settings", "ClearGameProgress", "");
 		}
+		else if (go.name == "button_leaderboard")
+		{
+			// show leaderboard UI
+			Social.ShowLeaderboardUI();
+		}
 
         // AUDIO
         else if (go.name == "button_sfx")
@@ -130,7 +137,7 @@ public class MainMenu : MonoBehaviour {
 		versionTextObject.transform.localScale = versionTextObject.transform.localScale * 0.04f;
 		versionTextObject.transform.parent = gameObject.transform;
 		TextMesh myTextComponent = versionTextObject.GetComponent<TextMesh>();
-		myTextComponent.text = "Version 2.18";
+		myTextComponent.text = "Version 2.19";
 
 		// make sure audio icons check are accurately on or off
 		if (SaveGame.GetAudioOn_music() == false)
