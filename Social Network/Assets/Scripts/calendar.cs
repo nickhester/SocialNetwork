@@ -570,7 +570,7 @@ public class Calendar : MonoBehaviour {
 			if (!isDebugActive)
 				GUI.color = new Color(0, 0, 0, 0);
 
-			if (GUI.Button(new Rect((Screen.width/2) - 50, Screen.height - 40, 100, 40), "*debug mode*\nall levels open"))
+			if (GUI.Button(new Rect((Screen.width/2) - 100, Screen.height - 80, 200, 80), "*debug mode*\nclick to open levels"))
 			{
 				debugActivateClickCount++;
 
