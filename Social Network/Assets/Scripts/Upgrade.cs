@@ -6,7 +6,8 @@ public static class Upgrade {
 
 	public static bool hasVerifiedUpgrade = false;
 	public static int dayLocked = 8;
-	public static int dayToWarn = 6;
+	public static int dayToRequestRating1 = 6;
+	public static int dayToRequestRating2 = 11;
 
 	public static void PurchaseUpgrade(int paymentOption)
 	{

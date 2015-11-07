@@ -237,7 +237,10 @@ public class NetworkManager : MonoBehaviour {
 		foreach (Person _ppl in GetAllPeople())
 		{
 			_ppl.m_Mood = Mood.Neutral;
-			_ppl.DisableOneClickMask();
+			if (currentLevelInfo.isOneClick)
+			{
+				_ppl.DisableOneClickMask();
+			}
 		}
         numActionsTaken = 0;
 		DeselectAllPeople();

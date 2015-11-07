@@ -38,70 +38,6 @@ public class NotificationManager : MonoBehaviour
 	private Vector2 screenPos_patients_5_4 = new Vector2(2.1f, 1.8f);
     private Vector2 screenPos_showMeButton = new Vector2(-4.3f, 6.0f);
 
-	/*
-	public Texture InstructionPaper_allSessionsCompleted;
-	public Texture InstructionPaper_allStarsEarned;
-	public Texture InstructionPaper_appointments;
-	public Texture InstructionPaper_completeFirstDay;
-	public Texture InstructionPaper_credits;
-	public Texture InstructionPaper_dark_background;
-	public Texture InstructionPaper_fridayEncouragement_0;
-	public Texture InstructionPaper_fridayEncouragement_1;
-	public Texture InstructionPaper_fridayEncouragement_2;
-	public Texture InstructionPaper_introduction;
-	public Texture InstructionPaper_introduction_2;
-	public Texture InstructionPaper_level2_0;
-	public Texture InstructionPaper_level2_1;
-	public Texture InstructionPaper_level2_2;
-	public Texture InstructionPaper_level2_3;
-	public Texture InstructionPaper_level2_4;
-	public Texture InstructionPaper_level3_0;
-	public Texture InstructionPaper_level3_1;
-	public Texture InstructionPaper_level_0;
-	public Texture InstructionPaper_level_1;
-	public Texture InstructionPaper_level_2;
-	public Texture InstructionPaper_level_3;
-	public Texture InstructionPaper_level_4;
-	public Texture InstructionPaper_level_5;
-	public Texture InstructionPaper_levelSuccess;
-	public Texture InstructionPaper_restartLevel_0;
-	public Texture InstructionPaper_restartLevel_1;
-	public Texture InstructionPaper_restartLevel_2;
-	public Texture InstructionPaper_returnToClipboard;
-	public Texture InstructionPaper_showMe;
-	public Texture InstructionPaper_special_cantTouch0;
-	public Texture InstructionPaper_special_cantTouch1;
-	public Texture InstructionPaper_special_cantTouch2;
-	public Texture InstructionPaper_special_fallToRed;
-	public Texture InstructionPaper_special_noLines;
-	public Texture InstructionPaper_special_oneClick;
-	public Texture InstructionPaper_tip2_1;
-	public Texture InstructionPaper_tip2_2;
-	public Texture InstructionPaper_tip2_3;
-	public Texture InstructionPaper_tip2_4;
-	public Texture InstructionPaper_tip2_5;
-	public Texture InstructionPaper_tip2_6;
-	public Texture InstructionPaper_tip2_7;
-	public Texture InstructionPaper_tip2_8;
-	public Texture InstructionPaper_tip2_9;
-	public Texture InstructionPaper_tip2_10;
-	public Texture InstructionPaper_tip2_11;
-	public Texture InstructionPaper_tip2_12;
-	public Texture InstructionPaper_tip2_13;
-	public Texture InstructionPaper_tip3_1;
-	public Texture InstructionPaper_tip3_2;
-	public Texture InstructionPaper_tip3_3;
-	public Texture InstructionPaper_tip3_4;
-	public Texture InstructionPaper_tip3_5;
-	public Texture InstructionPaper_tip3_6;
-	public Texture InstructionPaper_UpgradeChoice;
-	public Texture InstructionPaper_UpgradeFinal;
-	public Texture InstructionPaper_UpgradeWarning;
-	public Texture InstructionPaper_stripSmall;
-	public Texture InstructionPaper_stripMid;
-	public Texture InstructionPaper_stripLarge;
-	*/
-	
 	public GameObject InstructionPaper_canvas_allSessionsCompleted;
 	public GameObject InstructionPaper_canvas_allStarsEarned;
 	public GameObject InstructionPaper_canvas_appointments;
@@ -158,7 +94,7 @@ public class NotificationManager : MonoBehaviour
 	public GameObject InstructionPaper_canvas_tip3_6;
 	public GameObject InstructionPaper_canvas_UpgradeChoice;
 	public GameObject InstructionPaper_canvas_UpgradeFinal;
-	public GameObject InstructionPaper_canvas_UpgradeWarning;
+	public GameObject InstructionPaper_canvas_RateIt;
 
     void Awake()
     {
@@ -798,9 +734,9 @@ public class NotificationManager : MonoBehaviour
 		{
 			if (_indexWithinSet == 0)
 			{
-				m_notification.DisplayNotification(InstructionPaper_canvas_UpgradeWarning, true, true, 0);
+				m_notification.DisplayNotification(InstructionPaper_canvas_RateIt, true, true, 0);
 				RequestExclusiveControl();
-				AllowActions(new List<string> { "UpgradeButton_Yes", "UpgradeButton_KeepPlaying" }, new List<string>(), new List<string>());
+				AllowActions(new List<string> { "UpgradeButton_RateIt", "UpgradeButton_No" }, new List<string>(), new List<string>());
 			}
 			else
 			{
@@ -829,6 +765,20 @@ public class NotificationManager : MonoBehaviour
 				m_notification.DisplayNotification(InstructionPaper_canvas_UpgradeChoice, true, true, 2);
 				RequestExclusiveControl();
 				AllowActions(new List<string> { "UpgradeButton_Unlock", "UpgradeButton_Cancel" }, new List<string>(), new List<string>());
+			}
+			else
+			{
+				SaveGame.SetSeenInstruction(_setIndex, true);
+				EndNotification();
+			}
+		}
+		else if (_setIndex == 23)        // Upgrade Warning (duplicate) =====================================================
+		{
+			if (_indexWithinSet == 0)
+			{
+				m_notification.DisplayNotification(InstructionPaper_canvas_RateIt, true, true, 0);
+				RequestExclusiveControl();
+				AllowActions(new List<string> { "UpgradeButton_RateIt", "UpgradeButton_No" }, new List<string>(), new List<string>());
 			}
 			else
 			{

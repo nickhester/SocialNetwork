@@ -67,6 +67,11 @@ public class Calendar : MonoBehaviour {
 		{
 			MetricsLogger.Instance.LogCustomEvent("Game", "Unlock", "Cancel");
 		}
+		else if (go.transform.name.StartsWith("UpgradeButton_RateIt"))
+		{
+			MetricsLogger.Instance.LogCustomEvent("Game", "Rate", "Accept");
+			Application.OpenURL("market://details?id=com.hestergames.socialsessions");
+		}
 		else if (go.transform.name.StartsWith("Lock"))
 		{
 			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(21, true);
@@ -86,6 +91,7 @@ public class Calendar : MonoBehaviour {
 
 		float calendarDaySeparationVertical = 2.0f;
 		dayParent = new GameObject("dayParent");
+
 		for (int i = 0; i < daysToGenerate; i++)
 		{
 			// create calendar days in order
@@ -114,14 +120,17 @@ public class Calendar : MonoBehaviour {
 				_newCalDayComponent.SetNumStars(3);
 			}
 
+			bool isShowingLock = false;
+			if (i == Upgrade.dayLocked && !Upgrade.canVerifyUpgrade())
+			{
+				// if the unlock has not been purchased, show the lock icon
+				isShowingLock = true;
+				_newCalDayComponent.ShowLock();
+			}
+
 			if (i == 0 || SaveGame.GetHasCompletedAllRoundsInDay(i - 1))
 			{
-				if (i == Upgrade.dayLocked && !Upgrade.canVerifyUpgrade())
-				{
-					// if the unlock has not been purchased, show the lock icon
-					_newCalDayComponent.ShowLock();
-				}
-				else
+				if (!isShowingLock)
 				{
 					_newCalDayComponent.isPlayable = true;
 				}
@@ -520,9 +529,13 @@ public class Calendar : MonoBehaviour {
 		}
 
         // show notifications on specific days of the calendar view
-		if (furthestDayUnlocked == Upgrade.dayToWarn && !Upgrade.canVerifyUpgrade())
+		if (furthestDayUnlocked == Upgrade.dayToRequestRating1)
 		{
 			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(20, false);
+		}
+		if (furthestDayUnlocked == Upgrade.dayToRequestRating2)
+		{
+			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(23, false);
 		}
 		else if (furthestDayUnlocked == Upgrade.dayLocked && !Upgrade.canVerifyUpgrade())
 		{

@@ -22,6 +22,7 @@ public class Notification : MonoBehaviour
 	[SerializeField] private GameObject buttonPrefab_No;
 	[SerializeField] private GameObject buttonPrefab_KeepPlaying;
 	[SerializeField] private GameObject buttonPrefab_Cancel;
+	[SerializeField] private GameObject buttonPrefab_RateIt;
 	private Vector3 buttonPosition_unlock = new Vector3(0.0f, -0.5f);
 	private Vector3 buttonPosition_cancel = new Vector3(0.0f, -4.0f);
 	private Vector3 buttonPosition_yes = new Vector3(-2.4f, -3.2f);
@@ -86,12 +87,12 @@ public class Notification : MonoBehaviour
 
 		if (upgradeToShow == 0)	// upgrade warning
 		{
-			GameObject go_yes = Instantiate(buttonPrefab_Yes, new Vector3(buttonPosition_yes.x, buttonPosition_yes.y, activeNotification.transform.position.z - 0.1f), Quaternion.identity) as GameObject;
-			GameObject go_keepPlaying = Instantiate(buttonPrefab_KeepPlaying, new Vector3(buttonPosition_keepPlaying.x, buttonPosition_keepPlaying.y, activeNotification.transform.position.z - 0.1f), Quaternion.identity) as GameObject;
-			go_yes.transform.SetParent(activeNotification.transform);
-			go_keepPlaying.transform.SetParent(activeNotification.transform);
-			go_yes.name = RemoveStringFromEnd(go_yes.name, cloneString);
-			go_keepPlaying.name = RemoveStringFromEnd(go_keepPlaying.name, cloneString);
+			GameObject go_rateIt = Instantiate(buttonPrefab_RateIt, new Vector3(buttonPosition_yes.x, buttonPosition_yes.y, activeNotification.transform.position.z - 0.1f), Quaternion.identity) as GameObject;
+			GameObject go_no = Instantiate(buttonPrefab_No, new Vector3(buttonPosition_no.x, buttonPosition_no.y, activeNotification.transform.position.z - 0.1f), Quaternion.identity) as GameObject;
+			go_rateIt.transform.SetParent(activeNotification.transform);
+			go_no.transform.SetParent(activeNotification.transform);
+			go_rateIt.name = RemoveStringFromEnd(go_rateIt.name, cloneString);
+			go_no.name = RemoveStringFromEnd(go_no.name, cloneString);
 		}
 		else if (upgradeToShow == 1) // upgrade final
 		{
