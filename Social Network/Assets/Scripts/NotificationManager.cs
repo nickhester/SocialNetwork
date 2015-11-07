@@ -37,8 +37,128 @@ public class NotificationManager : MonoBehaviour
 	private Vector2 screenPos_patients_5_3 = new Vector2(-0.7f, 4.3f);
 	private Vector2 screenPos_patients_5_4 = new Vector2(2.1f, 1.8f);
     private Vector2 screenPos_showMeButton = new Vector2(-4.3f, 6.0f);
-    private Vector2 screenPos_smallStripBelowPeople = new Vector2(0.0f, -2.1f);
-    private Vector2 screenPos_largeStripBelowPeople = new Vector2(0.0f, -4.5f);
+
+	/*
+	public Texture InstructionPaper_allSessionsCompleted;
+	public Texture InstructionPaper_allStarsEarned;
+	public Texture InstructionPaper_appointments;
+	public Texture InstructionPaper_completeFirstDay;
+	public Texture InstructionPaper_credits;
+	public Texture InstructionPaper_dark_background;
+	public Texture InstructionPaper_fridayEncouragement_0;
+	public Texture InstructionPaper_fridayEncouragement_1;
+	public Texture InstructionPaper_fridayEncouragement_2;
+	public Texture InstructionPaper_introduction;
+	public Texture InstructionPaper_introduction_2;
+	public Texture InstructionPaper_level2_0;
+	public Texture InstructionPaper_level2_1;
+	public Texture InstructionPaper_level2_2;
+	public Texture InstructionPaper_level2_3;
+	public Texture InstructionPaper_level2_4;
+	public Texture InstructionPaper_level3_0;
+	public Texture InstructionPaper_level3_1;
+	public Texture InstructionPaper_level_0;
+	public Texture InstructionPaper_level_1;
+	public Texture InstructionPaper_level_2;
+	public Texture InstructionPaper_level_3;
+	public Texture InstructionPaper_level_4;
+	public Texture InstructionPaper_level_5;
+	public Texture InstructionPaper_levelSuccess;
+	public Texture InstructionPaper_restartLevel_0;
+	public Texture InstructionPaper_restartLevel_1;
+	public Texture InstructionPaper_restartLevel_2;
+	public Texture InstructionPaper_returnToClipboard;
+	public Texture InstructionPaper_showMe;
+	public Texture InstructionPaper_special_cantTouch0;
+	public Texture InstructionPaper_special_cantTouch1;
+	public Texture InstructionPaper_special_cantTouch2;
+	public Texture InstructionPaper_special_fallToRed;
+	public Texture InstructionPaper_special_noLines;
+	public Texture InstructionPaper_special_oneClick;
+	public Texture InstructionPaper_tip2_1;
+	public Texture InstructionPaper_tip2_2;
+	public Texture InstructionPaper_tip2_3;
+	public Texture InstructionPaper_tip2_4;
+	public Texture InstructionPaper_tip2_5;
+	public Texture InstructionPaper_tip2_6;
+	public Texture InstructionPaper_tip2_7;
+	public Texture InstructionPaper_tip2_8;
+	public Texture InstructionPaper_tip2_9;
+	public Texture InstructionPaper_tip2_10;
+	public Texture InstructionPaper_tip2_11;
+	public Texture InstructionPaper_tip2_12;
+	public Texture InstructionPaper_tip2_13;
+	public Texture InstructionPaper_tip3_1;
+	public Texture InstructionPaper_tip3_2;
+	public Texture InstructionPaper_tip3_3;
+	public Texture InstructionPaper_tip3_4;
+	public Texture InstructionPaper_tip3_5;
+	public Texture InstructionPaper_tip3_6;
+	public Texture InstructionPaper_UpgradeChoice;
+	public Texture InstructionPaper_UpgradeFinal;
+	public Texture InstructionPaper_UpgradeWarning;
+	public Texture InstructionPaper_stripSmall;
+	public Texture InstructionPaper_stripMid;
+	public Texture InstructionPaper_stripLarge;
+	*/
+	
+	public GameObject InstructionPaper_canvas_allSessionsCompleted;
+	public GameObject InstructionPaper_canvas_allStarsEarned;
+	public GameObject InstructionPaper_canvas_appointments;
+	public GameObject InstructionPaper_canvas_completeFirstDay;
+	public GameObject InstructionPaper_canvas_credits;
+	public GameObject InstructionPaper_canvas_fridayEncouragement_0;
+	public GameObject InstructionPaper_canvas_fridayEncouragement_1;
+	public GameObject InstructionPaper_canvas_fridayEncouragement_2;
+	public GameObject InstructionPaper_canvas_introduction;
+	public GameObject InstructionPaper_canvas_introduction_2;
+	public GameObject InstructionPaper_canvas_level2_0;
+	public GameObject InstructionPaper_canvas_level2_1;
+	public GameObject InstructionPaper_canvas_level2_2;
+	public GameObject InstructionPaper_canvas_level2_3;
+	public GameObject InstructionPaper_canvas_level2_4;
+	public GameObject InstructionPaper_canvas_level3_0;
+	public GameObject InstructionPaper_canvas_level3_1;
+	public GameObject InstructionPaper_canvas_level_0;
+	public GameObject InstructionPaper_canvas_level_1;
+	public GameObject InstructionPaper_canvas_level_2;
+	public GameObject InstructionPaper_canvas_level_3;
+	public GameObject InstructionPaper_canvas_level_4;
+	public GameObject InstructionPaper_canvas_level_5;
+	public GameObject InstructionPaper_canvas_levelSuccess;
+	public GameObject InstructionPaper_canvas_restartLevel_0;
+	public GameObject InstructionPaper_canvas_restartLevel_1;
+	public GameObject InstructionPaper_canvas_restartLevel_2;
+	public GameObject InstructionPaper_canvas_returnToClipboard;
+	public GameObject InstructionPaper_canvas_showMe;
+	public GameObject InstructionPaper_canvas_special_cantTouch0;
+	public GameObject InstructionPaper_canvas_special_cantTouch1;
+	public GameObject InstructionPaper_canvas_special_cantTouch2;
+	public GameObject InstructionPaper_canvas_special_fallToRed;
+	public GameObject InstructionPaper_canvas_special_noLines;
+	public GameObject InstructionPaper_canvas_special_oneClick;
+	public GameObject InstructionPaper_canvas_tip2_1;
+	public GameObject InstructionPaper_canvas_tip2_2;
+	public GameObject InstructionPaper_canvas_tip2_3;
+	public GameObject InstructionPaper_canvas_tip2_4;
+	public GameObject InstructionPaper_canvas_tip2_5;
+	public GameObject InstructionPaper_canvas_tip2_6;
+	public GameObject InstructionPaper_canvas_tip2_7;
+	public GameObject InstructionPaper_canvas_tip2_8;
+	public GameObject InstructionPaper_canvas_tip2_9;
+	public GameObject InstructionPaper_canvas_tip2_10;
+	public GameObject InstructionPaper_canvas_tip2_11;
+	public GameObject InstructionPaper_canvas_tip2_12;
+	public GameObject InstructionPaper_canvas_tip2_13;
+	public GameObject InstructionPaper_canvas_tip3_1;
+	public GameObject InstructionPaper_canvas_tip3_2;
+	public GameObject InstructionPaper_canvas_tip3_3;
+	public GameObject InstructionPaper_canvas_tip3_4;
+	public GameObject InstructionPaper_canvas_tip3_5;
+	public GameObject InstructionPaper_canvas_tip3_6;
+	public GameObject InstructionPaper_canvas_UpgradeChoice;
+	public GameObject InstructionPaper_canvas_UpgradeFinal;
+	public GameObject InstructionPaper_canvas_UpgradeWarning;
 
     void Awake()
     {
@@ -142,15 +262,13 @@ public class NotificationManager : MonoBehaviour
             if (_indexWithinSet == 0)
             {
                 // introduction screen
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_introduction"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_introduction, true, true);
             }
             else if (_indexWithinSet == 1)
             {
                 // introduction screen 2
                 m_finger.SendFinger(new Vector2(-1.8f, 2.5f));
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_introduction 2"), new Vector2(0.0f, -4.0f), false, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_introduction_2, false, false);
                 RequestExclusiveControl();
                 AllowActions(new List<string> { "1 Monday" }, new List<string>(), new List<string>());
             }
@@ -165,8 +283,7 @@ public class NotificationManager : MonoBehaviour
             if (_indexWithinSet == 0)
             {
                 m_finger.SendFinger(new Vector2(-3.5f, 2.3f));
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_appointments"), new Vector2(0.0f, -1.5f), false, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_appointments, false, false);
                 RequestExclusiveControl();
                 AllowActions(new List<string> { "appointment 0" }, new List<string>(), new List<string>());
             }
@@ -180,40 +297,34 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level_0"), screenPos_smallStripBelowPeople, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_level_0, true, true);
             }
             else if (_indexWithinSet == 1)
             {
                 m_finger.SendFinger(screenPos_patients_3_2);
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level_1"), screenPos_smallStripBelowPeople, false, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_level_1, false, false);
                 RequestExclusiveControl();
                 AllowActions(new List<string> { "person 2" }, new List<string>(), new List<string>());
             }
             else if (_indexWithinSet == 2)
             {
                 m_finger.SendFinger(screenPos_greenButton);
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level_2"), screenPos_smallStripBelowPeople, false, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_level_2, false, false);
                 AllowActions(new List<string> { "Button_green" }, new List<string>(), new List<string>());
             }
             else if (_indexWithinSet == 3)
             {
                 m_finger.SendFingerAway(false);
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level_3"), screenPos_smallStripBelowPeople, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_level_3, true, true);
                 EndExclusiveControl();
             }
             else if (_indexWithinSet == 4)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level_4"), screenPos_smallStripBelowPeople, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_level_4, true, true);
             }
             else if (_indexWithinSet == 5)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level_5"), screenPos_smallStripBelowPeople, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_level_5, true, true);
             }
             else if (_indexWithinSet == 6)
             {
@@ -236,8 +347,7 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_levelSuccess"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_levelSuccess, true, true);
             }
             else
             {
@@ -249,8 +359,7 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_returnToClipboard"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_returnToClipboard, true, true);
             }
             else
             {
@@ -262,22 +371,19 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level2_0"), screenPos_smallStripBelowPeople, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_level2_0, true, true);
             }
             else if (_indexWithinSet == 1)
             {
                 m_finger.SendFinger(screenPos_patients_3_2);
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level2_1"), screenPos_smallStripBelowPeople, false, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_level2_1, false, false);
                 RequestExclusiveControl();
                 AllowActions(new List<string> { "person 2" }, new List<string>(), new List<string>());
             }
             else if (_indexWithinSet == 2)
             {
                 m_finger.SendFingerAway(false);
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level2_2"), screenPos_largeStripBelowPeople, true, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_level2_2, true, true);
                 EndExclusiveControl();
             }
             else if (_indexWithinSet == 3)
@@ -289,14 +395,12 @@ public class NotificationManager : MonoBehaviour
             else if (_indexWithinSet == 4)
             {
                 m_finger.SendFingerAway(false);
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level2_3"), screenPos_smallStripBelowPeople, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_level2_3, true, true);
                 EndExclusiveControl();
             }
             else if (_indexWithinSet == 5)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level2_4"), screenPos_smallStripBelowPeople, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_level2_4, true, true);
             }
             else if (_indexWithinSet == 6)
             {
@@ -331,8 +435,7 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_showMe"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_showMe, true, true);
             }
             else if (_indexWithinSet == 1)
             {
@@ -350,8 +453,7 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level3_0"), screenPos_smallStripBelowPeople, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_level3_0, true, true);
             }
             else if (_indexWithinSet == 1)
             {
@@ -362,8 +464,7 @@ public class NotificationManager : MonoBehaviour
             else if (_indexWithinSet == 2)
             {
                 m_finger.SendFingerAway(false);
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_level3_1"), screenPos_largeStripBelowPeople, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_level3_1, true, true);
                 EndExclusiveControl();
             }
             else
@@ -376,21 +477,18 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip2_1"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_1, true, true);
             }
             else if (_indexWithinSet == 1)
             {
-                m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_tip2_2"), screenPos_smallStripBelowPeople, false, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_2, false, false);
 				m_finger.SendFinger(screenPos_patients_4_1);
 				RequestExclusiveControl();
 				AllowActions(new List<string> { "person 1" }, new List<string>(), new List<string>());
             }
             else if (_indexWithinSet == 2)
             {
-                m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_tip2_3"), screenPos_smallStripBelowPeople, false, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_3, false, false);
 				m_finger.SendFinger(screenPos_patients_4_2);
 				AllowActions(new List<string> { "person 2" }, new List<string>(), new List<string>());
             }
@@ -401,62 +499,52 @@ public class NotificationManager : MonoBehaviour
 			}
             else if (_indexWithinSet == 4)
             {
-                m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_tip2_4"), screenPos_smallStripBelowPeople, false, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_4, false, false);
 				m_finger.SendFinger(screenPos_patients_4_3);
 				AllowActions(new List<string> { "person 3" }, new List<string>(), new List<string>());
 
             }
             else if (_indexWithinSet == 5)
             {
-                m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_tip2_5"), screenPos_smallStripBelowPeople, false, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_5, false, false);
 				m_finger.SendFinger(screenPos_redButton);
 				AllowActions(new List<string> { "Button_red" }, new List<string>(), new List<string>());
             }
             else if (_indexWithinSet == 6)
             {
-                m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_tip2_6"), screenPos_smallStripBelowPeople, false, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_6, false, false);
 				m_finger.SendFinger(screenPos_patients_4_0);
 				AllowActions(new List<string> { "person 0" }, new List<string>(), new List<string>());
             }
             else if (_indexWithinSet == 7)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip2_7"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_7, true, true);
 				m_finger.SendFingerAway(false);
 				EndExclusiveControl();
             }
             else if (_indexWithinSet == 8)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip2_8"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_8, true, true);
             }
             else if (_indexWithinSet == 9)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip2_9"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_9, true, true);
             }
             else if (_indexWithinSet == 10)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip2_10"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_10, true, true);
             }
             else if (_indexWithinSet == 11)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip2_11"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_11, true, true);
             }
             else if (_indexWithinSet == 12)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip2_12"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_12, true, true);
             }
             else if (_indexWithinSet == 13)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip2_13"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_13, true, true);
             }
             else
             {
@@ -468,18 +556,15 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_fridayEncouragement_0"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_fridayEncouragement_0, true, true);
             }
             else if (_indexWithinSet == 1)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_fridayEncouragement_1"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_fridayEncouragement_1, true, true);
             }
             else if (_indexWithinSet == 2)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_fridayEncouragement_2"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_fridayEncouragement_2, true, true);
             }
             else
             {
@@ -491,18 +576,15 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip3_1"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip3_1, true, true);
             }
             else if (_indexWithinSet == 1)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip3_2"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip3_2, true, true);
             }
             else if (_indexWithinSet == 2)
             {
-                m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_tip3_3"), screenPos_smallStripBelowPeople, false, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip3_3, false, false);
 				m_finger.SendFinger(screenPos_patients_5_3);
 				RequestExclusiveControl();
 				AllowActions(new List<string> { "person 3" }, new List<string>(), new List<string>());
@@ -524,15 +606,13 @@ public class NotificationManager : MonoBehaviour
 			}
             else if (_indexWithinSet == 6)
             {
-                m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_tip3_4"), screenPos_smallStripBelowPeople, false, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip3_4, false, false);
 				m_finger.SendFinger(screenPos_patients_5_1);
 				AllowActions(new List<string> { "person 1" }, new List<string>(), new List<string>());
             }
             else if (_indexWithinSet == 7)
             {
-                m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_tip3_5"), screenPos_smallStripBelowPeople, true, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip3_5, true, false);
 				m_finger.SendFingerAway(false);
 				EndExclusiveControl();
 			}
@@ -562,8 +642,7 @@ public class NotificationManager : MonoBehaviour
 			}
             else if (_indexWithinSet == 12)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_tip3_6"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_tip3_6, true, true);
 				EndExclusiveControl();
             }
             else if (_indexWithinSet == 13)
@@ -587,18 +666,15 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_special_cantTouch0"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_special_cantTouch0, true, true);
             }
 			else if (_indexWithinSet == 1)
 			{
-				m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_special_cantTouch1"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_special_cantTouch1, true, true);
 			}
 			else if (_indexWithinSet == 2)
 			{
-				m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_special_cantTouch2"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_special_cantTouch2, true, true);
 			}
             else
             {
@@ -610,8 +686,7 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_special_fallToRed"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_special_fallToRed, true, true);
             }
             else
             {
@@ -623,8 +698,7 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_special_oneClick"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_special_oneClick, true, true);
             }
             else
             {
@@ -636,8 +710,7 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_special_noLines"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_special_noLines, true, true);
             }
             else
             {
@@ -649,8 +722,7 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_allSessionsCompleted"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_allSessionsCompleted, true, true);
             }
             else
             {
@@ -662,8 +734,7 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_allStarsEarned"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_allStarsEarned, true, true);
             }
             else
             {
@@ -675,8 +746,7 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_credits"), new Vector2(0.0f, -19.2f), true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_credits, true, true);
             }
             else
             {
@@ -688,18 +758,15 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_restartLevel_0"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_restartLevel_0, true, true);
             }
             else if (_indexWithinSet == 1)
             {
-                m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_restartLevel_1"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_restartLevel_1, true, true);
             }
             else if (_indexWithinSet == 2)
             {
-                m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_restartLevel_2"), Vector2.zero, true, false);
+				m_notification.DisplayNotification(InstructionPaper_canvas_restartLevel_2, true, false);
 				m_finger.SendFinger(GameObject.Find("restartLevel"));
             }
             else
@@ -713,8 +780,7 @@ public class NotificationManager : MonoBehaviour
 		{
 			if (_indexWithinSet == 0)
 			{
-				m_notification.DisplayNotification(
-                    Resources.Load<Texture>("textures/instructions/Instruction Paper_completeFirstDay"), Vector2.zero, true, true);
+				m_notification.DisplayNotification(InstructionPaper_canvas_completeFirstDay, true, true);
 			}
 			else if (_indexWithinSet == 1)
 			{
@@ -732,8 +798,7 @@ public class NotificationManager : MonoBehaviour
 		{
 			if (_indexWithinSet == 0)
 			{
-				m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_UpgradeWarning"), Vector2.zero, true, true, 0);
+				m_notification.DisplayNotification(InstructionPaper_canvas_UpgradeWarning, true, true, 0);
 				RequestExclusiveControl();
 				AllowActions(new List<string> { "UpgradeButton_Yes", "UpgradeButton_KeepPlaying" }, new List<string>(), new List<string>());
 			}
@@ -747,8 +812,7 @@ public class NotificationManager : MonoBehaviour
 		{
 			if (_indexWithinSet == 0)
 			{
-				m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_UpgradeFinal"), Vector2.zero, true, true, 1);
+				m_notification.DisplayNotification(InstructionPaper_canvas_UpgradeFinal, true, true, 1);
 				RequestExclusiveControl();
 				AllowActions(new List<string> { "UpgradeButton_Yes", "UpgradeButton_No" }, new List<string>(), new List<string>());
 			}
@@ -762,8 +826,7 @@ public class NotificationManager : MonoBehaviour
 		{
 			if (_indexWithinSet == 0)
 			{
-				m_notification.DisplayNotification(
-					Resources.Load<Texture>("textures/instructions/Instruction Paper_UpgradeChoice"), Vector2.zero, true, true, 2);
+				m_notification.DisplayNotification(InstructionPaper_canvas_UpgradeChoice, true, true, 2);
 				RequestExclusiveControl();
 				AllowActions(new List<string> { "UpgradeButton_Unlock", "UpgradeButton_Cancel" }, new List<string>(), new List<string>());
 			}
