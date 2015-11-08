@@ -44,14 +44,18 @@ public class GameManager : MonoBehaviour {
 	public void onItemPurchased(PurchasableVirtualItem pvi, string payload)
 	{
 		print ("onItemPurchased called");
-		GameObject.FindObjectOfType<Calendar>().ReloadCalendar();
+		Calendar c = GameObject.FindObjectOfType<Calendar>();
+		if (c != null)
+		{
+			c.ReloadCalendar();
+		}
 		Upgrade.PurchaseUpgrade_callback(true);
 	}
 
 	// soomla event - restore transactions
 	public void onRestoreTransactionsFinished(bool success)
 	{
-
+		print("onRestoreTransactionsFinished called");
 	}
 
 	void RestartSessionMetrics()

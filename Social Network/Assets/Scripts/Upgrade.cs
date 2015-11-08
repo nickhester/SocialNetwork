@@ -30,6 +30,11 @@ public static class Upgrade {
 		hasVerifiedUpgrade = true;
 	}
 
+	public static void RestorePurchase_callback(bool success)
+	{
+		MonoBehaviour.print("Restore Purchase callback received");
+	}
+
 	public static bool canVerifyUpgrade()
 	{
 		if (!hasVerifiedUpgrade)
