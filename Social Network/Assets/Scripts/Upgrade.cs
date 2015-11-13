@@ -26,7 +26,7 @@ public static class Upgrade {
 	public static void PurchaseUpgrade_callback(bool success)
 	{
 		MonoBehaviour.print("Purchasing callback received");
-		SaveGame.SetCustomString("hasUpgraded", "true");
+		SaveGame.SetHasUpgraded(true);
 		hasVerifiedUpgrade = true;
 	}
 
@@ -47,7 +47,7 @@ public static class Upgrade {
 	public static bool VerifyUpgrade()
 	{
 		// TODO: verify upgrade from app store
-		if (SaveGame.GetCustomString("hasUpgraded") == "true")
+		if (SaveGame.GetHasUpgraded())
 		{
 			hasVerifiedUpgrade = true;
 			return true;

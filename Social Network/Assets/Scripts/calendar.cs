@@ -82,6 +82,9 @@ public class Calendar : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		// when the calendar loads, rebuild the save data
+		GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().gameDataBlob.ClearDayStarCount();
+
 		// position audio icons on edge of screen
 		Vector3 audioIconPositions = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * audioButtonScreenPos_X, Screen.height * audioButtonScreenPos_Y));
 		GameObject iconAudio = GameObject.Find("audioToggle_music");

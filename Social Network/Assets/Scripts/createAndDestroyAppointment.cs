@@ -153,6 +153,8 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 				SaveGame.SetHasCompletedAllRoundsInDay(currentDayIndex, true);
 			}
 			SaveGame.UpdateGameStats();
+
+			gameManager.UpdateCloudSaveFromLocal();
 			
 			hasDisplayedLevelEndScreen = true;
 		}

@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.IO;
+using System;
 using Soomla.Store;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 
 public class GameManager : MonoBehaviour {
 
@@ -8,6 +14,10 @@ public class GameManager : MonoBehaviour {
 	private int numAppointmentsThisSession = 0;
 	private Clipboard currentClipboard;
 	private float currentGameSessionTime = 0.0f;
+	
+	public GameDataBlob gameDataBlob;
+	public int pendingCloudSaveOperation = 0;	// 1 == load from cloud, 2 == save to cloud
+	byte[] testByteArray = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
 	void Start()
 	{
@@ -37,7 +47,21 @@ public class GameManager : MonoBehaviour {
 			SoomlaStore.Initialize(new SoomlaStoreAssets());
 		}
 
+		gameDataBlob = new GameDataBlob();
+		gameDataBlob.Init();
+
+		// initialize google play to cloud save
+		PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+			.EnableSavedGames()
+			.Build();
+		PlayGamesPlatform.InitializeInstance(config);
+		PlayGamesPlatform.DebugLogEnabled = true;
+		PlayGamesPlatform.Activate();
+#if !UNITY_EDITOR
 		GooglePlayAPI.Initialize();
+#endif
+		// callback is managed in GooglePlayAPI 
+		pendingCloudSaveOperation = 1;
 	}
 
 	// soomla event - item purchased
@@ -131,6 +155,9 @@ public class GameManager : MonoBehaviour {
 
 		MetricsLogger.Instance.LogCustomEvent("Appointment", "AppointmentLength", FormatDayAndLevel(), appointmentDuration);
 		MetricsLogger.Instance.LogProgressionEvent_Complete(FormatDayAndLevel());
+
+		// add to total accumulated time
+		SaveGame.SetTotalAppointmentTime(SaveGame.GetTotalAppointmentTime() + appointmentDuration);
 	}
 
 	#endregion
@@ -164,7 +191,6 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-
 	public string FormatDayAndLevel()
 	{
 		if (GetClipboard() == null)
@@ -175,5 +201,76 @@ public class GameManager : MonoBehaviour {
 		{
 			return GetClipboard().GetNextLevelUp().GetMyDayIndex().ToString("D2") + "-" + GetClipboard().GetNextLevelUp().GetMyLevelIndex().ToString("D2");
 		}
+	}
+
+	public void UpdateLocalSaveDataFromBlob()
+	{
+		SaveGame.CloudSaveToLocalSave(gameDataBlob);
+	}
+
+	public void UpdateCloudSaveFromLocal()
+	{
+		pendingCloudSaveOperation = 2;
+		gameDataBlob.UpdateToSend();
+		SaveGame.LocalSaveToCloudSave(gameDataBlob);
+	}
+
+	public void callback_OnSavedGameOpened(GooglePlayGames.BasicApi.SavedGame.ISavedGameMetadata game)
+	{
+		if (pendingCloudSaveOperation == 1)
+		{
+			// ready to load from cloud
+			GooglePlayAPI.LoadGameData(game);
+		}
+		else if (pendingCloudSaveOperation == 2)
+		{
+			// ready to save to cloud
+			byte[] byteArrayToSend = ToByteArray(gameDataBlob);
+			GooglePlayAPI.SaveGame(game, byteArrayToSend, System.TimeSpan.FromSeconds(gameDataBlob.totalAppointmentTime));
+		}
+	}
+
+	public void callback_OnSavedGameDataRead(byte[] data)
+	{
+		// read byte data
+		gameDataBlob = FromByteArray(data) as GameDataBlob;
+
+		if (gameDataBlob != null)
+		{
+			print("gameDataBlob from data is NOT null");
+		}
+		else
+		{
+			print("gameDataBlob from data is null");
+		}
+
+		UpdateLocalSaveDataFromBlob();
+	}
+
+	byte[] ToByteArray(object source)
+	{
+		/*
+		BinaryFormatter formatter = new BinaryFormatter();
+		using (MemoryStream stream = new MemoryStream())
+		{
+			formatter.Serialize(stream, source);
+			return stream.ToArray();
+		}
+		*/
+
+		return testByteArray;
+	}
+
+	object FromByteArray(byte[] byteArrayInput)
+	{
+		/*
+		BinaryFormatter formatter = new BinaryFormatter();
+		using (MemoryStream stream = new MemoryStream(byteArrayInput))
+		{
+			return formatter.Deserialize(stream);
+		}
+		*/
+
+		return new object();
 	}
 }

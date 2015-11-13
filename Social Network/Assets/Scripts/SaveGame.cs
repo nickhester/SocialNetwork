@@ -91,6 +91,8 @@ public static class SaveGame {
 	{
 		SaveData.SetInt("hasSeenInstruction" + instructionIndex, (hasSeen ? 1 : 0));
 		SaveAllData();
+
+		GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().gameDataBlob.UpdateSeenInstructions(instructionIndex);
 	}
 
 	public static bool GetSeenInstruction(int instructionIndex)
@@ -113,10 +115,13 @@ public static class SaveGame {
 	{
 		SaveData.SetInt(FormatRoundString(day, round) + "_starCount", count);
 		SaveAllData();
+
+		GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().gameDataBlob.UpdateStarCountDay(day, round, count);
 	}
 	
 	public static int GetRoundStarCount(int day, int round)
 	{
+		bool hasIt = SaveData.HasKey(FormatRoundString(day, round) + "_starCount");
 		return SaveData.GetInt(FormatRoundString(day, round) + "_starCount");
 	}
 
@@ -190,6 +195,39 @@ public static class SaveGame {
 		SaveAllData();
 	}
 
+	public static void SetTotalAppointmentTime(float t)
+	{
+		SaveData.SetFloat("accumulatedAppointmentTime", t);
+		SaveAllData();
+	}
+
+	public static float GetTotalAppointmentTime()
+	{
+		if (SaveData.HasKey("accumulatedAppointmentTime"))
+		{
+			return SaveData.GetFloat("accumulatedAppointmentTime");
+		}
+		else
+		{
+			return 0.0f;
+		}
+	}
+
+	public static void SetHasUpgraded(bool hasUpgraded)
+	{
+		if (hasUpgraded)
+		{
+			GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().gameDataBlob.hasUnlockedFullGame = true;
+		}
+
+		SaveData.SetInt("hasUpgraded", (hasUpgraded ? 1 : 0));
+	}
+
+	public static bool GetHasUpgraded()
+	{
+		return ((SaveData.GetInt("hasUpgraded") == 1) ? true : false);
+	}
+
 	// debug only
 	public static void SetCustomString(string key, string value)
 	{
@@ -200,5 +238,50 @@ public static class SaveGame {
 	public static string GetCustomString(string key)
 	{
 		return SaveData.GetString(key);
+	}
+	
+	public static void LocalSaveToCloudSave(GameDataBlob blob)
+	{
+		
+		// send to google saved game
+	}
+	
+	public static void CloudSaveToLocalSave(GameDataBlob blob)
+	{
+		if (blob == null)
+		{
+			Debug.LogError("Incoming save data is null or unreadable. Save updated aborting.");
+			return;
+		}
+
+		// update upgraded status if it's not already
+		if (blob.hasUnlockedFullGame && !GetHasUpgraded())
+		{
+			SetHasUpgraded(true);
+		}
+
+		// update instruction status if it's less
+		for (int i = 0; i < blob.seenInstructions.Count; i++)
+		{
+			if (GetSeenInstruction(i) == false && blob.seenInstructions[i] == true)
+			{
+				SetSeenInstruction(i, true);
+			}
+		}
+
+		// update appointment time
+		if (blob.totalAppointmentTime > GetTotalAppointmentTime())
+		{
+			SetTotalAppointmentTime(blob.totalAppointmentTime);
+		}
+
+		// update star statuses
+		for (int i = 0; i < blob.starCountDay.Count; i++)
+		{
+			for (int j = 0; j < blob.starCountDay[i].Count; j++)
+			{
+				SetRoundStarCount(i, j, blob.starCountDay[i][j]);
+			}
+		}
 	}
 }

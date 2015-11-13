@@ -26,6 +26,7 @@ public class CalendarDay : MonoBehaviour {
 	private DayOfTheWeek dayOfTheWeek;
 	private bool hasGottenAllStars = false;
 	public bool hasPassedAllRounds = false;
+	private GameManager gameManager;
 
 	// difficulty settings to pass to day creator
 	private int percentVeryEasy = 0;
@@ -66,7 +67,10 @@ public class CalendarDay : MonoBehaviour {
 
 	#region StartAndUpdate
 
-	void Init () {
+	void Init ()
+	{
+		GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+
 		// create object for the calendar day number
 		GameObject _textNumber = Instantiate(m_text1, transform.position, Quaternion.identity) as GameObject;
 		_textNumber.transform.localScale *= 0.065f;
@@ -107,6 +111,9 @@ public class CalendarDay : MonoBehaviour {
 				numAppointmentsCompleted++;
 				currentNumStars += thisRoundNumStars;
 			}
+			
+			// generate save game data for blob
+			gameManager.gameDataBlob.AddDayStarCount(dayIndex_internal, i, thisRoundNumStars);
 		}
 		string stringToDisplay = "";
 		if (isPlayable && numAppointmentsCompleted > 0)

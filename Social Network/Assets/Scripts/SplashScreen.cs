@@ -39,11 +39,9 @@ public class SplashScreen : MonoBehaviour {
 			{
 				break;
 			}
-			print(overlay.color.a);
 			yield return null;
 		}
 
-		print("LOADING LEVEL");
 		Application.LoadLevel("Scene_MainMenu");
 	}
 }
