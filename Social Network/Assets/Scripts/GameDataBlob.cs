@@ -7,8 +7,13 @@ using System.Runtime.Serialization;
 [System.Serializable]
 public class GameDataBlob
 {
-	public List<bool> seenInstructions;
-	public List<List<int>> starCountDay;
+	// HACK: these values are hard coded, and will need to be updated if they change
+	const int numInstructions = 101;
+	const int numDaysOnCalendar = 30;
+	const int numAppointmentsPerDayMax = 5;
+
+	public bool[] seenInstructions = new bool[numInstructions];
+	public int[,] starCountDay = new int[30, numAppointmentsPerDayMax];
 	public float totalAppointmentTime;
 	public bool hasUnlockedFullGame;
 
@@ -19,13 +24,10 @@ public class GameDataBlob
 
 	public void Init()
 	{
-		seenInstructions = new List<bool>();
-		starCountDay = new List<List<int>>();
-
 		// find all instruction seen statuses
 		for (int i = 0; i < 100; i++)
 		{
-			seenInstructions.Add(SaveGame.GetSeenInstruction(i));
+			seenInstructions[i] = SaveGame.GetSeenInstruction(i);
 		}
 
 		totalAppointmentTime = SaveGame.GetTotalAppointmentTime();
@@ -34,34 +36,12 @@ public class GameDataBlob
 
 	public void AddDayStarCount(int day, int round, int stars)
 	{
-		if (day == starCountDay.Count)
-		{
-			starCountDay.Add(new List<int>());
-		}
-		else if (day > starCountDay.Count)
-		{
-			// this is fine, no need to add a new day yet
-		}
-		else if (day > starCountDay.Count + 1)
-		{
-			// throw exception, must have skipped one
-			Debug.LogError("Blob: must have skipped a day");
-		}
-
-		if (round == starCountDay[day].Count)
-		{
-			starCountDay[day].Add(stars);
-		}
-		else if (round > starCountDay[day].Count)
-		{
-			// throw exception, must have skipped one
-			Debug.LogError("Blob: must have skipped a level");
-		}
+		starCountDay[day, round] = stars;
 	}
 
 	public void ClearDayStarCount()
 	{
-		starCountDay = new List<List<int>>();
+		starCountDay = new int[30, numAppointmentsPerDayMax];
 	}
 
 	// updated internally on data package
@@ -79,7 +59,7 @@ public class GameDataBlob
 	// updated externally on level complete
 	public void UpdateStarCountDay(int day, int round, int starCount)
 	{
-		starCountDay[day][round] = starCount;
+		starCountDay[day,round] = starCount;
 	}
 
 	// updated internally on data package
@@ -95,8 +75,6 @@ public class GameDataBlob
 	{
 		UpdateHasUnlockedFullGame();
 		UpdateTotalAppointmentTime();
-
-		//MonoBehaviour.print(this.ToString());
 	}
 
 	public override string ToString()
@@ -106,18 +84,18 @@ public class GameDataBlob
 		retVal += "totalAppointmentTime = " + totalAppointmentTime + "\n";
 		retVal += "\nseenInstructions: \n";
 
-		for (int i = 0; i < seenInstructions.Count; i++)
+		for (int i = 0; i < seenInstructions.Length; i++)
 		{
 			retVal += i + " = " + seenInstructions[i] + "\n";
 		}
 
 		retVal += "\nstarCountDay\n";
 
-		for (int i = 0; i < starCountDay.Count; i++)
+		for (int i = 0; i < starCountDay.GetLength(0); i++)
 		{
-			for (int j = 0; j < starCountDay[i].Count; j++)
+			for (int j = 0; j < starCountDay.GetLength(1); j++)
 			{
-				retVal += i + "," + j + " = " + starCountDay[i][j] + "\n";
+				retVal += i + "," + j + " = " + starCountDay[i,j] + "\n";
 			}
 		}
 

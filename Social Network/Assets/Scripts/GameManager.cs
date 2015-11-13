@@ -210,9 +210,12 @@ public class GameManager : MonoBehaviour {
 
 	public void UpdateCloudSaveFromLocal()
 	{
+#if !UNITY_EDITOR
+		GooglePlayAPI.Initialize();
 		pendingCloudSaveOperation = 2;
 		gameDataBlob.UpdateToSend();
 		SaveGame.LocalSaveToCloudSave(gameDataBlob);
+#endif
 	}
 
 	public void callback_OnSavedGameOpened(GooglePlayGames.BasicApi.SavedGame.ISavedGameMetadata game)
@@ -232,45 +235,43 @@ public class GameManager : MonoBehaviour {
 
 	public void callback_OnSavedGameDataRead(byte[] data)
 	{
+		if (data.Length == 0)
+		{
+			Debug.LogWarning("gameDataBlob from data is 0 length");
+			return;
+		}
+
 		// read byte data
 		gameDataBlob = FromByteArray(data) as GameDataBlob;
 
-		if (gameDataBlob != null)
+		if (gameDataBlob == null)
 		{
-			print("gameDataBlob from data is NOT null");
-		}
-		else
-		{
-			print("gameDataBlob from data is null");
+			Debug.LogWarning("gameDataBlob from data is null");
+			return;
 		}
 
+		print("gameDataBlob looks good, sending it to UpdateLocalSaveDataFromBlob()");
 		UpdateLocalSaveDataFromBlob();
 	}
 
 	byte[] ToByteArray(object source)
 	{
-		/*
+		
 		BinaryFormatter formatter = new BinaryFormatter();
 		using (MemoryStream stream = new MemoryStream())
 		{
 			formatter.Serialize(stream, source);
 			return stream.ToArray();
 		}
-		*/
-
-		return testByteArray;
 	}
 
 	object FromByteArray(byte[] byteArrayInput)
 	{
-		/*
+		
 		BinaryFormatter formatter = new BinaryFormatter();
 		using (MemoryStream stream = new MemoryStream(byteArrayInput))
 		{
 			return formatter.Deserialize(stream);
 		}
-		*/
-
-		return new object();
 	}
 }

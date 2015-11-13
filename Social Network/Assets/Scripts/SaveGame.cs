@@ -250,7 +250,7 @@ public static class SaveGame {
 	{
 		if (blob == null)
 		{
-			Debug.LogError("Incoming save data is null or unreadable. Save updated aborting.");
+			Debug.LogWarning("Incoming save data is null or unreadable. Save updated aborting.");
 			return;
 		}
 
@@ -261,7 +261,7 @@ public static class SaveGame {
 		}
 
 		// update instruction status if it's less
-		for (int i = 0; i < blob.seenInstructions.Count; i++)
+		for (int i = 0; i < blob.seenInstructions.Length; i++)
 		{
 			if (GetSeenInstruction(i) == false && blob.seenInstructions[i] == true)
 			{
@@ -276,11 +276,11 @@ public static class SaveGame {
 		}
 
 		// update star statuses
-		for (int i = 0; i < blob.starCountDay.Count; i++)
+		for (int i = 0; i < blob.starCountDay.GetLength(0); i++)
 		{
-			for (int j = 0; j < blob.starCountDay[i].Count; j++)
+			for (int j = 0; j < blob.starCountDay.GetLength(1); j++)
 			{
-				SetRoundStarCount(i, j, blob.starCountDay[i][j]);
+				SetRoundStarCount(i, j, blob.starCountDay[i,j]);
 			}
 		}
 	}

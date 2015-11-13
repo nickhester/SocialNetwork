@@ -10,6 +10,7 @@ using System;
 public static class GooglePlayAPI {
 
 	private static bool isUsingGooglePlay = true;
+	private static string saveDataName = "saveData";
 
 	public static void Initialize()
 	{
@@ -18,7 +19,7 @@ public static class GooglePlayAPI {
 			if (success)
 			{
 				MonoBehaviour.print("GooglePlayGames completed initialization");
-				OpenSavedgame("saveData");
+				OpenSavedgame(saveDataName);
 			}
 			else
 			{
