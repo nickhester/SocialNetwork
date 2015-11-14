@@ -418,15 +418,15 @@ public class NotificationManager : MonoBehaviour
             else if (_indexWithinSet == 1)
             {
 				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_2, false, false);
-				m_finger.SendFinger(screenPos_patients_4_1);
+				m_finger.SendFinger(screenPos_patients_4_2);
 				RequestExclusiveControl();
-				AllowActions(new List<string> { "person 1" }, new List<string>(), new List<string>());
+				AllowActions(new List<string> { "person 2" }, new List<string>(), new List<string>());
             }
             else if (_indexWithinSet == 2)
             {
 				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_3, false, false);
-				m_finger.SendFinger(screenPos_patients_4_2);
-				AllowActions(new List<string> { "person 2" }, new List<string>(), new List<string>());
+				m_finger.SendFinger(screenPos_patients_4_0);
+				AllowActions(new List<string> { "person 0" }, new List<string>(), new List<string>());
             }
 			else if (_indexWithinSet == 3)
 			{
@@ -449,8 +449,8 @@ public class NotificationManager : MonoBehaviour
             else if (_indexWithinSet == 6)
             {
 				m_notification.DisplayNotification(InstructionPaper_canvas_tip2_6, false, false);
-				m_finger.SendFinger(screenPos_patients_4_0);
-				AllowActions(new List<string> { "person 0" }, new List<string>(), new List<string>());
+				m_finger.SendFinger(screenPos_patients_4_1);
+				AllowActions(new List<string> { "person 1" }, new List<string>(), new List<string>());
             }
             else if (_indexWithinSet == 7)
             {

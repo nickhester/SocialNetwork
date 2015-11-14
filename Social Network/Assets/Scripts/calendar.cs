@@ -196,7 +196,7 @@ public class Calendar : MonoBehaviour {
 				case 3:	// thursday
                     _newCalDayComponent.numAppointments = 4;
 					
-					reqList.Add(new ValidLevels(4, Types.Difficulty.Easy, 595357, Types.SpecialLevel.None));
+					reqList.Add(new ValidLevels(4, Types.Difficulty.Easy, 367595, Types.SpecialLevel.None));	// this level seed is a duplicate (intentional)
 					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 950079, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(5, Types.Difficulty.Easy, 595034, Types.SpecialLevel.None));
 					reqList.Add(new ValidLevels(5, Types.Difficulty.Medium, 773589, Types.SpecialLevel.None));
