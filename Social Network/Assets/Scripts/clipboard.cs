@@ -103,16 +103,7 @@ public class Clipboard : MonoBehaviour
             }
             else if (go.name == "BackButton")	// if clicking the "back" button, go back to the calendar
             {
-                if (buttonState == 0)				// click the "back" button to return to calendar
-                {
-                    createAndDestroyLevelRef.ReturnToCalendar();
-                }
-
-                else if (buttonState == 2)
-                {
-                    HideClipboard();                              // if clicking the "done" button from the results screen, go back to clipboard
-                    Invoke("SwapClipboardPages", timeToSwap);
-                }
+				GoBack();
             }
 			else if (go.name == "RestartFromResultsScreenButton")	// if clicking the restart button from the clipboard, immediately restart previous level
 			{
@@ -252,6 +243,11 @@ public class Clipboard : MonoBehaviour
             startButton.GetComponent<Renderer>().material = buttonTextDone;
         }
 		else { Debug.LogError("Clipboard button state is invalid"); }
+
+		if (Input.GetButtonDown("Cancel"))
+		{
+			GoBack();
+		}
 	}
 
 	#endregion
@@ -460,6 +456,30 @@ public class Clipboard : MonoBehaviour
 		else
 		{
 			restartFromResultsScreenButton.SetActive(false);
+		}
+	}
+
+	void GoBack()
+	{
+		if (!isHiding)									// if the clipboard is visible
+		{
+			if (buttonState == 0)				// click the "back" button to return to calendar
+			{
+				createAndDestroyLevelRef.ReturnToCalendar();
+			}
+
+			else if (buttonState == 2)
+			{
+				HideClipboard();                              // if clicking the "done" button from the results screen, go back to clipboard
+				Invoke("SwapClipboardPages", timeToSwap);
+			}
+		}
+		else
+		{
+			if (buttonState == 1)			// click the "back" button to give up on the level
+			{
+				createAndDestroyLevelRef.RoundEnd(false);
+			}
 		}
 	}
 }

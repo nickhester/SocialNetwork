@@ -59,7 +59,7 @@ public class MainMenu : MonoBehaviour {
 		}
         else if (go.name == "button_back")
 		{
-			isLerpingTowardOptions = false;
+			GoBack();
 		}
         else if (go.name == "button_clearProgress")
 		{
@@ -137,7 +137,7 @@ public class MainMenu : MonoBehaviour {
 		versionTextObject.transform.localScale = versionTextObject.transform.localScale * 0.04f;
 		versionTextObject.transform.parent = gameObject.transform;
 		TextMesh myTextComponent = versionTextObject.GetComponent<TextMesh>();
-		myTextComponent.text = "Version 2.25";
+		myTextComponent.text = "Version 2.26";
 
 		// make sure audio icons check are accurately on or off
 		if (SaveGame.GetAudioOn_music() == false)
@@ -222,6 +222,11 @@ public class MainMenu : MonoBehaviour {
 				mainTitleOriginalPosition.z);
 			sinWaveCounter += Time.deltaTime;
 		}
+
+		if (Input.GetButtonDown("Cancel"))
+		{
+			GoBack();
+		}
 	}
 
 	void SplitBackground()
@@ -255,5 +260,10 @@ public class MainMenu : MonoBehaviour {
 		AudioSource m_audio = GameObject.Find("Music Player").GetComponent<AudioSource>();
 		m_audio.enabled = true;
 		m_audio.Play();
+	}
+
+	void GoBack()
+	{
+		isLerpingTowardOptions = false;
 	}
 }

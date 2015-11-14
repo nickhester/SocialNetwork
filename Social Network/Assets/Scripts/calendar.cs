@@ -33,7 +33,7 @@ public class Calendar : MonoBehaviour {
         }
         else if (go.transform.name == "MainMenu")
         {
-			UnloadCalendarAndLoadLevel("Scene_MainMenu");
+			GoBack();
         }
         else if (go.transform.name == "Next Week")
         {
@@ -566,6 +566,11 @@ public class Calendar : MonoBehaviour {
     {
 		Vector3 targetWeekPosition = new Vector3(-viewingWeek * distanceBetweenWeeks, dayParent.transform.position.y, 0);
 		dayParent.transform.position = Vector3.Lerp(dayParent.transform.position, targetWeekPosition, 0.1f);
+
+		if (Input.GetButtonDown("Cancel"))
+		{
+			GoBack();
+		}
 	}
 
 	public int Get_daysToGenerate()
@@ -636,5 +641,10 @@ public class Calendar : MonoBehaviour {
 	public void ReloadCalendar()
 	{
 		UnloadCalendarAndLoadLevel("Scene_Calendar");
+	}
+
+	void GoBack()
+	{
+		UnloadCalendarAndLoadLevel("Scene_MainMenu");
 	}
 }
