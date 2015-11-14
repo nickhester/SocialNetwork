@@ -583,6 +583,7 @@ public class Calendar : MonoBehaviour {
 		return dayList[dayIndex].numAppointments;
 	}
 
+#if UNITY_EDITOR
 	void OnGUI()
 	{
 		if (true)//Debug.isDebugBuild)
@@ -617,6 +618,7 @@ public class Calendar : MonoBehaviour {
 			}
 		}
 	}
+#endif
 
 	void Debug_unlockLevelsOnWeek(int week, int numStars)
 	{

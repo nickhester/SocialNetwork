@@ -30,6 +30,8 @@ public class MainMenu : MonoBehaviour {
 	private float splitCounter = 0.0f;
 	private float splitLimit = 2.0f;
 
+	private string versionText = "Version 2.27";
+
 	[SerializeField] private Material confirmClearProgressImage;
     [SerializeField] private Material progressClearedImage;
     [SerializeField] private GameObject text;
@@ -137,7 +139,7 @@ public class MainMenu : MonoBehaviour {
 		versionTextObject.transform.localScale = versionTextObject.transform.localScale * 0.04f;
 		versionTextObject.transform.parent = gameObject.transform;
 		TextMesh myTextComponent = versionTextObject.GetComponent<TextMesh>();
-		myTextComponent.text = "Version 2.26";
+		myTextComponent.text = versionText;
 
 		// make sure audio icons check are accurately on or off
 		if (SaveGame.GetAudioOn_music() == false)
