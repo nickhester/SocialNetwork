@@ -12,6 +12,7 @@ public class GameDataBlob
 	const int numDaysOnCalendar = 30;
 	const int numAppointmentsPerDayMax = 5;
 
+	public int saveDataFormatVersion = -1;
 	public bool[] seenInstructions = new bool[numInstructions];
 	public int[,] starCountDay = new int[30, numAppointmentsPerDayMax];
 	public float totalAppointmentTime;
@@ -22,7 +23,7 @@ public class GameDataBlob
 		//
 	}
 
-	public void Init()
+	public void Init(int _saveDataFormatVersion)
 	{
 		// find all instruction seen statuses
 		for (int i = 0; i < 100; i++)
@@ -32,6 +33,8 @@ public class GameDataBlob
 
 		totalAppointmentTime = SaveGame.GetTotalAppointmentTime();
 		hasUnlockedFullGame = (SaveGame.GetCustomString("hasUpgraded") == "true");
+
+		saveDataFormatVersion = _saveDataFormatVersion;
 	}
 
 	public void AddDayStarCount(int day, int round, int stars)

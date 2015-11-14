@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
 	public GameDataBlob gameDataBlob;
 	public int pendingCloudSaveOperation = 0;	// 1 == load from cloud, 2 == save to cloud
 	byte[] testByteArray = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	public int saveDataFormatVersion = 1;
 
 	void Start()
 	{
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		gameDataBlob = new GameDataBlob();
-		gameDataBlob.Init();
+		gameDataBlob.Init(saveDataFormatVersion);
 
 		// initialize google play to cloud save
 		PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()

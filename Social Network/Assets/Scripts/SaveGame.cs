@@ -240,17 +240,16 @@ public static class SaveGame {
 		return SaveData.GetString(key);
 	}
 	
-	public static void LocalSaveToCloudSave(GameDataBlob blob)
-	{
-		
-		// send to google saved game
-	}
-	
 	public static void CloudSaveToLocalSave(GameDataBlob blob)
 	{
 		if (blob == null)
 		{
-			Debug.LogWarning("Incoming save data is null or unreadable. Save updated aborting.");
+			Debug.LogWarning("Incoming save data is null or unreadable. Save update aborting.");
+			return;
+		}
+		else if(blob.saveDataFormatVersion != GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().saveDataFormatVersion)
+		{
+			Debug.LogWarning("Incoming save data is from an old version. Save update aborting.");
 			return;
 		}
 
