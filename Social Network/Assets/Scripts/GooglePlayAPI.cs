@@ -195,7 +195,7 @@ public static class GooglePlayAPI {
 			.WithUpdatedDescription("Saved game at " + DateTime.Now);
 
 		// my customization
-		Texture2D savedImage = getScreenshot();
+		Texture2D savedImage = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().saveGameImage;
 		// end my customization
 
 		if (savedImage != null)
@@ -223,6 +223,7 @@ public static class GooglePlayAPI {
 		}
 	}
 
+	/*
 	static public Texture2D getScreenshot()
 	{
 		// Create a 2D texture that is 1024x700 pixels from which the PNG will be
@@ -235,6 +236,7 @@ public static class GooglePlayAPI {
 			new Rect(0, 0, Screen.width, (Screen.width / 1024) * 700), 0, 0);
 		return screenShot;
 	}
+	*/
 
 	static public void LoadGameData(ISavedGameMetadata game)
 	{

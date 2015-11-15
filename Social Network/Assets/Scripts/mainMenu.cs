@@ -30,7 +30,7 @@ public class MainMenu : MonoBehaviour {
 	private float splitCounter = 0.0f;
 	private float splitLimit = 2.0f;
 
-	private string versionText = "Version 2.27";
+	private string versionText = "Version 2.28";
 
 	[SerializeField] private Material confirmClearProgressImage;
     [SerializeField] private Material progressClearedImage;

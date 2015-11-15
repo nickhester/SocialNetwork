@@ -249,7 +249,12 @@ public static class SaveGame {
 		}
 		else if(blob.saveDataFormatVersion != GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().saveDataFormatVersion)
 		{
-			Debug.LogWarning("Incoming save data is from an old version. Save update aborting.");
+			Debug.LogWarning(
+				"Incoming save data is from an old version (" 
+				+ blob.saveDataFormatVersion 
+				+ "," 
+				+ GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().saveDataFormatVersion 
+				+ "). Save update aborting.");
 			return;
 		}
 

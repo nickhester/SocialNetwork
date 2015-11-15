@@ -26,13 +26,13 @@ public class GameDataBlob
 	public void Init(int _saveDataFormatVersion)
 	{
 		// find all instruction seen statuses
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < numInstructions; i++)
 		{
 			seenInstructions[i] = SaveGame.GetSeenInstruction(i);
 		}
 
 		totalAppointmentTime = SaveGame.GetTotalAppointmentTime();
-		hasUnlockedFullGame = (SaveGame.GetCustomString("hasUpgraded") == "true");
+		hasUnlockedFullGame = SaveGame.GetHasUpgraded();
 
 		saveDataFormatVersion = _saveDataFormatVersion;
 	}
@@ -68,28 +68,27 @@ public class GameDataBlob
 	// updated internally on data package
 	public void UpdateHasUnlockedFullGame()
 	{
-		if (SaveGame.GetHasUpgraded())
-		{
-			hasUnlockedFullGame = true;
-		}
+		hasUnlockedFullGame = SaveGame.GetHasUpgraded();
 	}
 
-	public void UpdateToSend()
+	public void UpdateToSend(int _version)
 	{
 		UpdateHasUnlockedFullGame();
 		UpdateTotalAppointmentTime();
+		saveDataFormatVersion = _version;
 	}
 
 	public override string ToString()
 	{
 		string retVal = "";
+		retVal += "saveVersion = " + saveDataFormatVersion + "\n";
 		retVal += "hasUnlockedFullGame = " + hasUnlockedFullGame + "\n";
 		retVal += "totalAppointmentTime = " + totalAppointmentTime + "\n";
 		retVal += "\nseenInstructions: \n";
 
-		for (int i = 0; i < seenInstructions.Length; i++)
+		for (int i = 0; i < seenInstructions.GetLength(0); i++)
 		{
-			retVal += i + " = " + seenInstructions[i] + "\n";
+			retVal += i + " = " + seenInstructions[i] + " -- ";
 		}
 
 		retVal += "\nstarCountDay\n";
@@ -98,9 +97,10 @@ public class GameDataBlob
 		{
 			for (int j = 0; j < starCountDay.GetLength(1); j++)
 			{
-				retVal += i + "," + j + " = " + starCountDay[i,j] + "\n";
+				retVal += i + "," + j + " = " + starCountDay[i,j] + " -- ";
 			}
 		}
+		retVal += "\n";
 
 		return retVal;
 	}

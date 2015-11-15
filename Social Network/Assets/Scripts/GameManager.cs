@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
 	public GameDataBlob gameDataBlob;
 	public int pendingCloudSaveOperation = 0;	// 1 == load from cloud, 2 == save to cloud
 	public int saveDataFormatVersion = 1;
+	public Texture2D saveGameImage;
 
 	void Start()
 	{
@@ -193,7 +194,7 @@ public class GameManager : MonoBehaviour {
 
 	public string FormatDayAndLevel()
 	{
-		if (GetClipboard() == null)
+		if (GetClipboard() == null || GetClipboard().GetNextLevelUp() == null)
 		{
 			return "-1--1";
 		}
@@ -211,9 +212,9 @@ public class GameManager : MonoBehaviour {
 	public void UpdateCloudSaveFromLocal()
 	{
 #if !UNITY_EDITOR
-		GooglePlayAPI.Initialize();
 		pendingCloudSaveOperation = 2;
-		gameDataBlob.UpdateToSend();
+		gameDataBlob.UpdateToSend(saveDataFormatVersion);
+		GooglePlayAPI.Initialize();
 #endif
 	}
 
@@ -255,7 +256,6 @@ public class GameManager : MonoBehaviour {
 
 	byte[] ToByteArray(object source)
 	{
-		
 		BinaryFormatter formatter = new BinaryFormatter();
 		using (MemoryStream stream = new MemoryStream())
 		{
