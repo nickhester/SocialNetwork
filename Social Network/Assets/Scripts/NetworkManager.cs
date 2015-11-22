@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,7 @@ public class NetworkManager : MonoBehaviour {
 	private Vector3 selectionCursorCurrentPos;
 	private Vector3 selectionCursorTargetPos;
 	private GameObject currentlySelectedPerson;
+	[SerializeField] private Toggle revealToggle;
 
 	// audio
 	private AudioSource myAudioComponent;
@@ -140,22 +142,23 @@ public class NetworkManager : MonoBehaviour {
     {
         if (go.transform.tag == "people")							// if you're clicking on a person
         {
+			revealToggle.isOn = true;
+
             // move cursor position on click
             selectionCursorInst.GetComponent<Renderer>().enabled = true;		// turn on cursor
             cursorSecondaryInst.GetComponent<Renderer>().enabled = true;		// turn on cursor
             selectionCursorTargetPos = new Vector3(go.transform.position.x, go.transform.position.y, go.transform.position.z + 0.1f);	// move cursor to location
             currentlySelectedPerson = go.transform.gameObject;			// set the clicked person as the currently selected person
-            GetComponent<LineDisplay>().TurnOffAllLines();		// turn off all the lines
             GetComponent<LineDisplay>().DisplayLines(go.transform.GetComponent<Person>());		// turn on only the lines touching the selected person
         }
-        else if (go.transform.name == "Button_green" && currentlySelectedPerson != null)
-        {
-            TakeAction(true);
-        }
-        else if (go.transform.name == "Button_red" && currentlySelectedPerson != null)
-        {
-            TakeAction(false);
-        }
+		else if (go.transform.name == "Button_green" && currentlySelectedPerson != null)
+		{
+			TakeAction(true);
+		}
+		else if (go.transform.name == "Button_red" && currentlySelectedPerson != null)
+		{
+			TakeAction(false);
+		}
         else if (go.transform.name == "restartLevel")
         {
             ReloadStartingState();
@@ -163,6 +166,27 @@ public class NetworkManager : MonoBehaviour {
 			MetricsLogger.Instance.LogCustomEvent("Appointment", "RestartUsed", gm.FormatDayAndLevel());
         }
     }
+
+	public void OnToggle_Reveal(Toggle toggle)
+	{
+		if (toggle.isOn)	// the toggle is going from blank to "reveal" (turn off lines)
+		{
+			print("hide lines");
+			if (currentlySelectedPerson != null)
+			{
+				GetComponent<LineDisplay>().DisplayLines(currentlySelectedPerson.transform.GetComponent<Person>());
+			}
+			else
+			{
+				GetComponent<LineDisplay>().TurnOffAllLines();
+			}
+		}
+		else				// the toggle is going from "reveal" to blank (turn on lines)
+		{
+			print("reveal lines");
+			GetComponent<LineDisplay>().DisplayAllLines();
+		}
+	}
 
 	public void DeselectAllPeople()
 	{

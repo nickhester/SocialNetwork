@@ -72,9 +72,24 @@ public class LineDisplay : MonoBehaviour {
 	{
 		if (!linesAreInvisible)
 		{
+			TurnOffAllLines();
 			foreach (GameObject line in lineConnections[_person])
 			{
 				line.GetComponent<Line>().isVisible = true;
+			}
+		}
+	}
+
+	public void DisplayAllLines()
+	{
+		if (!linesAreInvisible)
+		{
+			foreach (KeyValuePair<Person, List<GameObject>> connectionList in lineConnections)
+			{
+				foreach (GameObject line in lineConnections[connectionList.Key])
+				{
+					line.GetComponent<Line>().isVisible = true;
+				}
 			}
 		}
 	}
