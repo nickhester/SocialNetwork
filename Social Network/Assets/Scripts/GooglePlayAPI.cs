@@ -10,22 +10,28 @@ using System;
 public static class GooglePlayAPI {
 
 	private static bool isUsingGooglePlay = true;
+	private static bool isPlayingOffline = false;
 	private static string saveDataName = "saveData";
 
 	public static void Initialize()
 	{
-		Social.localUser.Authenticate((bool success) =>
+		if (!isPlayingOffline)
 		{
-			if (success)
+			Social.localUser.Authenticate((bool success) =>
 			{
-				MonoBehaviour.print("GooglePlayGames completed initialization");
-				OpenSavedgame(saveDataName);
-			}
-			else
-			{
-				MonoBehaviour.print("GooglePlayGames failed to authenticate local user");
-			}
-		});
+				if (success)
+				{
+					MonoBehaviour.print("GooglePlayGames completed initialization");
+					OpenSavedgame(saveDataName);
+					isPlayingOffline = false;
+				}
+				else
+				{
+					MonoBehaviour.print("GooglePlayGames failed to authenticate local user");
+					isPlayingOffline = true;
+				}
+			});
+		}
 	}
 
 	public static void ReportStarCount(int starCount)
