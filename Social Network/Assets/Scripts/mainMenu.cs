@@ -30,7 +30,7 @@ public class MainMenu : MonoBehaviour {
 	private float splitCounter = 0.0f;
 	private float splitLimit = 2.0f;
 
-	private string versionText = "Version 2.30";
+	private string versionText = "Version 2.31";
 
 	[SerializeField] private Material confirmClearProgressImage;
     [SerializeField] private Material progressClearedImage;
@@ -73,6 +73,7 @@ public class MainMenu : MonoBehaviour {
 			go.GetComponent<Renderer>().material = progressClearedImage;
 			go.name = "progressCleared";
 			SaveGame.DeleteAll();
+			GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().DeleteCloudSave();
 			MetricsLogger.Instance.LogCustomEvent("Settings", "ClearGameProgress", "");
 		}
 		else if (go.name == "button_leaderboard")

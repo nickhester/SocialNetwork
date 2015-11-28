@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
 	private float currentGameSessionTime = 0.0f;
 	
 	public GameDataBlob gameDataBlob;
-	public int pendingCloudSaveOperation = 0;	// 1 == load from cloud, 2 == save to cloud
+	public int pendingCloudSaveOperation = 0;	// 1 == load from cloud, 2 == save to cloud, 3 == save empty data to cloud to clear save data
 	public int saveDataFormatVersion = 1;
 	public Texture2D saveGameImage;
 
@@ -218,6 +218,14 @@ public class GameManager : MonoBehaviour {
 #endif
 	}
 
+	public void DeleteCloudSave()
+	{
+#if !UNITY_EDITOR
+		pendingCloudSaveOperation = 3;
+		GooglePlayAPI.Initialize();
+#endif
+	}
+
 	public void callback_OnSavedGameOpened(GooglePlayGames.BasicApi.SavedGame.ISavedGameMetadata game)
 	{
 		if (pendingCloudSaveOperation == 1)
@@ -230,6 +238,12 @@ public class GameManager : MonoBehaviour {
 			// ready to save to cloud
 			byte[] byteArrayToSend = ToByteArray(gameDataBlob);
 			GooglePlayAPI.SaveGame(game, byteArrayToSend, System.TimeSpan.FromSeconds(gameDataBlob.totalAppointmentTime));
+		}
+		else if (pendingCloudSaveOperation == 3)
+		{
+			// ready to send an invalid cloud save data to clear cloud save data
+			byte[] byteArrayToSend = new byte[] { 0 };
+			GooglePlayAPI.SaveGame(game, byteArrayToSend, System.TimeSpan.FromSeconds(0.0f));
 		}
 	}
 
