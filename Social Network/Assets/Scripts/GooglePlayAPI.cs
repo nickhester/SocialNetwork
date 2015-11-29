@@ -10,7 +10,7 @@ using System;
 public static class GooglePlayAPI {
 
 	private static bool isUsingGooglePlay = true;
-	private static bool isPlayingOffline = false;
+	public static bool isPlayingOffline = false;
 	private static string saveDataName = "saveData";
 
 	public static void Initialize()

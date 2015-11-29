@@ -61,6 +61,11 @@ public class GameManager : MonoBehaviour {
 #if !UNITY_EDITOR
 		GooglePlayAPI.Initialize();
 #endif
+
+#if UNITY_EDITOR
+		GooglePlayAPI.isPlayingOffline = true;
+#endif
+
 		// callback is managed in GooglePlayAPI 
 		pendingCloudSaveOperation = 1;
 	}
@@ -242,7 +247,7 @@ public class GameManager : MonoBehaviour {
 		else if (pendingCloudSaveOperation == 3)
 		{
 			// ready to send an invalid cloud save data to clear cloud save data
-			byte[] byteArrayToSend = new byte[] { 0 };
+			byte[] byteArrayToSend = new byte[] { 0, 1, 2, 3 };
 			GooglePlayAPI.SaveGame(game, byteArrayToSend, System.TimeSpan.FromSeconds(0.0f));
 		}
 	}

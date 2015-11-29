@@ -30,7 +30,7 @@ public class MainMenu : MonoBehaviour {
 	private float splitCounter = 0.0f;
 	private float splitLimit = 2.0f;
 
-	private string versionText = "Version 2.32";
+	private string versionText = "Version 2.33";
 
 	[SerializeField] private Material confirmClearProgressImage;
     [SerializeField] private Material progressClearedImage;
@@ -78,8 +78,11 @@ public class MainMenu : MonoBehaviour {
 		}
 		else if (go.name == "button_leaderboard")
 		{
-			// show leaderboard UI
-			Social.ShowLeaderboardUI();
+			if (!GooglePlayAPI.isPlayingOffline)
+			{
+				// show leaderboard UI
+				Social.ShowLeaderboardUI();
+			}
 		}
 
         // AUDIO
