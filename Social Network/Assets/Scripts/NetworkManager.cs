@@ -43,6 +43,7 @@ public class NetworkManager : MonoBehaviour {
 	[HideInInspector] public bool isAudioOn_sfx;
 
 	private SpecialEffects specialEffects;
+	private TextBubble textBubble;
 
 	// for webplayer only
 	[SerializeField] private Material redAndGreenButton_keys;
@@ -97,6 +98,7 @@ public class NetworkManager : MonoBehaviour {
 		}
 
 		specialEffects = GetComponent<SpecialEffects>();
+		textBubble = GetComponent<TextBubble>();
 
 		#if UNITY_WEBPLAYER
 		
@@ -229,9 +231,9 @@ public class NetworkManager : MonoBehaviour {
         return retVal;
     }
 
-    void TakeAction(bool isPositive)
+    void TakeAction(bool _isPositive)
     {
-        if (isPositive)
+		if (_isPositive)
         {
             TriggerRelationshipChange(currentlySelectedPerson, true);
             if (isAudioOn_sfx) { myAudioComponent.clip = audioActionPos; }
@@ -243,6 +245,7 @@ public class NetworkManager : MonoBehaviour {
         }
         if (isAudioOn_sfx) { myAudioComponent.Play(); }
         numActionsTaken++;
+		textBubble.ShowBubble(currentlySelectedPerson.transform.position, _isPositive);
     }
 
 	#region TestRunMethods
