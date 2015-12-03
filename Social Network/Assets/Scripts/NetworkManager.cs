@@ -98,7 +98,10 @@ public class NetworkManager : MonoBehaviour {
 		}
 
 		specialEffects = GetComponent<SpecialEffects>();
+		// reset seed back to something random
+		Random.seed = (int)System.DateTime.Now.Second;
 		textBubble = GetComponent<TextBubble>();
+		textBubble.Init(allPeople);
 
 		#if UNITY_WEBPLAYER
 		
