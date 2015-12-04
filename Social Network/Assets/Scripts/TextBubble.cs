@@ -19,7 +19,14 @@ public class TextBubble : MonoBehaviour {
 		"Am I your favorite?",
 		"My glass is half full now",
 		"You're the best",
-		"I'm glad I got up this morning"
+		"I'm glad I got up this morning",
+		"Yippee!",
+		"What a kind soul",
+		"Likewise",
+		"Gracias",
+		"You inspire me",
+		"Gee whiz",
+		"I feel warm inside"
 	};
 	private string[] textGroup_negative = new string[]
 	{
@@ -32,7 +39,10 @@ public class TextBubble : MonoBehaviour {
 		"Can I see your credentials?",
 		"How dare you",
 		"This is not going my way",
-		"Sticks and stones... nevermind"
+		"Sticks and stones... nevermind",
+		"Why?",
+		"You're cruel",
+		"Is this for the greater good?"
 	};
 	private string[] textGroup_bored = new string[]
 	{
@@ -44,7 +54,9 @@ public class TextBubble : MonoBehaviour {
 		"Are you still there?",
 		"You just take your time",
 		"Don't let me rush you",
-		"I'm getting veeery sleeepy"
+		"I'm getting veeery sleeepy",
+		"Can I just get some pills?",
+		"Are we there yet?"
 	};
 
 	private List<Person> people;
@@ -53,6 +65,8 @@ public class TextBubble : MonoBehaviour {
 	private float scalePositionTowardCenter = 0.75f;
 	private float verticalCenter = 2.5f;
 	private float verticalDistanceFromPerson = 1.25f;
+	private int defaultFontSize;
+	private int smallTextFontIncrease = 4;
 
 	private bool isBubbleVisible = false;
 	private float visibilityDuration = 2.8f;
@@ -65,6 +79,11 @@ public class TextBubble : MonoBehaviour {
 	public void Init (List<Person> _people)
 	{
 		people = _people;
+	}
+
+	void Start ()
+	{
+		defaultFontSize = chatBubble.transform.GetChild(0).GetComponent<Text>().fontSize;
 	}
 
 	void Update ()
@@ -99,8 +118,17 @@ public class TextBubble : MonoBehaviour {
 			chatBubble.gameObject.SetActive(true);
 
 			string textToDisplay = (textOptions[Random.Range(0, textOptions.Length)]);
-			chatBubble.GetComponentInChildren<Text>().text = textToDisplay;
-
+			Text t = chatBubble.GetComponentInChildren<Text>();
+			t.text = textToDisplay;
+			if (t.text.Length < 20)
+			{
+				t.fontSize = defaultFontSize + smallTextFontIncrease;
+			}
+			else
+			{
+				t.fontSize = defaultFontSize;
+			}
+			
 			isBubbleVisible = true;
 			visibilityCounter = 0.0f;
 		}
