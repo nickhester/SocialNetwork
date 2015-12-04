@@ -10,6 +10,7 @@ public class ValidLevels {
 	public int cantTouch;
 	public bool oneClick;
 	public int numClicks;
+	public int cantTouchNumClicks;
 
     public ActionTrail path;
     public ActionTrail cantTouchPath;
@@ -19,7 +20,7 @@ public class ValidLevels {
 	public bool isCantTouch = false;
 	public bool isNoLines = false;
 
-	void SetAttributes(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks,
+	void SetAttributes(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks, int _cantTouchNumClicks,
 	                          bool _isFallToRed, bool _isOneClick, bool _isCantTouch, bool _isNoLines)
 	{
 		level = _level;
@@ -28,15 +29,16 @@ public class ValidLevels {
 		cantTouch = _cantTouch;
 		oneClick = _oneClick;
 		numClicks = _numClicks;
+		cantTouchNumClicks = _cantTouchNumClicks;
 		isFallToRed = _isFallToRed;
 		isOneClick = _isOneClick;
 		isCantTouch = _isCantTouch;
 		isNoLines = _isNoLines;
 	}
 
-	public ValidLevels(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks)
+	public ValidLevels(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks, int _cantTouchNumClicks)
 	{
-		SetAttributes(_level, _difficulty, _seed, _cantTouch, _oneClick, _numClicks);
+		SetAttributes(_level, _difficulty, _seed, _cantTouch, _oneClick, _numClicks, _cantTouchNumClicks);
 	}
 
 	public ValidLevels() { }
@@ -67,9 +69,9 @@ public class ValidLevels {
 	}
 
 	// overload...
-	public void SetAttributes(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks)
+	public void SetAttributes(int _level, Difficulty _difficulty, int _seed, int _cantTouch, bool _oneClick, int _numClicks, int _cantTouchNumClicks)
 	{
-		SetAttributes(_level, _difficulty, _seed, _cantTouch, _oneClick, _numClicks, false, false, false, false);
+		SetAttributes(_level, _difficulty, _seed, _cantTouch, _oneClick, _numClicks, _cantTouchNumClicks, false, false, false, false);
 	}
 
 	public void SetOnlySpecialAttributes(bool _isFallToRed, bool _isOneClick, bool _isCantTouch, bool _isNoLines)

@@ -71,10 +71,12 @@ public class FileParse {
 				{ thisOneClick = b; }        							// set the oneClick possibility
 				if (int.TryParse((tokens[5].Split(':')[1]), out a))	
 				{ thisCantTouch = a; }        							// set who you cant touch, if possible
-				
-				ValidLevels lvl = new ValidLevels(thisLevel, thisDifficulty, thisSeed, thisCantTouch, thisOneClick, thisNumClick);
-                lvl.path = new ActionTrail(tokens[6]);
-				lvl.cantTouchPath = new ActionTrail(tokens[7]);
+
+				ActionTrail thisPath = new ActionTrail(tokens[6]);
+				ActionTrail thisCantTouchPath = new ActionTrail(tokens[7]);
+				ValidLevels lvl = new ValidLevels(thisLevel, thisDifficulty, thisSeed, thisCantTouch, thisOneClick, thisNumClick, thisCantTouchPath.trail.Count);
+				lvl.path = thisPath;
+				lvl.cantTouchPath = thisCantTouchPath;
 				_list.Add(lvl);
 			}
 		}

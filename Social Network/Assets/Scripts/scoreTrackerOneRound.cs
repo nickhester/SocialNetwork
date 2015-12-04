@@ -33,24 +33,19 @@ public class ScoreTrackerOneRound : MonoBehaviour {
 		// add score for perfect number of actions
         ValidLevels thisLevel = GameObject.Find("Clipboard").GetComponent<Clipboard>().GetNextLevelUp().myLevel;
 
-		if (!isSpecial)
-		{
-			if (numActionsTaken == thisLevel.numClicks)
-			{
-				score = 3;
-			}
-			else if (numActionsTaken == (thisLevel.numClicks + 1))
-			{
-				score = 2;
-			}
-			else
-			{
-				score = 1;
-			}
-		}
-		else if (isSpecial)
+		int requiredClicks = (thisLevel.isCantTouch ? thisLevel.cantTouchNumClicks : thisLevel.numClicks);
+
+		if (numActionsTaken == requiredClicks)
 		{
 			score = 3;
+		}
+		else if (numActionsTaken == (requiredClicks + 1))
+		{
+			score = 2;
+		}
+		else
+		{
+			score = 1;
 		}
 	}
 }
