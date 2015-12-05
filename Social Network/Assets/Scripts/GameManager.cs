@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour {
 	private int numAppointmentsThisSession = 0;
 	private Clipboard currentClipboard;
 	private float currentGameSessionTime = 0.0f;
+	private int targetFrameRate = 60;
 	
 	public GameDataBlob gameDataBlob;
 	public int pendingCloudSaveOperation = 0;	// 1 == load from cloud, 2 == save to cloud, 3 == save empty data to cloud to clear save data
@@ -37,6 +38,8 @@ public class GameManager : MonoBehaviour {
 	void Initialize()
 	{
 		DontDestroyOnLoad(gameObject);
+
+		Application.targetFrameRate = targetFrameRate;
 
 		RestartSessionMetrics();
 

@@ -207,6 +207,7 @@ public class Person : MonoBehaviour {
 	public void SetAsExcited(bool _isExcited)
 	{
 		isExcited = _isExcited;
+		SetMood(GetMood());
 	}
 
 	public void SetMood(Mood _newMood)
