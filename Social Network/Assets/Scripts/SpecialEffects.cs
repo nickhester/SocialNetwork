@@ -8,13 +8,17 @@ public class SpecialEffects : MonoBehaviour
 	float shakeFrequency1 = 49.0f;
 	float shakeFrequency2 = 35.0f;
 	float shakeScale = 0.012f;
+	private Vector3 shakingObjectNewPosition = Vector3.zero;
 
 	void Update ()
 	{
 		if (isShaking)
 		{
 			Vector3 pos = shakingObject.transform.position;
-			shakingObject.transform.position = new Vector3(pos.x + (Mathf.Sin(Time.time * shakeFrequency1) * shakeScale), pos.y + (Mathf.Sin(Time.time * shakeFrequency2) * shakeScale), pos.z);
+			shakingObjectNewPosition.x = pos.x + (Mathf.Sin(Time.time * shakeFrequency1) * shakeScale);
+			shakingObjectNewPosition.y = pos.y + (Mathf.Sin(Time.time * shakeFrequency2) * shakeScale);
+			shakingObjectNewPosition.z = pos.z;
+			shakingObject.transform.position = shakingObjectNewPosition;
 		}
 	}
 

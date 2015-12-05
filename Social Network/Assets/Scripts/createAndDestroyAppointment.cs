@@ -57,8 +57,10 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 	void Update ()
 	{
-
-		if (appointmentComplete) { waitToShowResultsAfterFinishedCounter -= Time.deltaTime; }
+		if (appointmentComplete)
+		{
+			waitToShowResultsAfterFinishedCounter -= Time.deltaTime;
+		}
 	}
 
 	#endregion

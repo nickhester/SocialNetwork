@@ -266,7 +266,7 @@ public class NetworkManager : MonoBehaviour {
 		GameObject.FindWithTag("GameManager").GetComponent<GameManager>().Event_AppointmentReset();
 		foreach (Person _ppl in GetAllPeople())
 		{
-			_ppl.m_Mood = Mood.Neutral;
+			_ppl.SetMood(Mood.Neutral);
 			if (currentLevelInfo.isOneClick)
 			{
 				_ppl.DisableOneClickMask();
@@ -340,7 +340,7 @@ public class NetworkManager : MonoBehaviour {
 	{
 		foreach (Person _person in GetAllPeople())
 		{
-			if (_person.m_Mood != Mood.Positive)
+			if (_person.GetMood() != Mood.Positive)
 			{
 				return false;
 			}
@@ -481,7 +481,7 @@ public class NetworkManager : MonoBehaviour {
 				peopleWithOnlyPositiveRelationships.Add(_person);
 			}
 
-			if (_person.m_Mood != Mood.Positive)
+			if (_person.GetMood() != Mood.Positive)
 			{
 				peopleWhoAreUnhappy.Add(_person);
 			}

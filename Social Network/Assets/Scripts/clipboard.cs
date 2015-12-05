@@ -25,6 +25,7 @@ public class Clipboard : MonoBehaviour
 	[HideInInspector] public Difficulty currentLevelDifficulty;
     [HideInInspector] public int currentLevelNumBlocks;
 	private GameObject startButton;
+	private Renderer startButton_renderer;
 
 	[HideInInspector] public LevelSelector selectorRef;
 	private int buttonState = 0;
@@ -155,7 +156,12 @@ public class Clipboard : MonoBehaviour
 		createAndDestroyLevelRef = GameObject.FindGameObjectWithTag("persistentObject").GetComponent<CreateAndDestroyAppointment>();
 		foreach (Transform GO in GetComponentsInChildren<Transform>())
 		{
-            if (GO.name == "BackButton") { startButton = GO.gameObject; }		// get reference to start button
+            if (GO.name == "BackButton")
+			{
+				// get reference to start button
+				startButton = GO.gameObject;
+				startButton_renderer = startButton.GetComponent<Renderer>();
+			}
 		}
 
 		selectorRef = GameObject.Find("LevelSelector").GetComponent<LevelSelector>();
@@ -232,15 +238,15 @@ public class Clipboard : MonoBehaviour
 		// update button with correct text for state
 		if (buttonState == 0)
         {
-            startButton.GetComponent<Renderer>().material = buttonTextBack;
+			startButton_renderer.material = buttonTextBack;
         }
 		else if (buttonState == 1) 
         {
-            startButton.GetComponent<Renderer>().material = buttonTextBack;
+			startButton_renderer.material = buttonTextBack;
         }
 		else if (buttonState == 2) 
         {
-            startButton.GetComponent<Renderer>().material = buttonTextDone;
+			startButton_renderer.material = buttonTextDone;
         }
 		else { Debug.LogError("Clipboard button state is invalid"); }
 

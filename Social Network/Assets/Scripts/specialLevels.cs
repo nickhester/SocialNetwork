@@ -27,7 +27,7 @@ public class SpecialLevels : MonoBehaviour {
 			if (fallToRedTimer >= fallToRedSeconds)
 			{
 				fallToRedTimer = 0;
-				manager.GetAllPeople()[Random.Range(0, manager.GetNumPeople())].m_Mood = Mood.Negative;
+				manager.GetAllPeople()[Random.Range(0, manager.GetNumPeople())].SetMood(Mood.Negative);
 			}
 		}
 	}

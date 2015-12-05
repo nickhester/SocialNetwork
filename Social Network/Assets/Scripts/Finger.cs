@@ -18,13 +18,12 @@ public class Finger : MonoBehaviour {
 
 	private Vector2 fingerTipOffset = new Vector2(0.7f, 0.7f);
 	private Vector2 fingerTipOffsetVisible = new Vector2(0.9f, 1.1f);
+	private Vector3 updateFingerPosition = Vector3.zero;
 
 	void Awake ()
     {
         fingerOrigin = new Vector3(0.0f, -30.0f, -2.5f);
         fingerInstance = Instantiate(fingerObject, fingerOrigin, Quaternion.identity) as GameObject;
-
-        //SendFinger(Vector2.zero);
 	}
 
     void Update()
@@ -32,7 +31,10 @@ public class Finger : MonoBehaviour {
         if (!isTraveling && fingerIsActive)
         {
             hoverCounter += Time.deltaTime;
-            fingerInstance.transform.position = new Vector3(currentTarget.x, (currentTarget.y + (Mathf.Sin(hoverCounter * hoverSpeed) * hoverAmount)), fingerInstance.transform.position.z);
+			updateFingerPosition.x = currentTarget.x;
+			updateFingerPosition.y = (currentTarget.y + (Mathf.Sin(hoverCounter * hoverSpeed) * hoverAmount));
+			updateFingerPosition.z = fingerInstance.transform.position.z;
+			fingerInstance.transform.position = updateFingerPosition;
         }
     }
 

@@ -7,20 +7,13 @@ public class ScoreTrackerOneRound : MonoBehaviour {
 
 	private int score;
 	
-
 	public void Reset ()
 	{
 		score = 0;
 	}
 
-	// Use this for initialization
 	void Start () {
 		Reset();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
 	}
 
 	public int GetScore()

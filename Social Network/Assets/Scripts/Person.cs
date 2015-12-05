@@ -7,18 +7,20 @@ public class Person : MonoBehaviour {
 
 	#region Variables
 
+	private Renderer m_renderer;
 	public List<Relationship> relationshipList;
 	public List<Relationship> relationshipListNonZero;
 	public List<Relationship> relationshipListNegative;
 	public List<Relationship> relationshipListPositive;
 	public int personalIndex;
-	public Mood m_Mood = Mood.Neutral;
+	private Mood m_mood = Mood.Neutral;
 	[HideInInspector]
 	public NetworkManager networkMgr;
 	[HideInInspector]
 	public Transform myTransform;
 	public GameObject myMaxIndicator;
 	private GameObject _myMaxIndicator;
+	private Renderer _myMaxIndicator_renderer;
 	private bool hasBeenActivatedOnce = false;
 	public bool canBeClicked = true;
 
@@ -44,6 +46,7 @@ public class Person : MonoBehaviour {
 
 	public void Initialize()
 	{
+		m_renderer = GetComponent<Renderer>();
 		myTransform = transform;
 		networkMgr = GameObject.FindGameObjectWithTag("networkManager").GetComponent<NetworkManager>();
 		foreach (Relationship _rel in relationshipList)
@@ -56,7 +59,8 @@ public class Person : MonoBehaviour {
 		Vector3 positionJustBehindPerson = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
 		_myMaxIndicator = Instantiate(myMaxIndicator, positionJustBehindPerson, Quaternion.identity) as GameObject;
 		_myMaxIndicator.transform.localScale = new Vector3(1.9f, 1.9f, 1);
-		_myMaxIndicator.GetComponent<Renderer>().enabled = false;
+		_myMaxIndicator_renderer = _myMaxIndicator.GetComponent<Renderer>();
+		_myMaxIndicator_renderer.enabled = false;
 		_myMaxIndicator.transform.parent = transform;
 		
 		if (!canBeClicked)
@@ -68,28 +72,7 @@ public class Person : MonoBehaviour {
 
 	void Update ()
 	{
-		if (m_Mood == Mood.Negative)
-		{
-			_myMaxIndicator.GetComponent<Renderer>().enabled = true;
-			_myMaxIndicator.GetComponent<Renderer>().material = statusCircleRed;
-			GetComponent<Renderer>().material = facialArt1_sad;
-		}
-		else if (m_Mood == Mood.Positive)
-		{
-			_myMaxIndicator.GetComponent<Renderer>().enabled = true;
-			_myMaxIndicator.GetComponent<Renderer>().material = statusCircleGreen;
-			GetComponent<Renderer>().material = facialArt1_happy;
-		}
-        else if (m_Mood == Mood.Neutral)
-        {
-            _myMaxIndicator.GetComponent<Renderer>().enabled = false;
-            GetComponent<Renderer>().material = facialArt1_normal;
-        }
-
-		if (isExcited)
-		{
-			GetComponent<Renderer>().material = facialArt1_excited;
-		}
+		
 	}
 
 	#endregion
@@ -128,7 +111,6 @@ public class Person : MonoBehaviour {
 		{ return; }
 
 		Mood changeToMood;
-
 		if (isPositiveChange)
 		{
 			changeToMood = Mood.Positive;
@@ -137,7 +119,7 @@ public class Person : MonoBehaviour {
 		{
 			changeToMood = Mood.Negative;
 		}
-		this.m_Mood = changeToMood;
+		SetMood(changeToMood);
 
 		listOfAffectedRels.Clear();					// start with cleared list of affected relationships
 		foreach (Relationship rel in relationshipList)					// go through my relationships
@@ -202,7 +184,7 @@ public class Person : MonoBehaviour {
 	
 	public void AffectRelationship(Mood _moodTarget, Relationship _relationship)
 	{
-		_relationship.GetOppositeMember(this).m_Mood = _moodTarget;
+		_relationship.GetOppositeMember(this).SetMood(_moodTarget);
 	}
 
 	void EffectPulse(Vector3 startPos, Vector3 endPos, bool isGreen, bool changesColor)
@@ -225,5 +207,37 @@ public class Person : MonoBehaviour {
 	public void SetAsExcited(bool _isExcited)
 	{
 		isExcited = _isExcited;
+	}
+
+	public void SetMood(Mood _newMood)
+	{
+		m_mood = _newMood;
+		if (m_mood == Mood.Negative)
+		{
+			_myMaxIndicator_renderer.enabled = true;
+			_myMaxIndicator_renderer.material = statusCircleRed;
+			m_renderer.material = facialArt1_sad;
+		}
+		else if (m_mood == Mood.Positive)
+		{
+			_myMaxIndicator_renderer.enabled = true;
+			_myMaxIndicator_renderer.material = statusCircleGreen;
+			m_renderer.material = facialArt1_happy;
+		}
+		else if (m_mood == Mood.Neutral)
+		{
+			_myMaxIndicator_renderer.enabled = false;
+			m_renderer.material = facialArt1_normal;
+		}
+
+		if (isExcited)
+		{
+			m_renderer.material = facialArt1_excited;
+		}
+	}
+
+	public Mood GetMood()
+	{
+		return m_mood;
 	}
 }

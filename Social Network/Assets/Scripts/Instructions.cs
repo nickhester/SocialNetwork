@@ -7,6 +7,7 @@ public class Instructions : MonoBehaviour {
 	public List<int> instructionsToShow = new List<int>();
 	public List<Material> instructionMats = new List<Material>();
 	private bool hasBeenDisplayingForOneFrame = false;
+	private Renderer m_renderer;
 
     void Awake()
     {
@@ -29,11 +30,16 @@ public class Instructions : MonoBehaviour {
         }
     }
 	
+	void Start()
+	{
+		m_renderer = gameObject.GetComponent<Renderer>();
+	}
+
 	// Update is called once per frame
 	void Update () {
 
 		// make sure not to take a click from something else
-		if (gameObject.GetComponent<Renderer>().enabled)
+		if (m_renderer.enabled)
         {
 			hasBeenDisplayingForOneFrame = true;
         }

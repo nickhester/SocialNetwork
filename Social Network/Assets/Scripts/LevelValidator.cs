@@ -162,7 +162,7 @@ public class LevelValidator {
 		for (int i = 0; i < networkMgr.GetNumPeople(); i++)
 		{
 			Person _people = networkMgr.GetAllPeople()[i];
-			statesOfPeople[_people.personalIndex] = _people.m_Mood;
+			statesOfPeople[_people.personalIndex] = _people.GetMood();
 //			if (_people.m_Mood == Mood.Positive)
 //			{
 //				statesOfPeople[_people.personalIndex] = true;
@@ -178,7 +178,7 @@ public class LevelValidator {
 		for (int i = 0; i < networkMgr.GetNumPeople(); i++)
 		{
             Person p = networkMgr.GetAllPeople()[i];
-            p.m_Mood = levelStateToReturnTo.myState[p.personalIndex];
+            p.SetMood(levelStateToReturnTo.myState[p.personalIndex]);
 		}
 	}
 	

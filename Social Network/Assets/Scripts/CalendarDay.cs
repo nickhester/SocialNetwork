@@ -138,10 +138,6 @@ public class CalendarDay : MonoBehaviour {
 		_textStars.GetComponent<TextMesh>().text = stringToDisplay;
 	}
 	
-	void Update () {
-		
-	}
-
 	#endregion
 
 	public void SetSpecialAttributes(int _fallToRed, int _oneClick, int _cantTouch, int _noLines)

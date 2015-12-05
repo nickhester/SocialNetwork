@@ -18,6 +18,8 @@ public class Calendar : MonoBehaviour {
 	private float audioButtonScreenPos_Y = 0.97f;
 	private float audioIconSpacing = 0.81f;
 
+	private Vector3 targetWeekPosition = Vector3.zero;
+
     void Awake()
     {
         InputManager.Instance.OnClick += OnClick;
@@ -564,7 +566,8 @@ public class Calendar : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		Vector3 targetWeekPosition = new Vector3(-viewingWeek * distanceBetweenWeeks, dayParent.transform.position.y, 0);
+		targetWeekPosition.x = -viewingWeek * distanceBetweenWeeks;
+		targetWeekPosition.y = dayParent.transform.position.y;
 		dayParent.transform.position = Vector3.Lerp(dayParent.transform.position, targetWeekPosition, 0.1f);
 
 		if (Input.GetButtonDown("Cancel"))

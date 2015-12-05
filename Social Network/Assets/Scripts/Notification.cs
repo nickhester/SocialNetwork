@@ -15,6 +15,7 @@ public class Notification : MonoBehaviour
     [SerializeField] private float pulseSpeed;
     [SerializeField] private float pulseAmount;
 	private float scaleFactor = 0.9f;
+	private Vector3 notificationScaleUpdate = Vector3.zero;
 
 	// buttons
 	[SerializeField] private GameObject buttonPrefab_UpgradeUnlock;
@@ -49,7 +50,10 @@ public class Notification : MonoBehaviour
         {
             currentPulseCounter += Time.deltaTime;
             float pulseScaler = (Mathf.Sin(currentPulseCounter * pulseSpeed) * pulseAmount) + 1.0f;
-            activeNotification.transform.localScale = new Vector3(currentNotificationOriginalScale.x * pulseScaler, currentNotificationOriginalScale.y * pulseScaler, currentNotificationOriginalScale.z);
+			notificationScaleUpdate.x = currentNotificationOriginalScale.x * pulseScaler;
+			notificationScaleUpdate.y = currentNotificationOriginalScale.y * pulseScaler;
+			notificationScaleUpdate.z = currentNotificationOriginalScale.z;
+            activeNotification.transform.localScale = notificationScaleUpdate;
         }
     }
 
