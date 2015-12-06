@@ -109,22 +109,6 @@ public class Calendar : MonoBehaviour {
 			_newCalDayComponent.dayIndex = i;
 			dayList.Add(_newCalDayComponent);
 
-			// set player pref data
-			if (SaveGame.GetDayStarCount(i) == 0)
-			{  }
-			else if (SaveGame.GetDayStarCount(i) == 1)
-			{
-				_newCalDayComponent.SetNumStars(1);
-			}
-			else if (SaveGame.GetDayStarCount(i) == 2)
-			{
-				_newCalDayComponent.SetNumStars(2);
-			}
-			else if (SaveGame.GetDayStarCount(i) == 3)
-			{
-				_newCalDayComponent.SetNumStars(3);
-			}
-
 			bool isShowingLock = false;
 			if (i == Upgrade.dayLocked && !Upgrade.canVerifyUpgrade())
 			{
@@ -508,7 +492,7 @@ public class Calendar : MonoBehaviour {
 			}
 
 			_newCalDay.name = (_newCalDayComponent.dayIndex + 1).ToString() + " " + _newCalDayComponent.GetDayOfTheWeek().ToString();
-			_newCalDayComponent.AddStatusOverlay();
+			_newCalDayComponent.Init();
 		}
 
 		// show notifications on specific weeks of the calendar view

@@ -130,14 +130,41 @@ public class Clipboard : MonoBehaviour
             }
             else if (go == showMeBanner)
             {
-                // restart the level and set level as not winnable/trackable
-                createAndDestroyLevelRef.RestartLevel(true);
-                GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(100, true);
-				MetricsLogger.Instance.LogCustomEvent("Appointment", "HelpMeUsed", gameManager.FormatDayAndLevel());
-                // wait for callback
+				if (SaveGame.GetHasSeenShowMe(nextLevelUp.GetMyDayIndex(), nextLevelUp.GetMyLevelIndex())
+					|| SaveGame.GetHasUpgraded())
+				{
+					StartShowMe();
+				}
+				else
+				{
+					GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(24, true);
+				}
             }
+			else if (go.name.StartsWith("UpgradeButton_Unlock"))
+			{
+				Upgrade.PurchaseUpgrade(1);
+				MetricsLogger.Instance.LogBusinessEvent("US Dollars", 199, "GameUpgrade", "N/A", "N/A", "N/A", "N/A");
+			}
+			else if (go.name.StartsWith("UpgradeButton_Cancel"))
+			{
+				// do nothing, the notification will disappear
+			}
+			else if (go.name.StartsWith("UpgradeButton_WatchIt"))
+			{
+				UnityAds.ShowRewardedAd(0);
+			}
         }
     }
+
+	public void StartShowMe()
+	{
+		SaveGame.SetHasSeenShowMe(nextLevelUp.GetMyDayIndex(), nextLevelUp.GetMyLevelIndex(), true);
+		// restart the level and set level as not winnable/trackable
+		createAndDestroyLevelRef.RestartLevel(true);
+		GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(100, true);
+		MetricsLogger.Instance.LogCustomEvent("Appointment", "HelpMeUsed", gameManager.FormatDayAndLevel());
+		// wait for callback
+	}
 
     public void Callback_CompletedShowMe()
     {

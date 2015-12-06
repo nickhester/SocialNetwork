@@ -30,7 +30,7 @@ public class MainMenu : MonoBehaviour {
 	private float splitCounter = 0.0f;
 	private float splitLimit = 2.0f;
 
-	private string versionText = "Version 3.2";
+	private string versionText = "Version 3.3";
 
 	[SerializeField] private Material confirmClearProgressImage;
     [SerializeField] private Material progressClearedImage;
@@ -231,7 +231,14 @@ public class MainMenu : MonoBehaviour {
 
 		if (Input.GetButtonDown("Cancel"))
 		{
-			GoBack();
+			if (isLerpingTowardOptions)
+			{
+				GoBack();
+			}
+			else
+			{
+				Application.Quit();
+			}
 		}
 	}
 

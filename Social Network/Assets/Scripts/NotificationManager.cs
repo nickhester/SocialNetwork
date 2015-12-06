@@ -95,6 +95,7 @@ public class NotificationManager : MonoBehaviour
 	public GameObject InstructionPaper_canvas_UpgradeChoice;
 	public GameObject InstructionPaper_canvas_UpgradeFinal;
 	public GameObject InstructionPaper_canvas_RateIt;
+	public GameObject Notification_canvas_showMe;
 
     void Awake()
     {
@@ -779,6 +780,20 @@ public class NotificationManager : MonoBehaviour
 				m_notification.DisplayNotification(InstructionPaper_canvas_RateIt, true, true, 0);
 				RequestExclusiveControl();
 				AllowActions(new List<string> { "UpgradeButton_RateIt", "UpgradeButton_No" }, new List<string>(), new List<string>());
+			}
+			else
+			{
+				SaveGame.SetSeenInstruction(_setIndex, true);
+				EndNotification();
+			}
+		}
+		else if (_setIndex == 24)        // Show Me Warning =====================================================
+		{
+			if (_indexWithinSet == 0)
+			{
+				m_notification.DisplayNotification(Notification_canvas_showMe, true, true, 3);
+				RequestExclusiveControl();
+				AllowActions(new List<string> { "UpgradeButton_Unlock", "UpgradeButton_WatchIt", "UpgradeButton_Cancel" }, new List<string>(), new List<string>());
 			}
 			else
 			{

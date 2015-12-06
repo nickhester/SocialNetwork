@@ -54,9 +54,6 @@ public class CalendarDay : MonoBehaviour {
 	private int pointsRequiredForThreeStars = 0;
 
 	// overlays
-	public GameObject stars_1;
-	public GameObject stars_2;
-	public GameObject stars_3;
 	public GameObject stampCheck;
 	public GameObject stampStar;
 	public GameObject overlay_grey;
@@ -67,7 +64,7 @@ public class CalendarDay : MonoBehaviour {
 
 	#region StartAndUpdate
 
-	void Init ()
+	public void Init ()
 	{
 		GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
@@ -136,6 +133,8 @@ public class CalendarDay : MonoBehaviour {
 			stringToDisplay = "";
 		}
 		_textStars.GetComponent<TextMesh>().text = stringToDisplay;
+
+		AddStatusOverlay();
 	}
 	
 	#endregion
@@ -148,18 +147,11 @@ public class CalendarDay : MonoBehaviour {
 		special_NoLines = _noLines;
 	}
 
-	public void AddStatusOverlay()
+	void AddStatusOverlay()
 	{
-		Init();
-
 		Vector3 overlayPosCenter = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 0.1f);
 		Vector3 overlayPosLeft = new Vector3(this.transform.position.x - 3.2f, this.transform.position.y - 0.25f, this.transform.position.z - 0.1f);
 		Vector3 overlayPosRight = new Vector3(this.transform.position.x + 3.2f, this.transform.position.y - 0.25f, this.transform.position.z - 0.1f);
-		/*
-		if (numStars == 1) { GameObject go = Instantiate(stars_1, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
-		else if (numStars == 2) { GameObject go = Instantiate(stars_2, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
-		else if (numStars == 3) { GameObject go = Instantiate(stars_3, overlayPos, Quaternion.identity) as GameObject; go.transform.parent = transform; }
-		*/
 
 		if (hasPassedAllRounds) { GameObject go = Instantiate(stampCheck, overlayPosLeft, Quaternion.identity) as GameObject; go.transform.parent = transform; }
 		if (hasGottenAllStars) { GameObject go = Instantiate(stampStar, overlayPosRight, Quaternion.identity) as GameObject; go.transform.parent = transform; }
@@ -184,16 +176,6 @@ public class CalendarDay : MonoBehaviour {
 	public void SetRequirementsForStars(int _oneStar, int _twoStars, int _threeStars)
 	{
 		pointsRequiredForOneStar = _oneStar; pointsRequiredForTwoStars = _twoStars; pointsRequiredForThreeStars = _threeStars;
-	}
-
-	public int GetNumStars()
-	{
-		return numStars;
-	}
-
-	public void SetNumStars(int _stars)
-	{
-		numStars = _stars;
 	}
 
 	public DayOfTheWeek GetDayOfTheWeek()

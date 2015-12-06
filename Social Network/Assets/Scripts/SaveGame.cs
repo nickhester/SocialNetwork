@@ -121,7 +121,6 @@ public static class SaveGame {
 	
 	public static int GetRoundStarCount(int day, int round)
 	{
-		bool hasIt = SaveData.HasKey(FormatRoundString(day, round) + "_starCount");
 		return SaveData.GetInt(FormatRoundString(day, round) + "_starCount");
 	}
 
@@ -225,7 +224,18 @@ public static class SaveGame {
 
 	public static bool GetHasUpgraded()
 	{
-		return ((SaveData.GetInt("hasUpgraded") == 1) ? true : false);
+		return (SaveData.GetInt("hasUpgraded") == 1);
+	}
+
+	public static void SetHasSeenShowMe(int day, int round, bool hasSeen)
+	{
+		SaveData.SetInt(FormatRoundString(day, round) + "_hasSeenShowMe", (hasSeen ? 1 : 0));
+		SaveAllData();
+	}
+
+	public static bool GetHasSeenShowMe(int day, int round)
+	{
+		return (SaveData.GetInt(FormatRoundString(day, round) + "_hasSeenShowMe") == 1);
 	}
 
 	// debug only
