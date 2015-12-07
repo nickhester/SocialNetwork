@@ -33,7 +33,13 @@ public class MetricsLogger : MonoBehaviour {
 
 	public void LogBusinessEvent(string _currency, int _amount, string _itemType, string _itemId, string _cartType, string _receipt, string _signature)
 	{
+#if UNITY_ANDROID
 		GameAnalytics.NewBusinessEventGooglePlay(_currency, _amount, _itemType, _itemId, _cartType, _receipt, _signature);
+#endif
+
+#if UNITY_IOS
+		//GameAnalytics.NewBusinessEventIOS()
+#endif
 	}
 
 	public void LogProgressionEvent_Complete(string _01)
