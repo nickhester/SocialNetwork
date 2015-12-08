@@ -63,18 +63,14 @@ public class GameManager : MonoBehaviour {
 		PlayGamesPlatform.Activate();
 
 		// if it's set on Android, but it's playing in the Editor...
-#if !UNITY_ANDROID
-#elif UNITY_EDITOR
+#if UNITY_EDITOR
 		GooglePlayAPI.isPlayingOffline = true;
-#else
-		GooglePlayAPI.Initialize();
 #endif
-
-#if !UNITY_IOS
-#elif UNITY_EDITOR
-		// ios stuff to disable in editor goes here
-#else
-		// ios stuff to enable at runtime goes here
+#if UNITY_IOS
+		GooglePlayAPI.isPlayingOffline = true;
+#endif
+#if UNITY_ANDROID
+		GooglePlayAPI.Initialize();
 #endif
 
 		// callback is managed in GooglePlayAPI 
@@ -227,7 +223,7 @@ public class GameManager : MonoBehaviour {
 
 	public void UpdateCloudSaveFromLocal()
 	{
-#if !UNITY_EDITOR
+#if UNITY_ANDROID
 		pendingCloudSaveOperation = 2;
 		gameDataBlob.UpdateToSend(saveDataFormatVersion);
 		GooglePlayAPI.Initialize();
@@ -236,7 +232,7 @@ public class GameManager : MonoBehaviour {
 
 	public void DeleteCloudSave()
 	{
-#if !UNITY_EDITOR
+#if UNITY_ANDROID
 		pendingCloudSaveOperation = 3;
 		GooglePlayAPI.Initialize();
 #endif
@@ -244,9 +240,7 @@ public class GameManager : MonoBehaviour {
 
 	public void callback_OnSavedGameOpened(GooglePlayGames.BasicApi.SavedGame.ISavedGameMetadata game)
 	{
-#if UNITY_IOS
-
-#else
+#if UNITY_ANDROID
 		if (pendingCloudSaveOperation == 1)
 		{
 			// ready to load from cloud

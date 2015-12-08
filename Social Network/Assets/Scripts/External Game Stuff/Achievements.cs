@@ -26,9 +26,7 @@ public static class Achievements {
 		if (r > 0)
 		{
 			KongregateAPI.ReportStarCount(r);
-#if UNITY_IOS
-
-#else
+#if UNITY_ANDROID
 			GooglePlayAPI.ReportStarCount(r);
 #endif
 		}
@@ -47,9 +45,7 @@ public static class Achievements {
 		}
 		// note: week is 0 based
 		KongregateAPI.ReportWeekCompleted(week);
-#if UNITY_IOS
-
-#else
+#if UNITY_ANDROID
 		GooglePlayAPI.ReportWeekCompleted(week);
 #endif
 		return true;
@@ -62,9 +58,7 @@ public static class Achievements {
 		{
 			// note: week is 0 based
 			KongregateAPI.ReportWeekPerfected(week);
-#if UNITY_IOS
-
-#else
+#if UNITY_ANDROID
 		GooglePlayAPI.ReportWeekPerfected(week);
 #endif
 			return true;
@@ -78,9 +72,7 @@ public static class Achievements {
 		if (SaveGame.numDaysCompleted == SaveGame.numTotalDays)
 		{
 			KongregateAPI.ReportGameCompleted();
-#if UNITY_IOS
-
-#else
+#if UNITY_ANDROID
 		GooglePlayAPI.ReportGameCompleted();
 #endif
 			return true;
@@ -97,9 +89,7 @@ public static class Achievements {
 				return false;
 		}
 		KongregateAPI.ReportGamePerfected();
-#if UNITY_IOS
-
-#else
+#if UNITY_ANDROID
 		GooglePlayAPI.ReportGamePerfected();
 #endif
 		return true;

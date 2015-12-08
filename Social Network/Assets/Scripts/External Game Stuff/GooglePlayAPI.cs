@@ -2,9 +2,8 @@
 using System.Collections;
 using UnityEngine.SocialPlatforms;
 using System;
-#if UNITY_IOS
 
-#else
+#if UNITY_ANDROID
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
@@ -12,12 +11,10 @@ using GooglePlayGames.BasicApi.SavedGame;
 
 public static class GooglePlayAPI {
 
-#if UNITY_IOS
-
-#else
 	public static bool isPlayingOffline = false;
 	private static string saveDataName = "saveData";
 
+#if UNITY_ANDROID
 	public static void Initialize()
 	{
 		if (!isPlayingOffline)

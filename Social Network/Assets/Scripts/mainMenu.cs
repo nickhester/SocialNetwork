@@ -78,9 +78,7 @@ public class MainMenu : MonoBehaviour {
 		}
 		else if (go.name == "button_leaderboard")
 		{
-#if UNITY_IOS
-
-#else
+#if UNITY_ANDROID
 			if (!GooglePlayAPI.isPlayingOffline)
 			{
 				// show leaderboard UI
