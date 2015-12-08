@@ -8,10 +8,13 @@ using System;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
-
+#endif
 
 public static class GooglePlayAPI {
 
+#if UNITY_IOS
+
+#else
 	public static bool isPlayingOffline = false;
 	private static string saveDataName = "saveData";
 
@@ -265,5 +268,5 @@ public static class GooglePlayAPI {
 			// handle error
 		}
 	}
-}
 #endif
+}
