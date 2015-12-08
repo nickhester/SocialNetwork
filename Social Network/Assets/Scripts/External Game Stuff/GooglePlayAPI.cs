@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SocialPlatforms;
+using System;
+#if UNITY_IOS
+
+#else
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
-using UnityEngine.SocialPlatforms;
-using System;
 
 
 public static class GooglePlayAPI {
 
-	private static bool isUsingGooglePlay = true;
 	public static bool isPlayingOffline = false;
 	private static string saveDataName = "saveData";
 
@@ -264,3 +266,4 @@ public static class GooglePlayAPI {
 		}
 	}
 }
+#endif

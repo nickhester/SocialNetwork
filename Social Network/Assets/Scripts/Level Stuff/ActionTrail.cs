@@ -26,7 +26,7 @@ public class ActionTrail {
                 int num;
                 int.TryParse(token.Substring(0, 1), out num);
                 bool choice = true;
-                string visibleString = token.Substring(1, 1);
+                //string visibleString = token.Substring(1, 1);		// never used
                 if (token.Substring(1, 1) == "F")
                 {
                     choice = false;

@@ -882,7 +882,7 @@ public class NotificationManager : MonoBehaviour
 
     void RequestExclusiveControl()
     {
-        inputManager.RequestExclusiveControl(gameObject);
+        inputManager.RequestExclusiveControl();
         isInExclusiveEvent = true;
     }
 

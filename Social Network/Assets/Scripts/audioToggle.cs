@@ -34,7 +34,6 @@ public class AudioToggle : MonoBehaviour {
     {
         if (InputManager.Instance != null)
         {
-            int id = gameObject.GetInstanceID();
             InputManager.Instance.OnClick -= OnClick;
         }
     }

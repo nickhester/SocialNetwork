@@ -486,8 +486,6 @@ public class Calendar : MonoBehaviour {
 					
 				default:	// shouldn't be used
                     Debug.LogError("falling to default switch statement for calendar day");
-					_newCalDayComponent.numAppointments = 		6;
-					_newCalDayComponent.SetDifficulties			(20, 20, 20, 20);
 					break;
 			}
 

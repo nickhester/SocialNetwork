@@ -78,11 +78,16 @@ public class MainMenu : MonoBehaviour {
 		}
 		else if (go.name == "button_leaderboard")
 		{
+#if UNITY_IOS
+
+#else
 			if (!GooglePlayAPI.isPlayingOffline)
 			{
 				// show leaderboard UI
 				Social.ShowLeaderboardUI();
 			}
+#endif
+
 		}
 
         // AUDIO

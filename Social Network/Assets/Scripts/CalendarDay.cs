@@ -29,29 +29,16 @@ public class CalendarDay : MonoBehaviour {
 	private GameManager gameManager;
 
 	// difficulty settings to pass to day creator
-	private int percentVeryEasy = 0;
-	private int percentEasy = 0;
-	private int percentMedium = 0;
-	private int percentHard = 0;
 	public int numAppointments;
 	//public int timeLimit;
 	public bool isPlayable = false;
 	public List<ValidLevels> specificLevelsRequested = new List<ValidLevels>();
 
     // special day attributes
-    private int special_FallToRed = 0;          // people randomly fall back to red
-	private int special_OneClick = 0;           // can only click each person once
-	private int special_CantTouch = 0;          // a certain person you can't click on
-	private int special_NoLines = 0;            // lines do not display
 	public GameObject specialMask_FallToRed;
 	public GameObject specialMask_OneClick;
 	public GameObject specialMask_CantTouch;
 	public GameObject specialMask_NoLines;
-
-	// requirements for this level
-	private int pointsRequiredForOneStar = 0;
-	private int pointsRequiredForTwoStars = 0;
-	private int pointsRequiredForThreeStars = 0;
 
 	// overlays
 	public GameObject stampCheck;
@@ -139,14 +126,6 @@ public class CalendarDay : MonoBehaviour {
 	
 	#endregion
 
-	public void SetSpecialAttributes(int _fallToRed, int _oneClick, int _cantTouch, int _noLines)
-	{
-		special_FallToRed = _fallToRed;
-		special_OneClick = _oneClick;
-		special_CantTouch = _cantTouch;
-		special_NoLines = _noLines;
-	}
-
 	void AddStatusOverlay()
 	{
 		Vector3 overlayPosCenter = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 0.1f);
@@ -159,11 +138,6 @@ public class CalendarDay : MonoBehaviour {
 		if (!isPlayable) { GameObject go = Instantiate (overlay_grey, overlayPosCenter, Quaternion.identity) as GameObject; go.transform.parent = transform; }
 	}
 
-	public void SetDifficulties(int _VeryEasy, int _Easy, int _Medium, int _Hard)
-	{
-		percentVeryEasy = _VeryEasy; percentEasy = _Easy; percentMedium = _Medium; percentHard = _Hard;
-	}
-
 	public void SetSpecificLevel(ValidLevels levelRequested)
 	{
 		specificLevelsRequested.Add(levelRequested);
@@ -171,11 +145,6 @@ public class CalendarDay : MonoBehaviour {
 	public void SetSpecificLevels(List<ValidLevels> levelsRequested)
 	{
 		specificLevelsRequested.AddRange(levelsRequested);
-	}
-
-	public void SetRequirementsForStars(int _oneStar, int _twoStars, int _threeStars)
-	{
-		pointsRequiredForOneStar = _oneStar; pointsRequiredForTwoStars = _twoStars; pointsRequiredForThreeStars = _threeStars;
 	}
 
 	public DayOfTheWeek GetDayOfTheWeek()

@@ -27,7 +27,6 @@ public class InputManager : MonoBehaviour {
     }
     private GameObject objectMousedDownOn;
     private bool isSendingExclusiveEvents = false;
-    private Object exclusiveReceiver;
     private bool isIgnoringUserInput = false;
 
     void Update()
@@ -68,15 +67,13 @@ public class InputManager : MonoBehaviour {
         }
     }
 
-    public void RequestExclusiveControl(Object obj)
+    public void RequestExclusiveControl()
     {
-        exclusiveReceiver = obj;
         isSendingExclusiveEvents = true;
     }
 
     public void EndExclusiveControl()
     {
-        exclusiveReceiver = null;
         isSendingExclusiveEvents = false;
     }
 

@@ -73,6 +73,16 @@ public struct levelTesterState_s
 		}
 		return returnValue;
 	}
+	public override bool Equals(object obj)
+	{
+		Debug.LogError("Equals() not implemented");
+		return base.Equals(obj);
+	}
+	public override int GetHashCode()
+	{
+		Debug.LogError("GetHashCode() not implemented");
+		return base.GetHashCode();
+	}
 	public override string ToString()
 	{
 		string returnVal = "";
