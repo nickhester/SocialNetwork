@@ -9,16 +9,11 @@ Library/AssetImportState
 Library/AssetServerCacheV3
 Library/FailedAssetImports.txt
 Library/ScriptAssemblies
-Library/ScriptMapper
 Library/assetDatabase3
 Library/cache
 Library/expandedItems
-Library/metadata
 Library/previews
-Library/guidmapper
-Library/
-Library/*
+Library/UnityAssemblies
 Temp
-UnityProject/TwoWeekAsteroids/Library/guidmapper
 
 *.userprefs
