@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour {
 
 	[SerializeField] private Material confirmClearProgressImage;
     [SerializeField] private Material progressClearedImage;
-    [SerializeField] private GameObject text;
+    //[SerializeField] private GameObject text;	// 3dtextarial
 
     [SerializeField] private Material audio_sfx;
     [SerializeField] private Material audio_music;
@@ -142,11 +142,13 @@ public class MainMenu : MonoBehaviour {
         mainTitle.transform.position = new Vector3(mainTitleOriginalPosition.x, mainTitleOriginalPosition.y + mainTitleDistanceStartUp, mainTitleOriginalPosition.z);
 
 		// display software version number
+		/*
 		GameObject versionTextObject = Instantiate(text, new Vector3(2.5f, -26.4f, -1.0f), Quaternion.identity) as GameObject;
 		versionTextObject.transform.localScale = versionTextObject.transform.localScale * 0.04f;
 		versionTextObject.transform.parent = gameObject.transform;
 		TextMesh myTextComponent = versionTextObject.GetComponent<TextMesh>();
 		myTextComponent.text = versionText;
+		*/
 
 		// make sure audio icons check are accurately on or off
 		if (SaveGame.GetAudioOn_music() == false)
