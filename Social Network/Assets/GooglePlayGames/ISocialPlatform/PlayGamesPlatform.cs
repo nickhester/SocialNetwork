@@ -71,7 +71,7 @@ namespace GooglePlayGames
         {
             if (sInstance != null)
             {
-                Logger.w("PlayGamesPlatform already initialized. Ignoring this call.");
+                GooglePlayGames.OurUtils.Logger.w("PlayGamesPlatform already initialized. Ignoring this call.");
                 return;
             }
 
@@ -90,7 +90,7 @@ namespace GooglePlayGames
             {
                 if (sInstance == null)
                 {
-                    Logger.d("Instance was not initialized, using default configuration.");
+                    GooglePlayGames.OurUtils.Logger.d("Instance was not initialized, using default configuration.");
                     InitializeInstance(PlayGamesClientConfiguration.DefaultConfiguration);
                 }
 
@@ -165,12 +165,12 @@ namespace GooglePlayGames
         {
             get
             {
-                return Logger.DebugLogEnabled;
+                return GooglePlayGames.OurUtils.Logger.DebugLogEnabled;
             }
 
             set
             {
-                Logger.DebugLogEnabled = value;
+                GooglePlayGames.OurUtils.Logger.DebugLogEnabled = value;
             }
         }
 
@@ -224,9 +224,9 @@ namespace GooglePlayGames
         /// <returns>The singleton <see cref="PlayGamesPlatform" /> instance.</returns>
         public static PlayGamesPlatform Activate()
         {
-            Logger.d("Activating PlayGamesPlatform.");
+            GooglePlayGames.OurUtils.Logger.d("Activating PlayGamesPlatform.");
             Social.Active = PlayGamesPlatform.Instance;
-            Logger.d("PlayGamesPlatform activated: " + Social.Active);
+            GooglePlayGames.OurUtils.Logger.d("PlayGamesPlatform activated: " + Social.Active);
             return PlayGamesPlatform.Instance;
         }
 
@@ -292,7 +292,7 @@ namespace GooglePlayGames
             // make a platform-specific Play Games client
             if (mClient == null)
             {
-                Logger.d("Creating platform-specific Play Games client.");
+                GooglePlayGames.OurUtils.Logger.d("Creating platform-specific Play Games client.");
                 mClient = PlayGamesClientFactory.GetPlatformPlayGamesClient(mConfiguration);
             }
 
@@ -342,7 +342,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("GetUserId() can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("GetUserId() can only be called after authentication.");
                 callback(new IUserProfile[0]);
             }
 
@@ -360,7 +360,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("GetUserId() can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("GetUserId() can only be called after authentication.");
                 return "0";
             }
 
@@ -429,7 +429,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("GetAchievement can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("GetAchievement can only be called after authentication.");
                 return null;
             }
 
@@ -446,7 +446,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("GetUserDisplayName can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("GetUserDisplayName can only be called after authentication.");
                 return string.Empty;
             }
 
@@ -464,7 +464,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("GetUserImageUrl can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("GetUserImageUrl can only be called after authentication.");
                 return null;
             }
 
@@ -503,7 +503,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("ReportProgress can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("ReportProgress can only be called after authentication.");
                 if (callback != null)
                 {
                     callback.Invoke(false);
@@ -513,13 +513,13 @@ namespace GooglePlayGames
             }
 
             // map ID, if it's in the dictionary
-            Logger.d("ReportProgress, " + achievementID + ", " + progress);
+            GooglePlayGames.OurUtils.Logger.d("ReportProgress, " + achievementID + ", " + progress);
             achievementID = MapId(achievementID);
 
             // if progress is 0.0, we just want to reveal it
             if (progress < 0.000001)
             {
-                Logger.d("Progress 0.00 interpreted as request to reveal.");
+                GooglePlayGames.OurUtils.Logger.d("Progress 0.00 interpreted as request to reveal.");
                 mClient.RevealAchievement(achievementID, callback);
                 return;
             }
@@ -530,8 +530,8 @@ namespace GooglePlayGames
             Achievement ach = mClient.GetAchievement(achievementID);
             if (ach == null)
             {
-                Logger.w("Unable to locate achievement " + achievementID);
-                Logger.w("As a quick fix, assuming it's standard.");
+                GooglePlayGames.OurUtils.Logger.w("Unable to locate achievement " + achievementID);
+                GooglePlayGames.OurUtils.Logger.w("As a quick fix, assuming it's standard.");
                 isIncremental = false;
             }
             else
@@ -539,10 +539,10 @@ namespace GooglePlayGames
                 isIncremental = ach.IsIncremental;
                 curSteps = ach.CurrentSteps;
                 totalSteps = ach.TotalSteps;
-                Logger.d("Achievement is " + (isIncremental ? "INCREMENTAL" : "STANDARD"));
+                GooglePlayGames.OurUtils.Logger.d("Achievement is " + (isIncremental ? "INCREMENTAL" : "STANDARD"));
                 if (isIncremental)
                 {
-                    Logger.d("Current steps: " + curSteps + "/" + totalSteps);
+                    GooglePlayGames.OurUtils.Logger.d("Current steps: " + curSteps + "/" + totalSteps);
                 }
             }
 
@@ -550,18 +550,18 @@ namespace GooglePlayGames
             if (isIncremental)
             {
                 // increment it to the target percentage (approximate)
-                Logger.d("Progress " + progress +
+                GooglePlayGames.OurUtils.Logger.d("Progress " + progress +
                     " interpreted as incremental target (approximate).");
                 if (progress >= 0.0 && progress <= 1.0)
                 {
                     // in a previous version, incremental progress was reported by using the range [0-1]
-                    Logger.w("Progress " + progress + " is less than or equal to 1. You might be trying to use values in the range of [0,1], while values are expected to be within the range [0,100]. If you are using the latter, you can safely ignore this message.");
+                    GooglePlayGames.OurUtils.Logger.w("Progress " + progress + " is less than or equal to 1. You might be trying to use values in the range of [0,1], while values are expected to be within the range [0,100]. If you are using the latter, you can safely ignore this message.");
                 }
 
                 int targetSteps = (int)((progress / 100) * totalSteps);
                 int numSteps = targetSteps - curSteps;
-                Logger.d("Target steps: " + targetSteps + ", cur steps:" + curSteps);
-                Logger.d("Steps to increment: " + numSteps);
+                GooglePlayGames.OurUtils.Logger.d("Target steps: " + targetSteps + ", cur steps:" + curSteps);
+                GooglePlayGames.OurUtils.Logger.d("Steps to increment: " + numSteps);
                 if (numSteps > 0)
                 {
                     mClient.IncrementAchievement(achievementID, numSteps, callback);
@@ -570,13 +570,13 @@ namespace GooglePlayGames
             else if (progress >= 100)
             {
                 // unlock it!
-                Logger.d("Progress " + progress + " interpreted as UNLOCK.");
+                GooglePlayGames.OurUtils.Logger.d("Progress " + progress + " interpreted as UNLOCK.");
                 mClient.UnlockAchievement(achievementID, callback);
             }
             else
             {
                 // not enough to unlock
-                Logger.d("Progress " + progress + " not enough to unlock non-incremental achievement.");
+                GooglePlayGames.OurUtils.Logger.d("Progress " + progress + " not enough to unlock non-incremental achievement.");
             }
         }
 
@@ -599,7 +599,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("IncrementAchievement can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("IncrementAchievement can only be called after authentication.");
                 if (callback != null)
                 {
                     callback.Invoke(false);
@@ -609,7 +609,7 @@ namespace GooglePlayGames
             }
 
             // map ID, if it's in the dictionary
-            Logger.d("IncrementAchievement: " + achievementID + ", steps " + steps);
+            GooglePlayGames.OurUtils.Logger.d("IncrementAchievement: " + achievementID + ", steps " + steps);
             achievementID = MapId(achievementID);
             mClient.IncrementAchievement(achievementID, steps, callback);
         }
@@ -637,7 +637,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("SetStepsAtLeast can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("SetStepsAtLeast can only be called after authentication.");
                 if (callback != null)
                 {
                     callback.Invoke(false);
@@ -647,7 +647,7 @@ namespace GooglePlayGames
             }
 
             // map ID, if it's in the dictionary
-            Logger.d("SetStepsAtLeast: " + achievementID + ", steps " + steps);
+            GooglePlayGames.OurUtils.Logger.d("SetStepsAtLeast: " + achievementID + ", steps " + steps);
             achievementID = MapId(achievementID);
             mClient.SetStepsAtLeast(achievementID, steps, callback);
         }
@@ -660,7 +660,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("LoadAchievementDescriptions can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("LoadAchievementDescriptions can only be called after authentication.");
                 callback.Invoke(null);
             }
 
@@ -684,7 +684,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("LoadAchievements can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("LoadAchievements can only be called after authentication.");
                 callback.Invoke(null);
             }
 
@@ -731,7 +731,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("ReportScore can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("ReportScore can only be called after authentication.");
                 if (callback != null)
                 {
                     callback.Invoke(false);
@@ -740,7 +740,7 @@ namespace GooglePlayGames
                 return;
             }
 
-            Logger.d("ReportScore: score=" + score + ", board=" + board);
+            GooglePlayGames.OurUtils.Logger.d("ReportScore: score=" + score + ", board=" + board);
             string lbId = MapId(board);
             mClient.SubmitScore(lbId, score, callback);
         }
@@ -758,7 +758,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("ReportScore can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("ReportScore can only be called after authentication.");
                 if (callback != null)
                 {
                     callback.Invoke(false);
@@ -767,7 +767,7 @@ namespace GooglePlayGames
                 return;
             }
 
-            Logger.d("ReportScore: score=" + score + ", board=" + board +
+            GooglePlayGames.OurUtils.Logger.d("ReportScore: score=" + score + ", board=" + board +
                 " metadata=" + metadata);
             string lbId = MapId(board);
             mClient.SubmitScore(lbId, score, metadata, callback);
@@ -807,7 +807,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("LoadScores can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("LoadScores can only be called after authentication.");
                 callback(new LeaderboardScoreData(leaderboardId,
                     ResponseStatus.NotAuthorized));
                 return;
@@ -822,7 +822,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("LoadMoreScores can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("LoadMoreScores can only be called after authentication.");
                 callback(new LeaderboardScoreData(token.LeaderboardId,
                     ResponseStatus.NotAuthorized));
                 return;
@@ -859,11 +859,11 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("ShowAchievementsUI can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("ShowAchievementsUI can only be called after authentication.");
                 return;
             }
 
-            Logger.d("ShowAchievementsUI callback is "  + callback);
+            GooglePlayGames.OurUtils.Logger.d("ShowAchievementsUI callback is "  + callback);
             mClient.ShowAchievementsUI(callback);
         }
 
@@ -877,7 +877,7 @@ namespace GooglePlayGames
         /// </summary>
         public void ShowLeaderboardUI()
         {
-            Logger.d("ShowLeaderboardUI with default ID");
+            GooglePlayGames.OurUtils.Logger.d("ShowLeaderboardUI with default ID");
             ShowLeaderboardUI(MapId(mDefaultLbUi), null);
         }
 
@@ -922,12 +922,12 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("ShowLeaderboardUI can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("ShowLeaderboardUI can only be called after authentication.");
                 callback(UIStatus.NotAuthorized);
                 return;
             }
 
-            Logger.d("ShowLeaderboardUI, lbId=" + lbId + " callback is " + callback);
+            GooglePlayGames.OurUtils.Logger.d("ShowLeaderboardUI, lbId=" + lbId + " callback is " + callback);
             mClient.ShowLeaderboardUI(lbId, span, callback);
         }
 
@@ -943,7 +943,7 @@ namespace GooglePlayGames
         /// </param>
         public void SetDefaultLeaderboardForUI(string lbid)
         {
-            Logger.d("SetDefaultLeaderboardForUI: " + lbid);
+            GooglePlayGames.OurUtils.Logger.d("SetDefaultLeaderboardForUI: " + lbid);
             if (lbid != null)
             {
                 lbid = MapId(lbid);
@@ -960,7 +960,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("LoadScores can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("LoadScores can only be called after authentication.");
                 if (callback != null)
                 {
                     callback(false);
@@ -981,7 +981,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.e("LoadScores can only be called after authentication.");
+                GooglePlayGames.OurUtils.Logger.e("LoadScores can only be called after authentication.");
                 if (callback != null)
                 {
                     callback(false);
@@ -1006,7 +1006,7 @@ namespace GooglePlayGames
             }
 
             ((PlayGamesLeaderboard)board).loading = true;
-            Logger.d("LoadScores, board=" + board + " callback is " + callback);
+            GooglePlayGames.OurUtils.Logger.d("LoadScores, board=" + board + " callback is " + callback);
             mClient.LoadScores(
                 board.id,
                 LeaderboardStart.PlayerCentered,
@@ -1079,7 +1079,7 @@ namespace GooglePlayGames
             if (mIdMap.ContainsKey(id))
             {
                 string result = mIdMap[id];
-                Logger.d("Mapping alias " + id + " to ID " + result);
+                GooglePlayGames.OurUtils.Logger.d("Mapping alias " + id + " to ID " + result);
                 return result;
             }
 
@@ -1090,7 +1090,7 @@ namespace GooglePlayGames
         {
             if (!IsAuthenticated())
             {
-                Logger.d("Cannot get friends when not authenticated!");
+                GooglePlayGames.OurUtils.Logger.d("Cannot get friends when not authenticated!");
                 return new IUserProfile[0];
             }
 
