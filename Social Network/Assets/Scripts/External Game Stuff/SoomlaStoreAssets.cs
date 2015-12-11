@@ -5,7 +5,11 @@ public class SoomlaStoreAssets : IStoreAssets {
 
 	public const string UNLOCK_ALL_LEVELS_ITEM_ID = "unlock_all_levels_item_id";
 	//public const string UNLOCK_ALL_LEVELS_PRODUCT_ID = "android.test.purchased";
+#if UNITY_ANDROID
 	public const string UNLOCK_ALL_LEVELS_PRODUCT_ID = "unlock_all_levels";
+#elif UNITY_IOS
+	public const string UNLOCK_ALL_LEVELS_PRODUCT_ID = "upgrade_to_full";
+#endif
 
 	public int GetVersion()
 	{

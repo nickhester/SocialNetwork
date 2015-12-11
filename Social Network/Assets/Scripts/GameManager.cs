@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour {
 	public int saveDataFormatVersion = 1;
 	public Texture2D saveGameImage;
 
+	public GameService gameService;
+
 	void Start()
 	{
 		// singleton
@@ -62,16 +64,21 @@ public class GameManager : MonoBehaviour {
 		PlayGamesPlatform.DebugLogEnabled = true;
 		PlayGamesPlatform.Activate();
 
+		// create generic game service class
+		
+
 		// if it's set on Android, but it's playing in the Editor...
 #if UNITY_EDITOR
-		GooglePlayAPI.isPlayingOffline = true;
+		gameService = new GameServiceMock();
 #endif
 #if UNITY_IOS
-		GooglePlayAPI.isPlayingOffline = true;
+		gameService = new AppleGameCenterAPI();
+		gameService.Initialize();
 #endif
 #if UNITY_ANDROID
-		GooglePlayAPI.Initialize();
+		gameService = new GooglePlayAPI();
 #endif
+		gameService.Initialize();
 
 		// callback is managed in GooglePlayAPI 
 		pendingCloudSaveOperation = 1;
@@ -223,40 +230,37 @@ public class GameManager : MonoBehaviour {
 
 	public void UpdateCloudSaveFromLocal()
 	{
-#if UNITY_ANDROID
 		pendingCloudSaveOperation = 2;
 		gameDataBlob.UpdateToSend(saveDataFormatVersion);
-		GooglePlayAPI.Initialize();
-#endif
+		gameService.Initialize();
 	}
 
 	public void DeleteCloudSave()
 	{
-#if UNITY_ANDROID
 		pendingCloudSaveOperation = 3;
-		GooglePlayAPI.Initialize();
-#endif
+		gameService.Initialize();
 	}
 
 	public void callback_OnSavedGameOpened(GooglePlayGames.BasicApi.SavedGame.ISavedGameMetadata game)
 	{
 #if UNITY_ANDROID
+		GooglePlayAPI gp = gameService as GooglePlayAPI;
 		if (pendingCloudSaveOperation == 1)
 		{
 			// ready to load from cloud
-			GooglePlayAPI.LoadGameData(game);
+			gp.LoadGameData(game);
 		}
 		else if (pendingCloudSaveOperation == 2)
 		{
 			// ready to save to cloud
 			byte[] byteArrayToSend = ToByteArray(gameDataBlob);
-			GooglePlayAPI.SaveGame(game, byteArrayToSend, System.TimeSpan.FromSeconds(gameDataBlob.totalAppointmentTime));
+			gp.SaveGame(game, byteArrayToSend, System.TimeSpan.FromSeconds(gameDataBlob.totalAppointmentTime));
 		}
 		else if (pendingCloudSaveOperation == 3)
 		{
 			// ready to send an invalid cloud save data to clear cloud save data
 			byte[] byteArrayToSend = new byte[] { 0, 1, 2, 3 };
-			GooglePlayAPI.SaveGame(game, byteArrayToSend, System.TimeSpan.FromSeconds(0.0f));
+			gp.SaveGame(game, byteArrayToSend, System.TimeSpan.FromSeconds(0.0f));
 		}
 #endif
 

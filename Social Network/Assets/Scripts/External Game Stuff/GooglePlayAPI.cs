@@ -2,20 +2,19 @@
 using System.Collections;
 using UnityEngine.SocialPlatforms;
 using System;
-
-#if UNITY_ANDROID
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using GooglePlayGames.BasicApi.SavedGame;
-#endif
 
-public static class GooglePlayAPI {
 
-	public static bool isPlayingOffline = false;
-	private static string saveDataName = "saveData";
+public class GooglePlayAPI : GameService
+{
 
-#if UNITY_ANDROID
-	public static void Initialize()
+	public bool isPlayingOffline = false;
+	private string saveDataName = "saveData";
+
+
+	public void Initialize()
 	{
 		if (!isPlayingOffline)
 		{
@@ -36,7 +35,7 @@ public static class GooglePlayAPI {
 		}
 	}
 
-	public static void ReportStarCount(int starCount)
+	public void ReportStarCount(int starCount)
 	{
 		Social.ReportScore(starCount, "CgkIsqTI3JUKEAIQDw", (bool success) =>
 		{
@@ -51,7 +50,7 @@ public static class GooglePlayAPI {
 		});
 	}
 
-	public static void ReportWeekCompleted(int weekCompleted)
+	public void ReportWeekCompleted(int weekCompleted)
 	{
 		string achievementCode = "fail";
 
@@ -96,7 +95,7 @@ public static class GooglePlayAPI {
 		SendReport(achievementCode);
 	}
 
-	public static void ReportWeekPerfected(int weekPerfected)
+	public void ReportWeekPerfected(int weekPerfected)
 	{
 		string achievementCode = "fail";
 
@@ -141,17 +140,17 @@ public static class GooglePlayAPI {
 		SendReport(achievementCode);
 	}
 
-	public static void ReportGameCompleted()
+	public void ReportGameCompleted()
 	{
 		SendReport("CgkIsqTI3JUKEAIQDQ");
 	}
 
-	public static void ReportGamePerfected()
+	public void ReportGamePerfected()
 	{
 		SendReport("CgkIsqTI3JUKEAIQDg");
 	}
 
-	static void SendReport(string code)
+	public void SendReport(string code)
 	{
 		Social.ReportProgress(code, 100.0f, (bool success) =>
 		{
@@ -166,14 +165,19 @@ public static class GooglePlayAPI {
 		});
 	}
 
-	public static void SendCloudSavedGame()
+	public bool GetIsPlayingOffline()
 	{
+		return isPlayingOffline;
+	}
 
+	public void SetIsPlayingOffline(bool _isPlayingOffline)
+	{
+		isPlayingOffline = _isPlayingOffline;
 	}
 
 	//========= Google's specific functions
 
-	static public void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game)
+	public void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game)
 	{
 		if (status == SavedGameRequestStatus.Success)
 		{
@@ -186,14 +190,14 @@ public static class GooglePlayAPI {
 		}
 	}
 	
-	static public void OpenSavedgame(string filename)
+	public void OpenSavedgame(string filename)
 	{
 		ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
 		
 		savedGameClient.OpenWithAutomaticConflictResolution(filename, DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened);
 	}
 
-	static public void SaveGame(ISavedGameMetadata game, byte[] savedData, TimeSpan totalPlaytime)
+	public void SaveGame(ISavedGameMetadata game, byte[] savedData, TimeSpan totalPlaytime)
 	{
 		ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
 
@@ -219,7 +223,7 @@ public static class GooglePlayAPI {
 		savedGameClient.CommitUpdate(game, updatedMetadata, savedData, OnSavedGameWritten);
 	}
 
-	static public void OnSavedGameWritten(SavedGameRequestStatus status, ISavedGameMetadata game)
+	public void OnSavedGameWritten(SavedGameRequestStatus status, ISavedGameMetadata game)
 	{
 		if (status == SavedGameRequestStatus.Success)
 		{
@@ -231,28 +235,13 @@ public static class GooglePlayAPI {
 		}
 	}
 
-	/*
-	static public Texture2D getScreenshot()
-	{
-		// Create a 2D texture that is 1024x700 pixels from which the PNG will be
-		// extracted
-		Texture2D screenShot = new Texture2D(1024, 700);
-
-		// Takes the screenshot from top left hand corner of screen and maps to top
-		// left hand corner of screenShot texture
-		screenShot.ReadPixels(
-			new Rect(0, 0, Screen.width, (Screen.width / 1024) * 700), 0, 0);
-		return screenShot;
-	}
-	*/
-
-	static public void LoadGameData(ISavedGameMetadata game)
+	public void LoadGameData(ISavedGameMetadata game)
 	{
 		ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
 		savedGameClient.ReadBinaryData(game, OnSavedGameDataRead);
 	}
 
-	static public void OnSavedGameDataRead(SavedGameRequestStatus status, byte[] data)
+	public void OnSavedGameDataRead(SavedGameRequestStatus status, byte[] data)
 	{
 		if (status == SavedGameRequestStatus.Success)
 		{
@@ -265,5 +254,5 @@ public static class GooglePlayAPI {
 			// handle error
 		}
 	}
-#endif
+
 }
