@@ -183,6 +183,11 @@ public class GooglePlayAPI : GameService
 		isPlayingOffline = _isPlayingOffline;
 	}
 
+	public void LeaveRating()
+	{
+		Application.OpenURL("market://details?id=com.hestergames.socialsessions");
+	}
+
 	//========= Google's specific functions
 
 	public void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game)

@@ -72,7 +72,7 @@ public class Calendar : MonoBehaviour {
 		else if (go.transform.name.StartsWith("UpgradeButton_RateIt"))
 		{
 			MetricsLogger.Instance.LogCustomEvent("Game", "Rate", "Accept");
-			Application.OpenURL("market://details?id=com.hestergames.socialsessions");
+			GameObject.FindObjectOfType<GameManager>().gameService.LeaveRating();
 		}
 		else if (go.transform.name.StartsWith("Lock"))
 		{

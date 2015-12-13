@@ -20,4 +20,6 @@ public interface GameService
 	bool GetIsPlayingOffline();
 
 	void SetIsPlayingOffline(bool _isPlayingOffline);
+
+	void LeaveRating();
 }

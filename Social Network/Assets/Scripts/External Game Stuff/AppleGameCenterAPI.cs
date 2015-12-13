@@ -192,4 +192,9 @@ public class AppleGameCenterAPI : GameService
 	{
 		isPlayingOffline = _isPlayingOffline;
 	}
+
+	public void LeaveRating()
+	{
+		Application.OpenURL("itms-apps://itunes.apple.com/app/1066662142");
+	}
 }

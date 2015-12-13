@@ -24,4 +24,6 @@ public class GameServiceMock : GameService
 	}
 
 	public void SetIsPlayingOffline(bool _isPlayingOffline) { }
+
+	public void LeaveRating() { }
 }

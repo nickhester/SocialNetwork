@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Types;
+using UnityEngine.UI;
 
 public class Clipboard : MonoBehaviour
 {
@@ -29,8 +30,9 @@ public class Clipboard : MonoBehaviour
 
 	[HideInInspector] public LevelSelector selectorRef;
 	private int buttonState = 0;
-	[SerializeField] private Material buttonTextDone;
-	[SerializeField] private Material buttonTextBack;
+	private Text buttonTextComponent;
+	private string buttonTextDone = "Done";
+	private string buttonTextBack = "Back";
 
 	private float timeToSwap = 0.68f;
     [SerializeField] private float lerpSpeed;
@@ -177,6 +179,8 @@ public class Clipboard : MonoBehaviour
 		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 		gameManager.Register_Clipboard(this);
 
+		buttonTextComponent = GetComponentInChildren<Text>();
+
 		offscreenPosition = new Vector3(transform.position.x, transform.position.y - 13, transform.position.z);
 		originalPosition = transform.position;
 
@@ -265,15 +269,15 @@ public class Clipboard : MonoBehaviour
 		// update button with correct text for state
 		if (buttonState == 0)
         {
-			startButton_renderer.material = buttonTextBack;
+			buttonTextComponent.text = buttonTextBack;
         }
 		else if (buttonState == 1) 
         {
-			startButton_renderer.material = buttonTextBack;
+			buttonTextComponent.text = buttonTextBack;
         }
 		else if (buttonState == 2) 
         {
-			startButton_renderer.material = buttonTextDone;
+			buttonTextComponent.text = buttonTextDone;
         }
 		else { Debug.LogError("Clipboard button state is invalid"); }
 

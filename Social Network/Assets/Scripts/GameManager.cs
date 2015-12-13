@@ -60,15 +60,15 @@ public class GameManager : MonoBehaviour {
 		gameDataBlob.Init(saveDataFormatVersion);
 
 		// create generic game service class
-#if UNITY_EDITOR
-		gameService = new GameServiceMock();
-#endif
 #if UNITY_IOS
 		gameService = new AppleGameCenterAPI();
 		gameService.Initialize();
 #endif
 #if UNITY_ANDROID
 		gameService = new GooglePlayAPI();
+#endif
+#if UNITY_EDITOR
+		gameService = new GameServiceMock();
 #endif
 		gameService.Initialize();
 
