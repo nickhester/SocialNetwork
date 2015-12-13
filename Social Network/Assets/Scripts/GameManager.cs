@@ -5,8 +5,11 @@ using System.Text;
 using System.IO;
 using System;
 using Soomla.Store;
+
+#if UNITY_ANDROID
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+#endif
 
 public class GameManager : MonoBehaviour {
 
@@ -56,18 +59,7 @@ public class GameManager : MonoBehaviour {
 		gameDataBlob = new GameDataBlob();
 		gameDataBlob.Init(saveDataFormatVersion);
 
-		// initialize google play to cloud save
-		PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-			.EnableSavedGames()
-			.Build();
-		PlayGamesPlatform.InitializeInstance(config);
-		PlayGamesPlatform.DebugLogEnabled = true;
-		PlayGamesPlatform.Activate();
-
 		// create generic game service class
-		
-
-		// if it's set on Android, but it's playing in the Editor...
 #if UNITY_EDITOR
 		gameService = new GameServiceMock();
 #endif
@@ -80,7 +72,7 @@ public class GameManager : MonoBehaviour {
 #endif
 		gameService.Initialize();
 
-		// callback is managed in GooglePlayAPI 
+		// callback is managed in gameService API
 		pendingCloudSaveOperation = 1;
 	}
 
@@ -181,24 +173,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	#endregion
-	/*
-	void OnApplicationQuit()
-	{
-		SendSessionMetrics2();
-	}
 	
-	void OnApplicationFocus(bool hasFocus)
-	{
-		if (!hasFocus)
-		{
-			SendSessionMetrics();
-		}
-		else
-		{
-			RestartSessionMetrics();
-		}
-	}
-	*/
 	void OnApplicationPause(bool pauseStatus)
 	{
 		if (pauseStatus)

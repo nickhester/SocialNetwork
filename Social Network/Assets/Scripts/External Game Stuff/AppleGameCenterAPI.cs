@@ -11,11 +11,25 @@ public class AppleGameCenterAPI : GameService
 	{
 		if (!isPlayingOffline)
 		{
+			// TODO: initialize google play to cloud save
+
 			Social.localUser.Authenticate((bool success) =>
 			{
 				if (success)
 				{
 					MonoBehaviour.print("Social initialization succeeded");
+
+					Social.LoadAchievements((IAchievement[] achievements) =>
+					{
+						if (achievements.Length != 0)
+						{
+
+						}
+						else
+						{
+							MonoBehaviour.print("Found " + achievements.Length + " Achievements");
+						}
+					});
 
 					// TODO: open saved game here
 
@@ -27,6 +41,7 @@ public class AppleGameCenterAPI : GameService
 					isPlayingOffline = true;
 				}
 			});
+			GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
 		}
 	}
 

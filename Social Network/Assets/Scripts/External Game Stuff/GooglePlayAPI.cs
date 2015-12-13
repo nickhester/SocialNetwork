@@ -18,6 +18,14 @@ public class GooglePlayAPI : GameService
 	{
 		if (!isPlayingOffline)
 		{
+			// initialize google play to cloud save
+			PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+				.EnableSavedGames()
+				.Build();
+			PlayGamesPlatform.InitializeInstance(config);
+			PlayGamesPlatform.DebugLogEnabled = true;
+			PlayGamesPlatform.Activate();
+
 			Social.localUser.Authenticate((bool success) =>
 			{
 				if (success)
