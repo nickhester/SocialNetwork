@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Runtime.InteropServices;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.SocialPlatforms.GameCenter;
 
@@ -49,13 +50,13 @@ public class AppleGameCenterAPI : GameService
 	{
 		Social.ReportScore(starCount, "star_count", (bool success) =>
 		{
-			if (!success)
+			if (success)
 			{
-				MonoBehaviour.print("AppleGameCenter failed to ReportStarCount");
+				MonoBehaviour.print("AppleGameCenter succeeded in ReportStarCount");
 			}
 			else
 			{
-				MonoBehaviour.print("AppleGameCenter succeeded in ReportStarCount");
+				MonoBehaviour.print("AppleGameCenter failed to ReportStarCount");
 			}
 		});
 	}
@@ -160,19 +161,26 @@ public class AppleGameCenterAPI : GameService
 		SendReport("all_sessions_perfected");
 	}
 
+	[DllImport("__Internal")]
+	private static extern void _ReportAchievement(string achievementID, float progress);
+
 	public void SendReport(string code)
 	{
+		_ReportAchievement(code, 100.0f);
+
+		/*
 		Social.ReportProgress(code, 100.0f, (bool success) =>
 		{
-			if (!success)
-			{
-				MonoBehaviour.print("AppleGameCenter failed to report Achievement (" + code + ")");
-			}
-			else
+			if (success)
 			{
 				MonoBehaviour.print("AppleGameCenter succeeded in reporting Achievement (" + code + ")");
 			}
+			else
+			{
+				MonoBehaviour.print("AppleGameCenter failed to report Achievement (" + code + ")");
+			}
 		});
+		*/
 	}
 
 	public bool GetIsPlayingOffline()
