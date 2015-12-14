@@ -17,7 +17,7 @@ public class SplashScreen : MonoBehaviour {
 
 	void Update ()
 	{
-		if (!hasStartedFade)
+		if (!hasStartedFade && !Application.isShowingSplashScreen)
 		{
 			if (countDownTimer < 0.0f)
 			{
