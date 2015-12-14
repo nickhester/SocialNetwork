@@ -176,7 +176,6 @@ public class NetworkManager : MonoBehaviour {
 	{
 		if (toggle.isOn)	// the toggle is going from blank to "reveal" (turn off lines)
 		{
-			print("hide lines");
 			if (currentlySelectedPerson != null)
 			{
 				GetComponent<LineDisplay>().DisplayLines(currentlySelectedPerson.transform.GetComponent<Person>());
@@ -188,7 +187,6 @@ public class NetworkManager : MonoBehaviour {
 		}
 		else				// the toggle is going from "reveal" to blank (turn on lines)
 		{
-			print("reveal lines");
 			GetComponent<LineDisplay>().DisplayAllLines();
 		}
 	}
