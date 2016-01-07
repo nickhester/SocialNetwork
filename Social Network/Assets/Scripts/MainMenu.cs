@@ -30,7 +30,7 @@ public class MainMenu : MonoBehaviour {
 	private float splitCounter = 0.0f;
 	private float splitLimit = 2.0f;
 
-	private string versionText = "Version 3.4";
+	private string versionText = "Version 3.5";
 
 	[SerializeField] private Material confirmClearProgressImage;
     [SerializeField] private Material progressClearedImage;
@@ -62,6 +62,11 @@ public class MainMenu : MonoBehaviour {
         else if (go.name == "button_back")
 		{
 			GoBack();
+		}
+		else if (go.name == "button_restorePurchases")
+		{
+			// restore purchases explicitly
+			GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().RestoreTransactions();
 		}
         else if (go.name == "button_clearProgress")
 		{

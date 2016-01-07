@@ -88,6 +88,11 @@ public class GameManager : MonoBehaviour {
 		Upgrade.PurchaseUpgrade_callback(true);
 	}
 
+	public void RestoreTransactions()
+	{
+		SoomlaStore.RestoreTransactions();
+	}
+
 	// soomla event - restore transactions
 	public void onRestoreTransactionsFinished(bool success)
 	{
