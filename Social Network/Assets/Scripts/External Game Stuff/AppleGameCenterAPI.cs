@@ -195,6 +195,6 @@ public class AppleGameCenterAPI : GameService
 
 	public void LeaveRating()
 	{
-		Application.OpenURL("itms-apps://itunes.apple.com/app/1066662142");
+		Application.OpenURL("https://itunes.apple.com/us/app/social-sessions-game/id1066662142");
 	}
 }
