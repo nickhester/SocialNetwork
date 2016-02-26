@@ -9,6 +9,8 @@ public class SoomlaStoreAssets : IStoreAssets {
 	public const string UNLOCK_ALL_LEVELS_PRODUCT_ID = "unlock_all_levels";
 #elif UNITY_IOS
 	public const string UNLOCK_ALL_LEVELS_PRODUCT_ID = "upgrade_to_full";
+#elif UNITY_EDITOR
+	public const string UNLOCK_ALL_LEVELS_PRODUCT_ID = "unlock_all_levels";
 #endif
 
 	public int GetVersion()

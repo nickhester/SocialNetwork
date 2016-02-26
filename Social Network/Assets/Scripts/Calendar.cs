@@ -16,7 +16,7 @@ public class Calendar : MonoBehaviour {
 
 	private float audioButtonScreenPos_X = 0.95f;
 	private float audioButtonScreenPos_Y = 0.97f;
-	private float audioIconSpacing = 0.81f;
+	private float audioIconSpacing = 0.86f;
 
 	private Vector3 targetWeekPosition = Vector3.zero;
 

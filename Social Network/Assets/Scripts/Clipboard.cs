@@ -11,6 +11,10 @@ public class Clipboard : MonoBehaviour
     private bool isHiding = false;
 	private Vector3 offscreenPosition;
 	private Vector3 originalPosition;
+	private float offscreenOffset = 11.5f;
+	private Vector3 offscreenScale;
+	private Vector3 originalScale;
+	private float offscreenScalar = 0.82f;
 	private CreateAndDestroyAppointment createAndDestroyLevelRef;
 	private bool creatingInitialApptList = true;
 	private List<ValidLevels> listOfSpecificallyRequestedLevels = new List<ValidLevels>();
@@ -61,15 +65,34 @@ public class Clipboard : MonoBehaviour
     struct LerpPackage
     {
         public GameObject go;
-        public Vector3 start;
-        public Vector3 end;
+        public Vector3 posStart;
+        public Vector3 posEnd;
+		public Vector3 rotStart;
+		public Vector3 rotEnd;
+		public Vector3 scaleStart;
+		public Vector3 scaleEnd;
 
-        public LerpPackage(GameObject _go, Vector3 _start, Vector3 _end)
+		public LerpPackage(GameObject _go, Vector3 _posStart, Vector3 _posEnd, Vector3 _rotStart, Vector3 _rotEnd, Vector3 _scaleStart, Vector3 _scaleEnd)
         {
             go = _go;
-            start = _start;
-            end = _end;
+			posStart = _posStart;
+			posEnd = _posEnd;
+			rotStart = _rotStart;
+			rotEnd = _rotEnd;
+			scaleStart = _scaleStart;
+			scaleEnd = _scaleEnd;
         }
+
+		public LerpPackage(GameObject _go, Vector3 _posStart, Vector3 _posEnd)
+		{
+			go = _go;
+			posStart = _posStart;
+			posEnd = _posEnd;
+			rotStart = _go.transform.rotation.eulerAngles;
+			rotEnd = _go.transform.rotation.eulerAngles;
+			scaleStart = go.transform.localScale;
+			scaleEnd = go.transform.localScale;
+		}
     }
 
     #endregion
@@ -98,7 +121,7 @@ public class Clipboard : MonoBehaviour
 				//if (_currentAppointment.GetMyDayIndex() < daysToShowBanner && !(_currentAppointment.GetMyDayIndex() == 0 && _currentAppointment.GetMyLevelIndex() == 0))
 				if (!(_currentAppointment.GetMyDayIndex() == 0 && _currentAppointment.GetMyLevelIndex() == 0))
                 {
-                    StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeInPosition, showMeOutPosition)));
+					StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeInPosition, showMeOutPosition)));
                 }
 
 				// log event to game manager
@@ -181,8 +204,10 @@ public class Clipboard : MonoBehaviour
 
 		buttonTextComponent = GetComponentInChildren<Text>();
 
-		offscreenPosition = new Vector3(transform.position.x, transform.position.y - 13, transform.position.z);
+		offscreenPosition = new Vector3(transform.position.x, transform.position.y - offscreenOffset, transform.position.z);
+		offscreenScale = transform.localScale * offscreenScalar;
 		originalPosition = transform.position;
+		originalScale = transform.localScale;
 
 		createAndDestroyLevelRef = GameObject.FindGameObjectWithTag("persistentObject").GetComponent<CreateAndDestroyAppointment>();
 		foreach (Transform GO in GetComponentsInChildren<Transform>())
@@ -420,7 +445,7 @@ public class Clipboard : MonoBehaviour
     {
         currentLerpTarget = offscreenPosition;
         isHiding = true;
-        StartCoroutine(SlideObject(new LerpPackage(gameObject, transform.position, currentLerpTarget)));
+		StartCoroutine(SlideObject(new LerpPackage(gameObject, transform.position, currentLerpTarget, gameObject.transform.rotation.eulerAngles, gameObject.transform.rotation.eulerAngles, gameObject.transform.localScale, offscreenScale)));
     }
 
     void BringUpClipboard()
@@ -428,7 +453,7 @@ public class Clipboard : MonoBehaviour
         // note: this is not called the first time the clipboard is seen b/c it starts already up
         currentLerpTarget = originalPosition;
         isHiding = false;
-        StartCoroutine(SlideObject(new LerpPackage(gameObject, transform.position, currentLerpTarget)));
+		StartCoroutine(SlideObject(new LerpPackage(gameObject, transform.position, currentLerpTarget, gameObject.transform.rotation.eulerAngles, gameObject.transform.rotation.eulerAngles, gameObject.transform.localScale, originalScale)));
         StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeOutPosition, showMeInPosition)));
     }
 
@@ -446,8 +471,12 @@ public class Clipboard : MonoBehaviour
         }
         
         float progress = 0.0f;
-        Vector3 startingPos = _input.start;
-        Vector3 targetPos = _input.end;
+        Vector3 startingPos = _input.posStart;
+        Vector3 targetPos = _input.posEnd;
+		Vector3 startingRot = _input.rotStart;
+		Vector3 targetRot = _input.rotEnd;
+		Vector3 startingScale = _input.scaleStart;
+		Vector3 targetScale = _input.scaleEnd;
 
         // early out if the object is already basically there
         if (Vector3.Distance(_input.go.transform.position, targetPos) < 0.1f)
@@ -460,11 +489,15 @@ public class Clipboard : MonoBehaviour
             {
                 // lerp in local position
                 _input.go.transform.localPosition = Vector3.Lerp(startingPos, targetPos, Lerp_FastInEaseOut(progress));
+				_input.go.transform.localEulerAngles = Vector3.Lerp(startingRot, targetRot, Lerp_FastInEaseOut(progress));
+				_input.go.transform.localScale = Vector3.Lerp(startingScale, targetScale, Lerp_FastInEaseOut(progress));
                 progress += Time.deltaTime * lerpSpeed;
                 yield return null;
             }
 			// make sure it makes it all the way down
 			_input.go.transform.localPosition = targetPos;
+			_input.go.transform.eulerAngles = targetRot;
+			_input.go.transform.localScale = targetScale;
         }
         
         if (_isMovingClipboard)

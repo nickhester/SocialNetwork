@@ -16,9 +16,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 	[HideInInspector]
 	public GUIStyle dayCompleteScreenStyle;
 	private bool hasDisplayedLevelEndScreen = false;
-	[SerializeField] private Material[] notesForStars;
 	private GameObject resultsPage;
-	private GameObject resultsNotes;
 	private bool isDisplayingScore = false;
 	private int numActions;
 
@@ -50,8 +48,6 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		// add levels available and levels on clipboard (b/c levels available has already been subtracted from)
 		resultsPage = GameObject.Find("results page");
 		resultsPage.GetComponent<Renderer>().enabled = false;
-		resultsNotes = GameObject.Find("results notes");
-		resultsNotes.GetComponent<Renderer>().enabled = false;
 		waitToShowResultsAfterFinishedCounter = waitToShowResultsAfterFinished;
 	}
 
@@ -303,20 +299,6 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 			ScoreTrackerOneRound st = GetComponent<ScoreTrackerOneRound>();
 			int resultActions = numActions;
 			int resultStars = st.GetScore();
-
-			if (resultStars == 0)
-				resultsNotes.GetComponent<Renderer>().material = notesForStars[0];
-
-			else if (resultStars == 1)
-				resultsNotes.GetComponent<Renderer>().material = notesForStars[1];
-
-			else if (resultStars == 2)
-				resultsNotes.GetComponent<Renderer>().material = notesForStars[2];
-
-			else if (resultStars == 3)
-				resultsNotes.GetComponent<Renderer>().material = notesForStars[3];
-
-			resultsNotes.GetComponent<Renderer>().enabled = true;
 
 			foreach (TextMesh resultText in resultsPage.GetComponentsInChildren<TextMesh>())
 			{
