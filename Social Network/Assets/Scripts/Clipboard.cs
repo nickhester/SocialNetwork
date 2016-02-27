@@ -29,14 +29,15 @@ public class Clipboard : MonoBehaviour
     private Appointment nextLevelUp;
 	[HideInInspector] public Difficulty currentLevelDifficulty;
     [HideInInspector] public int currentLevelNumBlocks;
-	private GameObject startButton;
-	private Renderer startButton_renderer;
 
 	[HideInInspector] public LevelSelector selectorRef;
 	private int buttonState = 0;
 	private Text buttonTextComponent;
 	private string buttonTextDone = "Done";
 	private string buttonTextBack = "Back";
+	public GameObject backButtonA;
+	public GameObject backbuttonB;
+	public GameObject DoneButton;
 
 	private float timeToSwap = 0.68f;
     [SerializeField] private float lerpSpeed;
@@ -60,6 +61,8 @@ public class Clipboard : MonoBehaviour
 	private GameObject restartFromResultsScreenButton;
 
 	[SerializeField] private GameObject text;
+	private Vector3 textPosition = new Vector3(2.3f, -5.2f, 1.5f);
+	private Vector3 textScalar = new Vector3(0.006f, 0.004f, 1.0f);
     private bool isFirstCreation = true;
 
     struct LerpPackage
@@ -127,7 +130,7 @@ public class Clipboard : MonoBehaviour
 				// log event to game manager
 				gameManager.Event_AppointmentStart();
             }
-            else if (go.name == "BackButton")	// if clicking the "back" button, go back to the calendar
+			else if (go.name == "BackButton_red" || go.name == "BackButton_yellow" || go.name == "DoneButton")	// if clicking the "back" or "done" button, go back
             {
 				GoBack();
             }
@@ -149,7 +152,7 @@ public class Clipboard : MonoBehaviour
         }
         else
         {
-            if (go.name == "BackButton" && buttonState == 1)			// click the "back" button to give up on the level
+			if (buttonState == 1 && (go.name == "BackButton_red" || go.name == "BackButton_yellow" || go.name == "DoneButton"))			// click the "back" button to give up on the level
             {
                 createAndDestroyLevelRef.RoundEnd(false);
             }
@@ -210,15 +213,6 @@ public class Clipboard : MonoBehaviour
 		originalScale = transform.localScale;
 
 		createAndDestroyLevelRef = GameObject.FindGameObjectWithTag("persistentObject").GetComponent<CreateAndDestroyAppointment>();
-		foreach (Transform GO in GetComponentsInChildren<Transform>())
-		{
-            if (GO.name == "BackButton")
-			{
-				// get reference to start button
-				startButton = GO.gameObject;
-				startButton_renderer = startButton.GetComponent<Renderer>();
-			}
-		}
 
 		selectorRef = GameObject.Find("LevelSelector").GetComponent<LevelSelector>();
 		createAndDestroyLevelRef.levelsAvailable = selectorRef.dayToGenerate.numAppointments;
@@ -249,9 +243,9 @@ public class Clipboard : MonoBehaviour
         {
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(9, false);
         }
-		
-		GameObject dayLabelText = Instantiate(text, new Vector3(gameObject.transform.position.x + 2.75f, gameObject.transform.position.y - 6.5f, gameObject.transform.position.x - 1.5f), Quaternion.identity) as GameObject;
-		dayLabelText.transform.localScale = gameObject.transform.localScale * 0.003f;
+
+		GameObject dayLabelText = Instantiate(text, new Vector3(gameObject.transform.position.x + textPosition.x, gameObject.transform.position.y + textPosition.y, gameObject.transform.position.z - textPosition.z), Quaternion.identity) as GameObject;
+		dayLabelText.transform.localScale = new Vector3(gameObject.transform.localScale.x * textScalar.x, gameObject.transform.localScale.y * textScalar.y, gameObject.transform.localScale.z * textScalar.z);
 		dayLabelText.transform.parent = gameObject.transform;
 		TextMesh myLabelTextComponent = dayLabelText.GetComponent<TextMesh>();
 		myLabelTextComponent.text = "Day " + (selectorRef.dayToGenerate.dayIndex_internal + 1);
@@ -292,19 +286,7 @@ public class Clipboard : MonoBehaviour
 		}
 
 		// update button with correct text for state
-		if (buttonState == 0)
-        {
-			buttonTextComponent.text = buttonTextBack;
-        }
-		else if (buttonState == 1) 
-        {
-			buttonTextComponent.text = buttonTextBack;
-        }
-		else if (buttonState == 2) 
-        {
-			buttonTextComponent.text = buttonTextDone;
-        }
-		else { Debug.LogError("Clipboard button state is invalid"); }
+		SetButtonActive(buttonState);
 
 		if (Input.GetButtonDown("Cancel"))
 		{
@@ -314,7 +296,18 @@ public class Clipboard : MonoBehaviour
 
 	#endregion
 
-    void SwapClipboardPages()
+    void SetButtonActive(int _state)
+	{
+		bool buttonA = (_state == 0 ? true : false);
+		bool buttonB = (_state == 1 ? true : false);
+		bool buttonC = (_state == 2 ? true : false);
+
+		backButtonA.SetActive(buttonA);
+		backbuttonB.SetActive(buttonB);
+		DoneButton.SetActive(buttonC);
+	}
+	
+	void SwapClipboardPages()
     {
 		CloseResultsPage();
         BringUpClipboard();

@@ -63,7 +63,7 @@ public class Appointment : MonoBehaviour {
 	public void UpdateStarCount()
 	{
 		Vector3 overlayStarPos = new Vector3(transform.position.x + -2.9f, transform.position.y + 0.3f, transform.position.z - 0.1f);
-		Vector3 overlayStarScale = new Vector3(2.0f, 2.0f, 1.0f);
+		Vector3 overlayStarScale = Vector3.one;
 
 		if (starSlot != null) { Destroy(starSlot); }
 
