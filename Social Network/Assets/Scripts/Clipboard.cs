@@ -21,8 +21,8 @@ public class Clipboard : MonoBehaviour
 
 	// appointments
 	[SerializeField] private GameObject appointmentObject;
-	private float appointmentSpacing = 2.0f;
-	private float appointmentTop = 3.2f;
+	private float appointmentSpacing = 1.6f;
+	private float appointmentTop = 2.8f;
 
     private bool isInMotion = false;
 
@@ -64,6 +64,8 @@ public class Clipboard : MonoBehaviour
 	private Vector3 textPosition = new Vector3(2.3f, -5.2f, 1.5f);
 	private Vector3 textScalar = new Vector3(0.006f, 0.004f, 1.0f);
     private bool isFirstCreation = true;
+
+	public ParticleSystem starReward;
 
     struct LerpPackage
     {
@@ -321,6 +323,11 @@ public class Clipboard : MonoBehaviour
 		ShowRestartButton(false);
 	}
 
+	public void TriggerStarParticles()
+	{
+		starReward.Play();
+	}
+
     void OnReturnToClipboard()
     {
 		GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(4, false);
@@ -407,8 +414,12 @@ public class Clipboard : MonoBehaviour
 	{
 		foreach (Appointment a in transform.GetComponentsInChildren<Appointment>())
 		{
-            a.GetComponent<Renderer>().enabled = show;	// show all appointments
-            a.GetComponent<Collider>().enabled = show;
+			a.GetComponent<Collider>().enabled = show;	// show all appointments
+			Renderer r = a.GetComponent<Renderer>();
+			if (r != null)
+			{
+				r.enabled = show;
+			}
 			foreach (MeshRenderer childRenderer in a.transform.GetComponentsInChildren<MeshRenderer>())
 			{
                 childRenderer.enabled = show;

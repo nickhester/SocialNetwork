@@ -121,6 +121,11 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 			{
 				gameManager.GetClipboard().ShowRestartButton(true);
 			}
+			else
+			{
+				// trigger star particle for 3 stars
+				gameManager.GetClipboard().Invoke("TriggerStarParticles", waitTimeForClipboard + 0.5f);
+			}
 
 			int currentDayIndex = gameManager.GetClipboard().selectorRef.dayToGenerate.dayIndex;
 

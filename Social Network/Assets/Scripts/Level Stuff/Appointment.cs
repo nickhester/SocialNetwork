@@ -6,12 +6,17 @@ using Types;
 public class Appointment : MonoBehaviour {
 
 	[SerializeField] private GameObject textObject;
+	private Vector3 textObjectOffset = new Vector3(0.0f, -0.1f, -0.1f);
+	private float textObjectScalar = 0.036f;
     [SerializeField] private GameObject myTextObject;
     [SerializeField] private TextMesh myTextComponent;
+	private Vector3 specialOverlayOffset = new Vector3(2.5f, -0.1f, -0.5f);
     [SerializeField] private GameObject mySpecialOverlay_FallToRed;
     [SerializeField] private GameObject mySpecialOverlay_OneClick;
     [SerializeField] private GameObject mySpecialOverlay_CantTouch;
     [SerializeField] private GameObject mySpecialOverlay_NoLines;
+	private Vector3 starOverlayOffset = new Vector3(-0.294f, -0.071f, -0.5f);
+	private Vector3 starOverlayScale = new Vector3(0.053f, 0.321f, 1.0f);
     [SerializeField] private GameObject overlay_1Star;
     [SerializeField] private GameObject overlay_2Star;
     [SerializeField] private GameObject overlay_3Star;
@@ -37,15 +42,15 @@ public class Appointment : MonoBehaviour {
 	public void Initialize()
 	{
 		// Create text on appointment block
-		myTextObject = Instantiate(textObject, new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z - 0.1f), Quaternion.identity) as GameObject;
-		myTextObject.transform.localScale = myTextObject.transform.localScale * 0.045f;
+		myTextObject = Instantiate(textObject, (transform.position + textObjectOffset), Quaternion.identity) as GameObject;
+		myTextObject.transform.localScale = myTextObject.transform.localScale * textObjectScalar;
 		myTextObject.transform.parent = gameObject.transform;
 		myTextComponent = myTextObject.GetComponent<TextMesh>();
 	}
 
 	public void SetMySpecialOverlays()
 	{
-        Vector3 overlaySpecialPos = new Vector3(transform.position.x + 3.8f, transform.position.y, transform.position.z - 0.5f);
+		Vector3 overlaySpecialPos = transform.position + specialOverlayOffset;
         Vector3 overlaySpecialScale = new Vector3(1, 1, 1);
 
 		if (myLevel.isFallToRed)
@@ -62,27 +67,33 @@ public class Appointment : MonoBehaviour {
 
 	public void UpdateStarCount()
 	{
-		Vector3 overlayStarPos = new Vector3(transform.position.x + -2.9f, transform.position.y + 0.3f, transform.position.z - 0.1f);
-		Vector3 overlayStarScale = Vector3.one;
+		bool isOverlayVisible = true;
 
-		if (starSlot != null) { Destroy(starSlot); }
+		if (starSlot != null)
+		{
+			Destroy(starSlot);
+			isOverlayVisible = starSlot.GetComponent<MeshRenderer>().enabled;
+		}
 
         int thisAppointmentStarCount = SaveGame.GetRoundStarCount(GetMyDayIndex(), GetMyLevelIndex());
 		if (thisAppointmentStarCount == 3)
-			starSlot = InstantiateAndPositionOverlay(overlay_3Star, overlayStarPos, overlayStarScale);
+			starSlot = InstantiateAndPositionOverlay(overlay_3Star, starOverlayOffset, starOverlayScale);
 		else if (thisAppointmentStarCount == 2)
-			starSlot = InstantiateAndPositionOverlay(overlay_2Star, overlayStarPos, overlayStarScale);
+			starSlot = InstantiateAndPositionOverlay(overlay_2Star, starOverlayOffset, starOverlayScale);
 		else if (thisAppointmentStarCount == 1)
-			starSlot = InstantiateAndPositionOverlay(overlay_1Star, overlayStarPos, overlayStarScale);
+			starSlot = InstantiateAndPositionOverlay(overlay_1Star, starOverlayOffset, starOverlayScale);
+
+		starSlot.GetComponent<MeshRenderer>().enabled = isOverlayVisible;
 	}
 
     GameObject InstantiateAndPositionOverlay(GameObject _overlay, Vector3 _overlayPos, Vector3 _overlayScale)
 	{
 
-        GameObject returnGO = Instantiate(_overlay, _overlayPos, Quaternion.identity) as GameObject;
+        GameObject returnGO = Instantiate(_overlay, Vector3.zero, Quaternion.identity) as GameObject;
 
-        returnGO.transform.localScale = _overlayScale;
-		returnGO.transform.parent = transform;
+        returnGO.transform.parent = transform;
+		returnGO.transform.localScale = _overlayScale;
+		returnGO.transform.localPosition = _overlayPos;
 
 		return returnGO;
 	}

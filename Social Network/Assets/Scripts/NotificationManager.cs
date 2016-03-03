@@ -721,9 +721,9 @@ public class NotificationManager : MonoBehaviour
 			}
 			else if (_indexWithinSet == 1)
 			{
-				m_finger.SendFinger(GameObject.Find("BackButton"));
+				m_finger.SendFinger(GameObject.Find("BackButton_red"));
 				RequestExclusiveControl();
-				AllowActions(new List<string> { "BackButton" }, new List<string>(), new List<string>());
+				AllowActions(new List<string> { "BackButton_red" }, new List<string>(), new List<string>());
 			}
 			else
 			{
