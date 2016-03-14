@@ -25,10 +25,19 @@ public class Person : MonoBehaviour {
 	public bool canBeClicked = true;
 
 	// faces
-	public Material facialArt1_happy;
-	public Material facialArt1_sad;
-	public Material facialArt1_normal;
-	public Material facialArt1_excited;
+	private int faceIndex = -1;
+	public Material facialArt_happy;
+	public Material facialArt_sad;
+	public Material facialArt_normal;
+	public Material facialArt_excited;
+	private Material m_facialArt_happy;
+	private Material m_facialArt_sad;
+	private Material m_facialArt_normal;
+	private Material m_facialArt_excited;
+	public List<Texture> faces_happy = new List<Texture>();
+	public List<Texture> faces_sad = new List<Texture>();
+	public List<Texture> faces_normal = new List<Texture>();
+	public List<Texture> faces_excited = new List<Texture>();
 	public Material statusCircleGreen;
 	public Material statusCircleRed;
 
@@ -47,6 +56,18 @@ public class Person : MonoBehaviour {
 	public void Initialize()
 	{
 		m_renderer = GetComponent<Renderer>();
+		faceIndex = Random.Range(0, faces_happy.Count);
+
+		m_facialArt_happy = new Material(facialArt_happy);
+		m_facialArt_sad = new Material(facialArt_sad);
+		m_facialArt_normal = new Material(facialArt_normal);
+		m_facialArt_excited = new Material(facialArt_excited);
+
+		m_facialArt_happy.SetTexture("_MainTex", faces_happy[faceIndex]);
+		m_facialArt_sad.SetTexture("_MainTex", faces_sad[faceIndex]);
+		m_facialArt_normal.SetTexture("_MainTex", faces_normal[faceIndex]);
+		m_facialArt_excited.SetTexture("_MainTex", faces_excited[faceIndex]);
+		
 		myTransform = transform;
 		networkMgr = GameObject.FindGameObjectWithTag("networkManager").GetComponent<NetworkManager>();
 		foreach (Relationship _rel in relationshipList)
@@ -62,6 +83,8 @@ public class Person : MonoBehaviour {
 		_myMaxIndicator_renderer = _myMaxIndicator.GetComponent<Renderer>();
 		_myMaxIndicator_renderer.enabled = false;
 		_myMaxIndicator.transform.parent = transform;
+		
+		SetMood(Mood.Neutral);
 		
 		if (!canBeClicked)
 		{
@@ -217,23 +240,23 @@ public class Person : MonoBehaviour {
 		{
 			_myMaxIndicator_renderer.enabled = true;
 			_myMaxIndicator_renderer.material = statusCircleRed;
-			m_renderer.material = facialArt1_sad;
+			m_renderer.material = m_facialArt_sad;
 		}
 		else if (m_mood == Mood.Positive)
 		{
 			_myMaxIndicator_renderer.enabled = true;
 			_myMaxIndicator_renderer.material = statusCircleGreen;
-			m_renderer.material = facialArt1_happy;
+			m_renderer.material = m_facialArt_happy;
 		}
 		else if (m_mood == Mood.Neutral)
 		{
 			_myMaxIndicator_renderer.enabled = false;
-			m_renderer.material = facialArt1_normal;
+			m_renderer.material = m_facialArt_normal;
 		}
 
 		if (isExcited)
 		{
-			m_renderer.material = facialArt1_excited;
+			m_renderer.material = m_facialArt_excited;
 		}
 	}
 

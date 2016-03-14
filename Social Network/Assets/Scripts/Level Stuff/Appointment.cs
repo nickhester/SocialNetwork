@@ -77,11 +77,21 @@ public class Appointment : MonoBehaviour {
 
         int thisAppointmentStarCount = SaveGame.GetRoundStarCount(GetMyDayIndex(), GetMyLevelIndex());
 		if (thisAppointmentStarCount == 3)
+		{
 			starSlot = InstantiateAndPositionOverlay(overlay_3Star, starOverlayOffset, starOverlayScale);
+		}
 		else if (thisAppointmentStarCount == 2)
+		{
 			starSlot = InstantiateAndPositionOverlay(overlay_2Star, starOverlayOffset, starOverlayScale);
+		}
 		else if (thisAppointmentStarCount == 1)
+		{
 			starSlot = InstantiateAndPositionOverlay(overlay_1Star, starOverlayOffset, starOverlayScale);
+		}
+		else
+		{
+			return;
+		}
 
 		starSlot.GetComponent<MeshRenderer>().enabled = isOverlayVisible;
 	}
