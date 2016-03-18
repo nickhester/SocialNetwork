@@ -64,9 +64,26 @@ public class NetworkManager : MonoBehaviour {
 		InitiateLevel();
 		SaveStartingState();
 
+		// generate random order of faces
+		int numFaces = GetAllPeople()[0].faces_normal.Count;
+		List<int> sequentialList = new List<int>();
+		for (int i = 0; i <= numFaces; i++)
+		{
+			sequentialList.Add(i);
+		}
+		List<int> randomList = new List<int>();
+
+		for (int i = numFaces; i >= 0; i--)
+		{
+			int n = Random.Range(0, i);
+			randomList.Add(sequentialList[n]);
+			sequentialList.RemoveAt(n);
+		}
+
 		foreach (Person _person in GetAllPeople())
 		{
-            _person.Initialize();
+			_person.Initialize(randomList[0]);
+			randomList.RemoveAt(0);
         }
 
 		selectionCursorInst = Instantiate(selectionCursor) as GameObject;

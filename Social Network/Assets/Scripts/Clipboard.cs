@@ -186,6 +186,11 @@ public class Clipboard : MonoBehaviour
         }
     }
 
+	public void ReceiveClickFromUIButton(GameObject _go)
+	{
+		InputManager.Instance.SendMouseClick(_go);
+	}
+
 	public void StartShowMe()
 	{
 		SaveGame.SetHasSeenShowMe(nextLevelUp.GetMyDayIndex(), nextLevelUp.GetMyLevelIndex(), true);

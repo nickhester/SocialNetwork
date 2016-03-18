@@ -53,20 +53,19 @@ public class Person : MonoBehaviour {
 	
 	#region StartAndUpdate
 
-	public void Initialize()
+	public void Initialize(int _personIndex)
 	{
 		m_renderer = GetComponent<Renderer>();
-		faceIndex = Random.Range(0, faces_happy.Count);
 
 		m_facialArt_happy = new Material(facialArt_happy);
 		m_facialArt_sad = new Material(facialArt_sad);
 		m_facialArt_normal = new Material(facialArt_normal);
 		m_facialArt_excited = new Material(facialArt_excited);
 
-		m_facialArt_happy.SetTexture("_MainTex", faces_happy[faceIndex]);
-		m_facialArt_sad.SetTexture("_MainTex", faces_sad[faceIndex]);
-		m_facialArt_normal.SetTexture("_MainTex", faces_normal[faceIndex]);
-		m_facialArt_excited.SetTexture("_MainTex", faces_excited[faceIndex]);
+		m_facialArt_happy.SetTexture("_MainTex", faces_happy[_personIndex]);
+		m_facialArt_sad.SetTexture("_MainTex", faces_sad[_personIndex]);
+		m_facialArt_normal.SetTexture("_MainTex", faces_normal[_personIndex]);
+		m_facialArt_excited.SetTexture("_MainTex", faces_excited[_personIndex]);
 		
 		myTransform = transform;
 		networkMgr = GameObject.FindGameObjectWithTag("networkManager").GetComponent<NetworkManager>();
