@@ -13,6 +13,7 @@ public class Calendar : MonoBehaviour {
 	private bool isDebugActive = false;
 	private int debugActivateClickCount = 0;
 	private int furthestDayUnlocked = 0;
+	private float dayPositionStartingHeight = 3.5f;
 
 	private float audioButtonScreenPos_X = 0.95f;
 	private float audioButtonScreenPos_Y = 0.97f;
@@ -81,6 +82,11 @@ public class Calendar : MonoBehaviour {
 
     }
 
+	public void ReceiveClickFromUIButton(GameObject _go)
+	{
+		InputManager.Instance.SendMouseClick(_go);
+	}
+
 	// Use this for initialization
 	void Start () {
 
@@ -100,10 +106,11 @@ public class Calendar : MonoBehaviour {
 		for (int i = 0; i < daysToGenerate; i++)
 		{
 			// create calendar days in order
-			GameObject _newCalDay = Instantiate(calendarDayObject, new Vector3(
-				Mathf.Floor((i)/5.0f) * distanceBetweenWeeks,
-				(-((i % 5)*calendarDaySeparationVertical) + ((calendarDaySeparationVertical/2.0f) * 3.7f))
-				), Quaternion.identity) as GameObject;
+			GameObject _newCalDay = Instantiate(calendarDayObject, 
+				new Vector3(
+					Mathf.Floor((i)/5.0f) * distanceBetweenWeeks,
+					(-((i % 5) * calendarDaySeparationVertical) + ((calendarDaySeparationVertical / 2.0f) * dayPositionStartingHeight))),
+				Quaternion.identity) as GameObject;
 			_newCalDay.transform.parent = dayParent.transform;
 			CalendarDay _newCalDayComponent = _newCalDay.GetComponent<CalendarDay>();
 			_newCalDayComponent.dayIndex = i;

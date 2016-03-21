@@ -15,11 +15,11 @@ public class CalendarDay : MonoBehaviour {
 		set
 		{
 			this.dayIndex_internal = value;
-			if (value%5 == 0) { dayOfTheWeek = DayOfTheWeek.Monday; }
-			else if (value%5 == 1) { dayOfTheWeek = DayOfTheWeek.Tuesday; }
-			else if (value%5 == 2) { dayOfTheWeek = DayOfTheWeek.Wednesday; }
-			else if (value%5 == 3) { dayOfTheWeek = DayOfTheWeek.Thursday; }
-			else if (value%5 == 4) { dayOfTheWeek = DayOfTheWeek.Friday; }
+			if (value % 5 == 0) { dayOfTheWeek = DayOfTheWeek.Monday; }
+			else if (value % 5 == 1) { dayOfTheWeek = DayOfTheWeek.Tuesday; }
+			else if (value % 5 == 2) { dayOfTheWeek = DayOfTheWeek.Wednesday; }
+			else if (value % 5 == 3) { dayOfTheWeek = DayOfTheWeek.Thursday; }
+			else if (value % 5 == 4) { dayOfTheWeek = DayOfTheWeek.Friday; }
 		}
 	}
 	private int numStars;
@@ -48,7 +48,13 @@ public class CalendarDay : MonoBehaviour {
     // text labels
     public GameObject m_text1;
 	public GameObject m_text2;
-
+	private float m_text_dayNumber_scale = 0.03f;
+	private float m_text_dayName_scale = 0.03f;
+	private float m_text_starCount_scale = 0.04f;
+	private Vector3 m_text_dayNumber_positionOffset = new Vector3(-3.65f, 0.6f, -0.1f);
+	private Vector3 m_text_dayName_positionOffset = new Vector3(0.0f, 0.6f, -0.1f);
+	private Vector3 m_text_starCount_positionOffset = new Vector3(0.0f, -0.2f, -0.2f);
+	
 	#region StartAndUpdate
 
 	public void Init ()
@@ -57,32 +63,27 @@ public class CalendarDay : MonoBehaviour {
 
 		// create object for the calendar day number
 		GameObject _textNumber = Instantiate(m_text1, transform.position, Quaternion.identity) as GameObject;
-		_textNumber.transform.localScale *= 0.065f;
-		_textNumber.transform.position = new Vector3(transform.position.x, transform.position.y + 0.65f, transform.position.z - 0.1f);
 		_textNumber.transform.parent = transform;
 		// create object for the week day name
 		GameObject _textDay = Instantiate(m_text1, transform.position, Quaternion.identity) as GameObject;
 		_textDay.transform.parent = transform;
-		_textDay.transform.localScale *= 0.065f;
-		_textDay.transform.position = new Vector3(transform.position.x, transform.position.y + 0.65f, transform.position.z - 0.1f);
 		// create object for the star count
 		GameObject _textStars = Instantiate(m_text2, transform.position, Quaternion.identity) as GameObject;
 		_textStars.transform.parent = transform;
-		_textStars.transform.localScale *= 0.06f;
 
 		// create day number text
-		_textNumber.transform.localScale = _textNumber.transform.localScale * 0.75f;
-		_textNumber.transform.position = new Vector3(transform.position.x - 3.65f, transform.position.y + 0.65f, transform.position.z - 0.1f);
-		_textNumber.GetComponent<TextMesh>().text = ((dayIndex + 1).ToString());
+		_textNumber.transform.localScale *= m_text_dayNumber_scale;
+		_textNumber.transform.position = new Vector3(transform.position.x + m_text_dayNumber_positionOffset.x, transform.position.y + m_text_dayNumber_positionOffset.y, transform.position.z + m_text_dayNumber_positionOffset.z);
+		_textNumber.GetComponent<TextMesh>().text = (dayIndex + 1).ToString() + ".";
 
 		// create day name text
-		_textDay.transform.localScale = _textDay.transform.localScale * 0.6f;
-		_textDay.transform.position = new Vector3(transform.position.x, transform.position.y + 0.65f, transform.position.z - 0.1f);
-		_textDay.GetComponent<TextMesh>().text = (dayOfTheWeek.ToString());
+		_textDay.transform.localScale *= m_text_dayName_scale;
+		_textDay.transform.position = new Vector3(transform.position.x + m_text_dayName_positionOffset.x, transform.position.y + m_text_dayName_positionOffset.y, transform.position.z + m_text_dayName_positionOffset.z);
+		_textDay.GetComponent<TextMesh>().text = dayOfTheWeek.ToString().ToUpper();
 
 		// create star count text
-		_textStars.transform.localScale = _textStars.transform.localScale * 0.7f;
-		_textStars.transform.position = new Vector3(transform.position.x + 0.0f, transform.position.y + -0.4f, transform.position.z - 0.2f);
+		_textStars.transform.localScale *= m_text_starCount_scale;
+		_textStars.transform.position = new Vector3(transform.position.x + m_text_starCount_positionOffset.x, transform.position.y + m_text_starCount_positionOffset.y, transform.position.z + m_text_starCount_positionOffset.z);
 
 		// show number of rounds completed in that day
 		int numAppointmentsCompleted = 0;
