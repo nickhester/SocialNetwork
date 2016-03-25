@@ -1,16 +1,13 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class CalendarProgressBar : MonoBehaviour {
 
-	private Vector3 sessionBarStartPos;
-	private Vector3 sessionBarEndPos;
-	private Vector3 starBarStartPos;
-	private Vector3 starBarEndPos;
-	[SerializeField] private float lineWidth;
-	[SerializeField] private float lineLength;
-	[SerializeField] private Color barColor;
-	[SerializeField] private GameObject text;
+	public Slider bar_days;
+	public Slider bar_stars;
+	public Text fraction_days;
+	public Text fraction_stars;
 
 	// Use this for initialization
 	void Start ()
@@ -24,8 +21,12 @@ public class CalendarProgressBar : MonoBehaviour {
 		float progressThroughDays = (float)numDaysCompleted/(float)numTotalDays;
 		float progressThroughStars = (float)numStarsAcquired/(float)numTotalPossibleStars;
 
-		// Start line creation
+		bar_days.value = progressThroughDays;
+		bar_stars.value = progressThroughStars;
 
+		/*
+		// Start line creation
+		
 		foreach (Transform t in GetComponentsInChildren<Transform>())
 		{
 			if (t.name == "sessionBarMarker")
@@ -51,6 +52,7 @@ public class CalendarProgressBar : MonoBehaviour {
 		barStarsComplete.GetComponent<Renderer>().material = new Material(Shader.Find("Transparent/VertexLit"));
 		barStarsComplete.GetComponent<Renderer>().material.color = barColor;
 		barStarsComplete.GetComponent<Renderer>().material.SetColor("_Emission", barColor);
+		*/
 
 		// show game completion notes ("notification" pages)
 		if (numDaysCompleted == numTotalDays)
@@ -62,6 +64,7 @@ public class CalendarProgressBar : MonoBehaviour {
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(16, false);
 		}
 
+		/*
 		// Create text
 		GameObject myTextSessions = Instantiate(text, new Vector3(transform.position.x + 2.4f, transform.position.y + 0.5f, transform.position.z - 0.1f), Quaternion.identity) as GameObject;
 		myTextSessions.transform.localScale = myTextSessions.transform.localScale * 0.033f;
@@ -76,5 +79,9 @@ public class CalendarProgressBar : MonoBehaviour {
 		TextMesh myTextStarsComponent = myTextStars.GetComponent<TextMesh>();
 		myTextStarsComponent.anchor = TextAnchor.MiddleRight;
 		myTextStarsComponent.text = numStarsAcquired + "/" + numTotalPossibleStars;
+		*/
+
+		fraction_days.text = numDaysCompleted + "/" + numTotalDays;
+		fraction_stars.text = numStarsAcquired + "/" + numTotalPossibleStars;
 	}
 }

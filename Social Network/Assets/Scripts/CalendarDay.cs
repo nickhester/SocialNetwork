@@ -54,7 +54,9 @@ public class CalendarDay : MonoBehaviour {
 	private Vector3 m_text_dayNumber_positionOffset = new Vector3(-3.65f, 0.6f, -0.1f);
 	private Vector3 m_text_dayName_positionOffset = new Vector3(0.0f, 0.6f, -0.1f);
 	private Vector3 m_text_starCount_positionOffset = new Vector3(0.0f, -0.2f, -0.2f);
-	
+	private Vector3 m_overlay_left = new Vector3(-3.55f, -0.5f, -0.1f);
+	private Vector3 m_overlay_right = new Vector3(3.55f, -0.5f, -0.1f);
+
 	#region StartAndUpdate
 
 	public void Init ()
@@ -130,8 +132,8 @@ public class CalendarDay : MonoBehaviour {
 	void AddStatusOverlay()
 	{
 		Vector3 overlayPosCenter = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 0.1f);
-		Vector3 overlayPosLeft = new Vector3(this.transform.position.x - 3.2f, this.transform.position.y - 0.25f, this.transform.position.z - 0.1f);
-		Vector3 overlayPosRight = new Vector3(this.transform.position.x + 3.2f, this.transform.position.y - 0.25f, this.transform.position.z - 0.1f);
+		Vector3 overlayPosLeft = this.transform.position + m_overlay_left;
+		Vector3 overlayPosRight = this.transform.position + m_overlay_right;
 
 		if (hasPassedAllRounds) { GameObject go = Instantiate(stampCheck, overlayPosLeft, Quaternion.identity) as GameObject; go.transform.parent = transform; }
 		if (hasGottenAllStars) { GameObject go = Instantiate(stampStar, overlayPosRight, Quaternion.identity) as GameObject; go.transform.parent = transform; }
