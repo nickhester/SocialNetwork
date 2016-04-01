@@ -43,7 +43,13 @@ public class AudioToggle : MonoBehaviour {
         if (go == gameObject)
         {
             GameObject networkManagerObject = GameObject.FindGameObjectWithTag("networkManager");
-			GameManager gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+			GameManager gm = null;
+			GameObject gmObject = GameObject.FindGameObjectWithTag("GameManager");
+			if (gmObject != null)
+			{
+				gm = gmObject.GetComponent<GameManager>();
+			}
+
             if (isAudioOn)
             {
                 if (audioType == typeOfAudio.sfx)
@@ -136,9 +142,11 @@ public class AudioToggle : MonoBehaviour {
             InputManager.Instance.OnClick += OnClick;
         }
 
+		/*
         if (Application.loadedLevelName == "Scene_MainMenu")
         {
             Destroy(gameObject);
         }
+		*/
 	}
 }

@@ -162,7 +162,7 @@ public class NetworkManager : MonoBehaviour {
 
     void OnClick(GameObject go)
     {
-        if (go.transform.tag == "people")							// if you're clicking on a person
+        if (go.tag == "people")							// if you're clicking on a person
         {
 			revealToggle.isOn = true;
 
@@ -173,21 +173,30 @@ public class NetworkManager : MonoBehaviour {
             currentlySelectedPerson = go.transform.gameObject;			// set the clicked person as the currently selected person
             GetComponent<LineDisplay>().DisplayLines(go.transform.GetComponent<Person>());		// turn on only the lines touching the selected person
         }
-		else if (go.transform.name == "Button_green" && currentlySelectedPerson != null)
+		else if (go.name == "Button_green" && currentlySelectedPerson != null)
 		{
 			TakeAction(true);
 		}
-		else if (go.transform.name == "Button_red" && currentlySelectedPerson != null)
+		else if (go.name == "Button_red" && currentlySelectedPerson != null)
 		{
 			TakeAction(false);
 		}
-        else if (go.transform.name == "restartLevel")
+        else if (go.name == "restartLevel")
         {
             ReloadStartingState();
 			GameManager gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 			MetricsLogger.Instance.LogCustomEvent("Appointment", "RestartUsed", gm.FormatDayAndLevel());
         }
+		else if (go.name == "reveal toggle")
+		{
+			OnToggle_Reveal(go.GetComponent<Toggle>());
+		}
     }
+
+	public void ReceiveClickFromUIButton(GameObject _go)
+	{
+		InputManager.Instance.SendMouseClick(_go);
+	}
 
 	public void OnToggle_Reveal(Toggle toggle)
 	{

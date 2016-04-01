@@ -42,6 +42,7 @@ public class NotificationManager : MonoBehaviour
 	public GameObject InstructionPaper_canvas_allStarsEarned;
 	public GameObject InstructionPaper_canvas_appointments;
 	public GameObject InstructionPaper_canvas_completeFirstDay;
+	public GameObject InstructionPaper_canvas_confirmClearData;
 	public GameObject InstructionPaper_canvas_credits;
 	public GameObject InstructionPaper_canvas_fridayEncouragement_0;
 	public GameObject InstructionPaper_canvas_fridayEncouragement_1;
@@ -108,7 +109,7 @@ public class NotificationManager : MonoBehaviour
 
     private void OnClick(GameObject go)
     {
-        if (go.tag == "notificationModal")
+		if (go.name.StartsWith("notificationModal"))
         {
             // remove notification or go to next
             m_notification.RemoveNotification();
@@ -129,32 +130,50 @@ public class NotificationManager : MonoBehaviour
 
     private void OnClick_Exclusive(GameObject go)
     {
-        foreach (string objectName in intendedObjects)
-        {
-            if (go.name == objectName)
-            {
-                ActivateNotification(currentSet, currentIndexWithinSet);
-                inputManager.ManuallySendEvent(GameObject.Find(objectName));
-                return;
-            }
-        }
-        foreach (string objectName in allowedObjects_NotificationStays)
-        {
-            if (go.name == objectName)
-            {
-                inputManager.ManuallySendEvent(GameObject.Find(objectName));
-                return;
-            }
-        }
-        foreach (string objectName in allowedObjects_NotificationEnds)
-        {
-            if (go.name == objectName)
-            {
-                inputManager.ManuallySendEvent(GameObject.Find(objectName));
-                EndNotification();
-                return;
-            }
-        }
+		if (intendedObjects != null)
+		{
+			foreach (string objectName in intendedObjects)
+			{
+				if (go.name.StartsWith(objectName))
+				{
+					ActivateNotification(currentSet, currentIndexWithinSet);
+					inputManager.ManuallySendEvent(go);
+					return;
+				}
+			}
+		}
+
+		if (allowedObjects_NotificationStays != null)
+		{
+			foreach (string objectName in allowedObjects_NotificationStays)
+			{
+				if (go.name.StartsWith(objectName))
+				{
+					inputManager.ManuallySendEvent(go);
+					return;
+				}
+			}
+		}
+
+		if (allowedObjects_NotificationEnds != null)
+		{
+			foreach (string objectName in allowedObjects_NotificationEnds)
+			{
+				if (go.name.StartsWith(objectName))
+				{
+					inputManager.ManuallySendEvent(go);
+					EndNotification();
+					return;
+				}
+			}
+		}
+
+		// if there are no specifically allowed action lists, then check to see if its hitting the modal slate
+		if (m_notification.currentNotificationIsModal && go.name.StartsWith("notificationModal"))
+		{
+			ActivateNotification(currentSet, currentIndexWithinSet);
+			return;
+		}
     }
 
     void Start()
@@ -684,6 +703,7 @@ public class NotificationManager : MonoBehaviour
             if (_indexWithinSet == 0)
             {
 				m_notification.DisplayNotification(InstructionPaper_canvas_credits, true, true);
+				RequestExclusiveControl();
             }
             else
             {
@@ -794,6 +814,20 @@ public class NotificationManager : MonoBehaviour
 				m_notification.DisplayNotification(Notification_canvas_showMe, true, true, 3);
 				RequestExclusiveControl();
 				AllowActions(new List<string> { "UpgradeButton_Unlock", "UpgradeButton_WatchIt", "UpgradeButton_Cancel" }, new List<string>(), new List<string>());
+			}
+			else
+			{
+				SaveGame.SetSeenInstruction(_setIndex, true);
+				EndNotification();
+			}
+		}
+		else if (_setIndex == 25)        // Confirm Clear Data Warning =====================================================
+		{
+			if (_indexWithinSet == 0)
+			{
+				m_notification.DisplayNotification(InstructionPaper_canvas_confirmClearData, true, true);
+				RequestExclusiveControl();
+				AllowActions(new List<string> { "Button Yes", "Button Cancel" }, new List<string>(), new List<string>());
 			}
 			else
 			{
@@ -914,4 +948,9 @@ public class NotificationManager : MonoBehaviour
     {
         // send callback
     }
+
+	public Notification GetCurrentNotification()
+	{
+		return m_notification;
+	}
 }

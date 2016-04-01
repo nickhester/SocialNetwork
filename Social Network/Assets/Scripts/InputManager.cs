@@ -29,7 +29,7 @@ public class InputManager : MonoBehaviour {
     private bool isSendingExclusiveEvents = false;
     private bool isIgnoringUserInput = false;
 
-    void Update()
+	void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -54,7 +54,7 @@ public class InputManager : MonoBehaviour {
         }
     }
 
-    public void SendMouseClick(GameObject go)
+	public void SendMouseClick(GameObject go)
     {
         // notify of the event
         if (isSendingExclusiveEvents)
@@ -63,31 +63,50 @@ public class InputManager : MonoBehaviour {
         }
         else
         {
-            OnClick(go);
+			NotificationManager nm = GameObject.FindObjectOfType<NotificationManager>();
+			Notification n = nm.GetCurrentNotification();
+			if (n.IsNotificationActive())
+			{
+				if (n.currentNotificationIsModal)
+				{
+					if (go.name.StartsWith("notificationModal"))
+					{
+						OnClick(go);
+					}
+				}
+				else
+				{
+					OnClick(go);
+				}
+			}
+			else
+			{
+				OnClick(go);
+			}
         }
     }
 
-    public void RequestExclusiveControl()
+	public void RequestExclusiveControl()
     {
         isSendingExclusiveEvents = true;
     }
 
-    public void EndExclusiveControl()
+	public void EndExclusiveControl()
     {
         isSendingExclusiveEvents = false;
     }
 
-    public void ManuallySendEvent(GameObject obj)
+	public void ManuallySendEvent(GameObject obj)
     {
         OnClick(obj);
     }
 
-    public void IgnoreUserInput()
+	public void IgnoreUserInput()
     {
         isIgnoringUserInput = true;
     }
 
-    public void ResumeUserInput()
+	public void ResumeUserInput()
     {
         isIgnoringUserInput = false;
     }

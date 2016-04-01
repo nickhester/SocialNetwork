@@ -6,25 +6,11 @@ using UnityEngine.SocialPlatforms;
 
 public class MainMenu : MonoBehaviour {
 
-	private GameObject clickedThisGO;
-	private float clickScale;
-	private Vector3 originalScale;
-	private Vector3 cameraStartingPos;
-	private Vector3 cameraOptionsPos;
-    private float cameraOptionsPosOffset = 19.2f;
-	private bool isLerpingTowardOptions = false;
-	private bool isClickingButton = false;
+	private Vector3 paperStartingPos;
+	private Vector3 paperOptionsPos;
+    private float paperPosOffset = 15.0f;
+	private bool isShowingOptions = false;
 	private bool backgroundIsSplitting = false;
-	private GameObject rh;
-	private GameObject lh;
-	private GameObject mainMenuParent;
-	private GameObject mainTitle;
-	private Vector3 mainTitleOriginalPosition;
-    private float mainTitleDistanceStartUp = 10.0f;
-	private bool isMainTitleLerping = true;
-	private float mainTitleSinSpeed = 1.25f;
-	private float mainTitleSinSize = 0.16f;
-	private float sinWaveCounter = 0.0f;
 
 	private float splitSpeed = 13.0f;
 	private float splitCounter = 0.0f;
@@ -34,11 +20,9 @@ public class MainMenu : MonoBehaviour {
 
 	[SerializeField] private Material confirmClearProgressImage;
     [SerializeField] private Material progressClearedImage;
-    //[SerializeField] private GameObject text;	// 3dtextarial
 
-    [SerializeField] private Material audio_sfx;
-    [SerializeField] private Material audio_music;
-    [SerializeField] private Material audio_off;
+	[SerializeField] private GameObject optionsScreen;
+	[SerializeField] private GameObject paperObject;
 
 	// external API stuff
 	[HideInInspector]
@@ -51,37 +35,34 @@ public class MainMenu : MonoBehaviour {
 
     void OnClick(GameObject go)
     {
-        if (go.name == "button_Start")
+        if (go.name == "Button - play")
 		{
-			SplitBackground();
+			Application.LoadLevel("Scene_Calendar");
 		}
-        else if (go.name == "button_options")
+        else if (go.name == "Button - options")
 		{
-			isLerpingTowardOptions = true;
+			ShowOptions(true);
 		}
-        else if (go.name == "button_back")
+        else if (go.name == "Button - back")
 		{
 			GoBack();
 		}
-		else if (go.name == "button_restorePurchases")
+		else if (go.name == "Button - Restore Purchases")
 		{
 			// restore purchases explicitly
 			GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().RestoreTransactions();
 		}
-        else if (go.name == "button_clearProgress")
+        else if (go.name == "Button - Clear Progress")
 		{
-			go.GetComponent<Renderer>().material = confirmClearProgressImage;
-			go.name = "button_clearProgressConfirm";
+			GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(25, true);
 		}
-        else if (go.name == "button_clearProgressConfirm")
+		else if (go.name == "Button Yes")
 		{
-			go.GetComponent<Renderer>().material = progressClearedImage;
-			go.name = "progressCleared";
 			SaveGame.DeleteAll();
 			GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().DeleteCloudSave();
 			MetricsLogger.Instance.LogCustomEvent("Settings", "ClearGameProgress", "");
 		}
-		else if (go.name == "button_leaderboard")
+		else if (go.name == "Button - Leaderboard")
 		{
 			if (!GameObject.FindObjectOfType<GameManager>().gameService.GetIsPlayingOffline())
 			{
@@ -90,58 +71,23 @@ public class MainMenu : MonoBehaviour {
 			}
 		}
 
-        // AUDIO
-        else if (go.name == "button_sfx")
-        {
-            if (SaveGame.GetAudioOn_sfx())
-            {
-                SaveGame.SetAudioOn_sfx(false);
-                go.GetComponent<Renderer>().material = audio_off;
-				MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOffSFX", "MainMenu");
-            }
-            else
-            {
-                SaveGame.SetAudioOn_sfx(true);
-                go.GetComponent<Renderer>().material = audio_sfx;
-				MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOnSFX", "MainMenu");
-            }
-        }
-        else if (go.name == "button_music")
-        {
-            if (SaveGame.GetAudioOn_music())
-            {
-                TurnMusicOff();
-                SaveGame.SetAudioOn_music(false);
-                go.GetComponent<Renderer>().material = audio_off;
-				MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOffMusic", "MainMenu");
-            }
-            else
-            {
-                TurnMusicOn();
-                SaveGame.SetAudioOn_music(true);
-                go.GetComponent<Renderer>().material = audio_music;
-				MetricsLogger.Instance.LogCustomEvent("Settings", "TurnOnMusic", "MainMenu");
-            }
-        }
-        else if (go.name == "button_viewCredits")
+        else if (go.name == "Button - view credits")
         {
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(17, true);
         }
     }
 
-	// Use this for initialization
+	public void ReceiveClickFromUIButton(GameObject _go)
+	{
+		InputManager.Instance.SendMouseClick(_go);
+	}
+
 	void Start () {
 
-		clickScale = 0.9f;
-		cameraStartingPos = Camera.main.transform.position;
-        cameraOptionsPos = new Vector3(cameraStartingPos.x, cameraStartingPos.y - cameraOptionsPosOffset, cameraStartingPos.z);
-
-		rh = GameObject.Find("Main Menu background rightHalf");
-		lh = GameObject.Find("Main Menu background leftHalf");
-		mainMenuParent = GameObject.Find("Main Menu");
-		mainTitle = GameObject.Find("mainTitle");
-		mainTitleOriginalPosition = mainTitle.transform.position;
-        mainTitle.transform.position = new Vector3(mainTitleOriginalPosition.x, mainTitleOriginalPosition.y + mainTitleDistanceStartUp, mainTitleOriginalPosition.z);
+		// set up paper movement
+		paperStartingPos = paperObject.transform.position;
+        paperOptionsPos = new Vector3(paperStartingPos.x, paperStartingPos.y - paperPosOffset, paperStartingPos.z);
+		paperObject.transform.position = paperOptionsPos;
 
 		// display software version number
 		/*
@@ -152,93 +98,25 @@ public class MainMenu : MonoBehaviour {
 		myTextComponent.text = versionText;
 		*/
 
-		// make sure audio icons check are accurately on or off
-		if (SaveGame.GetAudioOn_music() == false)
-			GameObject.Find("button_music").GetComponent<Renderer>().material = audio_off;
-		if (SaveGame.GetAudioOn_sfx() == false)
-			GameObject.Find("button_sfx").GetComponent<Renderer>().material = audio_off;
-
 		SaveGame.lastCalendarDayClicked = -1;	// reset lastdayclicked counter
 	}
 
-	GameObject getObjectAtMouse()
-	{
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-		RaycastHit hit;
-		if (Physics.Raycast (ray, out hit, 10.0f))
-		{
-			if (hit.transform.name.StartsWith("button_"))
-			{
-				return hit.transform.gameObject;
-			}
-		}
-		return null;
-	}
-
-	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetMouseButtonDown(0))
+		if (isShowingOptions)
 		{
-			clickedThisGO = getObjectAtMouse();
-			if (clickedThisGO != null)
-			{
-				DepressAButton(clickedThisGO);
-			}
-		}
-        
-		if (Input.GetMouseButtonUp(0) && clickedThisGO != null)
-		{
-			
-			isClickingButton = false;
-			UnpressAButton(clickedThisGO);
-		}
-        
-		if (isLerpingTowardOptions)
-		{
-			Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, cameraOptionsPos, 0.1f);
+			// move paper down
+			paperObject.transform.position = Vector3.Lerp(paperObject.transform.position, paperOptionsPos, 0.1f);
 		}
 		else
 		{
-			Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, cameraStartingPos, 0.1f);
-		}
-
-		if (backgroundIsSplitting)
-		{
-			rh.transform.Translate(Vector3.right * splitSpeed * Time.deltaTime);
-			lh.transform.Translate(Vector3.left * splitSpeed * Time.deltaTime);
-			mainMenuParent.transform.Translate(Vector3.left * splitSpeed * Time.deltaTime);
-			splitCounter += Time.deltaTime;
-
-			if (splitCounter >= splitLimit / 2.0f)
-			{
-				Camera.main.backgroundColor = new Color(Camera.main.backgroundColor.r - 0.05f, Camera.main.backgroundColor.g - 0.05f, Camera.main.backgroundColor.b - 0.05f);
-			}
-			if (splitCounter >= splitLimit)
-			{
-				Application.LoadLevel("Scene_Calendar");
-			}
-		}
-
-		// main title movement
-		mainTitle.transform.position = Vector3.Lerp(mainTitle.transform.position, mainTitleOriginalPosition, 0.1f);			// lerp down into position
-		mainTitle.transform.position = new Vector3(mainTitleOriginalPosition.x, mainTitle.transform.position.y, mainTitle.transform.position.z);	// keep centered
-		if (Mathf.Abs(mainTitle.transform.position.y - mainTitleOriginalPosition.y) < 0.005f)
-		{
-			isMainTitleLerping = false;
-		}
-		if (!isMainTitleLerping)
-		{
-			mainTitle.transform.position = new Vector3(
-				mainTitleOriginalPosition.x,
-				mainTitleOriginalPosition.y + Mathf.Sin(sinWaveCounter * mainTitleSinSpeed) * mainTitleSinSize,
-				mainTitleOriginalPosition.z);
-			sinWaveCounter += Time.deltaTime;
+			// move paper into place
+			paperObject.transform.position = Vector3.Lerp(paperObject.transform.position, paperStartingPos, 0.1f);
 		}
 
 		if (Input.GetButtonDown("Cancel"))
 		{
-			if (isLerpingTowardOptions)
+			if (isShowingOptions)
 			{
 				GoBack();
 			}
@@ -249,41 +127,22 @@ public class MainMenu : MonoBehaviour {
 		}
 	}
 
-	void SplitBackground()
+	void ShowOptions(bool b)
 	{
-		backgroundIsSplitting = true;
-		foreach (MeshCollider col in mainMenuParent.GetComponentsInChildren<MeshCollider>())
+		if (b)
 		{
-			col.enabled = false;
+			optionsScreen.SetActive(true);
+			isShowingOptions = true;
 		}
-	}
-
-	void DepressAButton(GameObject hit)
-	{
-		if (!isClickingButton) { originalScale = hit.transform.localScale; isClickingButton = true; }
-		hit.transform.localScale = originalScale * clickScale;
-	}
-
-	void UnpressAButton(GameObject hit)
-	{
-		hit.transform.localScale = originalScale;
-	}
-
-	void TurnMusicOff()
-	{
-		AudioSource audio = GameObject.Find("Music Player").GetComponent<AudioSource>();
-		audio.enabled = false;
-	}
-
-	void TurnMusicOn()
-	{
-		AudioSource m_audio = GameObject.Find("Music Player").GetComponent<AudioSource>();
-		m_audio.enabled = true;
-		m_audio.Play();
+		else
+		{
+			optionsScreen.SetActive(false);
+			isShowingOptions = false;
+		}
 	}
 
 	void GoBack()
 	{
-		isLerpingTowardOptions = false;
+		ShowOptions(false);
 	}
 }
