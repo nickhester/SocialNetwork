@@ -70,7 +70,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		Destroy (gameObject);
 	}
 
-	// duplicate for default argument (see other "RoundEnd" function)
+	// overload for default argument
 	public void RoundEnd(bool levelSuccess)
 	{
 		RoundEnd(levelSuccess, 0);
@@ -163,7 +163,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		}
 		if (levelSuccess)
 		{
-			_thisLevel.UpdateStarCount();
+			_thisLevel.UpdateStarCount(false);
 		}
 	}
 	

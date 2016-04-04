@@ -28,6 +28,7 @@ public class Line : MonoBehaviour {
 	private Color negativeColor;
 	private Color positiveColor;
 	private const float fadedAlphaValue = 0.0f;
+	private string shaderColorValueName = "_Emission";
 
 	public void SetColors (Color _negativeColor, Color _positiveColor)
 	{
@@ -42,7 +43,7 @@ public class Line : MonoBehaviour {
 		else if (myState == -1) { myColor = negativeColor; }
 
 		m_renderer.material.color = myColor;
-		m_renderer.material.SetColor("_Emission", myColor);
+		m_renderer.material.SetColor(shaderColorValueName, myColor);
 	}
 
 	void Update () {
@@ -63,7 +64,7 @@ public class Line : MonoBehaviour {
 				myColor = new Color(m_renderer.material.color.r, m_renderer.material.color.g, m_renderer.material.color.b, fadedAlphaValue);
 			}
 			m_renderer.material.color = myColor;
-			m_renderer.material.SetColor("_Emission", myColor);
+			m_renderer.material.SetColor(shaderColorValueName, myColor);
 		}
 	}
 

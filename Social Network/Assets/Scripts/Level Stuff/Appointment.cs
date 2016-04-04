@@ -62,17 +62,15 @@ public class Appointment : MonoBehaviour {
 		if (myLevel.isNoLines)
 		{ mySpecialOverlay_NoLines = InstantiateAndPositionOverlay(mySpecialOverlay_NoLines, overlaySpecialPos, overlaySpecialScale); }
         
-		UpdateStarCount();
+		UpdateStarCount(true);
 	}
 
-	public void UpdateStarCount()
+	public void UpdateStarCount(bool _isOverlayVisible)
 	{
-		bool isOverlayVisible = true;
-
 		if (starSlot != null)
 		{
 			Destroy(starSlot);
-			isOverlayVisible = starSlot.GetComponent<MeshRenderer>().enabled;
+			_isOverlayVisible = starSlot.GetComponent<MeshRenderer>().enabled;
 		}
 
         int thisAppointmentStarCount = SaveGame.GetRoundStarCount(GetMyDayIndex(), GetMyLevelIndex());
@@ -93,7 +91,7 @@ public class Appointment : MonoBehaviour {
 			return;
 		}
 
-		starSlot.GetComponent<MeshRenderer>().enabled = isOverlayVisible;
+		starSlot.GetComponent<MeshRenderer>().enabled = _isOverlayVisible;
 	}
 
     GameObject InstantiateAndPositionOverlay(GameObject _overlay, Vector3 _overlayPos, Vector3 _overlayScale)
