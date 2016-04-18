@@ -10,7 +10,7 @@ public class Appointment : MonoBehaviour {
 	private float textObjectScalar = 0.036f;
     [SerializeField] private GameObject myTextObject;
     [SerializeField] private TextMesh myTextComponent;
-	private Vector3 specialOverlayOffset = new Vector3(2.5f, -0.1f, -0.5f);
+	private Vector3 specialOverlayOffset = new Vector3(0.25f, -0.4f, 0.0f);
     [SerializeField] private GameObject mySpecialOverlay_FallToRed;
     [SerializeField] private GameObject mySpecialOverlay_OneClick;
     [SerializeField] private GameObject mySpecialOverlay_CantTouch;
@@ -50,17 +50,25 @@ public class Appointment : MonoBehaviour {
 
 	public void SetMySpecialOverlays()
 	{
-		Vector3 overlaySpecialPos = transform.position + specialOverlayOffset;
-        Vector3 overlaySpecialScale = new Vector3(1, 1, 1);
+		Vector3 overlaySpecialPos = specialOverlayOffset;
+		Vector3 overlaySpecialScale = Vector3.zero;
 
 		if (myLevel.isFallToRed)
-		{ mySpecialOverlay_FallToRed = InstantiateAndPositionOverlay(mySpecialOverlay_FallToRed, overlaySpecialPos, overlaySpecialScale); }
+		{
+			mySpecialOverlay_FallToRed = InstantiateAndPositionOverlay(mySpecialOverlay_FallToRed, overlaySpecialPos, overlaySpecialScale);
+		}
 		if (myLevel.isOneClick)
-		{ mySpecialOverlay_OneClick = InstantiateAndPositionOverlay(mySpecialOverlay_OneClick, overlaySpecialPos, overlaySpecialScale); }
+		{
+			mySpecialOverlay_OneClick = InstantiateAndPositionOverlay(mySpecialOverlay_OneClick, overlaySpecialPos, overlaySpecialScale);
+		}
 		if (myLevel.isCantTouch)
-		{ mySpecialOverlay_CantTouch = InstantiateAndPositionOverlay(mySpecialOverlay_CantTouch, overlaySpecialPos, overlaySpecialScale); }
+		{
+			mySpecialOverlay_CantTouch = InstantiateAndPositionOverlay(mySpecialOverlay_CantTouch, overlaySpecialPos, overlaySpecialScale);
+		}
 		if (myLevel.isNoLines)
-		{ mySpecialOverlay_NoLines = InstantiateAndPositionOverlay(mySpecialOverlay_NoLines, overlaySpecialPos, overlaySpecialScale); }
+		{
+			mySpecialOverlay_NoLines = InstantiateAndPositionOverlay(mySpecialOverlay_NoLines, overlaySpecialPos, overlaySpecialScale);
+		}
         
 		UpdateStarCount(true);
 	}
@@ -96,11 +104,13 @@ public class Appointment : MonoBehaviour {
 
     GameObject InstantiateAndPositionOverlay(GameObject _overlay, Vector3 _overlayPos, Vector3 _overlayScale)
 	{
-
         GameObject returnGO = Instantiate(_overlay, Vector3.zero, Quaternion.identity) as GameObject;
 
-        returnGO.transform.parent = transform;
-		returnGO.transform.localScale = _overlayScale;
+        returnGO.transform.SetParent(transform);
+		if (_overlayScale != Vector3.zero)
+		{
+			returnGO.transform.localScale = _overlayScale;
+		}
 		returnGO.transform.localPosition = _overlayPos;
 
 		return returnGO;

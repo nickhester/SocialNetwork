@@ -69,7 +69,7 @@ public class Notification : MonoBehaviour
 		go.name = RemoveStringFromEnd(go.name, cloneString);
 	}
 
-	public void DisplayNotification(GameObject canvas, bool isModal, bool isDarkened, int upgradeToShow)
+	public void DisplayNotification(GameObject canvas, bool isModal, bool isDarkened, int specialButtonOption)
 	{
 		if (canvas == null)
 		{
@@ -99,8 +99,9 @@ public class Notification : MonoBehaviour
 		// register UI buttons to call to input manager
 		List<Button> buttons = new List<Button>();
 		buttons.AddRange(activeNotification.GetComponentsInChildren<Button>());
-		foreach (Button button in buttons)
+		for (int i = 0; i < buttons.Count; i++)
 		{
+			Button button = buttons[i];
 			button.onClick.AddListener(() => InputManager.Instance.SendMouseClick(button.gameObject));
 		}
 
@@ -108,35 +109,26 @@ public class Notification : MonoBehaviour
 		currentNotificationIsModal = isModal;
 		currentNotificationName = name;
 
-		if (upgradeToShow == 0)	// upgrade warning
+		if (specialButtonOption == 0)	// upgrade warning
 		{
 			GameObject go_rateIt = Instantiate(buttonPrefab_RateIt, new Vector3(buttonPosition_yes.x, buttonPosition_yes.y, activeNotification.transform.position.z - 0.1f), Quaternion.identity) as GameObject;
 			GameObject go_no = Instantiate(buttonPrefab_No, new Vector3(buttonPosition_no.x, buttonPosition_no.y, activeNotification.transform.position.z - 0.1f), Quaternion.identity) as GameObject;
 			SetUpButtons(go_rateIt);
 			SetUpButtons(go_no);
 		}
-		else if (upgradeToShow == 1) // upgrade final
+		else if (specialButtonOption == 1) // upgrade final
 		{
 			GameObject go_yes = Instantiate(buttonPrefab_Yes, new Vector3(buttonPosition_yes.x, buttonPosition_yes.y, activeNotification.transform.position.z - 0.1f), Quaternion.identity) as GameObject;
 			GameObject go_no = Instantiate(buttonPrefab_No, new Vector3(buttonPosition_no.x, buttonPosition_no.y, activeNotification.transform.position.z - 0.1f), Quaternion.identity) as GameObject;
 			SetUpButtons(go_yes);
 			SetUpButtons(go_no);
 		}
-		else if (upgradeToShow == 2) // upgrade choices
+		else if (specialButtonOption == 2) // upgrade choices
 		{
 			GameObject go_unlock = Instantiate(buttonPrefab_UpgradeUnlock, new Vector3(buttonPosition_unlock.x, buttonPosition_unlock.y, activeNotification.transform.position.z - 0.1f), Quaternion.identity) as GameObject;
 			GameObject go_cancel = Instantiate(buttonPrefab_Cancel, new Vector3(buttonPosition_cancel.x, buttonPosition_cancel.y, activeNotification.transform.position.z - 0.1f), Quaternion.identity) as GameObject;
 			SetUpButtons(go_unlock);
 			SetUpButtons(go_cancel);
-		}
-		else if (upgradeToShow == 3) // show me ad warning
-		{
-			GameObject go_unlock = Instantiate(buttonPrefab_UpgradeUnlock, new Vector3(buttonPosition_watchItUnlock.x, buttonPosition_watchItUnlock.y, activeNotification.transform.position.z - 0.1f), Quaternion.identity) as GameObject;
-			GameObject go_cancel = Instantiate(buttonPrefab_Cancel, new Vector3(buttonPosition_watchItCancel.x, buttonPosition_watchItCancel.y, activeNotification.transform.position.z - 0.1f), Quaternion.identity) as GameObject;
-			GameObject go_watchIt = Instantiate(buttonPrefab_WatchIt, new Vector3(buttonPosition_watchItYes.x, buttonPosition_watchItYes.y, activeNotification.transform.position.z - 0.1f), Quaternion.identity) as GameObject;
-			SetUpButtons(go_unlock);
-			SetUpButtons(go_cancel);
-			SetUpButtons(go_watchIt);
 		}
 	}
 

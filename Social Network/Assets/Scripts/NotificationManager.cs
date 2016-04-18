@@ -22,21 +22,21 @@ public class NotificationManager : MonoBehaviour
     private float showMeInterval = 0.6f;
 
     // saved positions
-    private Vector2 screenPos_greenButton = new Vector2(-3.3f, -5.7f);
-    private Vector2 screenPos_redButton = new Vector2(1.3f, -5.7f);
-    private Vector2 screenPos_patients_3_2 = new Vector2(-0.5f, 3.5f);
-    private Vector2 screenPos_patients_3_1 = new Vector2(1.9f, -0.8f);
-    private Vector2 screenPos_patients_3_0 = new Vector2(-3.3f, -0.8f);
-    private Vector2 screenPos_patients_4_1 = new Vector2(-3.0f, 2.9f);
-	private Vector2 screenPos_patients_4_2 = new Vector2(1.7f, -1.2f);
-	private Vector2 screenPos_patients_4_3 = new Vector2(1.7f, 2.9f);
-	private Vector2 screenPos_patients_4_0 = new Vector2(-3.0f, -1.2f);
-	private Vector2 screenPos_patients_5_0 = new Vector2(-2.4f, -1.4f);
-	private Vector2 screenPos_patients_5_1 = new Vector2(-3.6f, 1.8f);
-	private Vector2 screenPos_patients_5_2 = new Vector2(1.1f, -1.4f);
-	private Vector2 screenPos_patients_5_3 = new Vector2(-0.7f, 4.3f);
-	private Vector2 screenPos_patients_5_4 = new Vector2(2.1f, 1.8f);
-    private Vector2 screenPos_showMeButton = new Vector2(-4.3f, 6.0f);
+    private Vector2 screenPos_greenButton = new Vector2(-1.3f, -7.0f);
+    private Vector2 screenPos_redButton = new Vector2(3.3f, -7.0f);
+    private Vector2 screenPos_patients_3_2 = new Vector2(1.0f, 3.3f);
+    private Vector2 screenPos_patients_3_1 = new Vector2(3.4f, -1.4f);
+    private Vector2 screenPos_patients_3_0 = new Vector2(-1.8f, -1.4f);
+    private Vector2 screenPos_patients_4_1 = new Vector2(-1.5f, 2.7f);
+	private Vector2 screenPos_patients_4_2 = new Vector2(3.2f, -1.4f);
+	private Vector2 screenPos_patients_4_3 = new Vector2(3.2f, 2.7f);
+	private Vector2 screenPos_patients_4_0 = new Vector2(-1.5f, -1.4f);
+	private Vector2 screenPos_patients_5_0 = new Vector2(-0.9f, -1.6f);
+	private Vector2 screenPos_patients_5_1 = new Vector2(-2.1f, 1.6f);
+	private Vector2 screenPos_patients_5_2 = new Vector2(2.6f, -1.6f);
+	private Vector2 screenPos_patients_5_3 = new Vector2(0.8f, 4.1f);
+	private Vector2 screenPos_patients_5_4 = new Vector2(3.6f, 1.6f);
+    private Vector2 screenPos_showMeButton = new Vector2(-2.8f, 6.0f);
 
 	public GameObject InstructionPaper_canvas_allSessionsCompleted;
 	public GameObject InstructionPaper_canvas_allStarsEarned;
@@ -223,7 +223,7 @@ public class NotificationManager : MonoBehaviour
             else if (_indexWithinSet == 1)
             {
                 // introduction screen 2
-                m_finger.SendFinger(new Vector2(-1.8f, 2.5f));
+                m_finger.SendFinger(new Vector2(0.9f, 2.1f));
 				m_notification.DisplayNotification(InstructionPaper_canvas_introduction_2, false, false);
                 RequestExclusiveControl();
                 AllowActions(new List<string> { "1 Monday" }, new List<string>(), new List<string>());
@@ -238,7 +238,7 @@ public class NotificationManager : MonoBehaviour
         {
             if (_indexWithinSet == 0)
             {
-                m_finger.SendFinger(new Vector2(-3.5f, 2.3f));
+                m_finger.SendFinger(new Vector2(3.0f, 1.9f));
 				m_notification.DisplayNotification(InstructionPaper_canvas_appointments, false, false);
                 RequestExclusiveControl();
                 AllowActions(new List<string> { "appointment 0" }, new List<string>(), new List<string>());
@@ -811,7 +811,7 @@ public class NotificationManager : MonoBehaviour
 		{
 			if (_indexWithinSet == 0)
 			{
-				m_notification.DisplayNotification(Notification_canvas_showMe, true, true, 3);
+				m_notification.DisplayNotification(Notification_canvas_showMe, true, true);
 				RequestExclusiveControl();
 				AllowActions(new List<string> { "UpgradeButton_Unlock", "UpgradeButton_WatchIt", "UpgradeButton_Cancel" }, new List<string>(), new List<string>());
 			}

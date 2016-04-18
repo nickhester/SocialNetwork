@@ -16,8 +16,8 @@ public class Finger : MonoBehaviour {
     [SerializeField] private float hoverAmount;
     [SerializeField] private float moveSpeed;
 
-	private Vector2 fingerTipOffset = new Vector2(0.7f, 0.7f);
-	private Vector2 fingerTipOffsetVisible = new Vector2(0.9f, 1.1f);
+	private Vector2 fingerTipOffset = new Vector2(-0.9f, 1.4f);
+	private Vector2 fingerTipOffsetVisible = new Vector2(-0.7f, 1.8f);
 	private Vector3 updateFingerPosition = Vector3.zero;
 
 	void Awake ()
