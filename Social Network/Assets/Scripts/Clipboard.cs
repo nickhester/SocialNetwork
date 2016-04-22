@@ -527,15 +527,7 @@ public class Clipboard : MonoBehaviour
 
 	public void ShowRestartButton(bool _show)
 	{
-		
-		if (_show)
-		{
-			restartFromResultsScreenButton.SetActive(true);
-		}
-		else
-		{
-			restartFromResultsScreenButton.SetActive(false);
-		}
+		restartFromResultsScreenButton.SetActive(_show);
 	}
 
 	void GoBack()

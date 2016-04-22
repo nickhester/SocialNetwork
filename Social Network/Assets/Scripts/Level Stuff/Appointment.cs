@@ -10,13 +10,14 @@ public class Appointment : MonoBehaviour {
 	private float textObjectScalar = 0.036f;
     [SerializeField] private GameObject myTextObject;
     [SerializeField] private TextMesh myTextComponent;
-	private Vector3 specialOverlayOffset = new Vector3(0.25f, -0.4f, 0.0f);
+	private Vector3 specialOverlayOffset = new Vector3(0.294f, -0.075f, 0.0f);
+	private float specialOverlayScalar = 0.321f;
     [SerializeField] private GameObject mySpecialOverlay_FallToRed;
     [SerializeField] private GameObject mySpecialOverlay_OneClick;
     [SerializeField] private GameObject mySpecialOverlay_CantTouch;
     [SerializeField] private GameObject mySpecialOverlay_NoLines;
 	private Vector3 starOverlayOffset = new Vector3(-0.294f, -0.071f, -0.5f);
-	private Vector3 starOverlayScale = new Vector3(0.053f, 0.321f, 1.0f);
+	private float starOverlayScale = 0.35f;
     [SerializeField] private GameObject overlay_1Star;
     [SerializeField] private GameObject overlay_2Star;
     [SerializeField] private GameObject overlay_3Star;
@@ -50,24 +51,21 @@ public class Appointment : MonoBehaviour {
 
 	public void SetMySpecialOverlays()
 	{
-		Vector3 overlaySpecialPos = specialOverlayOffset;
-		Vector3 overlaySpecialScale = Vector3.zero;
-
 		if (myLevel.isFallToRed)
 		{
-			mySpecialOverlay_FallToRed = InstantiateAndPositionOverlay(mySpecialOverlay_FallToRed, overlaySpecialPos, overlaySpecialScale);
+			mySpecialOverlay_FallToRed = InstantiateAndPositionOverlay(mySpecialOverlay_FallToRed, specialOverlayOffset, specialOverlayScalar);
 		}
 		if (myLevel.isOneClick)
 		{
-			mySpecialOverlay_OneClick = InstantiateAndPositionOverlay(mySpecialOverlay_OneClick, overlaySpecialPos, overlaySpecialScale);
+			mySpecialOverlay_OneClick = InstantiateAndPositionOverlay(mySpecialOverlay_OneClick, specialOverlayOffset, specialOverlayScalar);
 		}
 		if (myLevel.isCantTouch)
 		{
-			mySpecialOverlay_CantTouch = InstantiateAndPositionOverlay(mySpecialOverlay_CantTouch, overlaySpecialPos, overlaySpecialScale);
+			mySpecialOverlay_CantTouch = InstantiateAndPositionOverlay(mySpecialOverlay_CantTouch, specialOverlayOffset, specialOverlayScalar);
 		}
 		if (myLevel.isNoLines)
 		{
-			mySpecialOverlay_NoLines = InstantiateAndPositionOverlay(mySpecialOverlay_NoLines, overlaySpecialPos, overlaySpecialScale);
+			mySpecialOverlay_NoLines = InstantiateAndPositionOverlay(mySpecialOverlay_NoLines, specialOverlayOffset, specialOverlayScalar);
 		}
         
 		UpdateStarCount(true);
@@ -102,15 +100,12 @@ public class Appointment : MonoBehaviour {
 		starSlot.GetComponent<MeshRenderer>().enabled = _isOverlayVisible;
 	}
 
-    GameObject InstantiateAndPositionOverlay(GameObject _overlay, Vector3 _overlayPos, Vector3 _overlayScale)
+    GameObject InstantiateAndPositionOverlay(GameObject _overlay, Vector3 _overlayPos, float _overlayScale)
 	{
         GameObject returnGO = Instantiate(_overlay, Vector3.zero, Quaternion.identity) as GameObject;
 
         returnGO.transform.SetParent(transform);
-		if (_overlayScale != Vector3.zero)
-		{
-			returnGO.transform.localScale = _overlayScale;
-		}
+		returnGO.transform.localScale = returnGO.transform.localScale * _overlayScale;
 		returnGO.transform.localPosition = _overlayPos;
 
 		return returnGO;
