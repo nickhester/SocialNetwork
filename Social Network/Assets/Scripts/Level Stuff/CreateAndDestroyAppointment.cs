@@ -1,6 +1,7 @@
 //#define DEBUG_LEVEL_TESTER
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using Types;
@@ -66,7 +67,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		Destroy(gameManager.GetClipboard().selectorRef.dayToGenerate.gameObject);
 		Destroy(gameManager.GetClipboard().selectorRef.gameObject);
 		Destroy(gameManager.GetClipboard().gameObject);
-		Application.LoadLevel("Scene_Calendar");
+		SceneManager.LoadScene("Scene_Calendar");
 		Destroy (gameObject);
 	}
 
@@ -174,7 +175,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		{
 			gameManager.GetClipboard().GetNextLevelUp().myLevel = _aSpecificLevel;
 		}
-        Application.LoadLevelAdditive("Scene_Appointment");
+		SceneManager.LoadScene("Scene_Appointment", LoadSceneMode.Additive);
 	}
 
 	public void OnAppointmentStarted()

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LevelSelector : MonoBehaviour {
 
@@ -34,7 +35,7 @@ public class LevelSelector : MonoBehaviour {
 		}
 		_calendarDay.transform.parent = null;		// unparent calendar day so it doesn't get destroyed with the rest of them
 		DontDestroyOnLoad(_calendarDay.gameObject);
-		Application.LoadLevel("Scene_Clipboard");
+		SceneManager.LoadScene("Scene_Clipboard");
 		_dayToGenerate = _calendarDay;
 	}
 }

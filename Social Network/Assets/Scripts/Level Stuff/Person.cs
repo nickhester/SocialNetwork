@@ -25,7 +25,6 @@ public class Person : MonoBehaviour {
 	public bool canBeClicked = true;
 
 	// faces
-	private int faceIndex = -1;
 	public Material facialArt_happy;
 	public Material facialArt_sad;
 	public Material facialArt_normal;

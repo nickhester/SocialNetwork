@@ -31,7 +31,7 @@ namespace GooglePlayGames
                 return new GooglePlayGames.BasicApi.DummyClient();
             }
             #if UNITY_ANDROID
-                Logger.d("Creating Android IPlayGamesClient Client");
+                GooglePlayGames.OurUtils.Logger.d("Creating Android IPlayGamesClient Client");
                 return new GooglePlayGames.Native.NativeClient(config,
                     new GooglePlayGames.Android.AndroidClient());
             #elif (UNITY_IPHONE && !NO_GPGS)

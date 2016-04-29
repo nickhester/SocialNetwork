@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -629,7 +630,7 @@ public class Calendar : MonoBehaviour {
 	void UnloadCalendarAndLoadLevel(string _levelName)
 	{
 		Destroy(GameObject.FindObjectOfType<LevelSelector>().gameObject);
-		Application.LoadLevel(_levelName);
+		SceneManager.LoadScene(_levelName);
 	}
 
 	public void ReloadCalendar()

@@ -20,23 +20,6 @@ public class Notification : MonoBehaviour
 	private Vector3 notificationScaleUpdate = Vector3.zero;
 	string cloneString = "(Clone)";
 
-	// buttons
-	[SerializeField] private GameObject buttonPrefab_UpgradeUnlock;
-	[SerializeField] private GameObject buttonPrefab_Yes;
-	[SerializeField] private GameObject buttonPrefab_No;
-	[SerializeField] private GameObject buttonPrefab_KeepPlaying;
-	[SerializeField] private GameObject buttonPrefab_Cancel;
-	[SerializeField] private GameObject buttonPrefab_RateIt;
-	[SerializeField] private GameObject buttonPrefab_WatchIt;
-	private Vector3 buttonPosition_unlock = new Vector3(0.0f, -0.5f);
-	private Vector3 buttonPosition_cancel = new Vector3(0.0f, -4.0f);
-	private Vector3 buttonPosition_yes = new Vector3(-2.4f, -3.2f);
-	private Vector3 buttonPosition_no = new Vector3(2.4f, -3.2f);
-	private Vector3 buttonPosition_keepPlaying = new Vector3(2.4f, -3.2f);
-	private Vector3 buttonPosition_watchItYes = new Vector3(-2.4f, 1.0f);
-	private Vector3 buttonPosition_watchItCancel = new Vector3(2.4f, 1.0f);
-	private Vector3 buttonPosition_watchItUnlock = new Vector3(0.0f, -3.8f);
-
     void Awake()
     {
         InputManager.Instance.OnClick += OnClick;

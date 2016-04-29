@@ -33,8 +33,6 @@ public class Clipboard : MonoBehaviour
 	[HideInInspector] public LevelSelector selectorRef;
 	private int buttonState = 0;
 	private Text buttonTextComponent;
-	private string buttonTextDone = "Done";
-	private string buttonTextBack = "Back";
 	public GameObject backButtonA;
 	public GameObject backbuttonB;
 	public GameObject DoneButton;

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GooglePlayGames;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
@@ -10,16 +11,6 @@ public class MainMenu : MonoBehaviour {
 	private Vector3 paperOptionsPos;
     private float paperPosOffset = 15.0f;
 	private bool isShowingOptions = false;
-	private bool backgroundIsSplitting = false;
-
-	private float splitSpeed = 13.0f;
-	private float splitCounter = 0.0f;
-	private float splitLimit = 2.0f;
-
-	private string versionText = "Version 3.6";
-
-	[SerializeField] private Material confirmClearProgressImage;
-    [SerializeField] private Material progressClearedImage;
 
 	[SerializeField] private GameObject optionsScreen;
 	[SerializeField] private GameObject paperObject;
@@ -37,7 +28,7 @@ public class MainMenu : MonoBehaviour {
     {
         if (go.name == "Button - play")
 		{
-			Application.LoadLevel("Scene_Calendar");
+			SceneManager.LoadScene("Scene_Calendar");
 		}
         else if (go.name == "Button - options")
 		{
