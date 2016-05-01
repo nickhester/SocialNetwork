@@ -21,6 +21,7 @@ public class Person : MonoBehaviour {
 	public GameObject myMaxIndicator;
 	private GameObject _myMaxIndicator;
 	private Renderer _myMaxIndicator_renderer;
+	private Vector3 _myMaxIndicator_scale = new Vector3(2.5175f, 2.5175f, 1);
 	private bool hasBeenActivatedOnce = false;
 	public bool canBeClicked = true;
 
@@ -77,7 +78,7 @@ public class Person : MonoBehaviour {
 		
 		Vector3 positionJustBehindPerson = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
 		_myMaxIndicator = Instantiate(myMaxIndicator, positionJustBehindPerson, Quaternion.identity) as GameObject;
-		_myMaxIndicator.transform.localScale = new Vector3(1.9f, 1.9f, 1);
+		_myMaxIndicator.transform.localScale = _myMaxIndicator_scale;
 		_myMaxIndicator_renderer = _myMaxIndicator.GetComponent<Renderer>();
 		_myMaxIndicator_renderer.enabled = false;
 		_myMaxIndicator.transform.parent = transform;

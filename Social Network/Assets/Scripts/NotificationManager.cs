@@ -28,14 +28,14 @@ public class NotificationManager : MonoBehaviour
     private Vector2 screenPos_patients_3_1 = new Vector2(3.4f, -1.4f);
     private Vector2 screenPos_patients_3_0 = new Vector2(-1.8f, -1.4f);
     private Vector2 screenPos_patients_4_1 = new Vector2(-1.5f, 2.7f);
-	private Vector2 screenPos_patients_4_2 = new Vector2(3.2f, -1.4f);
+	private Vector2 screenPos_patients_4_2 = new Vector2(3.2f, -2.4f);
 	private Vector2 screenPos_patients_4_3 = new Vector2(3.2f, 2.7f);
-	private Vector2 screenPos_patients_4_0 = new Vector2(-1.5f, -1.4f);
-	private Vector2 screenPos_patients_5_0 = new Vector2(-0.9f, -1.6f);
-	private Vector2 screenPos_patients_5_1 = new Vector2(-2.1f, 1.6f);
-	private Vector2 screenPos_patients_5_2 = new Vector2(2.6f, -1.6f);
-	private Vector2 screenPos_patients_5_3 = new Vector2(0.8f, 4.1f);
-	private Vector2 screenPos_patients_5_4 = new Vector2(3.6f, 1.6f);
+	private Vector2 screenPos_patients_4_0 = new Vector2(-1.5f, -2.4f);
+	private Vector2 screenPos_patients_5_0 = new Vector2(-0.9f, -2.8f);
+	private Vector2 screenPos_patients_5_1 = new Vector2(-2.1f, 0.8f);
+	private Vector2 screenPos_patients_5_2 = new Vector2(2.6f, -2.8f);
+	private Vector2 screenPos_patients_5_3 = new Vector2(0.8f, 3.6f);
+	private Vector2 screenPos_patients_5_4 = new Vector2(3.6f, 0.8f);
     private Vector2 screenPos_showMeButton = new Vector2(-2.8f, 6.0f);
 
 	public GameObject InstructionPaper_canvas_allSessionsCompleted;
