@@ -169,7 +169,11 @@ public class NotificationManager : MonoBehaviour
 		}
 
 		// if there are no specifically allowed action lists, then check to see if its hitting the modal slate
-		if (m_notification.currentNotificationIsModal && go.name.StartsWith("notificationModal"))
+		if (intendedObjects == null 
+			&& allowedObjects_NotificationStays == null 
+			&& allowedObjects_NotificationEnds == null 
+			&& m_notification.currentNotificationIsModal 
+			&& go.name.StartsWith("notificationModal"))
 		{
 			ActivateNotification(currentSet, currentIndexWithinSet);
 			return;
