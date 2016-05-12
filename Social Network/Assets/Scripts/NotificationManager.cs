@@ -36,7 +36,6 @@ public class NotificationManager : MonoBehaviour
 	private Vector2 screenPos_patients_5_2 = new Vector2(2.6f, -2.8f);
 	private Vector2 screenPos_patients_5_3 = new Vector2(0.8f, 3.6f);
 	private Vector2 screenPos_patients_5_4 = new Vector2(3.6f, 0.8f);
-    private Vector2 screenPos_showMeButton = new Vector2(-2.8f, 6.0f);
 
 	public GameObject InstructionPaper_canvas_allSessionsCompleted;
 	public GameObject InstructionPaper_canvas_allStarsEarned;
@@ -399,7 +398,7 @@ public class NotificationManager : MonoBehaviour
             }
             else if (_indexWithinSet == 1)
             {
-                m_finger.SendFinger(screenPos_showMeButton);
+                m_finger.SendFinger(GameObject.Find("ShowMe"));
                 RequestExclusiveControl();
                 AllowActions(new List<string> { "ShowMe" }, new List<string>(), new List<string>());
             }
