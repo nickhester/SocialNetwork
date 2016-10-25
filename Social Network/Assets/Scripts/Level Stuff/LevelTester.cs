@@ -12,7 +12,7 @@ public class LevelTester : MonoBehaviour {
     public bool runTestSeries = false;
     public int numLevelsToRun;
 
-	private FileParse fp;
+	private ValidSeedListFileParse fp;
 	
     private int numLevelsLeftToRun;
     private int levelToLoad;
@@ -263,7 +263,7 @@ public class LevelTester : MonoBehaviour {
 		{
 			lv.levelList.Add(thisLevel);
 
-			if (fp == null) { fp = new FileParse(); }
+			if (fp == null) { fp = new ValidSeedListFileParse(); }
 			fp.SerializeALevel(thisLevel);
 		}
 		return true;
@@ -271,7 +271,7 @@ public class LevelTester : MonoBehaviour {
 
 	void SaveLevelToFile(ValidLevels level)
 	{
-		if (fp == null) { fp = new FileParse(); }
+		if (fp == null) { fp = new ValidSeedListFileParse(); }
 		fp.SerializeALevel(level);
 	}
 }

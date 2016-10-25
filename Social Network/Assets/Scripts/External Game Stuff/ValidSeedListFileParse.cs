@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Types;
 
-public class FileParse {
+public class ValidSeedListFileParse {
 
 	FileIO fileIO;
 
-	public FileParse()
+	public ValidSeedListFileParse()
 	{
 		fileIO = new FileIO("validSeedList");
 	}

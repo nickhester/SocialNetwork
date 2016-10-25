@@ -6,7 +6,7 @@ using Types;
 
 public class LevelFactory : MonoBehaviour {
 
-	private FileParse fileParse;
+	private ValidSeedListFileParse fileParse;
 
 	void Start () {
 		GenerateValidLevelList();
@@ -85,7 +85,7 @@ public class LevelFactory : MonoBehaviour {
 
 	List<ValidLevels> GenerateValidLevelList()
 	{
-		if (fileParse == null) { fileParse = new FileParse(); }
+		if (fileParse == null) { fileParse = new ValidSeedListFileParse(); }
 		return fileParse.DeseriealizeLevels();
 	}
 }
