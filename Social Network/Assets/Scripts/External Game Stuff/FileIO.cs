@@ -12,6 +12,7 @@ public class FileIO {
 	public FileIO(string _fileName)
 	{
 		fileName = _fileName;
+		fileExtension = "txt";
 		RefreshFile();
 	}
 
