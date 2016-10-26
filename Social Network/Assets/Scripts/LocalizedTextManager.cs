@@ -21,10 +21,58 @@ public class LocalizedTextManager : MonoBehaviour
 		Initialize();
 	}
 
+	public void ToggleLanguageAndUpdateText()
+	{
+		int newLanguageIndex = ((int)(currentLanguage + 1));
+		int numLanguages = (Enum.GetNames(typeof(Language)).Length);
+		currentLanguage = (Language)(newLanguageIndex % numLanguages);
+
+		List<LocalizedText> localizedTextObjects = new List<LocalizedText>(FindObjectsOfType<LocalizedText>());
+		for (int i = 0; i < localizedTextObjects.Count; i++)
+		{
+			localizedTextObjects[i].SetLocalizedText();
+		}
+
+		SaveGame.SetLanguage(currentLanguage);
+	}
+
 	void Initialize()
 	{
 		if (!hasBeenInitizlied)
 		{
+			// check save data for previous language setting
+			if (SaveGame.GetHasSetLanguage())
+			{
+				currentLanguage = SaveGame.GetLanguage();
+			}
+			else
+			{
+				// check system language
+				switch (Application.systemLanguage)
+				{
+					case SystemLanguage.Arabic:
+						{
+							currentLanguage = Language.Arabic;
+							break;
+						}
+					case SystemLanguage.English:
+						{
+							currentLanguage = Language.English;
+							break;
+						}
+					case SystemLanguage.Spanish:
+						{
+							currentLanguage = Language.Spanish;
+							break;
+						}
+					default:
+						{
+							currentLanguage = Language.English;
+							break;
+						}
+				}
+			}
+
 			FileIO localizedTextFile = new FileIO("localizedText", "csv");
 			localizedDataTableObject = ReadCSV(localizedTextFile.GetFileText());
 			hasBeenInitizlied = true;

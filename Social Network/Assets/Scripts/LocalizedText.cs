@@ -8,6 +8,11 @@ public class LocalizedText : MonoBehaviour
 
 	void Start ()
 	{
+		SetLocalizedText();
+	}
+
+	public void SetLocalizedText()
+	{
 		Text myTextObject = GetComponent<Text>();
 		LocalizedTextManager localizedTextManager = FindObjectOfType<LocalizedTextManager>();
 		myTextObject.text = localizedTextManager.GetLocalizedString(stringName);

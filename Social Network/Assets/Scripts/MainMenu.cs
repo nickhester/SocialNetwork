@@ -66,7 +66,12 @@ public class MainMenu : MonoBehaviour {
         {
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(17, true);
         }
-    }
+
+		else if (go.name == "Button - Language")
+		{
+			FindObjectOfType<LocalizedTextManager>().ToggleLanguageAndUpdateText();
+		}
+	}
 
 	public void ReceiveClickFromUIButton(GameObject _go)
 	{

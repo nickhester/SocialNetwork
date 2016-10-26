@@ -237,6 +237,22 @@ public static class SaveGame {
 	{
 		return (SaveData.GetInt(FormatRoundString(day, round) + "_hasSeenShowMe") == 1);
 	}
+	
+	public static void SetLanguage(LocalizedTextManager.Language language)
+	{
+		SaveData.SetInt("languageSetting", (int)language);
+		SaveAllData();
+	}
+
+	public static LocalizedTextManager.Language GetLanguage()
+	{
+		return (LocalizedTextManager.Language)SaveData.GetInt("languageSetting");
+	}
+
+	public static bool GetHasSetLanguage()
+	{
+		return SaveData.HasKey("languageSetting");
+	}
 
 	// debug only
 	public static void SetCustomString(string key, string value)
