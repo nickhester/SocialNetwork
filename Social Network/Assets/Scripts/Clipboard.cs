@@ -58,9 +58,8 @@ public class Clipboard : MonoBehaviour
 	private GameManager gameManager;
 	private GameObject restartFromResultsScreenButton;
 
-	[SerializeField] private GameObject text;
-	private Vector3 textPosition = new Vector3(2.3f, -5.2f, 1.5f);
-	private Vector3 textScalar = new Vector3(0.006f, 0.004f, 1.0f);
+	[SerializeField] private Text textDay;
+
     private bool isFirstCreation = true;
 
 	public ParticleSystem starReward;
@@ -248,13 +247,9 @@ public class Clipboard : MonoBehaviour
         {
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(9, false);
         }
-
-		GameObject dayLabelText = Instantiate(text, new Vector3(gameObject.transform.position.x + textPosition.x, gameObject.transform.position.y + textPosition.y, gameObject.transform.position.z - textPosition.z), Quaternion.identity) as GameObject;
-		dayLabelText.transform.localScale = new Vector3(gameObject.transform.localScale.x * textScalar.x, gameObject.transform.localScale.y * textScalar.y, gameObject.transform.localScale.z * textScalar.z);
-		dayLabelText.transform.parent = gameObject.transform;
-		TextMesh myLabelTextComponent = dayLabelText.GetComponent<TextMesh>();
-		myLabelTextComponent.text = "Day " + (selectorRef.dayToGenerate.dayIndex_internal + 1);
-
+		
+		textDay.text = "Day " + (selectorRef.dayToGenerate.dayIndex_internal + 1);
+		
 		restartFromResultsScreenButton = GameObject.Find("RestartFromResultsScreenButton");
 		ShowRestartButton(false);
 

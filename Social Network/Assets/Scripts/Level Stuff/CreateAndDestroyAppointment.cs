@@ -48,7 +48,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 		gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 		// add levels available and levels on clipboard (b/c levels available has already been subtracted from)
 		resultsPage = GameObject.Find("results page");
-		resultsPage.GetComponent<Renderer>().enabled = false;
+		resultsPage.SetActive(false);
 		waitToShowResultsAfterFinishedCounter = waitToShowResultsAfterFinished;
 	}
 
@@ -249,11 +249,8 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 	public void HideResultsPage()
 	{
-		resultsPage.GetComponent<Renderer>().enabled = false;
-		foreach (MeshRenderer mr in resultsPage.GetComponentsInChildren<MeshRenderer>())
-		{
-			mr.enabled = false;
-		}
+		resultsPage.SetActive(false);
+
 		isDisplayingScore = false;
 		waitToShowResultsAfterFinishedCounter = waitToShowResultsAfterFinished;
 		appointmentComplete = false;
@@ -295,7 +292,7 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 		if (appointmentComplete)
 		{
-			resultsPage.GetComponent<Renderer>().enabled = true;
+			resultsPage.SetActive(true);
 		}
 
 		if (appointmentComplete && waitToShowResultsAfterFinishedCounter <= 0 && !isDisplayingScore)
@@ -308,7 +305,6 @@ public class CreateAndDestroyAppointment : MonoBehaviour {
 
 			foreach (TextMesh resultText in resultsPage.GetComponentsInChildren<TextMesh>())
 			{
-				resultText.GetComponent<Renderer>().enabled = true;
 				if (resultText.gameObject.name == "actions")
 				{
 					resultText.text = resultActions.ToString();

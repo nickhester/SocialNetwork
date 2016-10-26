@@ -1,25 +1,93 @@
 ,english,arabic,spanish
-string1,sample text,لوحة المفاتيح العربية,esample text
-string2,sample text2,لوحة المفاتيح العربية 2,esample text 2
-string3,sample text3,لوحة المفاتيح العربية 3,esample text 3
-allSessionsCompleted,Congratulations*c* Doctor.\n\nThank you notes are pouring in from all your happy patients!\n\nThe world is a better place because of you.,لوحة المفاتيح العربية 4,esample text
-allStarsEarned,You did it! You completed every session perfectly.\n\nIt's been a pleasure working for you*c* Doctor.\n\nEnjoy retirement!,لوحة المفاتيح العربية 5,esample text
-appointments,Today's patients are eager to see you.\n\nSelect an appointment to begin your first session.,لوحة المفاتيح العربية 6,esample text
-completeFirstDay,Well*c* that's all of today's appointments.\n\nLet me know when you're ready to look at tomorrow's schedule.,لوحة المفاتيح العربية 7,esample text
-confirmClearData,Are you sure you want to clear local and cloud save data? This cannot be undone.,لوحة المفاتيح العربية 8,esample text
-cancel,Cancel,لوحة المفاتيح العربية 9,esample text
-yes,Yes,لوحة المفاتيح العربية,esample text
-credits1,Developed by:\nNick Hester\n\nSpecial Thanks to:,لوحة المفاتيح العربية,esample text
-credits2,Jennyfer Hester\nKen Pruiksma\nLance Ferguson\nDarrick Couts\nAndrew Carroll\nRagadipa Suharto,لوحة المفاتيح العربية,esample text
-credits3,Blake Palmer\nBrenda Yunt\nMichael Schmatjen\nLara Morgan\nLuke DeLaet\nJames Terry,لوحة المفاتيح العربية,esample text
-FridayEncouragement_0,It's Friday!,,
-FridayEncouragement_1,If you need some incentive to make it through the day*c* there will be a new type of group joining us next week.,,
-FridayEncouragement_2,I'll give you the details on Monday.,,
-introduction,Congratulations on the new office*c* Doctor.,,
-introduction_2,Choose the first day to begin.,,
-Level2_0,Not all patients are friends,,
-Level2_1,Choose this patient to see his relationships.,,
-level2_2,He's not friends with everyone. What you do to him will have the opposite effect on his enemy.,,
-level2_3,Now we have a patient who is unhappy.,,
-level2_4,Order matters. We can still make them happy.,,
-Level3_0,Hmm*c* I'm sensing some bad vibes.,,
+string1,sample text,اختبار ,texto
+string2,sample text2,اختبار ,texto
+string3,sample text3,اختبار ,texto
+allSessionsCompleted,Congratulations*c* Doctor.\n\nThank you notes are pouring in from all your happy patients!\n\nThe world is a better place because of you.,اختبار ,texto
+allStarsEarned,You did it! You completed every session perfectly.\n\nIt's been a pleasure working for you*c* Doctor.\n\nEnjoy retirement!,اختبار ,texto
+appointments,Today's patients are eager to see you.\n\nSelect an appointment to begin your first session.,اختبار ,texto
+completeFirstDay,Well*c* that's all of today's appointments.\n\nLet me know when you're ready to look at tomorrow's schedule.,اختبار ,texto
+confirmClearData,Are you sure you want to clear local and cloud save data? This cannot be undone.,اختبار ,texto
+cancel,Cancel,اختبار ,texto
+yes,Yes,اختبار ,texto
+credits1,Developed by:\nNick Hester\n\nSpecial Thanks to:,اختبار ,texto
+credits2,Jennyfer Hester\nKen Pruiksma\nLance Ferguson\nDarrick Couts\nAndrew Carroll\nRagadipa Suharto,اختبار ,texto
+credits3,Blake Palmer\nBrenda Yunt\nMichael Schmatjen\nLara Morgan\nLuke DeLaet\nJames Terry,اختبار ,texto
+fridayEncouragement_0,It's Friday!,اختبار ,texto
+fridayEncouragement_1,If you need some incentive to make it through the day*c* there will be a new type of group joining us next week.,اختبار ,texto
+fridayEncouragement_2,I'll give you the details on Monday.,اختبار ,texto
+introduction,Congratulations on the new office*c* Doctor.,اختبار ,texto
+introduction_2,Choose the first day to begin.,اختبار ,texto
+level2_0,Not all patients are friends,اختبار ,texto
+level2_1,Choose this patient to see his relationships.,اختبار ,texto
+level2_2,He's not friends with everyone. What you do to him will have the opposite effect on his enemy.,اختبار ,texto
+level2_3,Now we have a patient who is unhappy.,اختبار ,texto
+level2_4,Order matters. We can still make them happy.,اختبار ,texto
+level3_0,Hmm*c* I'm sensing some bad vibes.,اختبار ,texto
+level3_1,Being Mr. Nice Guy isn't going to cut it anymore.\nYou'll have to make someone unhappy in order to satisfy everyone here.,اختبار ,texto
+level_0,Meet your first group of patients.,اختبار ,texto
+level_1,First*c* choose a patient.,اختبار ,texto
+level_2,Choose to encourage this patient,اختبار ,texto
+level_3,This makes the patient happy.,اختبار ,texto
+level_4,It also affects their friends.,اختبار ,texto
+level_5,Make everyone happy to succeed.,اختبار ,texto
+levelSuccess,Congratulations*c* You made it through the first day!\n\nYou'll be scored by how many actions you make.,اختبار ,texto
+rateIt,I hope you're enjoying Social Sessions.\nIf so please leave a rating!,اختبار ,texto
+rate,Rate,اختبار ,texto
+no,No,اختبار ,texto
+restartLevel_0,You can take as much time as you need to complete a session.,اختبار ,texto
+restartLevel_1,However if you want 3 stars*c* then you'll have to do it in as few actions as possible.,اختبار ,texto
+restartLevel_2,Use the Restart button to quickly start a session over if you've made a mistake.,اختبار ,texto
+returnToClipboard,Finish all sessions to move to the next day.,اختبار ,texto
+showMe,If you get stuck*c* feel free to give me a call.\n\nI'll be happy to help.,اختبار ,texto
+special_cantTouch0,It's a new week!\n\nLet me see what you can expect this week...,اختبار ,texto
+special_cantTouch1,Some groups are special.\n\nWhen you see this symbol there will be one person that you will not be allowed to interact with.,اختبار ,texto
+special_cantTouch2,There will be other types of special groups in future weeks as well.,اختبار ,texto
+special_fallToRed,When you see this symbol people will become upset if you do not interact with them quickly enough.,اختبار ,texto
+special_noLines,When you see this symbol you won't be able to\nsee how your patients are connected with\none another.,اختبار ,texto
+special_oneClick,When you see this symbol you will only be allowed to interact with each person one time.,اختبار ,texto
+tip2_1,Tip:\n\nSome groups aren't very friendly with each other. Even with a lot of enemies in a group*c* you can still help them...,اختبار ,texto
+tip2_2,For example*c* some of these have no friends.,اختبار ,texto
+tip2_3,You can still make them happy indirectly...,اختبار ,texto
+tip2_4,We'll have to find another way to make them happy...,اختبار ,texto
+tip2_5,Luckily there's still someone you can discourage to make him happy.,اختبار ,texto
+tip2_6,And finally*c* he has a friend*c* so you can easily make them both happy!,اختبار ,texto
+tip2_7,It might help to think of it in a straight line.,اختبار ,texto
+tip2_8,Start by discouraging the second to last one...,اختبار ,texto
+tip2_9,... it doesn't matter how many enemies there are in a row...,اختبار ,texto
+tip2_10,...just keep discouraging one to make the one behind it happy...,اختبار ,texto
+tip2_11,...and if you can find a friend eventually...,اختبار ,texto
+tip2_12,...then you'll be able to make everyone happy!,اختبار ,texto
+tip2_13,So keep an eye out for groups like this that have a line of enemies and then a friend.,اختبار ,texto
+tip3_1,Tip:\n\nYour final action must be an encouragement*c* and it must be with someone who only has friends and no enemies.,اختبار ,texto
+tip3_2,Sometimes it's helpful to figure out your last action*c* first.,اختبار ,texto
+tip3_3,Find someone with only friends for your last action,اختبار ,texto
+tip3_4,There has to be at least one*c* or the session would be impossible.,اختبار ,texto
+tip3_5,Now*c* you just need to make everyone else happy first.,اختبار ,texto
+tip3_6,Then*c* you know that your final action will make him and all of his friends happy,اختبار ,texto
+UpgradeChoice,Unlock full game:,اختبار ,texto
+UpgradeFinal,Thank you for trying Social Sessions!\n\nUpgrade now to keep playing:\n-92 more levels!\n-3 more Special Modes!\n-No more ads!,اختبار ,texto
+ShowMe1,To view the solution*c* watch this quick ad.,اختبار ,texto
+ShowMe2,After that*c* you can view it whenever you want.,اختبار ,texto
+ShowMe3,Upgrade to full to never show ads.,اختبار ,texto
+WatchIt,Watch it,اختبار ,texto
+UpgradeNow,Upgrade Now,اختبار ,texto
+Social,SOCIAL,اختبار ,texto
+Sessions,SESSIONS,اختبار ,texto
+Play,PLAY,اختبار ,texto
+Options,OPTIONS,اختبار ,texto
+ViewCredits,View Credits,اختبار ,texto
+Leaderboard,Leaderboard,اختبار ,texto
+RestorePurchases,Restore Purchases,اختبار ,texto
+ClearProgress,Clear Progress,اختبار ,texto
+BACK,BACK,اختبار ,texto
+Back,Back,اختبار ,texto
+DaysComplete,Days Complete,اختبار ,texto
+StarsEarned,Stars Earned,اختبار ,texto
+NextWeek,Next\nWeek,اختبار ,texto
+LastWeek,Last\nWeek,اختبار ,texto
+MainMenu,Main\nMenu,اختبار ,texto
+Done,Done,اختبار ,texto
+Retry,Retry,اختبار ,texto
+Diagnosis,Diagnosis,اختبار ,texto
+ActionsTaken,actions\ntaken,اختبار ,texto
+StarsAwarded,stars\nawarded,اختبار ,texto
