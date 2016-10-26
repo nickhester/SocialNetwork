@@ -9,12 +9,7 @@ public class LevelSelector : MonoBehaviour {
 	{
 		get
 		{
-			_dayToGenerate.GetComponent<Collider>().enabled = false;
-			_dayToGenerate.GetComponent<Renderer>().enabled = false;
-			foreach (Renderer r in _dayToGenerate.GetComponentsInChildren<Renderer>())
-			{
-				r.enabled = false;
-			}
+			_dayToGenerate.gameObject.SetActive(false);
 			return this._dayToGenerate;
 		}
 		private set

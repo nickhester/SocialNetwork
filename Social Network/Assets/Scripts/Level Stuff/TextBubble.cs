@@ -9,54 +9,54 @@ public class TextBubble : MonoBehaviour {
 
 	private string[] textGroup_positive = new string[]
 	{
-		"I appreciate that",
-		"Thank you",
-		"Do you really mean that?",
-		"You're just saying that",
-		"Aww, shucks",
-		"You just made my day",
-		"Worth every penny",
-		"Am I your favorite?",
-		"My glass is half full now",
-		"You're the best",
-		"I'm glad I got up this morning",
-		"Yippee!",
-		"What a kind soul",
-		"Likewise",
-		"Gracias",
-		"You inspire me",
-		"Gee whiz",
-		"I feel warm inside"
+		"positiveComment01",
+		"positiveComment02",
+		"positiveComment03",
+		"positiveComment04",
+		"positiveComment05",
+		"positiveComment06",
+		"positiveComment07",
+		"positiveComment08",
+		"positiveComment09",
+		"positiveComment10",
+		"positiveComment11",
+		"positiveComment12",
+		"positiveComment13",
+		"positiveComment14",
+		"positiveComment15",
+		"positiveComment16",
+		"positiveComment17",
+		"positiveComment18"
 	};
 	private string[] textGroup_negative = new string[]
 	{
-		"I thought I could trust you",
-		"Why am I paying you for this?",
-		"Maybe I don't get your humor",
-		"You don't really mean that",
-		"It's all meaningless",
-		"What kind of advice is that?",
-		"Can I see your credentials?",
-		"How dare you",
-		"This is not going my way",
-		"Sticks and stones... nevermind",
-		"Why?",
-		"You're cruel",
-		"Is this for the greater good?"
+		"negativeComment01",
+		"negativeComment02",
+		"negativeComment03",
+		"negativeComment04",
+		"negativeComment05",
+		"negativeComment06",
+		"negativeComment07",
+		"negativeComment08",
+		"negativeComment09",
+		"negativeComment10",
+		"negativeComment11",
+		"negativeComment12",
+		"negativeComment13"
 	};
 	private string[] textGroup_bored = new string[]
 	{
-		"Should I go and come back?",
-		"Am I paying for this time?",
-		"Are we still on the clock?",
-		"I think I just fell asleep",
-		"Make me happy please",
-		"Are you still there?",
-		"You just take your time",
-		"Don't let me rush you",
-		"I'm getting veeery sleeepy",
-		"Can I just get some pills?",
-		"Are we there yet?"
+		"boredComment01",
+		"boredComment02",
+		"boredComment03",
+		"boredComment04",
+		"boredComment05",
+		"boredComment06",
+		"boredComment07",
+		"boredComment08",
+		"boredComment09",
+		"boredComment10",
+		"boredComment11"
 	};
 
 	private List<Person> people;
@@ -119,6 +119,10 @@ public class TextBubble : MonoBehaviour {
 
 			string textToDisplay = (textOptions[Random.Range(0, textOptions.Length)]);
 			Text t = chatBubble.GetComponentInChildren<Text>();
+
+			LocalizedTextManager localizedTextManager = FindObjectOfType<LocalizedTextManager>();
+			textToDisplay = localizedTextManager.GetLocalizedString(textToDisplay);
+
 			t.text = textToDisplay;
 			if (t.text.Length < 20)
 			{

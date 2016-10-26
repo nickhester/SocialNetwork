@@ -18,11 +18,13 @@ public class Clipboard : MonoBehaviour
 	private CreateAndDestroyAppointment createAndDestroyLevelRef;
 	private bool creatingInitialApptList = true;
 	private List<ValidLevels> listOfSpecificallyRequestedLevels = new List<ValidLevels>();
+	private LocalizedTextManager localizedTextManager;
 
 	// appointments
 	[SerializeField] private GameObject appointmentObject;
 	private float appointmentSpacing = 1.6f;
 	private float appointmentTop = 2.8f;
+	private List<Appointment> myAppointments = new List<Appointment>();
 
     private bool isInMotion = false;
 
@@ -208,6 +210,7 @@ public class Clipboard : MonoBehaviour
 	void Start () {
 		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 		gameManager.Register_Clipboard(this);
+		localizedTextManager = gameManager.GetComponent<LocalizedTextManager>();
 
 		buttonTextComponent = GetComponentInChildren<Text>();
 
@@ -248,7 +251,7 @@ public class Clipboard : MonoBehaviour
             GameObject.Find("NotificationManager").GetComponent<NotificationManager>().DisplayNotification(9, false);
         }
 		
-		textDay.text = "Day " + (selectorRef.dayToGenerate.dayIndex_internal + 1);
+		textDay.text = localizedTextManager.GetLocalizedString("Day") + " " + (selectorRef.dayToGenerate.dayIndex_internal + 1);
 		
 		restartFromResultsScreenButton = GameObject.Find("RestartFromResultsScreenButton");
 		ShowRestartButton(false);
@@ -351,7 +354,6 @@ public class Clipboard : MonoBehaviour
 			GameObject _appt = Instantiate(appointmentObject, _pos, Quaternion.identity) as GameObject;
             _appt.name = "appointment " + i;
 			Appointment _apptComponent = _appt.GetComponent<Appointment>();				// get reference to appointment component
-			_apptComponent.Initialize();
 			_appt.transform.parent = transform;
 			_apptComponent.levelIndex = i;
 
@@ -364,6 +366,8 @@ public class Clipboard : MonoBehaviour
 			               listOfSpecificallyRequestedLevels[0].isNoLines,
 			               listOfSpecificallyRequestedLevels[0].seed);
 			listOfSpecificallyRequestedLevels.RemoveAt(0);
+
+			myAppointments.Add(_apptComponent);
 		}
 	}
 
@@ -389,18 +393,17 @@ public class Clipboard : MonoBehaviour
 		_appt.myLevel = requestedLevel;
 
 		_appt.SetMySpecialOverlays();
-
+		
 		// build text to display on appointment
-		if (requestedLevel.difficulty == Difficulty.VeryEasy) { _difficultyText = "Trivial"; }
-		else if (_diff == Difficulty.Easy) { _difficultyText = "Minor"; }
-		else if (_diff == Difficulty.Medium) { _difficultyText = "Major"; }
-		else if (_diff == Difficulty.Hard) { _difficultyText = "Critical"; }
+		if (requestedLevel.difficulty == Difficulty.VeryEasy) { _difficultyText = localizedTextManager.GetLocalizedString("Trivial"); ; }
+		else if (_diff == Difficulty.Easy) { _difficultyText = localizedTextManager.GetLocalizedString("Minor"); }
+		else if (_diff == Difficulty.Medium) { _difficultyText = localizedTextManager.GetLocalizedString("Major"); }
+		else if (_diff == Difficulty.Hard) { _difficultyText = localizedTextManager.GetLocalizedString("Critical"); }
 
         _appointmentText += (_appt.myLevel.level).ToString();
-        _appointmentText += " Patients,";
-		_appointmentText += " Issues: ";
-		_appointmentText += _difficultyText;
-		_appt.myDisplayText_prop = _appointmentText;
+        _appointmentText += " " + localizedTextManager.GetLocalizedString("Patients") + ",";
+		_appointmentText += " " + localizedTextManager.GetLocalizedString("Issues") + ": ";
+		_appt.myDisplayText_prop = _appointmentText + _difficultyText;
 	}
 
 	void GenerateALevel(Appointment _appt, Difficulty _diff, int _levelNum, bool _special_FallToRed, bool _special_OneClick, bool _special_CantTouch, bool _special_NoLines)
@@ -410,18 +413,9 @@ public class Clipboard : MonoBehaviour
 
 	public void ShowClipboardAppointments(bool show)
 	{
-		foreach (Appointment a in transform.GetComponentsInChildren<Appointment>())
+		foreach (Appointment a in myAppointments)
 		{
-			a.GetComponent<Collider>().enabled = show;	// show all appointments
-			Renderer r = a.GetComponent<Renderer>();
-			if (r != null)
-			{
-				r.enabled = show;
-			}
-			foreach (MeshRenderer childRenderer in a.transform.GetComponentsInChildren<MeshRenderer>())
-			{
-                childRenderer.enabled = show;
-			}
+			a.gameObject.SetActive(show);
 		}
 	}
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using Types;
 
 public class CalendarDay : MonoBehaviour {
@@ -44,48 +45,25 @@ public class CalendarDay : MonoBehaviour {
 	public GameObject stampCheck;
 	public GameObject stampStar;
 	public GameObject overlay_grey;
-
-    // text labels
-    public GameObject m_text1;
-	public GameObject m_text2;
-	private float m_text_dayNumber_scale = 0.03f;
-	private float m_text_dayName_scale = 0.03f;
-	private float m_text_starCount_scale = 0.04f;
-	private Vector3 m_text_dayNumber_positionOffset = new Vector3(-3.65f, 0.6f, -0.1f);
-	private Vector3 m_text_dayName_positionOffset = new Vector3(0.0f, 0.6f, -0.1f);
-	private Vector3 m_text_starCount_positionOffset = new Vector3(0.0f, -0.2f, -0.2f);
 	private Vector3 m_overlay_left = new Vector3(-3.55f, -0.5f, -0.1f);
 	private Vector3 m_overlay_right = new Vector3(3.55f, -0.5f, -0.1f);
+
+	// labels
+	public Text weekdayNameText;
+	public Text daySummaryText;
+	public Text dayNumberText;
 
 	#region StartAndUpdate
 
 	public void Init ()
 	{
 		GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-
-		// create object for the calendar day number
-		GameObject _textNumber = Instantiate(m_text1, transform.position, Quaternion.identity) as GameObject;
-		_textNumber.transform.parent = transform;
-		// create object for the week day name
-		GameObject _textDay = Instantiate(m_text1, transform.position, Quaternion.identity) as GameObject;
-		_textDay.transform.parent = transform;
-		// create object for the star count
-		GameObject _textStars = Instantiate(m_text2, transform.position, Quaternion.identity) as GameObject;
-		_textStars.transform.parent = transform;
-
-		// create day number text
-		_textNumber.transform.localScale *= m_text_dayNumber_scale;
-		_textNumber.transform.position = new Vector3(transform.position.x + m_text_dayNumber_positionOffset.x, transform.position.y + m_text_dayNumber_positionOffset.y, transform.position.z + m_text_dayNumber_positionOffset.z);
-		_textNumber.GetComponent<TextMesh>().text = (dayIndex + 1).ToString() + ".";
+		LocalizedTextManager localizedTextManager = gameManager.GetComponent<LocalizedTextManager>();
 
 		// create day name text
-		_textDay.transform.localScale *= m_text_dayName_scale;
-		_textDay.transform.position = new Vector3(transform.position.x + m_text_dayName_positionOffset.x, transform.position.y + m_text_dayName_positionOffset.y, transform.position.z + m_text_dayName_positionOffset.z);
-		_textDay.GetComponent<TextMesh>().text = dayOfTheWeek.ToString().ToUpper();
-
-		// create star count text
-		_textStars.transform.localScale *= m_text_starCount_scale;
-		_textStars.transform.position = new Vector3(transform.position.x + m_text_starCount_positionOffset.x, transform.position.y + m_text_starCount_positionOffset.y, transform.position.z + m_text_starCount_positionOffset.z);
+		weekdayNameText.text = localizedTextManager.GetLocalizedString(dayOfTheWeek.ToString()).ToUpper();
+		
+		dayNumberText.text = (dayIndex + 1).ToString() + ".";
 
 		// show number of rounds completed in that day
 		int numAppointmentsCompleted = 0;
@@ -105,9 +83,9 @@ public class CalendarDay : MonoBehaviour {
 		string stringToDisplay = "";
 		if (isPlayable && numAppointmentsCompleted > 0)
 		{
-			stringToDisplay = numAppointmentsCompleted + " of " + numAppointments.ToString() + " sessions";
+			stringToDisplay = numAppointmentsCompleted + " " + localizedTextManager.GetLocalizedString("of") + " " + numAppointments.ToString() + " " + localizedTextManager.GetLocalizedString("sessions");
 			stringToDisplay += " - ";
-			stringToDisplay += currentNumStars.ToString() + " of " + (numAppointments * 3).ToString() + " stars";
+			stringToDisplay += currentNumStars.ToString() + " " + localizedTextManager.GetLocalizedString("of") + " " + (numAppointments * 3).ToString() + " " + localizedTextManager.GetLocalizedString("stars");
 			if (numAppointmentsCompleted == numAppointments)
 			{
 				hasPassedAllRounds = true;
@@ -122,7 +100,7 @@ public class CalendarDay : MonoBehaviour {
 		{
 			stringToDisplay = "";
 		}
-		_textStars.GetComponent<TextMesh>().text = stringToDisplay;
+		daySummaryText.text = stringToDisplay;
 
 		AddStatusOverlay();
 	}

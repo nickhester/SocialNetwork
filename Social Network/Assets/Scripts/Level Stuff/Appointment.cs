@@ -2,14 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Types;
+using UnityEngine.UI;
 
-public class Appointment : MonoBehaviour {
-
-	[SerializeField] private GameObject textObject;
-	private Vector3 textObjectOffset = new Vector3(0.0f, -0.1f, -0.1f);
-	private float textObjectScalar = 0.036f;
-    [SerializeField] private GameObject myTextObject;
-    [SerializeField] private TextMesh myTextComponent;
+public class Appointment : MonoBehaviour
+{
+	[SerializeField] private Text textDisplay;
 	private Vector3 specialOverlayOffset = new Vector3(0.294f, -0.075f, 0.0f);
 	private float specialOverlayScalar = 0.321f;
     [SerializeField] private GameObject mySpecialOverlay_FallToRed;
@@ -18,10 +15,11 @@ public class Appointment : MonoBehaviour {
     [SerializeField] private GameObject mySpecialOverlay_NoLines;
 	private Vector3 starOverlayOffset = new Vector3(-0.294f, -0.071f, -0.5f);
 	private float starOverlayScale = 0.35f;
+    [SerializeField] private GameObject overlay_0Star;
     [SerializeField] private GameObject overlay_1Star;
-    [SerializeField] private GameObject overlay_2Star;
+	[SerializeField] private GameObject overlay_2Star;
     [SerializeField] private GameObject overlay_3Star;
-    [SerializeField] private GameObject starSlot;
+    private GameObject starSlot;
 
 	public ValidLevels myLevel;
 	public int levelIndex;
@@ -36,17 +34,8 @@ public class Appointment : MonoBehaviour {
 		set
 		{
 			this.myDisplayText = value;
-			myTextComponent.text = value;
+			textDisplay.text = value;
 		}
-	}
-
-	public void Initialize()
-	{
-		// Create text on appointment block
-		myTextObject = Instantiate(textObject, (transform.position + textObjectOffset), Quaternion.identity) as GameObject;
-		myTextObject.transform.localScale = myTextObject.transform.localScale * textObjectScalar;
-		myTextObject.transform.parent = gameObject.transform;
-		myTextComponent = myTextObject.GetComponent<TextMesh>();
 	}
 
 	public void SetMySpecialOverlays()
@@ -76,28 +65,40 @@ public class Appointment : MonoBehaviour {
 		if (starSlot != null)
 		{
 			Destroy(starSlot);
-			_isOverlayVisible = starSlot.GetComponent<MeshRenderer>().enabled;
 		}
 
         int thisAppointmentStarCount = SaveGame.GetRoundStarCount(GetMyDayIndex(), GetMyLevelIndex());
-		if (thisAppointmentStarCount == 3)
-		{
-			starSlot = InstantiateAndPositionOverlay(overlay_3Star, starOverlayOffset, starOverlayScale);
-		}
-		else if (thisAppointmentStarCount == 2)
-		{
-			starSlot = InstantiateAndPositionOverlay(overlay_2Star, starOverlayOffset, starOverlayScale);
-		}
-		else if (thisAppointmentStarCount == 1)
-		{
-			starSlot = InstantiateAndPositionOverlay(overlay_1Star, starOverlayOffset, starOverlayScale);
-		}
-		else
-		{
-			return;
-		}
 
-		starSlot.GetComponent<MeshRenderer>().enabled = _isOverlayVisible;
+		GameObject overlayStar = null;
+		switch (thisAppointmentStarCount)
+		{
+			case 0:
+			{
+				overlayStar = overlay_0Star;
+				break;
+			}
+			case 1:
+			{
+				overlayStar = overlay_1Star;
+				break;
+			}
+			case 2:
+			{
+				overlayStar = overlay_2Star;
+				break;
+			}
+			case 3:
+			{
+				overlayStar = overlay_3Star;
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
+		starSlot = InstantiateAndPositionOverlay(overlayStar, starOverlayOffset, starOverlayScale);
+		return;
 	}
 
     GameObject InstantiateAndPositionOverlay(GameObject _overlay, Vector3 _overlayPos, float _overlayScale)
@@ -113,7 +114,7 @@ public class Appointment : MonoBehaviour {
 
     public int GetMyDayIndex()
     {
-        return GameObject.FindObjectOfType<CalendarDay>().dayIndex_internal;
+		return GameObject.FindObjectOfType<LevelSelector>().dayToGenerate.dayIndex_internal;
     }
 
     public int GetMyLevelIndex()
