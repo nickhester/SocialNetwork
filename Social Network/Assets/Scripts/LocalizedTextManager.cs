@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class LocalizedTextManager : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class LocalizedTextManager : MonoBehaviour
 	{
 		if (!hasBeenInitizlied)
 		{
-			FileIO localizedTextFile = new FileIO("localizedText");
+			FileIO localizedTextFile = new FileIO("localizedText", "csv");
 			localizedDataTableObject = ReadCSV(localizedTextFile.GetFileText());
 			hasBeenInitizlied = true;
 		}
@@ -83,6 +84,14 @@ public class LocalizedTextManager : MonoBehaviour
 					// replace escaped escape characters with literal escape characters
 					contents = contents.Replace("\\n", "\n");
 					contents = contents.Replace("*c*", ",");
+
+					// reverse order if language requires
+					if (columnHeaders[j] == "arabic")
+					{
+						char[] charArray = contents.ToCharArray();
+						Array.Reverse(charArray);
+						contents = new string(charArray);
+					}
 					
 					table.AddEntry(columnHeaders[j], rowHeader, contents);
 				}

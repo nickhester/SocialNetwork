@@ -1,7 +1,19 @@
 ,english,arabic,spanish
-string1,sample text,���� �������� �������,esample text
-string2,sample text2,���� �������� ������� 2,esample text 2
-string3,sample text3,���� �������� ������� 3,esample text 3
-allSessionsCompleted,Congratulations*c* Doctor.\n\nThank you notes are pouring in from all your happy patients!\n\nThe world is a better place because of you.,NI,NI
-allStarsEarned,You did it! You completed every session perfectly.\n\nIt's been a pleasure working for you*c* Doctor.\n\nEnjoy retirement!,NI,NI
-appointments,Today's patients are eager to see you.\n\nSelect an appointment to begin your first session.,NI,NI
+string1,sample text,لوحة المفاتيح العربية,esample text
+string2,sample text2,لوحة المفاتيح العربية 2,esample text 2
+string3,sample text3,لوحة المفاتيح العربية 3,esample text 3
+allSessionsCompleted,Congratulations*c* Doctor.\n\nThank you notes are pouring in from all your happy patients!\n\nThe world is a better place because of you.,لوحة المفاتيح العربية 4,esample text
+allStarsEarned,You did it! You completed every session perfectly.\n\nIt's been a pleasure working for you*c* Doctor.\n\nEnjoy retirement!,لوحة المفاتيح العربية 5,esample text
+appointments,Today's patients are eager to see you.\n\nSelect an appointment to begin your first session.,لوحة المفاتيح العربية 6,esample text
+completeFirstDay,Well*c* that's all of today's appointments.\n\nLet me know when you're ready to look at tomorrow's schedule.,لوحة المفاتيح العربية 7,esample text
+confirmClearData,Are you sure you want to clear local and cloud save data? This cannot be undone.,لوحة المفاتيح العربية 8,esample text
+cancel,Cancel,لوحة المفاتيح العربية 9,esample text
+yes,Yes,لوحة المفاتيح العربية,esample text
+credits1,Developed by:\nNick Hester\n\nSpecial Thanks to:,لوحة المفاتيح العربية,esample text
+credits2,Jennyfer Hester\nKen Pruiksma\nLance Ferguson\nDarrick Couts\nAndrew Carroll\nRagadipa Suharto,لوحة المفاتيح العربية,esample text
+credits3,Blake Palmer\nBrenda Yunt\nMichael Schmatjen\nLara Morgan\nLuke DeLaet\nJames Terry,لوحة المفاتيح العربية,esample text
+FridayEncouragement_0,It's Friday!,,
+FridayEncouragement_1,If you need some incentive to make it through the day*c* there will be a new type of group joining us next week.,,
+FridayEncouragement_2,I'll give you the details on Monday.,,
+introduction,Congratulations on the new office*c* Doctor.,,
+introduction_2,Choose the first day to begin.,,
