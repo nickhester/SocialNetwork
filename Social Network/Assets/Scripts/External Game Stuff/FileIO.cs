@@ -38,13 +38,7 @@ public class FileIO {
 
 	public string GetFileText()
 	{
-		//return textFile.text;
-		string text = "";
-		using (StreamReader sr = new StreamReader(GetPath(), true))
-		{
-			text = sr.ReadToEnd();
-		}
-		return text;
+		return textFile.text;
 	}
 
 	void RefreshFile()
@@ -54,7 +48,11 @@ public class FileIO {
 
 	string GetPath()
 	{
-		string path = Application.dataPath + "\\Resources\\" + fileName + "." + fileExtension;
+		string slashes = "\\";
+#if UNITY_ANDROID
+		slashes = "//";
+#endif
+		string path = Application.dataPath + slashes + "Resources" + slashes + fileName + "." + fileExtension;
 		return path;
 	}
 }
