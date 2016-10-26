@@ -6,7 +6,7 @@ completeFirstDay,Well*c* that's all of today's appointments.\n\nLet me know when
 confirmClearData,Are you sure you want to clear local and cloud save data? This cannot be undone.,اختبار,texto
 cancel,Cancel,اختبار,texto
 yes,Yes,اختبار,texto
-credits1,Developed by:\nNick Hester\n\nSpecial Thanks to:,اختبار\n\nاختبار,texto
+credits1,Developed by:\nNick Hester\n\nSpecial Thanks to:,اختبار,texto
 credits2,Jennyfer Hester\nKen Pruiksma\nLance Ferguson\nDarrick Couts\nAndrew Carroll\nRagadipa Suharto,اختبار,texto
 credits3,Blake Palmer\nBrenda Yunt\nMichael Schmatjen\nLara Morgan\nLuke DeLaet\nJames Terry,اختبار,texto
 fridayEncouragement_0,It's Friday!,اختبار,texto
@@ -146,4 +146,4 @@ boredComment08,Don't let me rush you,اختبار,texto
 boredComment09,I'm getting veeery sleeepy,اختبار,texto
 boredComment10,Can I just get some pills?,اختبار,texto
 boredComment11,Are we there yet?,اختبار,texto
-Language,Language,اختبار,texto
+Language,Language,لغة ,idioma
