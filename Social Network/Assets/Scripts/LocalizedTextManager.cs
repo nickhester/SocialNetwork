@@ -12,7 +12,8 @@ public class LocalizedTextManager : MonoBehaviour
 	{
 		English,
 		Spanish,
-		Arabic
+		Arabic,
+		Romanian
 	}
 	public Language currentLanguage;
 
@@ -33,6 +34,7 @@ public class LocalizedTextManager : MonoBehaviour
 			localizedTextObjects[i].SetLocalizedText();
 		}
 
+		MetricsLogger.Instance.LogCustomEvent("Settings", "LanguageManualToggle", "");
 		SaveGame.SetLanguage(currentLanguage);
 	}
 
@@ -53,21 +55,31 @@ public class LocalizedTextManager : MonoBehaviour
 					case SystemLanguage.Arabic:
 						{
 							currentLanguage = Language.Arabic;
+							MetricsLogger.Instance.LogCustomEvent("Settings", "SystemLanguageSet", "Arabic");
 							break;
 						}
 					case SystemLanguage.English:
 						{
 							currentLanguage = Language.English;
+							MetricsLogger.Instance.LogCustomEvent("Settings", "SystemLanguageSet", "English");
 							break;
 						}
 					case SystemLanguage.Spanish:
 						{
 							currentLanguage = Language.Spanish;
+							MetricsLogger.Instance.LogCustomEvent("Settings", "SystemLanguageSet", "Spanish");
+							break;
+						}
+					case SystemLanguage.Romanian:
+						{
+							currentLanguage = Language.Romanian;
+							MetricsLogger.Instance.LogCustomEvent("Settings", "SystemLanguageSet", "Romanian");
 							break;
 						}
 					default:
 						{
 							currentLanguage = Language.English;
+							MetricsLogger.Instance.LogCustomEvent("Settings", "SystemLanguageSet", "Unknown");
 							break;
 						}
 				}
@@ -87,16 +99,19 @@ public class LocalizedTextManager : MonoBehaviour
 		switch (currentLanguage)
 		{
 			case Language.English:
-				currentLanguageString = "english";
+				currentLanguageString = "English";
 				break;
 			case Language.Spanish:
-				currentLanguageString = "spanish";
+				currentLanguageString = "Spanish";
 				break;
 			case Language.Arabic:
-				currentLanguageString = "arabic";
+				currentLanguageString = "Arabic";
+				break;
+			case Language.Romanian:
+				currentLanguageString = "Romanian";
 				break;
 			default:
-				currentLanguageString = "english";
+				currentLanguageString = "English";
 				break;
 		}
 
