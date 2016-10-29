@@ -11,9 +11,9 @@ public class LocalizedTextManager : MonoBehaviour
 	public enum Language
 	{
 		English,
-		Spanish,
+		//Spanish,
 		Arabic,
-		Romanian
+		//Romanian
 	}
 	public Language currentLanguage;
 
@@ -64,18 +64,18 @@ public class LocalizedTextManager : MonoBehaviour
 							MetricsLogger.Instance.LogCustomEvent("Settings", "SystemLanguageSet", "English");
 							break;
 						}
-					case SystemLanguage.Spanish:
-						{
-							currentLanguage = Language.Spanish;
-							MetricsLogger.Instance.LogCustomEvent("Settings", "SystemLanguageSet", "Spanish");
-							break;
-						}
-					case SystemLanguage.Romanian:
-						{
-							currentLanguage = Language.Romanian;
-							MetricsLogger.Instance.LogCustomEvent("Settings", "SystemLanguageSet", "Romanian");
-							break;
-						}
+					//case SystemLanguage.Spanish:
+					//	{
+					//		currentLanguage = Language.Spanish;
+					//		MetricsLogger.Instance.LogCustomEvent("Settings", "SystemLanguageSet", "Spanish");
+					//		break;
+					//	}
+					//case SystemLanguage.Romanian:
+					//	{
+					//		currentLanguage = Language.Romanian;
+					//		MetricsLogger.Instance.LogCustomEvent("Settings", "SystemLanguageSet", "Romanian");
+					//		break;
+					//	}
 					default:
 						{
 							currentLanguage = Language.English;
@@ -101,15 +101,15 @@ public class LocalizedTextManager : MonoBehaviour
 			case Language.English:
 				currentLanguageString = "English";
 				break;
-			case Language.Spanish:
-				currentLanguageString = "Spanish";
-				break;
+			//case Language.Spanish:
+			//	currentLanguageString = "Spanish";
+			//	break;
 			case Language.Arabic:
 				currentLanguageString = "Arabic";
 				break;
-			case Language.Romanian:
-				currentLanguageString = "Romanian";
-				break;
+			//case Language.Romanian:
+			//	currentLanguageString = "Romanian";
+			//	break;
 			default:
 				currentLanguageString = "English";
 				break;
@@ -149,12 +149,14 @@ public class LocalizedTextManager : MonoBehaviour
 					contents = contents.Replace("*c*", ",");
 
 					// reverse order if language requires
-					if (columnHeaders[j] == "arabic")
+					
+					if (columnHeaders[j] == "Arabic")
 					{
 						char[] charArray = contents.ToCharArray();
 						Array.Reverse(charArray);
 						contents = new string(charArray);
 					}
+					
 					
 					table.AddEntry(columnHeaders[j], rowHeader, contents);
 				}
