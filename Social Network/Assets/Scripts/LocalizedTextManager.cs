@@ -152,9 +152,11 @@ public class LocalizedTextManager : MonoBehaviour
 					
 					if (columnHeaders[j] == "Arabic")
 					{
-						char[] charArray = contents.ToCharArray();
-						Array.Reverse(charArray);
-						contents = new string(charArray);
+						//char[] charArray = contents.ToCharArray();
+						//Array.Reverse(charArray);
+						//contents = new string(charArray);
+
+						contents = ArabicSupport.ArabicFixer.Fix(contents);
 					}
 					
 					

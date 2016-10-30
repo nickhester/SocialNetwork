@@ -1,70 +1,70 @@
 ,English,Arabic,Spanish,Romanian
-allSessionsCompleted,Congratulations*c* Doctor.\n\nThank you notes are pouring in from all your happy patients!\n\nThe world is a better place because of you.,تهانينا، يا طبيب. نشكرك على\n\nتوجيهاتك التي رسمت البسمة على جميع\n\nمرضاك! أصبح العالم مكان أفضل بسببك.,texto,probă 
-allStarsEarned,You did it! You completed every session perfectly.\n\nIt's been a pleasure working for you*c* Doctor.\n\nEnjoy retirement!,لقد فعلتها! لقد أكملت الجلسة بنجاح.\n\n كان من دواعي سروري العمل معك، يا طبيب.\n\n استمتع بتقاعدك!,texto,probă 
-appointments,Today's patients are eager to see you.\n\nSelect an appointment to begin your first session.,مرضى اليوم متشوقين لرؤيتك. \n\nاختر موعد لتبدأ جلستك الأولى.,texto,probă 
-completeFirstDay,Well*c* that's all of today's appointments.\n\nLet me know when you're ready to look at tomorrow's schedule.,حسناً، هذه جميع المواعيد لهذا اليوم.\n\n أخبرني عندما تريد النظر الى جدول اليوم التالي.,texto,probă 
-confirmClearData,Are you sure you want to clear local and cloud save data? This cannot be undone.,هل أنت متأكد أنك تريد مسح بيانات المحلية وبيانات السحابة؟ لا يمكن استرجاع البيانات المحذوفة.,texto,probă 
+allSessionsCompleted,Congratulations*c* Doctor.\n\nThank you notes are pouring in from all your happy patients!\n\nThe world is a better place because of you.,تهانينا، يا طبيب. نشكرك على\n\nتوجيهاتك التي رسمت\n البسمة على جميع\n\nمرضاك! أصبح العالم\n مكان أفضل بسببك.,texto,probă 
+allStarsEarned,You did it! You completed every session perfectly.\n\nIt's been a pleasure working for you*c* Doctor.\n\nEnjoy retirement!,لقد فعلتها! لقد\n أكملت الجلسة بنجاح.\n\n كان من دواعي سروري\n العمل معك، يا طبيب.\n\n استمتع بتقاعدك!,texto,probă 
+appointments,Today's patients are eager to see you.\n\nSelect an appointment to begin your first session.,مرضى اليوم\n متشوقين لرؤيتك. \n\nاختر موعد لتبدأ\n جلستك الأولى.,texto,probă 
+completeFirstDay,Well*c* that's all of today's appointments.\n\nLet me know when you're ready to look at tomorrow's schedule.,حسناً، هذه جميع\n المواعيد لهذا اليوم.\n\n أخبرني عندما تريد النظر\n الى جدول اليوم التالي.,texto,probă 
+confirmClearData,Are you sure you want to clear local and cloud save data? This cannot be undone.,هل أنت متأكد أنك\n تريد مسح بيانات المحلية\n وبيانات السحابة؟ لا يمكن\n استرجاع البيانات المحذوفة.,texto,probă 
 cancel,Cancel,ألغي,texto,probă 
 yes,Yes,نعم,texto,probă 
 credits0,Developed by:,تم التطوير من خلال:,texto,probă 
 credits1,Special Thanks to:,شكر خاص الي:,texto,probă 
 fridayEncouragement_0,It's Friday!,انه يوم الجمعة!,texto,probă 
-fridayEncouragement_1,If you need some incentive to make it through the day*c* there will be a new type of group joining us next week.,إذا كنت بحاجة الى بعض الحوافز لتفعلها خلال اليوم، سيكون هناك نوع جديد من هذه المجموعة التي ستنضم الينا الأسبوع القادم.,texto,probă 
-fridayEncouragement_2,I'll give you the details on Monday.,سأوافيك بالتفاصيل يوم الاثنين,texto,probă 
-introduction,Congratulations on the new office*c* Doctor.,تهانينا لك على المكتب الجديد، يا دكتور.,texto,probă 
+fridayEncouragement_1,If you need some incentive to make it through the day*c* there will be a new type of group joining us next week.,إذا كنت بحاجة الى بعض\n الحوافز لتفعلها خلال اليو\nم، سيكون هناك نوع جديد من \nهذه المجموعة التي ستنضم\n الينا الأسبوع القادم.,texto,probă 
+fridayEncouragement_2,I'll give you the details on Monday.,سأوافيك بالتفاصيل\n يوم الاثنين,texto,probă 
+introduction,Congratulations on the new office*c* Doctor.,تهانينا لك على المكتب\n الجديد، يا دكتور.,texto,probă 
 introduction_2,Choose the first day to begin.,اختر اليوم الأول كي تبدأ.,texto,probă 
 level2_0,Not all patients are friends,ليس جميع المرضى أصدقاء.,texto,probă 
-level2_1,Choose this patient to see his relationships.,اختر هذا المريض لمعرفة علاقاته.,texto,probă 
-level2_2,He's not friends with everyone. What you do to him will have the opposite effect on his enemy.,انه ليس صديقاً لأي أحد. ما تفعله من أجله سيكون بمثابة تأثير مضاد لأعدائه.,texto,probă 
+level2_1,Choose this patient to see his relationships.,اختر هذا المريض\n لمعرفة علاقاته.,texto,probă 
+level2_2,He's not friends with everyone. What you do to him will have the opposite effect on his enemy.,انه ليس صديقاً لأي أحد.\n ما تفعله من أجله سيكون\n بمثابة تأثير مضاد لأعدائه.,texto,probă 
 level2_3,Now we have a patient who is unhappy.,لدينا مريض غير سعيد الآن.,texto,probă 
-level2_4,Order matters. We can still make them happy.,مشاكل في الطلبات. لكننا نستطيع أن نجعلهم سعداء.,texto,probă 
-level3_0,Hmm*c* I'm sensing some bad vibes.,ممممم، أستشعر بعض المشاعر السيئة,texto,probă 
-level3_1,Being Mr. Nice Guy isn't going to cut it anymore.\nYou'll have to make someone unhappy in order to satisfy everyone here.,كونك شخص مهذب، يمنعك ذلك من قطع الدور بعد الآن.\n يتوجب عليك جعل شخص ما غير سعيد من أجل ارضاء الآخرين هنا.,texto,probă 
-level_0,Meet your first group of patients.,قابل مجموعتك الأولى من المرضى,texto,probă 
+level2_4,Order matters. We can still make them happy.,مشاكل في الطلبات.\n لكننا نستطيع أن\n نجعلهم سعداء.,texto,probă 
+level3_0,Hmm*c* I'm sensing some bad vibes.,ممممم، أستشعر\n بعض المشاعر السيئة,texto,probă 
+level3_1,Being Mr. Nice Guy isn't going to cut it anymore.\nYou'll have to make someone unhappy in order to satisfy everyone here.,كونك شخص مهذب، يمنعك\n ذلك من قطع الدور بعد الآن.\n يتوجب عليك جعل شخص\n ما غير سعيد من\n أجل ارضاء الآخرين هنا.,texto,probă 
+level_0,Meet your first group of patients.,قابل مجموعتك الأولى \nمن المرضى,texto,probă 
 level_1,First*c* choose a patient.,أختر مريضاً أولا.,texto,probă 
 level_2,Choose to encourage this patient,اختر لتشجع هذا المريض,texto,probă 
 level_3,This makes the patient happy.,هذا يجعل المريض سعيداً,texto,probă 
-level_4,It also affects their friends.,ويؤثر ذلك أيضاً على أصدقائه,texto,probă 
-level_5,Make everyone happy to succeed.,اجعل الجميع يشعر بلذة النجاح,texto,probă 
-levelSuccess,Congratulations*c* You made it through the first day!\n\nYou'll be scored by how many actions you make.,تهانينا، لقد قمت بفعلها في اليوم الأول! \n\nسيتم منحك الدرجة من خلال الاجراءات التي تقوم بها.,texto,probă 
-rateIt,I hope you're enjoying Social Sessions.\nIf so please leave a rating!,أتمنى أن تستمتع بالجلسات الاجتماعية. \nإذا كنت بالفعل مستمتعاً، يرجى ترك تقييم للعبة!,texto,probă 
+level_4,It also affects their friends.,ويؤثر ذلك أيضاً\n على أصدقائه,texto,probă 
+level_5,Make everyone happy to succeed.,اجعل الجميع يشعر\n بلذة النجاح,texto,probă 
+levelSuccess,Congratulations*c* You made it through the first day!\n\nYou'll be scored by how many actions you make.,تهانينا، لقد قمت\n بفعلها في اليوم الأول! \n\nسيتم منحك الدرجة من خلال\n الاجراءات التي تقوم بها.,texto,probă 
+rateIt,I hope you're enjoying Social Sessions.\nIf so please leave a rating!,أتمنى أن تستمتع بالجلسات الاجتماعية. \nإذا كنت بالفعل مستمتعاً، يرجى\n ترك تقييم للعبة!,texto,probă 
 rate,Rate,تقييم,texto,probă 
 no,No,لا,texto,probă 
-restartLevel_0,You can take as much time as you need to complete a session.,يمكنك أخذ الوقت الكافي لتكمل هذه الجلسة.,texto,probă 
-restartLevel_1,However if you want 3 stars*c* then you'll have to do it in as few actions as possible.,ومع ذلك إذا كنت تريد 3 نجوم، يمكنك فعلها بعدة اجراءات قدر الامكان.,texto,probă 
-restartLevel_2,Use the Restart button to quickly start a session over if you've made a mistake.,استخدم الزر اعادة تشغيل لكي تبدأ بجلسة أخري في حال قمت بخطأ.,texto,probă 
-returnToClipboard,Finish all sessions to move to the next day.,أنهي جميع الجلسات لتتحرك الى اليوم التالي.,texto,probă 
-showMe,If you get stuck*c* feel free to give me a call.\n\nI'll be happy to help.,إذا واجهت صعوبة، لا تتردد أن تتصل بي. \n\nسأكون سعيد للمساعدة.,texto,probă 
-special_cantTouch0,It's a new week!\n\nLet me see what you can expect this week...,انه أسبوع جديد! \n\nدعني أري ما تتوقعه هذا الأسبوع...,texto,probă 
-special_cantTouch1,Some groups are special.\n\nWhen you see this symbol there will be one person that you will not be allowed to interact with.,بعض المجموعات خاصة. \n\nعندما ترى هذا الرمز، سيكون هناك شخص واحد لا يسمح لك التفاعل معه.,texto,probă 
-special_cantTouch2,There will be other types of special groups in future weeks as well.,سيكون هناك أنواع أخرى من المجموعات الخاصة في الأسابيع المقبلة أيضاً.,texto,probă 
-special_fallToRed,When you see this symbol people will become upset if you do not interact with them quickly enough.,عندما ترى هذا الرمز، سيصبح الناس منزعجين لو لم تتفاعل معهم بسرعة كافية.,texto,probă 
-special_noLines,When you see this symbol you won't be able to\nsee how your patients are connected with\none another.,عندما ترى هذا الرمز، ستكون غير قادر على رؤية كيف يتصل المرضى مع بعضهم البعض.,texto,probă 
-special_oneClick,When you see this symbol you will only be allowed to interact with each person one time.,عندما ترى هذا الرمز، يُسمح لك فقط بالتفاعل مع كل شخص في وقت واحد.,texto,probă 
-tip2_1,Tip:\n\nSome groups aren't very friendly with each other. Even with a lot of enemies in a group*c* you can still help them...,نصيحة: \n\nبعض المجموعات غير صديقة لبعضها البعض. حتى يوجد الكثير من الأعداء في المجموعة، يمكنك الاستمرار في مساعدتهم...,texto,probă 
-tip2_2,For example*c* some of these have no friends.,على سبيل المثال، بعض هذه المجموعات لا يوجد لها أصدقاء.,texto,probă 
-tip2_3,You can still make them happy indirectly...,يمكنك جعلهم يشعرون بالسعادة بشكل غير مباشر...,texto,probă 
-tip2_4,We'll have to find another way to make them happy...,علينا العثور على طريقة أخرى لجعلهم سعداء,texto,probă 
-tip2_5,Luckily there's still someone you can discourage to make him happy.,لحسن الحظ مازال هناك شخص واحد لتثني عليه لتجعله يشعر بالسعادة.,texto,probă 
-tip2_6,And finally*c* he has a friend*c* so you can easily make them both happy!,وأخيراً، أصبح لديه صديقاً، لذلك يمكنها جعل الاثنين سعداء.,texto,probă 
-tip2_7,It might help to think of it in a straight line.,قد يساعد أن تفكر بها بشكل مستقيم.,texto,probă 
-tip2_8,Start by discouraging the second to last one...,ابدأ من خلال احباط الثاني حتى الأخير...,texto,probă 
-tip2_9,... it doesn't matter how many enemies there are in a row...,لا يهم كم هو عدد الأعداء في كل سطر...,texto,probă 
-tip2_10,...just keep discouraging one to make the one behind it happy...,فقط استمر في احباط شخص ما لتجعل الشخص الذي وراءه سعيداً...,texto,probă 
-tip2_11,...and if you can find a friend eventually...,وإذا كنت تريد العثور على شخص في نهاية المطاف...,texto,probă 
-tip2_12,...then you'll be able to make everyone happy!,ستكون قادر على جعل الجميع سعداء,texto,probă 
-tip2_13,So keep an eye out for groups like this that have a line of enemies and then a friend.,ثم ألقى نظرة على المجموعات مثل هذه التي تمتلك خط من الأعداء وصديق.,texto,probă 
-tip3_1,Tip:\n\nYour final action must be an encouragement*c* and it must be with someone who only has friends and no enemies.,نصيحة: \n\nاجراءك الأخير يجب أن يكون تشجيعاً ويجب ان يكون مع شخص يمتلك أصدقاء ولا يمتلك اعداء.,texto,probă 
-tip3_2,Sometimes it's helpful to figure out your last action*c* first.,في بعض الأحيان يكون من المفيد معرفة الاجراء الأخير,texto,probă 
-tip3_3,Find someone with only friends for your last action,أعثر على شخص مع أصدقاء فقط لإجرائك الأخير,texto,probă 
-tip3_4,There has to be at least one*c* or the session would be impossible.,يجب أن يكون هناك واحد على الأقل، أو ستكون المهمة مستحيلة.,texto,probă 
-tip3_5,Now*c* you just need to make everyone else happy first.,الآن، يتوجب عليك جعل الجميع سعداء أولا,texto,probă 
-tip3_6,Then*c* you know that your final action will make him and all of his friends happy,ثم تعلم أن اجراءك الأخير سيجعل جميع أصدقاءك يشعرون بالسعادة.,texto,probă 
+restartLevel_0,You can take as much time as you need to complete a session.,يمكنك أخذ الوقت الكافي\n لتكمل هذه الجلسة.,texto,probă 
+restartLevel_1,However if you want 3 stars*c* then you'll have to do it in as few actions as possible.,ومع ذلك إذا كنت تريد\n 3 نجوم، يمكنك فعلها بعدة\n اجراءات قدر الامكان.,texto,probă 
+restartLevel_2,Use the Restart button to quickly start a session over if you've made a mistake.,استخدم الزر اعادة\n تشغيل لكي تبدأ\n بجلسة أخري في\n حال قمت بخطأ.,texto,probă 
+returnToClipboard,Finish all sessions to move to the next day.,أنهي جميع الجلسات\n لتتحرك الى اليوم التالي.,texto,probă 
+showMe,If you get stuck*c* feel free to give me a call.\n\nI'll be happy to help.,إذا واجهت صعوبة،\n لا تتردد أن تتصل بي. \n\nسأكون سعيد للمساعدة.,texto,probă 
+special_cantTouch0,It's a new week!\n\nLet me see what you can expect this week...,انه أسبوع جديد! \n\nدعني أري ما تتوقعه\n هذا الأسبوع...,texto,probă 
+special_cantTouch1,Some groups are special.\n\nWhen you see this symbol there will be one person that you will not be allowed to interact with.,بعض المجموعات خاصة. \n\nعندما ترى هذا الرمز، سيكون\n هناك شخص واحد لا يسمح\n لك التفاعل معه.,texto,probă 
+special_cantTouch2,There will be other types of special groups in future weeks as well.,سيكون هناك أنواع\n أخرى من المجموعات\n الخاصة في الأسابيع المقبلة أيضاً.,texto,probă 
+special_fallToRed,When you see this symbol people will become upset if you do not interact with them quickly enough.,عندما ترى هذا الرمز،\n سيصبح الناس منزعجين لو\n لم تتفاعل معهم بسرعة كافية.,texto,probă 
+special_noLines,When you see this symbol you won't be able to\nsee how your patients are connected with\none another.,عندما ترى هذا الرمز،\n ستكون غير قادر\n على رؤية كيف يتصل\n المرضى مع بعضهم البعض.,texto,probă 
+special_oneClick,When you see this symbol you will only be allowed to interact with each person one time.,عندما ترى هذا الرمز،\n يُسمح لك فقط بالتفاعل\n مع كل شخص في وقت واحد.,texto,probă 
+tip2_1,Tip:\n\nSome groups aren't very friendly with each other. Even with a lot of enemies in a group*c* you can still help them...,نصيحة: \n\nبعض المجموعات غير صديقة\n لبعضها البعض. حتى يوجد\n الكثير من الأعداء في المجموعة،\n يمكنك الاستمرار في مساعدتهم...,texto,probă 
+tip2_2,For example*c* some of these have no friends.,على سبيل المثال، بعض هذه\n المجموعات لا يوجد لها أصدقاء.,texto,probă 
+tip2_3,You can still make them happy indirectly...,يمكنك جعلهم يشعرون\n بالسعادة بشكل غير مباشر...,texto,probă 
+tip2_4,We'll have to find another way to make them happy...,علينا العثور على طريقة\n أخرى لجعلهم سعداء,texto,probă 
+tip2_5,Luckily there's still someone you can discourage to make him happy.,لحسن الحظ مازال هناك شخص\n واحد لتثني عليه لتجعله\n يشعر بالسعادة.,texto,probă 
+tip2_6,And finally*c* he has a friend*c* so you can easily make them both happy!,وأخيراً، أصبح لديه صديقاً، لذلك\n يمكنها جعل الاثنين سعداء.,texto,probă 
+tip2_7,It might help to think of it in a straight line.,قد يساعد أن تفكر\n بها بشكل مستقيم.,texto,probă 
+tip2_8,Start by discouraging the second to last one...,ابدأ من خلال احباط\n الثاني حتى الأخير...,texto,probă 
+tip2_9,... it doesn't matter how many enemies there are in a row...,لا يهم كم هو عدد\n الأعداء في كل سطر...,texto,probă 
+tip2_10,...just keep discouraging one to make the one behind it happy...,فقط استمر في احباط شخص\n ما لتجعل الشخص\n الذي وراءه سعيداً...,texto,probă 
+tip2_11,...and if you can find a friend eventually...,وإذا كنت تريد العثور على\n شخص في نهاية المطاف...,texto,probă 
+tip2_12,...then you'll be able to make everyone happy!,ستكون قادر على\n جعل الجميع سعداء,texto,probă 
+tip2_13,So keep an eye out for groups like this that have a line of enemies and then a friend.,ثم ألقى نظرة على المجموعات مثل\n هذه التي تمتلك خط\n من الأعداء وصديق.,texto,probă 
+tip3_1,Tip:\n\nYour final action must be an encouragement*c* and it must be with someone who only has friends and no enemies.,نصيحة: \n\nاجراءك الأخير يجب أن يكون\n تشجيعاً ويجب ان\n يكون مع شخص\n يمتلك أصدقاء ولا يمتلك اعداء.,texto,probă 
+tip3_2,Sometimes it's helpful to figure out your last action*c* first.,في بعض الأحيان يكون من\n المفيد معرفة الاجراء الأخير,texto,probă 
+tip3_3,Find someone with only friends for your last action,أعثر على شخص مع\n أصدقاء فقط لإجرائك الأخير,texto,probă 
+tip3_4,There has to be at least one*c* or the session would be impossible.,يجب أن يكون هناك واحد على\n الأقل، أو ستكون المهمة مستحيلة.,texto,probă 
+tip3_5,Now*c* you just need to make everyone else happy first.,الآن، يتوجب عليك جعل\n الجميع سعداء أولا,texto,probă 
+tip3_6,Then*c* you know that your final action will make him and all of his friends happy,ثم تعلم أن اجراءك\n الأخير سيجعل جميع\n أصدقاءك يشعرون بالسعادة.,texto,probă 
 UpgradeChoice,Unlock full game:,افتح اللعبة بشكل كامل:,texto,probă 
-UpgradeFinal,Thank you for trying Social Sessions!\n\nUpgrade now to keep playing:\n-29 more levels!\n-3 more Special Modes!\n-No more ads!,أشكرك لتجربة الجلسات الاجتماعية! \nقم بالترقية الآن واستمر في اللعب: أكثر من 29 مستوى! \n- وثلاث أوضاع خاصة اضافية! \n- لا يوجد اعلانات!,texto,probă 
-ShowMe1,To view the solution*c* watch this quick ad.,لترى الحل، شاهد هذا الاعلان السريع.,texto,probă 
-ShowMe2,After that*c* you can view it whenever you want.,بعد ذلك، يمكنك مساعدته وقتما شئت.,texto,probă 
-ShowMe3,Upgrade to full to never show ads.,قم بترقية اللعبة بشكل كامل كي لا تشاهد الاعلانات.,texto,probă 
+UpgradeFinal,Thank you for trying Social Sessions!\n\nUpgrade now to keep playing:\n-92 more levels!\n-3 more Special Modes!\n-No more ads!,أشكرك لتجربة الجلسات الاجتماعية! \nقم بالترقية الآن واستمر في اللعب:\n أكثر من 92 مستوى! \n- وثلاث أوضاع خاصة اضافية! \n- لا يوجد اعلانات!,texto,probă 
+ShowMe1,To view the solution*c* watch this quick ad.,لترى الحل، شاهد\n هذا الاعلان السريع.,texto,probă 
+ShowMe2,After that*c* you can view it whenever you want.,بعد ذلك، يمكنك\n مساعدته وقتما شئت.,texto,probă 
+ShowMe3,Upgrade to full to never show ads.,قم بترقية اللعبة بشكل\n كامل كي لا تشاهد الاعلانات.,texto,probă 
 WatchIt,Watch it,شاهدها,texto,probă 
 UpgradeNow,Upgrade Now,قم بالترقية الآن,texto,probă 
 SOCIAL,SOCIAL,اجتماعي,texto,probă 
@@ -113,7 +113,7 @@ positiveComment07,Worth every penny,يستحق كل قرش,texto,probă
 positiveComment08,Am I your favorite?,هل أنا المفضل لديك؟,texto,probă 
 positiveComment09,My glass is half full now,كوبي نصف ممتلئ,texto,probă 
 positiveComment10,You're the best,أنت الأفضل,texto,probă 
-positiveComment11,I'm glad I got up this morning,أنا سعيد لأنني استيقظت هذا الصباح,texto,probă 
+positiveComment11,I'm glad I got up this morning,أنا سعيد لأنني استيقظت\n هذا الصباح,texto,probă 
 positiveComment12,Yippee!,ييب!,texto,probă 
 positiveComment13,What a kind soul,ما نوع الروح,texto,probă 
 positiveComment14,Likewise,بالمثل,texto,probă 
@@ -121,19 +121,19 @@ positiveComment15,Gracias,غراسياس,texto,probă
 positiveComment16,You inspire me,أنت تلهمني,texto,probă 
 positiveComment17,Gee whiz,جي ويز,texto,probă 
 positiveComment18,I feel warm inside,أشعر بدفء داخلي,texto,probă 
-negativeComment01,I thought I could trust you,اعتقدت أنه يمكنني أن أثق بك,texto,probă 
+negativeComment01,I thought I could trust you,اعتقدت أنه\n يمكنني أن أثق بك,texto,probă 
 negativeComment02,Why am I paying you for this?,لماذا أدفع لك لهذا؟,texto,probă 
-negativeComment03,Maybe I don't get your humor,ربما لا أمتلك حس الدعابة مثلك,texto,probă 
+negativeComment03,Maybe I don't get your humor,ربما لا أمتلك\n حس الدعابة مثلك,texto,probă 
 negativeComment04,You don't really mean that,أنت لا تقصد ذلك حقاً,texto,probă 
 negativeComment05,It's all meaningless,كل شيء لا معنى له,texto,probă 
 negativeComment06,What kind of advice is that?,ما نوع هذه النصيحة؟,texto,probă 
-negativeComment07,Can I see your credentials?,هل يمكنني رؤية بيانات الاعتماد الخاصة بك؟,texto,probă 
+negativeComment07,Can I see your credentials?,هل يمكنني رؤية بيانات\n الاعتماد الخاصة بك؟,texto,probă 
 negativeComment08,How dare you,كيف تتجرأ,texto,probă 
 negativeComment09,This is not going my way,هذا لن يعترض طريقي,texto,probă 
 negativeComment10,Sticks and stones... nevermind,العصي والحجارة ... لا بأس,texto,probă 
 negativeComment11,Why?,لماذا؟,texto,probă 
 negativeComment12,You're cruel,أنت قاسي,texto,probă 
-negativeComment13,Is this for the greater good?,هل هذا من أجل تحقيق الخير؟,texto,probă 
+negativeComment13,Is this for the greater good?,هل هذا من أجل\n تحقيق الخير؟,texto,probă 
 boredComment01,Should I go and come back?,هل ينبغي أن أذهب وأعود؟,texto,probă 
 boredComment02,Am I paying for this time?,هل يتوجب أن أدفع لهذه المرة؟,texto,probă 
 boredComment03,Are we still on the clock?,هل ما زلنا على مدار الساعة؟,texto,probă 
@@ -143,6 +143,6 @@ boredComment06,Are you still there?,هل ما زلت هناك؟,texto,probă
 boredComment07,You just take your time,خذ وقتك,texto,probă 
 boredComment08,Don't let me rush you,لا تدعني أستعجلك,texto,probă 
 boredComment09,I'm getting veeery sleeepy,انني أشعر بنعاس شديد,texto,probă 
-boredComment10,Can I just get some pills?,هل يمكنني الحصول على بعض حبوب الدواء؟,texto,probă 
+boredComment10,Can I just get some pills?,هل يمكنني الحصول\n على بعض حبوب الدواء؟,texto,probă 
 boredComment11,Are we there yet?,هل وصلنا هناك؟,texto,probă 
 Language,Language,لغة,idioma,limba 
