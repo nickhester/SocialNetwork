@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class LocalizedText : MonoBehaviour
 {
 	public string stringName;
+	public bool alwaysResizeToBestFit = false;	// this applies to all languages except English
 
 	void Start ()
 	{
@@ -17,7 +18,12 @@ public class LocalizedText : MonoBehaviour
 		LocalizedTextManager localizedTextManager = FindObjectOfType<LocalizedTextManager>();
 		myTextObject.text = localizedTextManager.GetLocalizedString(stringName);
 
-		if (localizedTextManager.currentLanguage == LocalizedTextManager.Language.Arabic)
+		if (localizedTextManager.currentLanguage == LocalizedTextManager.Language.English)
+		{
+			myTextObject.resizeTextForBestFit = false;
+		}
+		else if (localizedTextManager.currentLanguage == LocalizedTextManager.Language.Arabic
+			|| alwaysResizeToBestFit)
 		{
 			myTextObject.resizeTextForBestFit = true;
 		}
