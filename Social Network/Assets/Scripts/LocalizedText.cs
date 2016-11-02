@@ -17,13 +17,13 @@ public class LocalizedText : MonoBehaviour
 		LocalizedTextManager localizedTextManager = FindObjectOfType<LocalizedTextManager>();
 		myTextObject.text = localizedTextManager.GetLocalizedString(stringName);
 
-		if (localizedTextManager.currentLanguage == LocalizedTextManager.Language.English)
+		if (localizedTextManager.currentLanguage == LocalizedTextManager.Language.Arabic)
 		{
-			myTextObject.resizeTextForBestFit = false;
+			myTextObject.resizeTextForBestFit = true;
 		}
 		else
 		{
-			myTextObject.resizeTextForBestFit = true;
+			myTextObject.resizeTextForBestFit = false;
 		}
 	}
 }

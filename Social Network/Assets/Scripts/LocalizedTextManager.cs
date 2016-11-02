@@ -13,7 +13,7 @@ public class LocalizedTextManager : MonoBehaviour
 		English,
 		//Spanish,
 		Arabic,
-		//Romanian
+		Romanian
 	}
 	public Language currentLanguage;
 
@@ -70,12 +70,12 @@ public class LocalizedTextManager : MonoBehaviour
 					//		MetricsLogger.Instance.LogCustomEvent("Settings", "SystemLanguageSet", "Spanish");
 					//		break;
 					//	}
-					//case SystemLanguage.Romanian:
-					//	{
-					//		currentLanguage = Language.Romanian;
-					//		MetricsLogger.Instance.LogCustomEvent("Settings", "SystemLanguageSet", "Romanian");
-					//		break;
-					//	}
+					case SystemLanguage.Romanian:
+						{
+							currentLanguage = Language.Romanian;
+							MetricsLogger.Instance.LogCustomEvent("Settings", "SystemLanguageSet", "Romanian");
+							break;
+						}
 					default:
 						{
 							currentLanguage = Language.English;
@@ -107,9 +107,9 @@ public class LocalizedTextManager : MonoBehaviour
 			case Language.Arabic:
 				currentLanguageString = "Arabic";
 				break;
-			//case Language.Romanian:
-			//	currentLanguageString = "Romanian";
-			//	break;
+			case Language.Romanian:
+				currentLanguageString = "Romanian";
+				break;
 			default:
 				currentLanguageString = "English";
 				break;
@@ -152,10 +152,6 @@ public class LocalizedTextManager : MonoBehaviour
 					
 					if (columnHeaders[j] == "Arabic")
 					{
-						//char[] charArray = contents.ToCharArray();
-						//Array.Reverse(charArray);
-						//contents = new string(charArray);
-
 						contents = ArabicSupport.ArabicFixer.Fix(contents);
 					}
 					
