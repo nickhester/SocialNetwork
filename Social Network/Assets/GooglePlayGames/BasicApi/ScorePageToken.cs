@@ -13,13 +13,13 @@
 //  See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
-
+#if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))
 
 namespace GooglePlayGames.BasicApi
 {
     /// <summary>
     /// Score page token. This holds the internal token used
-    /// to page through the score pages.  The id, collection, and 
+    /// to page through the score pages.  The id, collection, and
     /// timespan are added as a convience, and not actually part of the
     /// page token returned from the SDK.
     /// </summary>
@@ -73,3 +73,4 @@ namespace GooglePlayGames.BasicApi
         }
     }
 }
+#endif

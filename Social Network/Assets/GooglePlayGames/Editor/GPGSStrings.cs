@@ -14,7 +14,10 @@
 //    limitations under the License.
 // </copyright>
 
-namespace GooglePlayGames
+// Keep the strings even if NO_GPGS 
+#if (UNITY_ANDROID || UNITY_IPHONE)
+
+namespace GooglePlayGames.Editor
 {
     public class GPGSStrings
     {
@@ -46,6 +49,9 @@ namespace GooglePlayGames
             public const string AppIdError = "The App Id does not appear to be valid. " +
                                              "It must consist solely of digits, usually 10 or more.";
 
+            public const string RequiresGPlusTitle = "Enable Google Plus API Access";
+            public const string RequiresGPlusBlurb = "(Not recommended) Enable access to the Google + API. " +
+                                                     "This is only needed if you are calling Google+ APIs directly.";
 
             public const string WebClientIdTitle = "Web App Client ID (Optional)";
             public const string ClientId = "Client ID";
@@ -97,7 +103,7 @@ namespace GooglePlayGames
         {
             public const string Title = "Google Play Games - Android Configuration";
             public const string Blurb = "To configure Google Play Games in this project,\n" +
-                                        "please enter the information below and click on the Setup button.";
+                                        "go to the Play Game console, then enter the information below and click on the Setup button.";
 
             public const string WebClientIdBlurb = "The web app client ID is needed to access the user's ID token and " +
                 "call other APIs onbehalf of the user." +
@@ -197,3 +203,4 @@ namespace GooglePlayGames
                                           "limitations under the License.";
     }
 }
+#endif

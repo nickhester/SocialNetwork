@@ -18,7 +18,10 @@
 
 namespace GooglePlayGames.IOS
 {
+    using System;
+    using GooglePlayGames.BasicApi;
     using GooglePlayGames.Native.PInvoke;
+    using UnityEngine;
 
     internal class IOSClient : IClientImpl
     {
@@ -30,7 +33,7 @@ namespace GooglePlayGames.IOS
         {
             if (!GameInfo.IosClientIdInitialized())
             {
-                throw new System.InvalidOperationException("Could not locate the OAuth Client ID, " +
+                throw new InvalidOperationException("Could not locate the OAuth Client ID, " +
                     "provide this by navigating to Google Play Games > iOS Setup");
             }
 
@@ -44,11 +47,22 @@ namespace GooglePlayGames.IOS
             return config;
         }
 
-        public TokenClient CreateTokenClient()
+        /// <summary>
+        /// Creates the token client.
+        /// </summary>
+        /// <returns>The token client.</returns>
+        /// <param name="playerId">not used for iOS</param>
+        /// <param name="reset">not used for iOS</param>
+        public TokenClient CreateTokenClient(string playerId, bool reset)
         {
             return new IOSTokenClient();
         }
 
+        public void GetPlayerStats(IntPtr apiClientPtr,
+            Action<CommonStatusCodes, PlayerStats> callback) {
+            throw new InvalidOperationException(
+                "The native API should be called for iOS");
+        }
     }
 }
 #endif

@@ -28,7 +28,6 @@ public static class PlayConstantNames
         public const string achievement_week_1_perfected = "CgkIsqTI3JUKEAIQBw"; // <GPGSID>
         public const string leaderboard_star_count = "CgkIsqTI3JUKEAIQDw"; // <GPGSID>
         public const string achievement_week_2_perfected = "CgkIsqTI3JUKEAIQCA"; // <GPGSID>
-        public const string package_name = "com.hestergames.socialnetwork"; // <GPGSID>
         public const string achievement_week_5_perfected = "CgkIsqTI3JUKEAIQCw"; // <GPGSID>
         public const string achievement_week_1_completed = "CgkIsqTI3JUKEAIQAQ"; // <GPGSID>
         public const string achievement_week_2_completed = "CgkIsqTI3JUKEAIQAg"; // <GPGSID>

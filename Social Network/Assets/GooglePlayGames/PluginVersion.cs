@@ -13,6 +13,7 @@
 //  See the License for the specific language governing permissions and
 //    limitations under the License.
 // </copyright>
+#if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))
 
 namespace GooglePlayGames
 {
@@ -21,11 +22,28 @@ namespace GooglePlayGames
     // older versions, used when upgrading to other versions
     public const string VersionKeyCPP = "00911";
     public const string VersionKeyU5 = "00915";
-    public const int VersionInt = 0x0925;
-    public const string VersionString = "0.9.25";
-    public const string VersionKey = "00925";
+    // patched 0.9.27 version for Unity 5.3 changes.
+    public const string VersionKey27Patch = "00927a";
+
+    public const string VersionKeyJarResolver = "00928";
+    public const string VersionKeyNativeCRM = "00930";
+
+    // Using JNI to get spendprobability - so don't delete the Games.cs files.
+    public const string VersionKeyJNIStats = "00934";
+
+    // New and improved jar resolver
+    public const string VersionKeyJarResolverDLL = "00935";
+
+    // Current Version.
+    public const int VersionInt = 0x0936;
+    public const string VersionString = "0.9.36";
+    public const string VersionKey = "00936";
 
     // used to check for the correct min version or play services.
-    public const int MinGmsCoreVersionCode = 7571000;
+    public const int MinGmsCoreVersionCode = 8487000;
+
+    // used to get the right version of dependencies.
+    public const string PlayServicesVersionConstraint = "9+";
   }
 }
+#endif

@@ -16,6 +16,8 @@
 
 #if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))
 
+using System;
+using GooglePlayGames.BasicApi;
 using GooglePlayGames.Native.PInvoke;
 
 namespace GooglePlayGames
@@ -25,10 +27,11 @@ namespace GooglePlayGames
     /// </summary>
     internal interface IClientImpl
     {
-
         PlatformConfiguration CreatePlatformConfiguration ();
 
-        TokenClient CreateTokenClient ();
+        TokenClient CreateTokenClient (string playerId, bool reset);
+
+        void GetPlayerStats(IntPtr apiClientPtr, Action<CommonStatusCodes, PlayerStats> callback);
     }
 }
 

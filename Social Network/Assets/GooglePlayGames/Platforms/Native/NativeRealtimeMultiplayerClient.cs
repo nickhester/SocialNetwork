@@ -49,7 +49,7 @@ namespace GooglePlayGames.Native
         private RoomSession GetTerminatedSession()
         {
             var terminatedRoom = new RoomSession(mRealtimeManager, new NoopListener());
-            terminatedRoom.EnterState(new ShutdownState(terminatedRoom));
+            terminatedRoom.EnterState(new ShutdownState(terminatedRoom), false);
             return terminatedRoom;
         }
 
@@ -190,6 +190,29 @@ namespace GooglePlayGames.Native
                 mCurrentSession.ShowWaitingRoomUI();
             }
         }
+            
+        public void GetAllInvitations(Action<Invitation[]> callback)
+        {
+            mRealtimeManager.FetchInvitations((response) =>
+                {
+                    if (!response.RequestSucceeded())
+                    {
+                        Logger.e("Couldn't load invitations.");
+                        callback(new Invitation[0]);
+                        return;
+                    }
+
+                    List<Invitation> invites = new List<Invitation>();
+                    foreach (var invitation in response.Invitations())
+                    {
+                        using (invitation)
+                        {
+                            invites.Add(invitation.AsInvitation());
+                        }
+                    }
+                    callback(invites.ToArray());
+                });
+        }
 
         public void AcceptFromInbox(RealTimeMultiplayerListener listener)
         {
@@ -235,6 +258,7 @@ namespace GooglePlayGames.Native
                                         using (invitation)
                                         {
                                             newRoom.HandleRoomResponse(acceptResponse);
+                                            newRoom.SetInvitation(invitation.AsInvitation());
                                         }
                                     }));
                         }
@@ -293,6 +317,11 @@ namespace GooglePlayGames.Native
                         newRoom.LeaveRoom();
                     });
             }
+        }
+
+        public Invitation GetInvitation()
+        {
+            return mCurrentSession.GetInvitation();
         }
 
         public void LeaveRoom()
@@ -422,6 +451,8 @@ namespace GooglePlayGames.Native
             private volatile State mState;
             private volatile bool mStillPreRoomCreation;
 
+            Invitation mInvitation;
+
             private volatile bool mShowingUI;
 
             private uint mMinPlayersToStart;
@@ -430,8 +461,7 @@ namespace GooglePlayGames.Native
             {
                 mManager = Misc.CheckNotNull(manager);
                 mListener = new OnGameThreadForwardingListener(listener);
-
-                EnterState(new BeforeRoomCreateStartedState(this));
+                EnterState(new BeforeRoomCreateStartedState(this), false);
                 mStillPreRoomCreation = true;
             }
 
@@ -474,24 +504,50 @@ namespace GooglePlayGames.Native
                 return mCurrentPlayerId;
             }
 
+            public void SetInvitation(Invitation invitation)
+            {
+                mInvitation = invitation;
+            }
+
+            public Invitation GetInvitation()
+            {
+                return mInvitation;
+            }
+
             internal OnGameThreadForwardingListener OnGameThreadListener()
             {
                 return mListener;
             }
 
-            /**
-         * Lifecycle methods - these might cause state transitions, and thus require us to hold a
-         * lock while they're executing to prevent any externally visible inconsistent state (e.g.
-         * receiving any callbacks after we've left a room).
-         */
-
+            /// <summary>
+            /// Enters the state firing on the OnStateEntered event.
+            /// </summary>
+            /// <param name="handler">Handler for the state.</param>
             internal void EnterState(State handler)
+            {
+                EnterState(handler, true);
+            }
+
+            /// <summary>
+            /// Sets the state of the session to the given state.
+            /// </summary>
+            /// <remarks>
+            /// Lifecycle methods - these might cause state transitions, and thus require us to hold a
+            /// lock while they're executing to prevent any externally visible inconsistent state (e.g.
+            /// receiving any callbacks after we've left a room).
+            /// </remarks>
+            /// <param name="handler">Handler - the State Handler.</param>
+            /// <param name="fireStateEnteredEvent">If set to <c>true</c> fire the StateEntered event.</param>
+            internal void EnterState(State handler, bool fireStateEnteredEvent)
             {
                 lock (mLifecycleLock)
                 {
                     mState = Misc.CheckNotNull(handler);
-                    Logger.d("Entering state: " + handler.GetType().Name);
-                    mState.OnStateEntered();
+                    if (fireStateEnteredEvent)
+                    {
+                        Logger.d("Entering state: " + handler.GetType().Name);
+                        mState.OnStateEntered();
+                    }
                 }
             }
 
@@ -571,6 +627,11 @@ namespace GooglePlayGames.Native
                 }
             }
 
+            /// <summary>
+            /// Handles the room response.
+            /// </summary>
+            /// <param name="response">Response.</param>
+            /// <param name="invitation">Invitation if accepting an invitation, this is stored in the session, otherwise null</param>
             internal void HandleRoomResponse(RealtimeManager.RealTimeRoomResponse response)
             {
                 lock (mLifecycleLock)

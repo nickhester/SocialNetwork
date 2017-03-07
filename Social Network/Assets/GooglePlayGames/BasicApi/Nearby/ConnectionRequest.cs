@@ -26,7 +26,7 @@ namespace GooglePlayGames.BasicApi.Nearby
         public ConnectionRequest(string remoteEndpointId, string remoteDeviceId,
                              string remoteEndpointName, string serviceId, byte[] payload)
         {
-			GooglePlayGames.OurUtils.Logger.d("Constructing ConnectionRequest");
+            Logger.d("Constructing ConnectionRequest");
             mRemoteEndpoint = new EndpointDetails(remoteEndpointId, remoteDeviceId,
                 remoteEndpointName, serviceId);
             this.mPayload = Misc.CheckNotNull(payload);
