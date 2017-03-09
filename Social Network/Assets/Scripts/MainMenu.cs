@@ -71,6 +71,10 @@ public class MainMenu : MonoBehaviour {
 		{
 			FindObjectOfType<LocalizedTextManager>().ToggleLanguageAndUpdateText();
 		}
+		else if (go.name == "Button - privacy policy")
+		{
+			Application.OpenURL("http://hestergames.blogspot.com/2017/03/privacy-policy-social-sessions-game.html");
+		}
 	}
 
 	public void ReceiveClickFromUIButton(GameObject _go)
