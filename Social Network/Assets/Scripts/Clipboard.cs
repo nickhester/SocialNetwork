@@ -119,10 +119,9 @@ public class Clipboard : MonoBehaviour
                 currentLevelDifficulty = GetNextLevelUp().myLevel.difficulty;			// store level difficulty for scoring
                 currentLevelNumBlocks = GetNextLevelUp().myLevel.level;
 
-                // bring up the ShowMe banner if first week
+                // bring up the ShowMe banner if not first level
                 // ShowMe stuff
                 Appointment _currentAppointment = GetNextLevelUp();
-				//if (_currentAppointment.GetMyDayIndex() < daysToShowBanner && !(_currentAppointment.GetMyDayIndex() == 0 && _currentAppointment.GetMyLevelIndex() == 0))
 				if (!(_currentAppointment.GetMyDayIndex() == 0 && _currentAppointment.GetMyLevelIndex() == 0))
                 {
 					StartCoroutine(SlideObject(new LerpPackage(showMeBanner, showMeInPosition, showMeOutPosition)));
@@ -130,6 +129,12 @@ public class Clipboard : MonoBehaviour
 
 				// log event to game manager
 				gameManager.Event_AppointmentStart();
+
+				// chance to show ad if not 1st or 2nd day
+				if (!SaveGame.GetHasUpgraded() && _currentAppointment.GetMyDayIndex() >= 2)
+				{
+					UnityAds.ShowPlacementAdChance(3, 1);
+				}
             }
 			else if (go.name == "BackButton_red" || go.name == "BackButton_yellow" || go.name == "DoneButton")	// if clicking the "back" or "done" button, go back
             {
